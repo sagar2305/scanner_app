@@ -56,15 +56,23 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				025BDA8525F09AA1000834AE /* AppDelegate.swift */,
-				025BDA8725F09AA1000834AE /* SceneDelegate.swift */,
+				025BDA9A25F09BAC000834AE /* App files */,
 				025BDA8925F09AA1000834AE /* ViewController.swift */,
 				025BDA8B25F09AA1000834AE /* Main.storyboard */,
 				025BDA8E25F09AA6000834AE /* Assets.xcassets */,
+			);
+			path = "Document Scanner";
+			sourceTree = "<group>";
+		};
+		025BDA9A25F09BAC000834AE /* App files */ = {
+			isa = PBXGroup;
+			children = (
+				025BDA8525F09AA1000834AE /* AppDelegate.swift */,
+				025BDA8725F09AA1000834AE /* SceneDelegate.swift */,
 				025BDA9025F09AA6000834AE /* LaunchScreen.storyboard */,
 				025BDA9325F09AA6000834AE /* Info.plist */,
 			);
-			path = "Document Scanner";
+			path = "App files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
