@@ -29,8 +29,8 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     /// presents user option to crop / rotate selected image
-    private func presentImageCorrectionViewController() {
-        
+    private func presentImageCorrectionViewController(for image: UIImage) {
+
     }
 }
 
@@ -47,7 +47,7 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
         guard  let selectedImage = info[.originalImage] as? UIImage else {
             fatalError("Failed to pick the image from photo library")
         }
-        
+        presentImageCorrectionViewController(for: selectedImage)
     }
     
 }

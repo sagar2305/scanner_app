@@ -16,7 +16,6 @@ protocol HomeViewControllerDelegate: class {
 class HomeViewController: UIViewController {
     
     private var footerCornerRadius: CGFloat = 24
-    
     weak var delegate: HomeViewControllerDelegate?
     
     @IBOutlet weak private var footerView: UIView!
@@ -25,24 +24,28 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
     }
     
+    @IBAction func test(_ sender: UIButton) {
+        print("WTF")
+    }
     private func setupViews() {
         footerView.layer.cornerRadius = footerCornerRadius
         footerView.clipsToBounds = true
+        footerView.isUserInteractionEnabled = true
     }
     
-    @IBAction private func didTapPickDocumentButton(_ button: UIButton) {
-        
+    
+    @IBAction func didTapPickImageButton(_ sender: UIButton) {
+        delegate?.pickNewDocument(self)
     }
     
-    @IBAction private func didTapScanDocumentButton(_ button: UIButton) {
-        
+    @IBAction func didTapScanButton(_ sender: UIButton) {
+        delegate?.scanNewDocument(self)
     }
     
-    @IBAction private func didTapSettingButton(_ button: UIButton) {
-        
+    @IBAction func didTapSettingsButton(_ sender: UIButton) {
+        delegate?.showSettings(self)
     }
     
 }

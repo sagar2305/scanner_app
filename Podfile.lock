@@ -1,16 +1,20 @@
 PODS:
   - SwiftLint (0.43.0)
+  - WeScan (1.7.0)
 
 DEPENDENCIES:
   - SwiftLint
+  - WeScan (>= 0.9)
 
 SPEC REPOS:
   trunk:
     - SwiftLint
+    - WeScan
 
 SPEC CHECKSUMS:
   SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
+  WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 906f29d3724a21fb1fb340a13067e6bae1698e39
+PODFILE CHECKSUM: ddef37166b996b2a958b979256737cc0f110a753
 
 COCOAPODS: 1.10.0

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerVC" customModule="Document_Scanner" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraPreview" destination="CEP-yl-14l" id="dor-yN-Ijm"/>
+                <outlet property="cancelButton" destination="6Om-UN-Rsk" id="WaC-iE-bag"/>
+                <outlet property="flashButton" destination="0cJ-AQ-jEh" id="ZcY-ln-jqS"/>
+                <outlet property="footerView" destination="CIs-OX-BK8" id="002-Gn-irT"/>
+                <outlet property="scanImage" destination="0xd-gA-Fpf" id="Ycd-bv-8m8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEP-yl-14l">
+                    <rect key="frame" x="12" y="56" width="390" height="702"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIs-OX-BK8">
+                    <rect key="frame" x="12" y="770" width="390" height="80"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="txd-ai-aXt">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="80"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iJ-DF-lc6">
+                                    <rect key="frame" x="0.0" y="0.0" width="124.5" height="80"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0cJ-AQ-jEh">
+                                            <rect key="frame" x="40.5" y="18" width="44" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="44" id="IQe-Z8-4nm"/>
+                                                <constraint firstAttribute="height" constant="44" id="TgG-Q1-max"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <imageReference key="image" image="flash.png" symbolScale="large" renderingMode="original"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                </preferredSymbolConfiguration>
+                                            </state>
+                                            <connections>
+                                                <action selector="flashButtonTapped:" destination="-1" eventType="touchUpInside" id="13T-Hr-0dF"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="0cJ-AQ-jEh" firstAttribute="centerY" secondItem="9iJ-DF-lc6" secondAttribute="centerY" id="Fuo-aI-gfa"/>
+                                        <constraint firstItem="0cJ-AQ-jEh" firstAttribute="centerX" secondItem="9iJ-DF-lc6" secondAttribute="centerX" id="vPz-DM-XfJ"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-0v-7pX">
+                                    <rect key="frame" x="132.5" y="0.0" width="125" height="80"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xd-gA-Fpf">
+                                            <rect key="frame" x="22.5" y="0.0" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="A0X-G1-gOQ"/>
+                                                <constraint firstAttribute="width" constant="80" id="FGI-YL-509"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                            <state key="normal">
+                                                <imageReference key="image" image="camera.aperture" catalog="system" symbolScale="large" renderingMode="original"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                </preferredSymbolConfiguration>
+                                            </state>
+                                            <connections>
+                                                <action selector="captureButtonTapped:" destination="-1" eventType="touchUpInside" id="UAt-GY-9yK"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="0xd-gA-Fpf" firstAttribute="centerX" secondItem="t6N-0v-7pX" secondAttribute="centerX" id="5r3-4T-9Ir"/>
+                                        <constraint firstItem="0xd-gA-Fpf" firstAttribute="centerY" secondItem="t6N-0v-7pX" secondAttribute="centerY" id="EcL-s8-sfB"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRp-si-uUG">
+                                    <rect key="frame" x="265.5" y="0.0" width="124.5" height="80"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Om-UN-Rsk">
+                                            <rect key="frame" x="40" y="18" width="44" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="0ng-d5-YT5"/>
+                                                <constraint firstAttribute="width" constant="44" id="crW-d5-nKO"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <imageReference key="image" image="xmark" catalog="system" symbolScale="medium" renderingMode="original"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="bold">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                </preferredSymbolConfiguration>
+                                            </state>
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="ouI-pI-cMV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="6Om-UN-Rsk" firstAttribute="centerY" secondItem="aRp-si-uUG" secondAttribute="centerY" id="VlS-p3-G2h"/>
+                                        <constraint firstItem="6Om-UN-Rsk" firstAttribute="centerX" secondItem="aRp-si-uUG" secondAttribute="centerX" id="ne7-x7-dv5"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="txd-ai-aXt" firstAttribute="leading" secondItem="CIs-OX-BK8" secondAttribute="leading" id="68G-wz-41Z"/>
+                        <constraint firstAttribute="trailing" secondItem="txd-ai-aXt" secondAttribute="trailing" id="Pj8-qf-Sz3"/>
+                        <constraint firstAttribute="height" constant="80" id="YX1-hr-Wr8"/>
+                        <constraint firstItem="txd-ai-aXt" firstAttribute="top" secondItem="CIs-OX-BK8" secondAttribute="top" id="hF5-8U-BDY"/>
+                        <constraint firstAttribute="bottom" secondItem="txd-ai-aXt" secondAttribute="bottom" id="i87-68-mxC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="CIs-OX-BK8" firstAttribute="top" secondItem="CEP-yl-14l" secondAttribute="bottom" constant="12" id="1oc-5k-ghr"/>
+                <constraint firstItem="CEP-yl-14l" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="3Ec-JI-na7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CIs-OX-BK8" secondAttribute="trailing" constant="12" id="51w-h6-bTU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CIs-OX-BK8" secondAttribute="bottom" constant="12" id="Hgs-qL-KpB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CEP-yl-14l" secondAttribute="trailing" constant="12" id="c5S-wc-rAJ"/>
+                <constraint firstItem="CEP-yl-14l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="kCM-vJ-szr"/>
+                <constraint firstItem="CIs-OX-BK8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="p6e-hA-qjX"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="133.92857142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="camera.aperture" catalog="system" width="128" height="121"/>
+        <image name="flash.png" width="36" height="36"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

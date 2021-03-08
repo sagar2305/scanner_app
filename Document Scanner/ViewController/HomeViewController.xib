@@ -22,10 +22,26 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
+                    <rect key="frame" x="8" y="105.5" width="359" height="473.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Documents" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-If-PzA">
+                    <rect key="frame" x="16" y="0.0" width="343" height="33.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTZ-Om-6jC">
                     <rect key="frame" x="8" y="579" width="359" height="80"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0t6-Aa-RdM">
+                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0t6-Aa-RdM">
                             <rect key="frame" x="0.0" y="0.0" width="359" height="80"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGb-l1-xpX">
@@ -40,6 +56,9 @@
                                             <state key="normal">
                                                 <imageReference key="image" image="photo.on.rectangle.angled" catalog="system" symbolScale="large" renderingMode="original"/>
                                             </state>
+                                            <connections>
+                                                <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="eVC-9n-sij"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,6 +79,9 @@
                                             <state key="normal">
                                                 <imageReference key="image" image="scanner" catalog="system" symbolScale="large" renderingMode="original"/>
                                             </state>
+                                            <connections>
+                                                <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="wyb-Wf-0DW"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,6 +102,9 @@
                                             <state key="normal">
                                                 <imageReference key="image" image="gear" catalog="system" symbolScale="large" renderingMode="original"/>
                                             </state>
+                                            <connections>
+                                                <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="pN1-Gr-FKT"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -101,24 +126,8 @@
                         <constraint firstAttribute="height" constant="80" id="t1D-R0-3bV"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
-                    <rect key="frame" x="8" y="105.5" width="359" height="473.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Documents" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-If-PzA">
-                    <rect key="frame" x="16" y="0.0" width="343" height="33.5"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="qr0-vj-rnp">
-                    <rect key="frame" x="16" y="42" width="343" height="56"/>
+                    <rect key="frame" x="16" y="41.5" width="343" height="56"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
             </subviews>

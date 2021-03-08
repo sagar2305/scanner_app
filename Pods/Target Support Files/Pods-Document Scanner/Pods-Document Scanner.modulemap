@@ -1,0 +1,6 @@
+module Pods_Document_Scanner {
+  umbrella header "Pods-Document Scanner-umbrella.h"
+
+  export *
+  module * { export * }
+}

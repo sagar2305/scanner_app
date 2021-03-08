@@ -11,9 +11,13 @@ class ApplicationCoordinator: Coordinator {
     
     var window: UIWindow
     
-    var rootViewController: UIViewController
+    var rootViewController: UIViewController {
+        return navigationController
+    }
     var childCoordinator: [Coordinator] = []
     
+    var navigationController: UINavigationController
+    var homeViewController: HomeViewController
     func start() {
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -22,15 +26,19 @@ class ApplicationCoordinator: Coordinator {
     
     init(_ window: UIWindow) {
         self.window = window
-        let homeViewController = HomeViewController()
-        rootViewController = homeViewController
+        homeViewController = HomeViewController()
+        navigationController = UINavigationController(rootViewController: homeViewController)
+        navigationController.isNavigationBarHidden = true
         homeViewController.delegate = self
     }
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
+    
     func scanNewDocument(_ controller: HomeViewController) {
-        
+        let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
+        childCoordinator.append(scanDocumentCoordinator)
+        scanDocumentCoordinator.start()
     }
     
     func pickNewDocument(_ controller: HomeViewController) {
