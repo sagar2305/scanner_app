@@ -4,4 +4,5 @@ platform :ios, '12.0'
 target 'Document Scanner' do
   pod 'SwiftLint'
   pod 'WeScan', '>= 0.9'
+  pod 'LGButton'
 end

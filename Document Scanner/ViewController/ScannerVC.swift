@@ -8,7 +8,7 @@
 import UIKit
 import WeScan
 
-protocol ScannerVCDelegate {
+protocol ScannerVCDelegate: class {
     func cancelScanning(_ controller: ScannerVC)
     func didScannedDocumentImage(_ image: UIImage, quad: Quadrilateral?, controller: ScannerVC)
 }

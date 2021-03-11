@@ -54,7 +54,7 @@
                                                 <constraint firstAttribute="width" constant="44" id="iQP-Ld-tNl"/>
                                             </constraints>
                                             <state key="normal">
-                                                <imageReference key="image" image="photo.on.rectangle.angled" catalog="system" symbolScale="large" renderingMode="original"/>
+                                                <imageReference key="image" image="photo-library" symbolScale="large" renderingMode="original"/>
                                             </state>
                                             <connections>
                                                 <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="eVC-9n-sij"/>
@@ -77,7 +77,7 @@
                                                 <constraint firstAttribute="width" constant="44" id="WCk-Va-0Ho"/>
                                             </constraints>
                                             <state key="normal">
-                                                <imageReference key="image" image="scanner" catalog="system" symbolScale="large" renderingMode="original"/>
+                                                <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
                                             </state>
                                             <connections>
                                                 <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="wyb-Wf-0DW"/>
@@ -100,7 +100,7 @@
                                                 <constraint firstAttribute="height" constant="44" id="fSf-Ah-RGw"/>
                                             </constraints>
                                             <state key="normal">
-                                                <imageReference key="image" image="gear" catalog="system" symbolScale="large" renderingMode="original"/>
+                                                <imageReference key="image" image="settings" symbolScale="large" renderingMode="original"/>
                                             </state>
                                             <connections>
                                                 <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="pN1-Gr-FKT"/>
@@ -152,9 +152,9 @@
         </view>
     </objects>
     <resources>
-        <image name="gear" catalog="system" width="128" height="119"/>
-        <image name="photo.on.rectangle.angled" catalog="system" width="128" height="101"/>
-        <image name="scanner" catalog="system" width="128" height="93"/>
+        <image name="camera" width="33" height="33"/>
+        <image name="photo-library" width="33" height="33"/>
+        <image name="settings" width="33" height="33"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

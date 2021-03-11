@@ -22,6 +22,8 @@
 		025BDAA525F0A05E000834AE /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025BDAA325F0A05E000834AE /* HomeViewController.xib */; };
 		025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDAA725F0A5B2000834AE /* ApplicationCoordinator.swift */; };
 		025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDAB025F0D394000834AE /* PickDocumentCoordinator.swift */; };
+		02ACA18C25FA8EC40063A3ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ACA18B25FA8EC40063A3ED /* Constants.swift */; };
+		02ACA19125FA8F580063A3ED /* IconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ACA19025FA8F580063A3ED /* IconsHelper.swift */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		2C8B3681A5047EB82E0DB67A /* libPods-Document Scanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */; };
 /* End PBXBuildFile section */
@@ -44,6 +46,8 @@
 		025BDAA325F0A05E000834AE /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		025BDAA725F0A5B2000834AE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		025BDAB025F0D394000834AE /* PickDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickDocumentCoordinator.swift; sourceTree = "<group>"; };
+		02ACA18B25FA8EC40063A3ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		02ACA19025FA8F580063A3ED /* IconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsHelper.swift; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		091CA3DF167A7F5E0B3F7B7E /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.release.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
 		2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Document Scanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +87,7 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				02ACA17925F9F1970063A3ED /* Controls */,
 				025BDAAB25F0B6E8000834AE /* CollectionViewCells */,
 				025BDAA125F0A022000834AE /* ViewController */,
 				025BDA9C25F09DF9000834AE /* Coordinators */,
@@ -90,6 +95,7 @@
 				025BDA8925F09AA1000834AE /* ViewController.swift */,
 				025BDA8B25F09AA1000834AE /* Main.storyboard */,
 				025BDA8E25F09AA6000834AE /* Assets.xcassets */,
+				02ACA18E25FA8F360063A3ED /* Helpers */,
 			);
 			path = "Document Scanner";
 			sourceTree = "<group>";
@@ -134,6 +140,22 @@
 			children = (
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		02ACA17925F9F1970063A3ED /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		02ACA18E25FA8F360063A3ED /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				02ACA18B25FA8EC40063A3ED /* Constants.swift */,
+				02ACA19025FA8F580063A3ED /* IconsHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		4C0B03C443DA94E9FFA99851 /* Frameworks */ = {
@@ -270,7 +292,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02ACA19125FA8F580063A3ED /* IconsHelper.swift in Sources */,
 				022471AA25F63731007D70FC /* EditImageVC.swift in Sources */,
+				02ACA18C25FA8EC40063A3ED /* Constants.swift in Sources */,
 				02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */,
 				025BDAA425F0A05E000834AE /* HomeViewController.swift in Sources */,
 				025BDA9E25F09E12000834AE /* Coordinator.swift in Sources */,

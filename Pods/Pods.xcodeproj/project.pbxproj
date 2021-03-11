@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -20,148 +20,201 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0D15B7DD5034D77A5E3FD3D07676B660 /* Pods-Document Scanner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C44ACB955A44E2E0B1F9CB57B883EB8A /* Pods-Document Scanner-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		13DAE63E31496E03BD62D9AF843F62FC /* EditScanCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E29A2B679C50E3699CDD2C4F96EED3 /* EditScanCornerView.swift */; };
-		1F56A5C308EDC7F296691C5B84DCC89F /* Pods-Document Scanner-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1202DBD2678E7D6F7651692B6791FBBD /* Pods-Document Scanner-dummy.m */; };
-		219F6359CA4AA1331EBF0DA35CAFE8F0 /* CaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEB4CAECFD2A5C2E7480746C6452A2 /* CaptureDevice.swift */; };
-		26255096DDAB14ED4691077A2906C3C1 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F552F792F2709CF7CEE1E12A01EFD4F /* EditImageViewController.swift */; };
-		41F60A97C81E983C14D6D79EC4E495D4 /* CaptureSession+Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5B01382900BFFFF9A1CBF49E73067 /* CaptureSession+Focus.swift */; };
-		42001213E356059FCC270226C7A0ACE0 /* CGImagePropertyOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66595D8C9E809048A7AC4851CD1ADD9C /* CGImagePropertyOrientation.swift */; };
-		54194D0AFC866A19CA80C44A16F33BD8 /* Quadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1EA28EADB8E5A635FB96D9B97B0EBC /* Quadrilateral.swift */; };
-		55178D5580C747F5793D668A2CC61DEE /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A02EB829AB4655B0952E2AB39AD6CB /* Array+Utils.swift */; };
-		65EC2A8F5D50C52C0D1D375830EC7F8B /* VisionRectangleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C738C6B9703F868938762EB7B10AABF /* VisionRectangleDetector.swift */; };
-		6B90336F0E605EAF3E835BB5165AFC38 /* UIImage+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE924CFE75B47511F912790F76C5107 /* UIImage+Orientation.swift */; };
-		7324D6A36DF7ED0E9D8DC2924FF92C9F /* RectangleFeaturesFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC3B406645607379417D5AD0CBCB78F /* RectangleFeaturesFunnel.swift */; };
-		73DD3079C2E4BC2ECE905C6F0117B847 /* CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA80BC93266AA5377823362C7254CF1 /* CaptureSession.swift */; };
-		762BB5D7AD45BE3C57E7C539C6D03DDF /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6FA27EBD9F9A98AA9A769F63C58D6 /* UIImage+SFSymbol.swift */; };
-		77BA558F17D18EE329998DB6FF1191E8 /* CaptureSession+Flash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2DFE962B2D57B40616632D18EEF876 /* CaptureSession+Flash.swift */; };
-		7B06A98D5222F7C5B8A64841D2442403 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B689AB230A4116C4789BEFA142269E7C /* Error.swift */; };
-		7C50B8C1A33EED6987A24AA03B3FB45C /* WeScan-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BD9B7BB579A5C8EB6C99FAAE91216177 /* WeScan-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		816CB9349994A6FB12157F0C7D3095E1 /* CaptureSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7653724ABE6CDFD8F6AC2F1298D914F7 /* CaptureSessionManager.swift */; };
-		90AB4BF6196AF15F5F78857B1AF80EFD /* ImageScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101892CC3644208A879868F7159F607E /* ImageScannerController.swift */; };
-		90B2DBA6AF6EA75A6C8767E8A0ABBDDE /* CameraScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6F6796367CC014BA2C6D57009476E3 /* CameraScannerViewController.swift */; };
-		910EE7909B5792370D1C2CE8C843E578 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D27EC2FD8D707C1C7480C69227C24 /* CGPoint+Utils.swift */; };
-		924A9748ED93C8590FEFE94F8698A498 /* FocusRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC0ADD781C074FAB4E0D8EFB52876F /* FocusRectangleView.swift */; };
-		951512740C8E094E361661FB4A7F8B93 /* CGAffineTransform+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976A8A6C126789D8546B71AC0760516 /* CGAffineTransform+Utils.swift */; };
-		A00FAB2F5A577663BB0C751D82AA46D1 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D3454F1E54A9DD737E7134EF2C25C3 /* Transformable.swift */; };
-		A361A8C78C2BF3C45892AF11C67C7622 /* CGRect+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7673F030923439D9ECB5F4107353 /* CGRect+Utils.swift */; };
-		A60C37874480454592AFD43F34730A6A /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FC02FEADB44E5D42CA0F1F11BF87B /* ShutterButton.swift */; };
-		A818E3CE9DB971882794F31983527AF0 /* WeScan-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BB7698DC3F644F4CBF600AEB729B1E /* WeScan-dummy.m */; };
-		AED6FC842424262A56A9CC898AC91A2B /* CGSize+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD80CD3870E0D939DBF00CDDCD4F3E8 /* CGSize+Utils.swift */; };
-		BB20C2A8AC99B47A4FB055CBCC099378 /* CaptureSession+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA04463F6B02A703A99B3F92141ED6B /* CaptureSession+Orientation.swift */; };
-		C7CE4AD76F08E7273DAA0FDB84C929CC /* ZoomGestureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80D6EB738BA001A7BAB86535B03B68 /* ZoomGestureController.swift */; };
-		C87899C7071A4A1930EDABE4BD99C449 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A118C8B072245E21973CA97D6170517 /* ScannerViewController.swift */; };
-		CA116ED28A6688EDA2FDB85D6DF089E6 /* AVCaptureVideoOrientation+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D20921A454583A704EC37761E119E18 /* AVCaptureVideoOrientation+Utils.swift */; };
-		D841A20C295045CFFFCE142B8DAA1D53 /* EditScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F61A3F618C9929B95F435019AB3D7 /* EditScanViewController.swift */; };
-		DE2BB5C0A2675A134603254679AA6FF4 /* CIRectangleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E9561EF6C99EEE07531480340F164 /* CIRectangleDetector.swift */; };
-		E1C64D5255BF47C825D38B462D5A299F /* WeScan.h in Headers */ = {isa = PBXBuildFile; fileRef = F9FE6667A2CAD79BE33A7B03BC798A74 /* WeScan.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E25445D78C15152A7A4878787722D3FA /* CIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A06D9E3D555AA696B95FC2F3669F71 /* CIImage+Utils.swift */; };
-		E6B89CD84B530AF48448613BDDCD97EB /* QuadrilateralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFE7B5CCC195877BFDD4F15F32E3F2B /* QuadrilateralView.swift */; };
-		EA15328F91DDFBCD0E3D54790651235C /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8F02045E7E42AD81312283395017CA /* UIImage+Utils.swift */; };
-		F16C0EA776FC0BC6F7A85B75F3FFC8A4 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8175EDE467A396E1E6423B604FCE6922 /* ReviewViewController.swift */; };
+		0BC787EDE4C90704A2B67A0D39C01064 /* SwiftIconFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06D55B06B06771C96C6E8E10714D205 /* SwiftIconFont.swift */; };
+		0C1516BD9AEBC02D47A1339C65C43FF0 /* FontLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F247D5249D9DF4CFC74FB84540A7F /* FontLoader.swift */; };
+		12CFA8F5FBA475C5816A35E9D22FC4C5 /* FontMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F4BDC2E8C02542400762BE6BDBF1B7 /* FontMap.swift */; };
+		13DAE63E31496E03BD62D9AF843F62FC /* EditScanCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0955FAD39DD10A4B7979F01AF3635B4 /* EditScanCornerView.swift */; };
+		219F6359CA4AA1331EBF0DA35CAFE8F0 /* CaptureDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB80F2355C6A82E40E76549C737B94F /* CaptureDevice.swift */; };
+		26255096DDAB14ED4691077A2906C3C1 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3966F623046ECEF48FB1436968FAB2 /* EditImageViewController.swift */; };
+		33A41C8AD24AF8DD95D833306010AD9A /* Pods-Document Scanner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C44ACB955A44E2E0B1F9CB57B883EB8A /* Pods-Document Scanner-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		347434E29BAED59EE7F1839AAE1A315C /* LGButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E86681F4A86FFE8084697D5EF87F0C3 /* LGButton-dummy.m */; };
+		38C3FD2D00E2A3425429860A648BF763 /* FontIon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E1979F13107F8CD3C6E2033A1F15B2 /* FontIon.swift */; };
+		41F60A97C81E983C14D6D79EC4E495D4 /* CaptureSession+Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A73030AC48E308D2FBF8919CD7D81AD /* CaptureSession+Focus.swift */; };
+		42001213E356059FCC270226C7A0ACE0 /* CGImagePropertyOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EEC276A67E0689C70AD0FC763343A8 /* CGImagePropertyOrientation.swift */; };
+		4ED5AD2C6DFF465DC5BA5CEBD4FC3B17 /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4B08CBE67A38EB7149FF8A694B317 /* FontAwesome.swift */; };
+		54194D0AFC866A19CA80C44A16F33BD8 /* Quadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D02EEB0F687FAEC88222ACA03168A /* Quadrilateral.swift */; };
+		55178D5580C747F5793D668A2CC61DEE /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D1381BEEFC639B28F040004B07830F /* Array+Utils.swift */; };
+		656D1F2F5DB26D75DA81EEB90E258E1A /* FontOct.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC31BF61A899E3A1BCE50E07EC426F6 /* FontOct.swift */; };
+		65EC2A8F5D50C52C0D1D375830EC7F8B /* VisionRectangleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5946B7A82EFBD0674A1326CA15C96E /* VisionRectangleDetector.swift */; };
+		6B90336F0E605EAF3E835BB5165AFC38 /* UIImage+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9197F57E57F4986C31B97A5984EE1A /* UIImage+Orientation.swift */; };
+		7001C78A7E41AA3DC5D7A2F1D6652592 /* LGButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DA885F9B34E634C10E7983BCF3CB67B /* LGButton-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		73188B758BF974F0E848357D8D0554A9 /* Pods-Document Scanner-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1202DBD2678E7D6F7651692B6791FBBD /* Pods-Document Scanner-dummy.m */; };
+		7324D6A36DF7ED0E9D8DC2924FF92C9F /* RectangleFeaturesFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124D2824A00B95C3D410C65913FA5484 /* RectangleFeaturesFunnel.swift */; };
+		73DD3079C2E4BC2ECE905C6F0117B847 /* CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16449C317717360AA57EC312D2EC76EC /* CaptureSession.swift */; };
+		762BB5D7AD45BE3C57E7C539C6D03DDF /* UIImage+SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE73BCC5C9742E99D6E582C44A536C /* UIImage+SFSymbol.swift */; };
+		77BA558F17D18EE329998DB6FF1191E8 /* CaptureSession+Flash.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD42B6D247958245B4224D1F5600E6F /* CaptureSession+Flash.swift */; };
+		7B06A98D5222F7C5B8A64841D2442403 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0E5470DA4FD945C559554319FD27E /* Error.swift */; };
+		7C50B8C1A33EED6987A24AA03B3FB45C /* WeScan-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B73934599CA4A0AA1226CEC9D8FB2A03 /* WeScan-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		816CB9349994A6FB12157F0C7D3095E1 /* CaptureSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1B57C6C2DA0F966278E2ED84942C36 /* CaptureSessionManager.swift */; };
+		90AB4BF6196AF15F5F78857B1AF80EFD /* ImageScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAAC610410A324EDEE2B8085DE77AB3 /* ImageScannerController.swift */; };
+		90B2DBA6AF6EA75A6C8767E8A0ABBDDE /* CameraScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299081DD9B9DA82DD984D768F7F6F8B4 /* CameraScannerViewController.swift */; };
+		910EE7909B5792370D1C2CE8C843E578 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0C761572C637464D7178DAC054676D /* CGPoint+Utils.swift */; };
+		924A9748ED93C8590FEFE94F8698A498 /* FocusRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44643055E61C6AB222031C0214164B42 /* FocusRectangleView.swift */; };
+		951512740C8E094E361661FB4A7F8B93 /* CGAffineTransform+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3D5AA3E7D39E93B2C84567FA9EAEC /* CGAffineTransform+Utils.swift */; };
+		A00FAB2F5A577663BB0C751D82AA46D1 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F838A0B18BB83AD8016B46A2A1A4FE /* Transformable.swift */; };
+		A361A8C78C2BF3C45892AF11C67C7622 /* CGRect+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CF254682EF0DC68C1D592A9EF249F /* CGRect+Utils.swift */; };
+		A60C37874480454592AFD43F34730A6A /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5151C1949D10296937EA75C61C96D /* ShutterButton.swift */; };
+		A818E3CE9DB971882794F31983527AF0 /* WeScan-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B89BC0E46EAD04A0BF6FF0900EFAB3 /* WeScan-dummy.m */; };
+		AED6FC842424262A56A9CC898AC91A2B /* CGSize+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1747030824899CB5AAA79FD943361E /* CGSize+Utils.swift */; };
+		BAAEAB8EB8149508ACE47AE36F1B2C44 /* FontThemify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7F3447A4FD2DF00AAF8B5EC218AB8 /* FontThemify.swift */; };
+		BB20C2A8AC99B47A4FB055CBCC099378 /* CaptureSession+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F403084574AC0A06CF2E03A6D531AC7 /* CaptureSession+Orientation.swift */; };
+		C118F33DECF2990CCEEF43389AE69625 /* SwiftIconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEF306619A143013B999D94090522AF /* SwiftIconLabel.swift */; };
+		C2FEBF5484CC5653BD6141A92EF3C2BE /* LGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E5281BBE943D10F2A24112F1F6F912 /* LGButton.swift */; };
+		C7CE4AD76F08E7273DAA0FDB84C929CC /* ZoomGestureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40664809EFD61D70272BA8F7476C8BC3 /* ZoomGestureController.swift */; };
+		C87899C7071A4A1930EDABE4BD99C449 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55876D91DEC1A06ED9E51E83B0003353 /* ScannerViewController.swift */; };
+		CA116ED28A6688EDA2FDB85D6DF089E6 /* AVCaptureVideoOrientation+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9AC991676E690BD80F7A9047D0E2F /* AVCaptureVideoOrientation+Utils.swift */; };
+		D06F86316F6FE76210133CAF7AF9F294 /* FontMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330CE7DEB6BDB9D09F52023DD068B10C /* FontMaterial.swift */; };
+		D841A20C295045CFFFCE142B8DAA1D53 /* EditScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDD599C4064BA4472AEC5D28475E4CC /* EditScanViewController.swift */; };
+		DE2BB5C0A2675A134603254679AA6FF4 /* CIRectangleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0B06925CF846D84BA93924A47AB35A /* CIRectangleDetector.swift */; };
+		E1C64D5255BF47C825D38B462D5A299F /* WeScan.h in Headers */ = {isa = PBXBuildFile; fileRef = BB46283006306F8119DFCADEFFA8760D /* WeScan.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E25445D78C15152A7A4878787722D3FA /* CIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1E7D39352F645F66AE08DD78AF0C9F /* CIImage+Utils.swift */; };
+		E6B89CD84B530AF48448613BDDCD97EB /* QuadrilateralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4878AE859686F9AB08049E6B27DF7F /* QuadrilateralView.swift */; };
+		EA15328F91DDFBCD0E3D54790651235C /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92413E8E86BDFA3452E2A45C9428EC37 /* UIImage+Utils.swift */; };
+		EF8CB1BC72BC60B31575AC4E3F35EB46 /* FontOpenic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7A1A3FF2166BB71B30FC1793AFA32 /* FontOpenic.swift */; };
+		F16C0EA776FC0BC6F7A85B75F3FFC8A4 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473DED2AF15226BABC20E03C4359C998 /* ReviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1D573CD66B75C1385B94D52FD8E00EEE /* PBXContainerItemProxy */ = {
+		32FCC64D993E222316A0EA5BE1AB754D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
 			remoteInfo = SwiftLint;
 		};
-		D9546C12ADA015937BB0E8A228B9F726 /* PBXContainerItemProxy */ = {
+		3C71028CAE3200A109CEEE8CD272CD14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AE77F0B12823BFAC940902290724DB28;
 			remoteInfo = WeScan;
 		};
+		F58E12E08869DF06434341E83E96181E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD999FE212F29E29DEEA0A85E1DC4D4E;
+			remoteInfo = LGButton;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01245A0FB4589BE66169B9C1F254054B /* Pods-Document Scanner-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Document Scanner-acknowledgements.markdown"; sourceTree = "<group>"; };
-		045C81544E1E4FFAFD85BA1405DE5A2A /* enhance@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "enhance@2x.png"; path = "WeScan/Assets/enhance@2x.png"; sourceTree = "<group>"; };
-		054FEA794111B2926B6C08496124A0A4 /* WeScan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WeScan.modulemap; sourceTree = "<group>"; };
-		0CB900459777D90740028479FBDCDAAE /* WeScan-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WeScan-prefix.pch"; sourceTree = "<group>"; };
+		060D02EEB0F687FAEC88222ACA03168A /* Quadrilateral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Quadrilateral.swift; path = WeScan/Common/Quadrilateral.swift; sourceTree = "<group>"; };
+		07D1381BEEFC639B28F040004B07830F /* Array+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Utils.swift"; path = "WeScan/Extensions/Array+Utils.swift"; sourceTree = "<group>"; };
+		08E1979F13107F8CD3C6E2033A1F15B2 /* FontIon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontIon.swift; path = LGButton/Classes/SwiftIconFont/FontIon.swift; sourceTree = "<group>"; };
+		0A4878AE859686F9AB08049E6B27DF7F /* QuadrilateralView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuadrilateralView.swift; path = WeScan/Common/QuadrilateralView.swift; sourceTree = "<group>"; };
+		0BEFB32089A08A117B3C6FBEC49BEDC3 /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
+		0C5946B7A82EFBD0674A1326CA15C96E /* VisionRectangleDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VisionRectangleDetector.swift; path = WeScan/Common/VisionRectangleDetector.swift; sourceTree = "<group>"; };
 		0EE6B255927BCD8997788DE152DD0270 /* Pods-Document Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Document Scanner.debug.xcconfig"; sourceTree = "<group>"; };
-		101892CC3644208A879868F7159F607E /* ImageScannerController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageScannerController.swift; path = WeScan/ImageScannerController.swift; sourceTree = "<group>"; };
-		108032A5BC3FAAA8C4478EF647A45D1A /* enhance@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "enhance@3x.png"; path = "WeScan/Assets/enhance@3x.png"; sourceTree = "<group>"; };
+		11B89BC0E46EAD04A0BF6FF0900EFAB3 /* WeScan-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WeScan-dummy.m"; sourceTree = "<group>"; };
+		11F6D04C386ED3332969ED75558C1D79 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1202DBD2678E7D6F7651692B6791FBBD /* Pods-Document Scanner-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Document Scanner-dummy.m"; sourceTree = "<group>"; };
-		13A06D9E3D555AA696B95FC2F3669F71 /* CIImage+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CIImage+Utils.swift"; path = "WeScan/Extensions/CIImage+Utils.swift"; sourceTree = "<group>"; };
-		1B3E4ABD44D04B7022E9D606B14D5413 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1C1EA28EADB8E5A635FB96D9B97B0EBC /* Quadrilateral.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Quadrilateral.swift; path = WeScan/Common/Quadrilateral.swift; sourceTree = "<group>"; };
-		1FDC0ADD781C074FAB4E0D8EFB52876F /* FocusRectangleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FocusRectangleView.swift; path = WeScan/Scan/FocusRectangleView.swift; sourceTree = "<group>"; };
+		124D2824A00B95C3D410C65913FA5484 /* RectangleFeaturesFunnel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RectangleFeaturesFunnel.swift; path = WeScan/Scan/RectangleFeaturesFunnel.swift; sourceTree = "<group>"; };
+		16449C317717360AA57EC312D2EC76EC /* CaptureSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureSession.swift; path = WeScan/Session/CaptureSession.swift; sourceTree = "<group>"; };
+		1E86681F4A86FFE8084697D5EF87F0C3 /* LGButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LGButton-dummy.m"; sourceTree = "<group>"; };
+		2275A653B2C548FC309FDF5C8D71D3FA /* themify.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = themify.ttf; path = LGButton/Resources/themify.ttf; sourceTree = "<group>"; };
+		2428F2510E1DFF0E89E206F1A13383D9 /* flash@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flash@2x.png"; path = "WeScan/Assets/flash@2x.png"; sourceTree = "<group>"; };
 		247A0D06ADF5F7FDB536BC21C9DFFC8B /* Pods-Document Scanner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Document Scanner.modulemap"; sourceTree = "<group>"; };
-		313D8EC4072D72BF5668D3F8AB20DF7E /* rotate.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = rotate.png; path = WeScan/Assets/rotate.png; sourceTree = "<group>"; };
-		34B6CD500CD17B25F664366B210633AB /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3755CD52EB0CC42C42F601E3E927967F /* flash.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = flash.png; path = WeScan/Assets/flash.png; sourceTree = "<group>"; };
-		375F61A3F618C9929B95F435019AB3D7 /* EditScanViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditScanViewController.swift; path = WeScan/Edit/EditScanViewController.swift; sourceTree = "<group>"; };
-		39D3454F1E54A9DD737E7134EF2C25C3 /* Transformable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Transformable.swift; path = WeScan/Protocols/Transformable.swift; sourceTree = "<group>"; };
-		3B6D27EC2FD8D707C1C7480C69227C24 /* CGPoint+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGPoint+Utils.swift"; path = "WeScan/Extensions/CGPoint+Utils.swift"; sourceTree = "<group>"; };
-		3DDE61CAF57F0175FFB55EB60D5C3226 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4382721BF34ACB3FC14B9722116661E0 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		299081DD9B9DA82DD984D768F7F6F8B4 /* CameraScannerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraScannerViewController.swift; path = WeScan/Scan/CameraScannerViewController.swift; sourceTree = "<group>"; };
+		2BA5151C1949D10296937EA75C61C96D /* ShutterButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShutterButton.swift; path = WeScan/Scan/ShutterButton.swift; sourceTree = "<group>"; };
+		2CE3D5AA3E7D39E93B2C84567FA9EAEC /* CGAffineTransform+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGAffineTransform+Utils.swift"; path = "WeScan/Extensions/CGAffineTransform+Utils.swift"; sourceTree = "<group>"; };
+		2DEF306619A143013B999D94090522AF /* SwiftIconLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftIconLabel.swift; path = LGButton/Classes/SwiftIconFont/SwiftIconLabel.swift; sourceTree = "<group>"; };
+		2EC74AE5CF35D584FA01C8933C076023 /* flash@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flash@3x.png"; path = "WeScan/Assets/flash@3x.png"; sourceTree = "<group>"; };
+		31BC0DC67CE6C290E04FF93EC83F10B1 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		330CE7DEB6BDB9D09F52023DD068B10C /* FontMaterial.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontMaterial.swift; path = LGButton/Classes/SwiftIconFont/FontMaterial.swift; sourceTree = "<group>"; };
+		3839CF779C5C7D63C3B172697E059AB8 /* LGButton.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LGButton.release.xcconfig; sourceTree = "<group>"; };
+		3E1747030824899CB5AAA79FD943361E /* CGSize+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGSize+Utils.swift"; path = "WeScan/Extensions/CGSize+Utils.swift"; sourceTree = "<group>"; };
+		40664809EFD61D70272BA8F7476C8BC3 /* ZoomGestureController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZoomGestureController.swift; path = WeScan/Edit/ZoomGestureController.swift; sourceTree = "<group>"; };
+		44643055E61C6AB222031C0214164B42 /* FocusRectangleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FocusRectangleView.swift; path = WeScan/Scan/FocusRectangleView.swift; sourceTree = "<group>"; };
 		46EDD43D1E2B741185BD13C944757AC4 /* Pods-Document Scanner-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Document Scanner-acknowledgements.plist"; sourceTree = "<group>"; };
-		48959D9B38CC829DADC449C849E81C3B /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4AC3B406645607379417D5AD0CBCB78F /* RectangleFeaturesFunnel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RectangleFeaturesFunnel.swift; path = WeScan/Scan/RectangleFeaturesFunnel.swift; sourceTree = "<group>"; };
-		4B2DFE962B2D57B40616632D18EEF876 /* CaptureSession+Flash.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Flash.swift"; path = "WeScan/Session/CaptureSession+Flash.swift"; sourceTree = "<group>"; };
-		4C5E9561EF6C99EEE07531480340F164 /* CIRectangleDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CIRectangleDetector.swift; path = WeScan/Common/CIRectangleDetector.swift; sourceTree = "<group>"; };
-		4C91974C755987FD15291E4E55D2B409 /* flash@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flash@3x.png"; path = "WeScan/Assets/flash@3x.png"; sourceTree = "<group>"; };
-		534495C631786D6A9F4B5E65271FED2C /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		56E29A2B679C50E3699CDD2C4F96EED3 /* EditScanCornerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditScanCornerView.swift; path = WeScan/Common/EditScanCornerView.swift; sourceTree = "<group>"; };
-		5A118C8B072245E21973CA97D6170517 /* ScannerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScannerViewController.swift; path = WeScan/Scan/ScannerViewController.swift; sourceTree = "<group>"; };
-		5B6897A7F7A7FE061909A1EA2DA7DF17 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		5D20921A454583A704EC37761E119E18 /* AVCaptureVideoOrientation+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AVCaptureVideoOrientation+Utils.swift"; path = "WeScan/Extensions/AVCaptureVideoOrientation+Utils.swift"; sourceTree = "<group>"; };
-		5F80D6EB738BA001A7BAB86535B03B68 /* ZoomGestureController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZoomGestureController.swift; path = WeScan/Edit/ZoomGestureController.swift; sourceTree = "<group>"; };
-		653B9D7B7362DCCF6F98BA7CBBCA05E6 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		66595D8C9E809048A7AC4851CD1ADD9C /* CGImagePropertyOrientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGImagePropertyOrientation.swift; path = WeScan/Extensions/CGImagePropertyOrientation.swift; sourceTree = "<group>"; };
-		66B5B01382900BFFFF9A1CBF49E73067 /* CaptureSession+Focus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Focus.swift"; path = "WeScan/Session/CaptureSession+Focus.swift"; sourceTree = "<group>"; };
+		473DED2AF15226BABC20E03C4359C998 /* ReviewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewController.swift; path = WeScan/Review/ReviewViewController.swift; sourceTree = "<group>"; };
+		4A73030AC48E308D2FBF8919CD7D81AD /* CaptureSession+Focus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Focus.swift"; path = "WeScan/Session/CaptureSession+Focus.swift"; sourceTree = "<group>"; };
+		4EF03D20D82AFB8985225BE27061CF0B /* rotate.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = rotate.png; path = WeScan/Assets/rotate.png; sourceTree = "<group>"; };
+		4F403084574AC0A06CF2E03A6D531AC7 /* CaptureSession+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Orientation.swift"; path = "WeScan/Session/CaptureSession+Orientation.swift"; sourceTree = "<group>"; };
+		4F63E05942578F925F58D8A6C637D06C /* flashUnavailable@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flashUnavailable@3x.png"; path = "WeScan/Assets/flashUnavailable@3x.png"; sourceTree = "<group>"; };
+		4FAAC610410A324EDEE2B8085DE77AB3 /* ImageScannerController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageScannerController.swift; path = WeScan/ImageScannerController.swift; sourceTree = "<group>"; };
+		55876D91DEC1A06ED9E51E83B0003353 /* ScannerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScannerViewController.swift; path = WeScan/Scan/ScannerViewController.swift; sourceTree = "<group>"; };
+		5C30F6424BFA5F2086129276D2BEE4E7 /* WeScan-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WeScan-prefix.pch"; sourceTree = "<group>"; };
+		5DAF4288ED4D062F51C92097C3D27973 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5FE9AC991676E690BD80F7A9047D0E2F /* AVCaptureVideoOrientation+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AVCaptureVideoOrientation+Utils.swift"; path = "WeScan/Extensions/AVCaptureVideoOrientation+Utils.swift"; sourceTree = "<group>"; };
+		62A3CA9B76932CADEDA5E5F6931B0ED1 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		63EB10DFDB5FC9BDEC4D16F6DDA7E771 /* octicons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = octicons.ttf; path = LGButton/Resources/octicons.ttf; sourceTree = "<group>"; };
+		65E5281BBE943D10F2A24112F1F6F912 /* LGButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LGButton.swift; path = LGButton/Classes/LGButton.swift; sourceTree = "<group>"; };
 		68C9F7C84DC9D6B273D6EDE059CAC627 /* libWeScan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeScan.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C738C6B9703F868938762EB7B10AABF /* VisionRectangleDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VisionRectangleDetector.swift; path = WeScan/Common/VisionRectangleDetector.swift; sourceTree = "<group>"; };
-		6EF6FA27EBD9F9A98AA9A769F63C58D6 /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SFSymbol.swift"; path = "WeScan/Extensions/UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
-		6FE9BCEFD8F6122BF02EDA9368543DD7 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		6FFE7B5CCC195877BFDD4F15F32E3F2B /* QuadrilateralView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuadrilateralView.swift; path = WeScan/Common/QuadrilateralView.swift; sourceTree = "<group>"; };
-		7653724ABE6CDFD8F6AC2F1298D914F7 /* CaptureSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureSessionManager.swift; path = WeScan/Scan/CaptureSessionManager.swift; sourceTree = "<group>"; };
-		79F48DCDEEFE2BEE1D71C4FBD6B20E83 /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
-		7EEF1D4E73CF2F566A0CBC1C14C2C77B /* flashUnavailable.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = flashUnavailable.png; path = WeScan/Assets/flashUnavailable.png; sourceTree = "<group>"; };
-		7F8F02045E7E42AD81312283395017CA /* UIImage+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Utils.swift"; path = "WeScan/Extensions/UIImage+Utils.swift"; sourceTree = "<group>"; };
+		6A1B57C6C2DA0F966278E2ED84942C36 /* CaptureSessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureSessionManager.swift; path = WeScan/Scan/CaptureSessionManager.swift; sourceTree = "<group>"; };
+		6CDD599C4064BA4472AEC5D28475E4CC /* EditScanViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditScanViewController.swift; path = WeScan/Edit/EditScanViewController.swift; sourceTree = "<group>"; };
+		6D11B2AB124FF10F32A93E79D9B5FB0B /* WeScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WeScan.debug.xcconfig; sourceTree = "<group>"; };
+		7036FE0D49AB2D88EDBF5F7C450331D4 /* flash.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = flash.png; path = WeScan/Assets/flash.png; sourceTree = "<group>"; };
+		70BBF013F5738D1BD6E2C8D0E41B0826 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776B3BFC3678E2D5A7110B3C29432119 /* WeScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WeScan.release.xcconfig; sourceTree = "<group>"; };
+		7ACE73BCC5C9742E99D6E582C44A536C /* UIImage+SFSymbol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SFSymbol.swift"; path = "WeScan/Extensions/UIImage+SFSymbol.swift"; sourceTree = "<group>"; };
+		7DA885F9B34E634C10E7983BCF3CB67B /* LGButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LGButton-umbrella.h"; sourceTree = "<group>"; };
+		7EADA9BCE782E6F0D97901AEE400F71F /* LGButton.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = LGButton.xib; path = LGButton/Resources/LGButton.xib; sourceTree = "<group>"; };
+		7F0C761572C637464D7178DAC054676D /* CGPoint+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGPoint+Utils.swift"; path = "WeScan/Extensions/CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		80739380F91974A53277D5AB074BD159 /* Pods-Document Scanner-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Document Scanner-resources.sh"; sourceTree = "<group>"; };
-		8175EDE467A396E1E6423B604FCE6922 /* ReviewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewController.swift; path = WeScan/Review/ReviewViewController.swift; sourceTree = "<group>"; };
-		8182BE16E5819A17D8497C77F9DD659F /* flashUnavailable@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flashUnavailable@3x.png"; path = "WeScan/Assets/flashUnavailable@3x.png"; sourceTree = "<group>"; };
-		8976A8A6C126789D8546B71AC0760516 /* CGAffineTransform+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGAffineTransform+Utils.swift"; path = "WeScan/Extensions/CGAffineTransform+Utils.swift"; sourceTree = "<group>"; };
-		8DEEB4CAECFD2A5C2E7480746C6452A2 /* CaptureDevice.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureDevice.swift; path = WeScan/Protocols/CaptureDevice.swift; sourceTree = "<group>"; };
-		8F552F792F2709CF7CEE1E12A01EFD4F /* EditImageViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditImageViewController.swift; path = WeScan/Edit/EditImageViewController.swift; sourceTree = "<group>"; };
-		915134D830CB2C5651BC56390A7C3D23 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		93C1BB5D87E2A5BB6253CC6D076B44CA /* WeScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WeScan.debug.xcconfig; sourceTree = "<group>"; };
+		85668E1A90C410790553BB47FA4EB698 /* rotate@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@3x.png"; path = "WeScan/Assets/rotate@3x.png"; sourceTree = "<group>"; };
+		8AA488013F1DC60698938869C5A04B2E /* flashUnavailable.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = flashUnavailable.png; path = WeScan/Assets/flashUnavailable.png; sourceTree = "<group>"; };
+		8AE91AEBC5BAC3AD6023E7EE90ACE829 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8FB80F2355C6A82E40E76549C737B94F /* CaptureDevice.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureDevice.swift; path = WeScan/Protocols/CaptureDevice.swift; sourceTree = "<group>"; };
+		92413E8E86BDFA3452E2A45C9428EC37 /* UIImage+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Utils.swift"; path = "WeScan/Extensions/UIImage+Utils.swift"; sourceTree = "<group>"; };
+		96F4BDC2E8C02542400762BE6BDBF1B7 /* FontMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontMap.swift; path = LGButton/Classes/SwiftIconFont/FontMap.swift; sourceTree = "<group>"; };
+		98B865295729212269FAD71B7C3C5A31 /* Ionicons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = Ionicons.ttf; path = LGButton/Resources/Ionicons.ttf; sourceTree = "<group>"; };
+		98EEC276A67E0689C70AD0FC763343A8 /* CGImagePropertyOrientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGImagePropertyOrientation.swift; path = WeScan/Extensions/CGImagePropertyOrientation.swift; sourceTree = "<group>"; };
+		99E7A1A3FF2166BB71B30FC1793AFA32 /* FontOpenic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontOpenic.swift; path = LGButton/Classes/SwiftIconFont/FontOpenic.swift; sourceTree = "<group>"; };
+		9BE0E5470DA4FD945C559554319FD27E /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = WeScan/Common/Error.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A95FC02FEADB44E5D42CA0F1F11BF87B /* ShutterButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShutterButton.swift; path = WeScan/Scan/ShutterButton.swift; sourceTree = "<group>"; };
-		A9BB7698DC3F644F4CBF600AEB729B1E /* WeScan-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WeScan-dummy.m"; sourceTree = "<group>"; };
-		AAA04463F6B02A703A99B3F92141ED6B /* CaptureSession+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Orientation.swift"; path = "WeScan/Session/CaptureSession+Orientation.swift"; sourceTree = "<group>"; };
-		AD6F6796367CC014BA2C6D57009476E3 /* CameraScannerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraScannerViewController.swift; path = WeScan/Scan/CameraScannerViewController.swift; sourceTree = "<group>"; };
-		AEE924CFE75B47511F912790F76C5107 /* UIImage+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Orientation.swift"; path = "WeScan/Extensions/UIImage+Orientation.swift"; sourceTree = "<group>"; };
-		AFA80BC93266AA5377823362C7254CF1 /* CaptureSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureSession.swift; path = WeScan/Session/CaptureSession.swift; sourceTree = "<group>"; };
-		AFD80CD3870E0D939DBF00CDDCD4F3E8 /* CGSize+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGSize+Utils.swift"; path = "WeScan/Extensions/CGSize+Utils.swift"; sourceTree = "<group>"; };
-		B0B799CE3952B26DAA3771467863D773 /* enhance.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = enhance.png; path = WeScan/Assets/enhance.png; sourceTree = "<group>"; };
-		B689AB230A4116C4789BEFA142269E7C /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = WeScan/Common/Error.swift; sourceTree = "<group>"; };
-		BAA48525A2DDE59DE116F8A6464D6AB3 /* WeScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WeScan.release.xcconfig; sourceTree = "<group>"; };
-		BD9B7BB579A5C8EB6C99FAAE91216177 /* WeScan-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WeScan-umbrella.h"; sourceTree = "<group>"; };
-		C1A31962250ADA7D67FA19240C0BEED8 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9EAA7AEA36D5464D31FB4444483110F5 /* WeScan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WeScan.modulemap; sourceTree = "<group>"; };
+		9ED0E3FED1EF06FC127429007C7A2D7C /* LGButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LGButton-prefix.pch"; sourceTree = "<group>"; };
+		A4FC52342F322F92E3837620C6900414 /* enhance@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "enhance@3x.png"; path = "WeScan/Assets/enhance@3x.png"; sourceTree = "<group>"; };
+		A9C4B08CBE67A38EB7149FF8A694B317 /* FontAwesome.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontAwesome.swift; path = LGButton/Classes/SwiftIconFont/FontAwesome.swift; sourceTree = "<group>"; };
+		AA3966F623046ECEF48FB1436968FAB2 /* EditImageViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditImageViewController.swift; path = WeScan/Edit/EditImageViewController.swift; sourceTree = "<group>"; };
+		B0955FAD39DD10A4B7979F01AF3635B4 /* EditScanCornerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditScanCornerView.swift; path = WeScan/Common/EditScanCornerView.swift; sourceTree = "<group>"; };
+		B73934599CA4A0AA1226CEC9D8FB2A03 /* WeScan-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WeScan-umbrella.h"; sourceTree = "<group>"; };
+		B7F838A0B18BB83AD8016B46A2A1A4FE /* Transformable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Transformable.swift; path = WeScan/Protocols/Transformable.swift; sourceTree = "<group>"; };
+		BB46283006306F8119DFCADEFFA8760D /* WeScan.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeScan.h; path = WeScan/WeScan.h; sourceTree = "<group>"; };
+		BBFADFDD26C024F6BB794134D81BBE19 /* map-icons.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "map-icons.ttf"; path = "LGButton/Resources/map-icons.ttf"; sourceTree = "<group>"; };
+		BC9197F57E57F4986C31B97A5984EE1A /* UIImage+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Orientation.swift"; path = "WeScan/Extensions/UIImage+Orientation.swift"; sourceTree = "<group>"; };
+		BCC31BF61A899E3A1BCE50E07EC426F6 /* FontOct.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontOct.swift; path = LGButton/Classes/SwiftIconFont/FontOct.swift; sourceTree = "<group>"; };
+		BE0B06925CF846D84BA93924A47AB35A /* CIRectangleDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CIRectangleDetector.swift; path = WeScan/Common/CIRectangleDetector.swift; sourceTree = "<group>"; };
+		BEB5730D0C9DB3D9997CC93D0C703557 /* libLGButton.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLGButton.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06D55B06B06771C96C6E8E10714D205 /* SwiftIconFont.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftIconFont.swift; path = LGButton/Classes/SwiftIconFont/SwiftIconFont.swift; sourceTree = "<group>"; };
+		C235E4C00C6D3C42C14A1709FEBAD91F /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2DF673A8FC56C295892BABD4DC60E4F /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
 		C44ACB955A44E2E0B1F9CB57B883EB8A /* Pods-Document Scanner-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Document Scanner-umbrella.h"; sourceTree = "<group>"; };
-		C47E7673F030923439D9ECB5F4107353 /* CGRect+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGRect+Utils.swift"; path = "WeScan/Extensions/CGRect+Utils.swift"; sourceTree = "<group>"; };
-		C560D0D9FD83738BD80B3733A769B12B /* rotate@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@2x.png"; path = "WeScan/Assets/rotate@2x.png"; sourceTree = "<group>"; };
-		CBC007CB5658173ABA6578881A643669 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
-		D09260C5F665E17596131C58BCE446F6 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C5ADD4FC7C840392B6D60E82997DDFD6 /* LGButton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LGButton.debug.xcconfig; sourceTree = "<group>"; };
+		C997EC432D28C66073409F21216D5F5E /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB0F247D5249D9DF4CFC74FB84540A7F /* FontLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontLoader.swift; path = LGButton/Classes/SwiftIconFont/FontLoader.swift; sourceTree = "<group>"; };
+		CD1E7D39352F645F66AE08DD78AF0C9F /* CIImage+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CIImage+Utils.swift"; path = "WeScan/Extensions/CIImage+Utils.swift"; sourceTree = "<group>"; };
+		CDD42B6D247958245B4224D1F5600E6F /* CaptureSession+Flash.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Flash.swift"; path = "WeScan/Session/CaptureSession+Flash.swift"; sourceTree = "<group>"; };
+		D09CF254682EF0DC68C1D592A9EF249F /* CGRect+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGRect+Utils.swift"; path = "WeScan/Extensions/CGRect+Utils.swift"; sourceTree = "<group>"; };
+		D2241D96B0D784E980F7F4A55B5DE071 /* MaterialIcons-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "MaterialIcons-Regular.ttf"; path = "LGButton/Resources/MaterialIcons-Regular.ttf"; sourceTree = "<group>"; };
+		D28C5B9F6AF504164AB4F49D5ADD32A7 /* flashUnavailable@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flashUnavailable@2x.png"; path = "WeScan/Assets/flashUnavailable@2x.png"; sourceTree = "<group>"; };
 		D52335B6C6BC5842E524A57D69E302F3 /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
-		D9A02EB829AB4655B0952E2AB39AD6CB /* Array+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Utils.swift"; path = "WeScan/Extensions/Array+Utils.swift"; sourceTree = "<group>"; };
-		DB7106F93701B4D77B00C390DA87954D /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DBD3F1098D9775984926DADA63ACF1D4 /* flashUnavailable@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flashUnavailable@2x.png"; path = "WeScan/Assets/flashUnavailable@2x.png"; sourceTree = "<group>"; };
-		DFE516C8CC18F7F06F5515A7ED8B023D /* rotate@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@3x.png"; path = "WeScan/Assets/rotate@3x.png"; sourceTree = "<group>"; };
+		D578639B590D5425188C13E3FD8FA7B6 /* enhance.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = enhance.png; path = WeScan/Assets/enhance.png; sourceTree = "<group>"; };
+		E091479269B094B50DE7EBE425A8A9D1 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E3564DEBF3B8E9F0DF589FDC8630C5B5 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E37C9F3EE7F8009636D5F17EDA5E3A5D /* libPods-Document Scanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Document Scanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E77139C1DC48DC6B8A5D9FD415C13547 /* flash@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flash@2x.png"; path = "WeScan/Assets/flash@2x.png"; sourceTree = "<group>"; };
-		F9FE6667A2CAD79BE33A7B03BC798A74 /* WeScan.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeScan.h; path = WeScan/WeScan.h; sourceTree = "<group>"; };
-		FF47F47F016EF972E066DE5C6561935E /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E9203F256BD8F3AF9DEA89DDA4F4D12B /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		EA3C6C36BA51DEDB93F25E4E40B8F517 /* LGButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LGButton.modulemap; sourceTree = "<group>"; };
+		EDB9F7AAD40DFD841DAB713F407607DE /* FontAwesome.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = FontAwesome.ttf; path = LGButton/Resources/FontAwesome.ttf; sourceTree = "<group>"; };
+		EE42920B072677D37C68E798826202C2 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F1A9D29060D517A635EF7C317ACCB6A2 /* open-iconic.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "open-iconic.ttf"; path = "LGButton/Resources/open-iconic.ttf"; sourceTree = "<group>"; };
+		F8E14A1495224E107276AA13E0F34F8E /* rotate@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@2x.png"; path = "WeScan/Assets/rotate@2x.png"; sourceTree = "<group>"; };
+		FA968C1BCBD866154AF4F16D360DC2C0 /* enhance@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "enhance@2x.png"; path = "WeScan/Assets/enhance@2x.png"; sourceTree = "<group>"; };
+		FBE2476C19DE22F124BC1AAD53D9D268 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		FEA1F41FE968D3C8167C8004A895DD7F /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FED7F3447A4FD2DF00AAF8B5EC218AB8 /* FontThemify.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontThemify.swift; path = LGButton/Classes/SwiftIconFont/FontThemify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0F4503CF57FD0F4C33DAA738153F0CFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6208D779E8DDA9C38074FFC87A7444E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,7 +222,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		777416C7CF91FA2B04ED2167B70165EB /* Frameworks */ = {
+		F9B8DD9CEA3E890A56C25D96F1E28AA0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -179,48 +232,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03BDA2436A2BEDD5126256CB7A78B4FE /* Support Files */ = {
+		2E01CCC7FA7FEDF17301ABF20EC72754 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CBC007CB5658173ABA6578881A643669 /* SwiftLint.debug.xcconfig */,
-				79F48DCDEEFE2BEE1D71C4FBD6B20E83 /* SwiftLint.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SwiftLint";
-			sourceTree = "<group>";
-		};
-		10A585130A6EBFA011C636E85DB3BBED /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B0B799CE3952B26DAA3771467863D773 /* enhance.png */,
-				045C81544E1E4FFAFD85BA1405DE5A2A /* enhance@2x.png */,
-				108032A5BC3FAAA8C4478EF647A45D1A /* enhance@3x.png */,
-				3755CD52EB0CC42C42F601E3E927967F /* flash.png */,
-				E77139C1DC48DC6B8A5D9FD415C13547 /* flash@2x.png */,
-				4C91974C755987FD15291E4E55D2B409 /* flash@3x.png */,
-				7EEF1D4E73CF2F566A0CBC1C14C2C77B /* flashUnavailable.png */,
-				DBD3F1098D9775984926DADA63ACF1D4 /* flashUnavailable@2x.png */,
-				8182BE16E5819A17D8497C77F9DD659F /* flashUnavailable@3x.png */,
-				6A14906F3094117F25677473F07A43F2 /* Localizable.strings */,
-				313D8EC4072D72BF5668D3F8AB20DF7E /* rotate.png */,
-				C560D0D9FD83738BD80B3733A769B12B /* rotate@2x.png */,
-				DFE516C8CC18F7F06F5515A7ED8B023D /* rotate@3x.png */,
+				EDB9F7AAD40DFD841DAB713F407607DE /* FontAwesome.ttf */,
+				98B865295729212269FAD71B7C3C5A31 /* Ionicons.ttf */,
+				7EADA9BCE782E6F0D97901AEE400F71F /* LGButton.xib */,
+				BBFADFDD26C024F6BB794134D81BBE19 /* map-icons.ttf */,
+				D2241D96B0D784E980F7F4A55B5DE071 /* MaterialIcons-Regular.ttf */,
+				63EB10DFDB5FC9BDEC4D16F6DDA7E771 /* octicons.ttf */,
+				F1A9D29060D517A635EF7C317ACCB6A2 /* open-iconic.ttf */,
+				2275A653B2C548FC309FDF5C8D71D3FA /* themify.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		25E09A5CA9FEAA7ED65D22D994A75B86 /* Support Files */ = {
+		3170427A4F0C5898D44A2883F041749E /* LGButton */ = {
 			isa = PBXGroup;
 			children = (
-				054FEA794111B2926B6C08496124A0A4 /* WeScan.modulemap */,
-				A9BB7698DC3F644F4CBF600AEB729B1E /* WeScan-dummy.m */,
-				0CB900459777D90740028479FBDCDAAE /* WeScan-prefix.pch */,
-				BD9B7BB579A5C8EB6C99FAAE91216177 /* WeScan-umbrella.h */,
-				93C1BB5D87E2A5BB6253CC6D076B44CA /* WeScan.debug.xcconfig */,
-				BAA48525A2DDE59DE116F8A6464D6AB3 /* WeScan.release.xcconfig */,
+				A9C4B08CBE67A38EB7149FF8A694B317 /* FontAwesome.swift */,
+				08E1979F13107F8CD3C6E2033A1F15B2 /* FontIon.swift */,
+				CB0F247D5249D9DF4CFC74FB84540A7F /* FontLoader.swift */,
+				96F4BDC2E8C02542400762BE6BDBF1B7 /* FontMap.swift */,
+				330CE7DEB6BDB9D09F52023DD068B10C /* FontMaterial.swift */,
+				BCC31BF61A899E3A1BCE50E07EC426F6 /* FontOct.swift */,
+				99E7A1A3FF2166BB71B30FC1793AFA32 /* FontOpenic.swift */,
+				FED7F3447A4FD2DF00AAF8B5EC218AB8 /* FontThemify.swift */,
+				65E5281BBE943D10F2A24112F1F6F912 /* LGButton.swift */,
+				C06D55B06B06771C96C6E8E10714D205 /* SwiftIconFont.swift */,
+				2DEF306619A143013B999D94090522AF /* SwiftIconLabel.swift */,
+				2E01CCC7FA7FEDF17301ABF20EC72754 /* Resources */,
+				83BAA56838330357908330943B94A586 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/WeScan";
+			path = LGButton;
+			sourceTree = "<group>";
+		};
+		466E0363769460E2D512CC17B62D363C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3170427A4F0C5898D44A2883F041749E /* LGButton */,
+				B71A67448D2790A231A100948D2280DF /* SwiftLint */,
+				4BD96D8342C666FFDC3961B7AFD45F45 /* WeScan */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		4783A6A54F4A32095AC7E28C303DDFE0 /* Pods-Document Scanner */ = {
@@ -239,13 +293,86 @@
 			path = "Target Support Files/Pods-Document Scanner";
 			sourceTree = "<group>";
 		};
-		5E7BCEACB93A6F5F96E4287C79F8BF9B /* Pods */ = {
+		4B208A8E8B0A077500D6C78FD317B636 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				B4970D73E84EB08E21ED4A04B6CDD011 /* SwiftLint */,
-				8A28F3AC15579E3EB708A4969B194BDC /* WeScan */,
+				C2DF673A8FC56C295892BABD4DC60E4F /* SwiftLint.debug.xcconfig */,
+				0BEFB32089A08A117B3C6FBEC49BEDC3 /* SwiftLint.release.xcconfig */,
 			);
-			name = Pods;
+			name = "Support Files";
+			path = "../Target Support Files/SwiftLint";
+			sourceTree = "<group>";
+		};
+		4BD96D8342C666FFDC3961B7AFD45F45 /* WeScan */ = {
+			isa = PBXGroup;
+			children = (
+				07D1381BEEFC639B28F040004B07830F /* Array+Utils.swift */,
+				5FE9AC991676E690BD80F7A9047D0E2F /* AVCaptureVideoOrientation+Utils.swift */,
+				299081DD9B9DA82DD984D768F7F6F8B4 /* CameraScannerViewController.swift */,
+				8FB80F2355C6A82E40E76549C737B94F /* CaptureDevice.swift */,
+				16449C317717360AA57EC312D2EC76EC /* CaptureSession.swift */,
+				CDD42B6D247958245B4224D1F5600E6F /* CaptureSession+Flash.swift */,
+				4A73030AC48E308D2FBF8919CD7D81AD /* CaptureSession+Focus.swift */,
+				4F403084574AC0A06CF2E03A6D531AC7 /* CaptureSession+Orientation.swift */,
+				6A1B57C6C2DA0F966278E2ED84942C36 /* CaptureSessionManager.swift */,
+				2CE3D5AA3E7D39E93B2C84567FA9EAEC /* CGAffineTransform+Utils.swift */,
+				98EEC276A67E0689C70AD0FC763343A8 /* CGImagePropertyOrientation.swift */,
+				7F0C761572C637464D7178DAC054676D /* CGPoint+Utils.swift */,
+				D09CF254682EF0DC68C1D592A9EF249F /* CGRect+Utils.swift */,
+				3E1747030824899CB5AAA79FD943361E /* CGSize+Utils.swift */,
+				CD1E7D39352F645F66AE08DD78AF0C9F /* CIImage+Utils.swift */,
+				BE0B06925CF846D84BA93924A47AB35A /* CIRectangleDetector.swift */,
+				AA3966F623046ECEF48FB1436968FAB2 /* EditImageViewController.swift */,
+				B0955FAD39DD10A4B7979F01AF3635B4 /* EditScanCornerView.swift */,
+				6CDD599C4064BA4472AEC5D28475E4CC /* EditScanViewController.swift */,
+				9BE0E5470DA4FD945C559554319FD27E /* Error.swift */,
+				44643055E61C6AB222031C0214164B42 /* FocusRectangleView.swift */,
+				4FAAC610410A324EDEE2B8085DE77AB3 /* ImageScannerController.swift */,
+				060D02EEB0F687FAEC88222ACA03168A /* Quadrilateral.swift */,
+				0A4878AE859686F9AB08049E6B27DF7F /* QuadrilateralView.swift */,
+				124D2824A00B95C3D410C65913FA5484 /* RectangleFeaturesFunnel.swift */,
+				473DED2AF15226BABC20E03C4359C998 /* ReviewViewController.swift */,
+				55876D91DEC1A06ED9E51E83B0003353 /* ScannerViewController.swift */,
+				2BA5151C1949D10296937EA75C61C96D /* ShutterButton.swift */,
+				B7F838A0B18BB83AD8016B46A2A1A4FE /* Transformable.swift */,
+				BC9197F57E57F4986C31B97A5984EE1A /* UIImage+Orientation.swift */,
+				7ACE73BCC5C9742E99D6E582C44A536C /* UIImage+SFSymbol.swift */,
+				92413E8E86BDFA3452E2A45C9428EC37 /* UIImage+Utils.swift */,
+				0C5946B7A82EFBD0674A1326CA15C96E /* VisionRectangleDetector.swift */,
+				BB46283006306F8119DFCADEFFA8760D /* WeScan.h */,
+				40664809EFD61D70272BA8F7476C8BC3 /* ZoomGestureController.swift */,
+				C985AEFC56403D5710DEC780F25039CC /* Resources */,
+				7776F7F76508448F455D1F1F91C240D2 /* Support Files */,
+			);
+			path = WeScan;
+			sourceTree = "<group>";
+		};
+		7776F7F76508448F455D1F1F91C240D2 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				9EAA7AEA36D5464D31FB4444483110F5 /* WeScan.modulemap */,
+				11B89BC0E46EAD04A0BF6FF0900EFAB3 /* WeScan-dummy.m */,
+				5C30F6424BFA5F2086129276D2BEE4E7 /* WeScan-prefix.pch */,
+				B73934599CA4A0AA1226CEC9D8FB2A03 /* WeScan-umbrella.h */,
+				6D11B2AB124FF10F32A93E79D9B5FB0B /* WeScan.debug.xcconfig */,
+				776B3BFC3678E2D5A7110B3C29432119 /* WeScan.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/WeScan";
+			sourceTree = "<group>";
+		};
+		83BAA56838330357908330943B94A586 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA3C6C36BA51DEDB93F25E4E40B8F517 /* LGButton.modulemap */,
+				1E86681F4A86FFE8084697D5EF87F0C3 /* LGButton-dummy.m */,
+				9ED0E3FED1EF06FC127429007C7A2D7C /* LGButton-prefix.pch */,
+				7DA885F9B34E634C10E7983BCF3CB67B /* LGButton-umbrella.h */,
+				C5ADD4FC7C840392B6D60E82997DDFD6 /* LGButton.debug.xcconfig */,
+				3839CF779C5C7D63C3B172697E059AB8 /* LGButton.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/LGButton";
 			sourceTree = "<group>";
 		};
 		85B5A9C8198E9245CDED0827D928DF6C /* Targets Support Files */ = {
@@ -256,65 +383,42 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		8A28F3AC15579E3EB708A4969B194BDC /* WeScan */ = {
+		A4C35932B6D9C0667027184DA6AE9E41 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D9A02EB829AB4655B0952E2AB39AD6CB /* Array+Utils.swift */,
-				5D20921A454583A704EC37761E119E18 /* AVCaptureVideoOrientation+Utils.swift */,
-				AD6F6796367CC014BA2C6D57009476E3 /* CameraScannerViewController.swift */,
-				8DEEB4CAECFD2A5C2E7480746C6452A2 /* CaptureDevice.swift */,
-				AFA80BC93266AA5377823362C7254CF1 /* CaptureSession.swift */,
-				4B2DFE962B2D57B40616632D18EEF876 /* CaptureSession+Flash.swift */,
-				66B5B01382900BFFFF9A1CBF49E73067 /* CaptureSession+Focus.swift */,
-				AAA04463F6B02A703A99B3F92141ED6B /* CaptureSession+Orientation.swift */,
-				7653724ABE6CDFD8F6AC2F1298D914F7 /* CaptureSessionManager.swift */,
-				8976A8A6C126789D8546B71AC0760516 /* CGAffineTransform+Utils.swift */,
-				66595D8C9E809048A7AC4851CD1ADD9C /* CGImagePropertyOrientation.swift */,
-				3B6D27EC2FD8D707C1C7480C69227C24 /* CGPoint+Utils.swift */,
-				C47E7673F030923439D9ECB5F4107353 /* CGRect+Utils.swift */,
-				AFD80CD3870E0D939DBF00CDDCD4F3E8 /* CGSize+Utils.swift */,
-				13A06D9E3D555AA696B95FC2F3669F71 /* CIImage+Utils.swift */,
-				4C5E9561EF6C99EEE07531480340F164 /* CIRectangleDetector.swift */,
-				8F552F792F2709CF7CEE1E12A01EFD4F /* EditImageViewController.swift */,
-				56E29A2B679C50E3699CDD2C4F96EED3 /* EditScanCornerView.swift */,
-				375F61A3F618C9929B95F435019AB3D7 /* EditScanViewController.swift */,
-				B689AB230A4116C4789BEFA142269E7C /* Error.swift */,
-				1FDC0ADD781C074FAB4E0D8EFB52876F /* FocusRectangleView.swift */,
-				101892CC3644208A879868F7159F607E /* ImageScannerController.swift */,
-				1C1EA28EADB8E5A635FB96D9B97B0EBC /* Quadrilateral.swift */,
-				6FFE7B5CCC195877BFDD4F15F32E3F2B /* QuadrilateralView.swift */,
-				4AC3B406645607379417D5AD0CBCB78F /* RectangleFeaturesFunnel.swift */,
-				8175EDE467A396E1E6423B604FCE6922 /* ReviewViewController.swift */,
-				5A118C8B072245E21973CA97D6170517 /* ScannerViewController.swift */,
-				A95FC02FEADB44E5D42CA0F1F11BF87B /* ShutterButton.swift */,
-				39D3454F1E54A9DD737E7134EF2C25C3 /* Transformable.swift */,
-				AEE924CFE75B47511F912790F76C5107 /* UIImage+Orientation.swift */,
-				6EF6FA27EBD9F9A98AA9A769F63C58D6 /* UIImage+SFSymbol.swift */,
-				7F8F02045E7E42AD81312283395017CA /* UIImage+Utils.swift */,
-				6C738C6B9703F868938762EB7B10AABF /* VisionRectangleDetector.swift */,
-				F9FE6667A2CAD79BE33A7B03BC798A74 /* WeScan.h */,
-				5F80D6EB738BA001A7BAB86535B03B68 /* ZoomGestureController.swift */,
-				10A585130A6EBFA011C636E85DB3BBED /* Resources */,
-				25E09A5CA9FEAA7ED65D22D994A75B86 /* Support Files */,
-			);
-			path = WeScan;
-			sourceTree = "<group>";
-		};
-		90E86704BF9B4F2672526697493C483A /* Products */ = {
-			isa = PBXGroup;
-			children = (
+				BEB5730D0C9DB3D9997CC93D0C703557 /* libLGButton.a */,
 				E37C9F3EE7F8009636D5F17EDA5E3A5D /* libPods-Document Scanner.a */,
 				68C9F7C84DC9D6B273D6EDE059CAC627 /* libWeScan.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B4970D73E84EB08E21ED4A04B6CDD011 /* SwiftLint */ = {
+		B71A67448D2790A231A100948D2280DF /* SwiftLint */ = {
 			isa = PBXGroup;
 			children = (
-				03BDA2436A2BEDD5126256CB7A78B4FE /* Support Files */,
+				4B208A8E8B0A077500D6C78FD317B636 /* Support Files */,
 			);
 			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		C985AEFC56403D5710DEC780F25039CC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D578639B590D5425188C13E3FD8FA7B6 /* enhance.png */,
+				FA968C1BCBD866154AF4F16D360DC2C0 /* enhance@2x.png */,
+				A4FC52342F322F92E3837620C6900414 /* enhance@3x.png */,
+				7036FE0D49AB2D88EDBF5F7C450331D4 /* flash.png */,
+				2428F2510E1DFF0E89E206F1A13383D9 /* flash@2x.png */,
+				2EC74AE5CF35D584FA01C8933C076023 /* flash@3x.png */,
+				8AA488013F1DC60698938869C5A04B2E /* flashUnavailable.png */,
+				D28C5B9F6AF504164AB4F49D5ADD32A7 /* flashUnavailable@2x.png */,
+				4F63E05942578F925F58D8A6C637D06C /* flashUnavailable@3x.png */,
+				215317BBEA774A3570DF5295A168A544 /* Localizable.strings */,
+				4EF03D20D82AFB8985225BE27061CF0B /* rotate.png */,
+				F8E14A1495224E107276AA13E0F34F8E /* rotate@2x.png */,
+				85668E1A90C410790553BB47FA4EB698 /* rotate@3x.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -322,8 +426,8 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				5E7BCEACB93A6F5F96E4287C79F8BF9B /* Pods */,
-				90E86704BF9B4F2672526697493C483A /* Products */,
+				466E0363769460E2D512CC17B62D363C /* Pods */,
+				A4C35932B6D9C0667027184DA6AE9E41 /* Products */,
 				85B5A9C8198E9245CDED0827D928DF6C /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -338,11 +442,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		6B8EEF650188490B2B9B9CB4C3206AEE /* Headers */ = {
+		03AB45CC5FB65CCDD09C62D2DD18059E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D15B7DD5034D77A5E3FD3D07676B660 /* Pods-Document Scanner-umbrella.h in Headers */,
+				33A41C8AD24AF8DD95D833306010AD9A /* Pods-Document Scanner-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6115DE4552A048CF133EB73487F9558 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7001C78A7E41AA3DC5D7A2F1D6652592 /* LGButton-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,21 +490,40 @@
 		};
 		C3413E7BD127C76BFD49E952A536A3C6 /* Pods-Document Scanner */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA91C38A4C4AAEA0207B5D24F97BE029 /* Build configuration list for PBXNativeTarget "Pods-Document Scanner" */;
+			buildConfigurationList = C3ED8A230AAE5013D223EE58E76D8F7A /* Build configuration list for PBXNativeTarget "Pods-Document Scanner" */;
 			buildPhases = (
-				6B8EEF650188490B2B9B9CB4C3206AEE /* Headers */,
-				01DCD37C2E708987D3B4ED5DF0155760 /* Sources */,
-				777416C7CF91FA2B04ED2167B70165EB /* Frameworks */,
+				03AB45CC5FB65CCDD09C62D2DD18059E /* Headers */,
+				DFB8EDCAC48C0A1DF5CB6BFAB9B7BC4E /* Sources */,
+				0F4503CF57FD0F4C33DAA738153F0CFB /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B10A0DB24FEA9D90BB00E1DA23F5081B /* PBXTargetDependency */,
-				D81C90025A84BEF4787C96B2566FD445 /* PBXTargetDependency */,
+				55BA8764D4CD46CFB16C7D1453D7C0BD /* PBXTargetDependency */,
+				23EB71ACACF5C49614B9193801ADBFD8 /* PBXTargetDependency */,
+				D7152F6EEBB9B771432DD06BDD8A2A29 /* PBXTargetDependency */,
 			);
 			name = "Pods-Document Scanner";
 			productName = "Pods-Document Scanner";
 			productReference = E37C9F3EE7F8009636D5F17EDA5E3A5D /* libPods-Document Scanner.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A015C1629C0CA4F44EB59A22818602B2 /* Build configuration list for PBXNativeTarget "LGButton" */;
+			buildPhases = (
+				B6115DE4552A048CF133EB73487F9558 /* Headers */,
+				2F70FABA5FAA840151A79A0E9B8D9732 /* Sources */,
+				F9B8DD9CEA3E890A56C25D96F1E28AA0 /* Frameworks */,
+				BA24691E87B1570FD1DD7EB09BA93F10 /* Copy generated compatibility header */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LGButton;
+			productName = LGButton;
+			productReference = BEB5730D0C9DB3D9997CC93D0C703557 /* libLGButton.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -402,10 +533,10 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1100;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -426,10 +557,11 @@
 				de,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 90E86704BF9B4F2672526697493C483A /* Products */;
+			productRefGroup = A4C35932B6D9C0667027184DA6AE9E41 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */,
 				C3413E7BD127C76BFD49E952A536A3C6 /* Pods-Document Scanner */,
 				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
 				AE77F0B12823BFAC940902290724DB28 /* WeScan */,
@@ -462,14 +594,49 @@
 			shellPath = /bin/sh;
 			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/WeScan/WeScan.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/WeScan/WeScan-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
 		};
+		BA24691E87B1570FD1DD7EB09BA93F10 /* Copy generated compatibility header */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h",
+				"${PODS_ROOT}/Headers/Public/LGButton/LGButton.modulemap",
+				"${PODS_ROOT}/Headers/Public/LGButton/LGButton-umbrella.h",
+			);
+			name = "Copy generated compatibility header";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap",
+				"${BUILT_PRODUCTS_DIR}/LGButton-umbrella.h",
+				"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/LGButton/LGButton.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/LGButton/LGButton-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		01DCD37C2E708987D3B4ED5DF0155760 /* Sources */ = {
+		2F70FABA5FAA840151A79A0E9B8D9732 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F56A5C308EDC7F296691C5B84DCC89F /* Pods-Document Scanner-dummy.m in Sources */,
+				4ED5AD2C6DFF465DC5BA5CEBD4FC3B17 /* FontAwesome.swift in Sources */,
+				38C3FD2D00E2A3425429860A648BF763 /* FontIon.swift in Sources */,
+				0C1516BD9AEBC02D47A1339C65C43FF0 /* FontLoader.swift in Sources */,
+				12CFA8F5FBA475C5816A35E9D22FC4C5 /* FontMap.swift in Sources */,
+				D06F86316F6FE76210133CAF7AF9F294 /* FontMaterial.swift in Sources */,
+				656D1F2F5DB26D75DA81EEB90E258E1A /* FontOct.swift in Sources */,
+				EF8CB1BC72BC60B31575AC4E3F35EB46 /* FontOpenic.swift in Sources */,
+				BAAEAB8EB8149508ACE47AE36F1B2C44 /* FontThemify.swift in Sources */,
+				347434E29BAED59EE7F1839AAE1A315C /* LGButton-dummy.m in Sources */,
+				C2FEBF5484CC5653BD6141A92EF3C2BE /* LGButton.swift in Sources */,
+				0BC787EDE4C90704A2B67A0D39C01064 /* SwiftIconFont.swift in Sources */,
+				C118F33DECF2990CCEEF43389AE69625 /* SwiftIconLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,41 +682,55 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DFB8EDCAC48C0A1DF5CB6BFAB9B7BC4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73188B758BF974F0E848357D8D0554A9 /* Pods-Document Scanner-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B10A0DB24FEA9D90BB00E1DA23F5081B /* PBXTargetDependency */ = {
+		23EB71ACACF5C49614B9193801ADBFD8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftLint;
 			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
-			targetProxy = 1D573CD66B75C1385B94D52FD8E00EEE /* PBXContainerItemProxy */;
+			targetProxy = 32FCC64D993E222316A0EA5BE1AB754D /* PBXContainerItemProxy */;
 		};
-		D81C90025A84BEF4787C96B2566FD445 /* PBXTargetDependency */ = {
+		55BA8764D4CD46CFB16C7D1453D7C0BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LGButton;
+			target = FD999FE212F29E29DEEA0A85E1DC4D4E /* LGButton */;
+			targetProxy = F58E12E08869DF06434341E83E96181E /* PBXContainerItemProxy */;
+		};
+		D7152F6EEBB9B771432DD06BDD8A2A29 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = WeScan;
 			target = AE77F0B12823BFAC940902290724DB28 /* WeScan */;
-			targetProxy = D9546C12ADA015937BB0E8A228B9F726 /* PBXContainerItemProxy */;
+			targetProxy = 3C71028CAE3200A109CEEE8CD272CD14 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6A14906F3094117F25677473F07A43F2 /* Localizable.strings */ = {
+		215317BBEA774A3570DF5295A168A544 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C1A31962250ADA7D67FA19240C0BEED8 /* Localizable.strings */,
-				34B6CD500CD17B25F664366B210633AB /* Localizable.strings */,
-				5B6897A7F7A7FE061909A1EA2DA7DF17 /* Localizable.strings */,
-				4382721BF34ACB3FC14B9722116661E0 /* Localizable.strings */,
-				FF47F47F016EF972E066DE5C6561935E /* Localizable.strings */,
-				3DDE61CAF57F0175FFB55EB60D5C3226 /* Localizable.strings */,
-				653B9D7B7362DCCF6F98BA7CBBCA05E6 /* Localizable.strings */,
-				1B3E4ABD44D04B7022E9D606B14D5413 /* Localizable.strings */,
-				D09260C5F665E17596131C58BCE446F6 /* Localizable.strings */,
-				6FE9BCEFD8F6122BF02EDA9368543DD7 /* Localizable.strings */,
-				DB7106F93701B4D77B00C390DA87954D /* Localizable.strings */,
-				915134D830CB2C5651BC56390A7C3D23 /* Localizable.strings */,
-				534495C631786D6A9F4B5E65271FED2C /* Localizable.strings */,
-				48959D9B38CC829DADC449C849E81C3B /* Localizable.strings */,
+				E3564DEBF3B8E9F0DF589FDC8630C5B5 /* Localizable.strings */,
+				EE42920B072677D37C68E798826202C2 /* Localizable.strings */,
+				FBE2476C19DE22F124BC1AAD53D9D268 /* Localizable.strings */,
+				11F6D04C386ED3332969ED75558C1D79 /* Localizable.strings */,
+				8AE91AEBC5BAC3AD6023E7EE90ACE829 /* Localizable.strings */,
+				FEA1F41FE968D3C8167C8004A895DD7F /* Localizable.strings */,
+				C235E4C00C6D3C42C14A1709FEBAD91F /* Localizable.strings */,
+				C997EC432D28C66073409F21216D5F5E /* Localizable.strings */,
+				5DAF4288ED4D062F51C92097C3D27973 /* Localizable.strings */,
+				E9203F256BD8F3AF9DEA89DDA4F4D12B /* Localizable.strings */,
+				70BBF013F5738D1BD6E2C8D0E41B0826 /* Localizable.strings */,
+				E091479269B094B50DE7EBE425A8A9D1 /* Localizable.strings */,
+				62A3CA9B76932CADEDA5E5F6931B0ED1 /* Localizable.strings */,
+				31BC0DC67CE6C290E04FF93EC83F10B1 /* Localizable.strings */,
 			);
 			name = Localizable.strings;
 			path = WeScan;
@@ -558,6 +739,29 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2AA4AC1D0EA2041C5B41C04DD9A415DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D52335B6C6BC5842E524A57D69E302F3 /* Pods-Document Scanner.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2B9E26EAE2CD392AD762421F663075A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -624,9 +828,9 @@
 			};
 			name = Debug;
 		};
-		2D7AEDCF7D0AA890213D81D509649742 /* Release */ = {
+		61DC6655438CF6476F74641AE468ED4A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D52335B6C6BC5842E524A57D69E302F3 /* Pods-Document Scanner.release.xcconfig */;
+			baseConfigurationReference = 0EE6B255927BCD8997788DE152DD0270 /* Pods-Document Scanner.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -643,9 +847,8 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
 		63FAF33E1C55B71A5F5A8B3CC8749F99 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -711,14 +914,14 @@
 		};
 		78DF344624CF207F1F6405889367EB99 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAA48525A2DDE59DE116F8A6464D6AB3 /* WeScan.release.xcconfig */;
+			baseConfigurationReference = 776B3BFC3678E2D5A7110B3C29432119 /* WeScan.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/WeScan/WeScan-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MODULEMAP_FILE = Headers/Public/WeScan/WeScan.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -735,35 +938,13 @@
 			};
 			name = Release;
 		};
-		847D64949B7AA555CB8EB471AEC32BA2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0EE6B255927BCD8997788DE152DD0270 /* Pods-Document Scanner.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		AD81E62ACCB0B7A923FC8AA288F9921E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79F48DCDEEFE2BEE1D71C4FBD6B20E83 /* SwiftLint.release.xcconfig */;
+			baseConfigurationReference = 0BEFB32089A08A117B3C6FBEC49BEDC3 /* SwiftLint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -774,16 +955,41 @@
 			};
 			name = Release;
 		};
+		B28458ADC69833C59027763AC482A096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3839CF779C5C7D63C3B172697E059AB8 /* LGButton.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/LGButton/LGButton-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MODULEMAP_FILE = Headers/Public/LGButton/LGButton.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = LGButton;
+				PRODUCT_NAME = LGButton;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		D5053867F007C405E6F285127D304FC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93C1BB5D87E2A5BB6253CC6D076B44CA /* WeScan.debug.xcconfig */;
+			baseConfigurationReference = 6D11B2AB124FF10F32A93E79D9B5FB0B /* WeScan.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/WeScan/WeScan-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MODULEMAP_FILE = Headers/Public/WeScan/WeScan.modulemap;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -801,16 +1007,40 @@
 		};
 		EADD1F50ABC8096A0D6CB18822BB4EE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CBC007CB5658173ABA6578881A643669 /* SwiftLint.debug.xcconfig */;
+			baseConfigurationReference = C2DF673A8FC56C295892BABD4DC60E4F /* SwiftLint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F71AC8B273496F9C181B94799FC3A0DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5ADD4FC7C840392B6D60E82997DDFD6 /* LGButton.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/LGButton/LGButton-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MODULEMAP_FILE = Headers/Public/LGButton/LGButton.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = LGButton;
+				PRODUCT_NAME = LGButton;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -836,6 +1066,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		A015C1629C0CA4F44EB59A22818602B2 /* Build configuration list for PBXNativeTarget "LGButton" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F71AC8B273496F9C181B94799FC3A0DA /* Debug */,
+				B28458ADC69833C59027763AC482A096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -845,11 +1084,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA91C38A4C4AAEA0207B5D24F97BE029 /* Build configuration list for PBXNativeTarget "Pods-Document Scanner" */ = {
+		C3ED8A230AAE5013D223EE58E76D8F7A /* Build configuration list for PBXNativeTarget "Pods-Document Scanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				847D64949B7AA555CB8EB471AEC32BA2 /* Debug */,
-				2D7AEDCF7D0AA890213D81D509649742 /* Release */,
+				61DC6655438CF6476F74641AE468ED4A /* Debug */,
+				2AA4AC1D0EA2041C5B41C04DD9A415DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

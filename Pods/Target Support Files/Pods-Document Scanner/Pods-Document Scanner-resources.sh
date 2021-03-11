@@ -97,6 +97,14 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/FontAwesome.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/Ionicons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/LGButton.xib"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/map-icons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/MaterialIcons-Regular.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/octicons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/open-iconic.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/themify.ttf"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance.png"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance@2x.png"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance@3x.png"
@@ -125,6 +133,14 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/WeScan/WeScan/zh-Hant.lproj/Localizable.strings"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/FontAwesome.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/Ionicons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/LGButton.xib"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/map-icons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/MaterialIcons-Regular.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/octicons.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/open-iconic.ttf"
+  install_resource "${PODS_ROOT}/LGButton/LGButton/Resources/themify.ttf"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance.png"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance@2x.png"
   install_resource "${PODS_ROOT}/WeScan/WeScan/Assets/enhance@3x.png"
