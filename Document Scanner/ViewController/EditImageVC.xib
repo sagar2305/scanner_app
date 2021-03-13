@@ -12,18 +12,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditImageVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
-                <outlet property="editButtonFive" destination="gT0-kV-zkW" id="MyR-jh-xMe"/>
-                <outlet property="editButtonFiveContainer" destination="dyi-hp-S9O" id="raB-Re-uTP"/>
-                <outlet property="editButtonFour" destination="Lmp-RQ-8ek" id="eS9-aW-dXg"/>
-                <outlet property="editButtonFourContainer" destination="KJm-eb-cfl" id="u7v-v3-YFv"/>
-                <outlet property="editButtonOne" destination="qty-BB-CHH" id="HWf-yN-h1K"/>
-                <outlet property="editButtonOneContainer" destination="u4c-fV-XOc" id="3Jv-qf-7ER"/>
-                <outlet property="editButtonThree" destination="nEe-dA-cHx" id="AsY-KO-q2F"/>
-                <outlet property="editButtonThreeContainer" destination="MW2-u9-fWz" id="l71-8v-YNF"/>
-                <outlet property="editButtonTwo" destination="OC6-qj-kGe" id="DAr-n3-ggB"/>
-                <outlet property="editButtonTwoContainer" destination="ygq-47-q1s" id="FgS-fJ-VYw"/>
-                <outlet property="footerView" destination="QLe-Fr-nQh" id="ScF-xW-7mJ"/>
-                <outlet property="imageEditorView" destination="JCo-HO-DcO" id="lsV-VO-lTy"/>
+                <outlet property="editButtonFive" destination="gT0-kV-zkW" id="t3v-7Y-3L5"/>
+                <outlet property="editButtonFiveContainer" destination="dyi-hp-S9O" id="mwe-w9-FVu"/>
+                <outlet property="editButtonFour" destination="Lmp-RQ-8ek" id="Bt1-S9-oJt"/>
+                <outlet property="editButtonFourContainer" destination="KJm-eb-cfl" id="fxc-FF-vSA"/>
+                <outlet property="editButtonOne" destination="qty-BB-CHH" id="rtw-ib-a0w"/>
+                <outlet property="editButtonOneContainer" destination="u4c-fV-XOc" id="ICJ-Lt-8eQ"/>
+                <outlet property="editButtonThree" destination="nEe-dA-cHx" id="gOo-Hh-BI2"/>
+                <outlet property="editButtonThreeContainer" destination="MW2-u9-fWz" id="IdH-xI-eEQ"/>
+                <outlet property="editButtonTwo" destination="OC6-qj-kGe" id="hiS-zR-vbF"/>
+                <outlet property="editButtonTwoContainer" destination="ygq-47-q1s" id="3Ff-Iv-36E"/>
+                <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
+                <outlet property="imageEditorView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -198,7 +198,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JCo-HO-DcO" secondAttribute="trailing" constant="12" id="ToS-y9-TuT"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="oO4-UN-oim"/>
             </constraints>
-            <point key="canvasLocation" x="137.68115942028987" y="80.357142857142847"/>
+            <point key="canvasLocation" x="-139" y="-141"/>
         </view>
     </objects>
     <resources>

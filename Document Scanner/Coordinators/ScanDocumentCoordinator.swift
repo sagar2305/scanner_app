@@ -15,8 +15,8 @@ class ScanDocumentCoordinator: Coordinator {
     }
     
     var childCoordinator: [Coordinator] = []
-    
     var navigationController: UINavigationController
+    var editImageVC: EditImageVC!
     
     init(_ controller: UINavigationController) {
         self.navigationController = controller
@@ -36,11 +36,11 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     }
     
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
-        let editImageVC = EditImageVC()
+        editImageVC = EditImageVC()
         editImageVC.imageToEdit = image
+        editImageVC.imageEditingMode = .basic
         editImageVC.quad = quad
         navigationController.pushViewController(editImageVC, animated: true)
     }
-    
     
 }

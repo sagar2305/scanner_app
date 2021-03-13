@@ -26,7 +26,9 @@ class EditImageVC: UIViewController {
     
     var imageEditingMode: ImageEditingMode? {
         didSet {
-            _updateViewForEditing()
+            if editVC != nil {
+                _updateViewForEditing()
+            }
         }
     }
     
@@ -36,8 +38,10 @@ class EditImageVC: UIViewController {
     weak var delegate: EditImageVCDelegate?
     
     //temporary images
-    var croppedImage: UIImage? //cropped image for filtering
-    var editedImage: UIImage?
+    private var _croppedImage: UIImage? //cropped image for filtering
+    private var _editedImage: UIImage?
+    
+    private var imageView: UIImageView?
     
     // MARK: - IBoutlets
     @IBOutlet weak var imageEditorView: UIView!
@@ -60,10 +64,9 @@ class EditImageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
     }
-    
+
     private func setupViews() {
         //one time view setups
         guard let imageToEdit = imageToEdit , let quad = quad else {
@@ -74,7 +77,7 @@ class EditImageVC: UIViewController {
         editVC.view.frame = imageEditorView.bounds
         editVC.willMove(toParent: self)
         imageEditorView.addSubview(editVC.view)
-               self.addChild(editVC)
+        self.addChild(editVC)
         editVC.didMove(toParent: self)
         editVC.delegate = self
         
@@ -88,22 +91,35 @@ class EditImageVC: UIViewController {
         }
         switch  editingMode {
         case .basic: _setupEditorViewForBasicEditingMode()
-        case .correction : _setupEditorViewForBasicEditingMode()
+        case .correction : _setupEditorViewForCorrectionMode()
         case .filtering : _setupEditorViewForFilteringMode()
         }
     }
     
     private func _setupEditorViewForBasicEditingMode() {
-        editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonTwo.setImage(Icons.camera, for: .normal)
+        editButtonOneContainer.isHidden = false
+        editButtonTwoContainer.isHidden = false
         editButtonThreeContainer.isHidden = true
-        editButtonFour.setImage(Icons.crop, for: .normal)
+        editButtonFourContainer.isHidden = false
         editButtonFiveContainer.isHidden = true
         
+        editButtonOne.setImage(Icons.cancel, for: .normal)
+        editButtonTwo.setImage(Icons.camera, for: .normal)
+        editButtonFour.setImage(Icons.crop, for: .normal)
     }
     
     private func _setupEditorViewForCorrectionMode() {
+        editButtonOneContainer.isHidden = false
+        editButtonTwoContainer.isHidden = false
+        editButtonThreeContainer.isHidden = false
+        editButtonFourContainer.isHidden = false
+        editButtonFiveContainer.isHidden = false
         
+        editButtonOne.setImage(Icons.cancel, for: .normal)
+        editButtonTwo.setImage(Icons.flash, for: .normal)
+        editButtonThree.setImage(Icons.reset, for: .normal)
+        editButtonFour.setImage(Icons.rotateLeft, for: .normal)
+        editButtonFive.setImage(Icons.done, for: .normal)
     }
     
     private func _setupEditorViewForFilteringMode() {
@@ -112,11 +128,12 @@ class EditImageVC: UIViewController {
     
     
     
-    
+    //cancel editing
     @IBAction func didTapEditButtonOne(_ sender: UIButton) {
         delegate?.cancelImageEditing(_controller: self)
     }
     
+    // rescan image
     @IBAction func didTapEditButtonTwo(_ sender: UIButton) {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
@@ -132,6 +149,7 @@ class EditImageVC: UIViewController {
         }
     }
     
+    //
     @IBAction func didTapEditButtonThree(_ sender: UIButton) {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
@@ -154,7 +172,7 @@ class EditImageVC: UIViewController {
         
         switch editingMode {
         case .basic:
-            break
+            editVC.cropImage()
         case .correction:
             break
         case .filtering:
@@ -182,6 +200,14 @@ class EditImageVC: UIViewController {
 
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        
+        _croppedImage = image
+        imageView = UIImageView()
+        imageView?.image = image
+        imageView?.frame = imageEditorView.bounds
+        imageEditorView.addSubview(imageView!)
+        imageEditorView.bringSubviewToFront(imageView!)
+        imageView?.contentMode = .scaleAspectFit
+        editVC.view.removeFromSuperview()
+        imageEditingMode = .correction
     }
 }
