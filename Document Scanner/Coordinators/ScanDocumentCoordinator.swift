@@ -7,6 +7,11 @@
 
 import UIKit
 import WeScan
+import NVActivityIndicatorView
+
+protocol ScanDocumentCoordinatorDelegate: class {
+    func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator)
+}
 
 class ScanDocumentCoordinator: Coordinator {
     
@@ -17,12 +22,19 @@ class ScanDocumentCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
     var editImageVC: EditImageVC!
+    weak var delegate: ScanDocumentCoordinatorDelegate?
     
     init(_ controller: UINavigationController) {
         self.navigationController = controller
     }
     
     func start() {
+        let scanDocumentVC = ScannerVC()
+        scanDocumentVC.delegate = self
+        navigationController.pushViewController(scanDocumentVC, animated: true)
+    }
+    
+    private func _startScanning() {
         let scanDocumentVC = ScannerVC()
         scanDocumentVC.delegate = self
         navigationController.pushViewController(scanDocumentVC, animated: true)
@@ -40,7 +52,53 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
         editImageVC.imageToEdit = image
         editImageVC.imageEditingMode = .basic
         editImageVC.quad = quad
+        editImageVC.delegate = self
         navigationController.pushViewController(editImageVC, animated: true)
     }
+    
+}
+
+extension ScanDocumentCoordinator: EditImageVCDelegate {
+    func cancelImageEditing(_controller: EditImageVC) {
+        //stop editing
+    }
+    
+    func filterImage(_ image: UIImage, controller: EditImageVC) {
+       
+    }
+    
+    func rescanImage(_ controller: EditImageVC) {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage, documentName: String, controller: EditImageVC) {
+        var quadPoints = [CGPoint]()
+        guard let quad = editImageVC.quad else {
+            fatalError("ERROR: No points available")
+        }
+        
+        let activityIndicator = NVActivityIndicatorView(frame: rootViewController.view.frame,
+                                                        type: .ballRotateChase,
+                                                        color: UIColor.blue,
+                                                        padding: 16)
+        activityIndicator.startAnimating()
+        
+        quadPoints.append(quad.topLeft)
+        quadPoints.append(quad.topRight)
+        quadPoints.append(quad.bottomLeft)
+        quadPoints.append(quad.bottomRight)
+        
+        let document = Document(documentName,
+                                originalImage: originalImage,
+                                editedImage: finalImage,
+                                quadrilateral: quadPoints)
+        
+        if document.saveOriginalImage(originalImage) && document.saveEditedImage(finalImage) {
+            document.save()
+            activityIndicator.stopAnimating()
+            delegate?.didFinishScanningDocument(self)
+        }
+    }
+    
     
 }

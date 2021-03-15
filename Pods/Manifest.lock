@@ -1,24 +1,30 @@
 PODS:
   - LGButton (1.1.6)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - SwiftLint (0.43.0)
   - WeScan (1.7.0)
 
 DEPENDENCIES:
   - LGButton
+  - NVActivityIndicatorView
   - SwiftLint
   - WeScan (>= 0.9)
 
 SPEC REPOS:
   trunk:
     - LGButton
+    - NVActivityIndicatorView
     - SwiftLint
     - WeScan
 
 SPEC CHECKSUMS:
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 187712863de8087b301fafa13da082fdfd8e3860
+PODFILE CHECKSUM: 11d28ad228210e156bb19bc53dee88821132dfdf
 
 COCOAPODS: 1.10.0

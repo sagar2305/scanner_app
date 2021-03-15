@@ -5,4 +5,5 @@ target 'Document Scanner' do
   pod 'SwiftLint'
   pod 'WeScan', '>= 0.9'
   pod 'LGButton'
+  pod 'NVActivityIndicatorView'
 end

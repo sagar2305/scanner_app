@@ -10,23 +10,36 @@ import WeScan
 
 protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
-    func rescanImageEditing(_ controller: EditImageVC)
-    func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage, controller: EditImageVC)
+    func filterImage(_ image: UIImage, controller: EditImageVC)
+    func rescanImage(_ controller: EditImageVC)
+    func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage,documentName: String, controller: EditImageVC)
 }
 
 class EditImageVC: UIViewController {
     
+    // MARK: - ViewController specific enums
     enum ImageEditingMode {
         case basic
         case correction
         case filtering
     }
+    
+    enum ImageRotationDirection {
+        case left
+        case right
+    }
 
-    private var editVC: EditImageViewController!
+    // MARK: - Views
+    private var _editVC: EditImageViewController!
+    private var _imageView: UIImageView?
+    
+    // MARK: - Constants
+    private var _rotateLeftRadians: CGFloat = -1.5708
+    private var _rotateRightRadians: CGFloat = 1.5708
     
     var imageEditingMode: ImageEditingMode? {
         didSet {
-            if editVC != nil {
+            if _editVC != nil {
                 _updateViewForEditing()
             }
         }
@@ -41,9 +54,9 @@ class EditImageVC: UIViewController {
     private var _croppedImage: UIImage? //cropped image for filtering
     private var _editedImage: UIImage?
     
-    private var imageView: UIImageView?
     
-    // MARK: - IBoutlets
+    
+    // MARK:- IBoutlets
     @IBOutlet weak var imageEditorView: UIView!
     @IBOutlet weak var footerView: UIView!
     
@@ -58,9 +71,6 @@ class EditImageVC: UIViewController {
     @IBOutlet weak var editButtonFour: UIButton!
     @IBOutlet weak var editButtonFiveContainer: UIView!
     @IBOutlet weak var editButtonFive: UIButton!
-
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,13 +83,13 @@ class EditImageVC: UIViewController {
             fatalError("ERROR: No image or quad is set for editing")
         }
         
-        editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad, strokeColor: UIColor(red: (69.0 / 255.0), green: (194.0 / 255.0), blue: (177.0 / 255.0), alpha: 1.0).cgColor)
-        editVC.view.frame = imageEditorView.bounds
-        editVC.willMove(toParent: self)
-        imageEditorView.addSubview(editVC.view)
-        self.addChild(editVC)
-        editVC.didMove(toParent: self)
-        editVC.delegate = self
+        _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad, strokeColor: UIColor(red: (69.0 / 255.0), green: (194.0 / 255.0), blue: (177.0 / 255.0), alpha: 1.0).cgColor)
+        _editVC.view.frame = imageEditorView.bounds
+        _editVC.willMove(toParent: self)
+        imageEditorView.addSubview(_editVC.view)
+        self.addChild(_editVC)
+        _editVC.didMove(toParent: self)
+        _editVC.delegate = self
         
         //recurring view setups
         _updateViewForEditing()
@@ -116,17 +126,80 @@ class EditImageVC: UIViewController {
         editButtonFiveContainer.isHidden = false
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonTwo.setImage(Icons.flash, for: .normal)
-        editButtonThree.setImage(Icons.reset, for: .normal)
-        editButtonFour.setImage(Icons.rotateLeft, for: .normal)
+        editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
+        editButtonThree.setImage(Icons.filter, for: .normal)
+        editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
     }
     
     private func _setupEditorViewForFilteringMode() {
+        editButtonOneContainer.isHidden = false
+        editButtonTwoContainer.isHidden = false
+        editButtonThreeContainer.isHidden = false
+        editButtonFourContainer.isHidden = false
+        editButtonFiveContainer.isHidden = false
+        
+        editButtonOne.setImage(Icons.cancel, for: .normal)
+        editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
+        editButtonThree.setImage(Icons.filter, for: .normal)
+        editButtonFour.setImage(Icons.rotateRight, for: .normal)
+        editButtonFive.setImage(Icons.done, for: .normal)
+    }
+    
+    //rotation of images is available in cropped mode only
+    private func _rotateImage(_ direction: ImageRotationDirection) {
+        switch  direction {
+        
+        case .left:
+            _croppedImage = _croppedImage?.rotate(withRotation: _rotateLeftRadians)
+        case .right:
+            _croppedImage = _croppedImage?.rotate(withRotation: _rotateRightRadians)
+        }
+        _imageView?.image = _croppedImage
         
     }
     
+    private func _initiateImageFiltering() {
+        /**
+         1 save original image temporary to user defaults
+         2 pass edited image(cropped)  to editing VC */
+        imageEditingMode = .filtering
+        delegate?.filterImage(_croppedImage!, controller: self)
+    }
     
+    private func _saveDocument(withName name: String) {
+        guard let editingMode = imageEditingMode else {
+            fatalError("ERROR: Image editing mode not set")
+        }
+        guard  let originalImage = imageToEdit else {
+            fatalError("ERROR: Original Image is not available")
+        }
+        
+        switch editingMode {
+        case .basic:
+            delegate?.finishedImageEditing(originalImage,
+                                           originalImage: originalImage,
+                                           documentName: name,
+                                           controller: self)
+        case .correction:
+            guard let croppedImage = _croppedImage else {
+                fatalError("ERROR: Cropped Image is not available")
+            }
+            delegate?.finishedImageEditing(croppedImage,
+                                           originalImage: originalImage,
+                                           documentName: name,
+                                           controller: self)
+            
+        case .filtering:
+            guard let editedImage = _editedImage else {
+                fatalError("ERROR: Edited Image is not available")
+            }
+            delegate?.finishedImageEditing(editedImage,
+                                           originalImage: originalImage,
+                                           documentName: name,
+                                           controller: self)
+        }
+    }
     
     //cancel editing
     @IBAction func didTapEditButtonOne(_ sender: UIButton) {
@@ -141,9 +214,9 @@ class EditImageVC: UIViewController {
         
         switch editingMode {
         case .basic:
-            delegate?.rescanImageEditing(self)
+            delegate?.rescanImage(self)
         case .correction:
-            delegate?.rescanImageEditing(self)
+            _rotateImage(.left)
         case .filtering:
             break
         }
@@ -159,7 +232,7 @@ class EditImageVC: UIViewController {
         case .basic:
             break
         case .correction:
-            break
+            _initiateImageFiltering()
         case .filtering:
             break
         }
@@ -172,27 +245,37 @@ class EditImageVC: UIViewController {
         
         switch editingMode {
         case .basic:
-            editVC.cropImage()
+            _editVC.cropImage()
         case .correction:
-            break
+            _rotateImage(.right)
         case .filtering:
             break
         }
     }
     
     @IBAction func didTapEditButtonFive(_ sender: Any) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
+        let alterView = UIAlertController(title: "Saving Image",
+                                           message: "Enter document name",
+                                           preferredStyle: .alert)
+        
+        alterView.addTextField { textField in
+            textField.placeholder = "Documents Name!"
         }
         
-        switch editingMode {
-        case .basic:
-            break
-        case .correction:
-            break
-        case .filtering:
-            break
-        }
+        alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
+            guard let textField = alterView?.textFields![0],
+                  let documentName = textField.text,
+                  !documentName.isEmpty else {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error)
+                return
+            }
+            // Force unwrapping because we know it exists.
+            self._saveDocument(withName: documentName)
+        }))
+        
+        alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+        present(alterView, animated: true)
     }
     
     
@@ -201,13 +284,13 @@ class EditImageVC: UIViewController {
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
         _croppedImage = image
-        imageView = UIImageView()
-        imageView?.image = image
-        imageView?.frame = imageEditorView.bounds
-        imageEditorView.addSubview(imageView!)
-        imageEditorView.bringSubviewToFront(imageView!)
-        imageView?.contentMode = .scaleAspectFit
-        editVC.view.removeFromSuperview()
+        _imageView = UIImageView()
+        _imageView?.image = image
+        _imageView?.frame = imageEditorView.bounds
+        imageEditorView.addSubview(_imageView!)
+        imageEditorView.bringSubviewToFront(_imageView!)
+        _imageView?.contentMode = .scaleAspectFit
+        _editVC.view.removeFromSuperview()
         imageEditingMode = .correction
     }
 }

@@ -19,4 +19,5 @@ struct Icons {
     static let rotateRight = UIImage(named: "rotate-right")
     static let settings = UIImage(named: "settings")
     static let reset = UIImage(named: "reset")
+    static let filter = UIImage(named: "image-filter")
 }

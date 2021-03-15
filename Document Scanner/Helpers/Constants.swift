@@ -7,3 +7,8 @@
 
 import Foundation
 
+struct Constant {
+    struct DocumentScannerDefaults {
+        static let documentsListKey = "DocumentsListKey"
+    }
+}

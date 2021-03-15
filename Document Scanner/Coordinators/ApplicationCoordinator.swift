@@ -37,6 +37,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     
     func scanNewDocument(_ controller: HomeViewController) {
         let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
+        scanDocumentCoordinator.delegate = self
         childCoordinator.append(scanDocumentCoordinator)
         scanDocumentCoordinator.start()
     }
@@ -47,6 +48,12 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     
     func showSettings(_ controller: HomeViewController) {
         
+    }
+}
+
+extension ApplicationCoordinator: ScanDocumentCoordinatorDelegate {
+    func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator) {
+        navigationController.popToViewController(homeViewController, animated: true)
     }
     
     
