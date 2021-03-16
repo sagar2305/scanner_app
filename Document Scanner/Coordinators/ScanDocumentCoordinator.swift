@@ -52,6 +52,7 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
         editImageVC.imageToEdit = image
         editImageVC.imageEditingMode = .basic
         editImageVC.quad = quad
+        editImageVC.imageSource = .camera
         editImageVC.delegate = self
         navigationController.pushViewController(editImageVC, animated: true)
     }
@@ -60,7 +61,7 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
 
 extension ScanDocumentCoordinator: EditImageVCDelegate {
     func cancelImageEditing(_controller: EditImageVC) {
-        //stop editing
+        delegate?.didFinishScanningDocument(self)
     }
     
     func filterImage(_ image: UIImage, controller: EditImageVC) {

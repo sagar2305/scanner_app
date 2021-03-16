@@ -18,6 +18,7 @@ class ApplicationCoordinator: Coordinator {
     
     var navigationController: UINavigationController
     var homeViewController: HomeViewController
+    
     func start() {
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -43,16 +44,31 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func pickNewDocument(_ controller: HomeViewController) {
-        
+        let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
+        pickDocumentCoordinator.delegate = self
+        childCoordinator.append(pickDocumentCoordinator)
+        pickDocumentCoordinator.start()
     }
     
     func showSettings(_ controller: HomeViewController) {
-        
+        let settingsCoordinator = SettingsCoordinator(self)
+        childCoordinator.append(settingsCoordinator)
+        settingsCoordinator.start()
     }
 }
 
 extension ApplicationCoordinator: ScanDocumentCoordinatorDelegate {
     func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator) {
+        navigationController.popToViewController(homeViewController, animated: true)
+    }
+}
+
+extension ApplicationCoordinator: PickerDocumentCoordinatorDelegate {
+    func didFinishedPickingImage(_ coordinator: PickDocumentCoordinator) {
+        navigationController.popToViewController(homeViewController, animated: true)
+    }
+    
+    func didCancelPickingImage(_ coordinator: PickDocumentCoordinator) {
         navigationController.popToViewController(homeViewController, animated: true)
     }
     

@@ -31,6 +31,13 @@ class EditImageVC: UIViewController {
     
     enum ImageFilters {
         case black_and_white
+        case brightness
+        case sharpen
+    }
+    
+    enum ImageSource {
+        case photo_library
+        case camera
     }
 
     // MARK: - Views
@@ -51,40 +58,61 @@ class EditImageVC: UIViewController {
     
     //set externally
     var quad: Quadrilateral?
-    var imageToEdit: UIImage? //original image
+    var imageSource: ImageSource!
+    var imageToEdit: UIImage? {
+        didSet {
+            if imageEditorView != nil {
+                _croppedImage = nil
+                _editedImage = nil
+                imageEditorView.subviews.forEach {  $0.removeFromSuperview() }
+                _setupViews()
+            }
+        }
+    } //original image
     weak var delegate: EditImageVCDelegate?
     
     //temporary images
     private var _croppedImage: UIImage? //cropped image for filtering
     private var _editedImage: UIImage?
     
-    
+    private var currentFilter: ImageFilters?
+    //last slide values for filters defaults 0
+    private var lastSliderValueForBlackAndWhite: Float = 0.0
+    private var lastSliderValueForBrightness: Float = 0.0
+    private var lastSliderValueForSharpen: Float = 0.0
     
     // MARK:- IBoutlets
-    @IBOutlet weak var imageEditorView: UIView!
-    @IBOutlet weak var footerView: UIView!
+    @IBOutlet private weak var imageEditorView: UIView!
+    @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var footerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var sliderViewContainer: UIView!
+    @IBOutlet private weak var slider: UISlider!
     
-    //button left to right in xib
-    @IBOutlet weak var editButtonOneContainer: UIView!
-    @IBOutlet weak var editButtonOne: UIButton!
-    @IBOutlet weak var editButtonTwoContainer: UIView!
-    @IBOutlet weak var editButtonTwo: UIButton!
-    @IBOutlet weak var editButtonThreeContainer: UIView!
-    @IBOutlet weak var editButtonThree:UIButton!
-    @IBOutlet weak var editButtonFourContainer: UIView!
-    @IBOutlet weak var editButtonFour: UIButton!
-    @IBOutlet weak var editButtonFiveContainer: UIView!
-    @IBOutlet weak var editButtonFive: UIButton!
+    //button  left to right in xib
+    @IBOutlet private weak var editButtonOneContainer: UIView!
+    @IBOutlet private weak var editButtonOne: UIButton!
+    @IBOutlet private weak var editButtonTwoContainer: UIView!
+    @IBOutlet private weak var editButtonTwo: UIButton!
+    @IBOutlet private weak var editButtonThreeContainer: UIView!
+    @IBOutlet private weak var editButtonThree:UIButton!
+    @IBOutlet private weak var editButtonFourContainer: UIView!
+    @IBOutlet private weak var editButtonFour: UIButton!
+    @IBOutlet private weak var editButtonFiveContainer: UIView!
+    @IBOutlet private weak var editButtonFive: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        _setupViews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
 
-    private func setupViews() {
+    private func _setupViews() {
         //one time view setups
-        guard let imageToEdit = imageToEdit , let quad = quad else {
-            fatalError("ERROR: No image or quad is set for editing")
+        guard let imageToEdit = imageToEdit else {
+            fatalError("ERROR: No image is set for editing")
         }
         
         _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad, strokeColor: UIColor(red: (69.0 / 255.0), green: (194.0 / 255.0), blue: (177.0 / 255.0), alpha: 1.0).cgColor)
@@ -118,8 +146,16 @@ class EditImageVC: UIViewController {
         editButtonFiveContainer.isHidden = true
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonTwo.setImage(Icons.camera, for: .normal)
+        if imageSource! == .camera {
+            editButtonTwo.setImage(Icons.camera, for: .normal)
+        } else {
+            editButtonTwo.setImage(Icons.photoLibrary, for: .normal)
+        }
         editButtonFour.setImage(Icons.crop, for: .normal)
+        
+        sliderViewContainer.isHidden = true
+        footerViewHeightConstraint.constant = 60
+        self.view.layoutIfNeeded()
     }
     
     private func _setupEditorViewForCorrectionMode() {
@@ -134,6 +170,10 @@ class EditImageVC: UIViewController {
         editButtonThree.setImage(Icons.filter, for: .normal)
         editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
+        
+        sliderViewContainer.isHidden = true
+        footerViewHeightConstraint.constant = 60
+        self.view.layoutIfNeeded()
     }
     
     private func _setupEditorViewForFilteringMode() {
@@ -148,12 +188,15 @@ class EditImageVC: UIViewController {
         editButtonThree.setImage(Icons.filter, for: .normal)
         editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
+        
+        sliderViewContainer.isHidden = true
+        footerViewHeightConstraint.constant = 60
+        self.view.layoutIfNeeded()
     }
     
     //rotation of images is available in cropped mode only
     private func _rotateImage(_ direction: ImageRotationDirection) {
         switch  direction {
-        
         case .left:
             _croppedImage = _croppedImage?.rotate(withRotation: _rotateLeftRadians)
         case .right:
@@ -205,20 +248,69 @@ class EditImageVC: UIViewController {
         }
     }
     
-    private func _applyFilter(_ filter: ImageFilters) {
+    private func _filterSelected(_ filter: ImageFilters) {
+        currentFilter = filter
+        sliderViewContainer.isHidden = false
+        footerViewHeightConstraint.constant = 120
+        self.view.layoutIfNeeded()
+        
         switch filter {
         case .black_and_white:
-            guard  let filteredImage = GPUImageHelper.shared.convertToBlackAndWhite(_imageView!.image!) else {
-                return
-            }
-            _editedImage = filteredImage
-            _imageView?.image = _editedImage
+            slider.minimumValue = 0.0
+            slider.maximumValue = 1.0
+            slider.setValue(lastSliderValueForBlackAndWhite, animated: true)
+        case .brightness:
+            slider.minimumValue = -1.0
+            slider.maximumValue = 1.0
+            slider.setValue(lastSliderValueForBrightness, animated: true)
+        case .sharpen:
+            slider.minimumValue = -4.0
+            slider.maximumValue = 4.0
+            slider.setValue(lastSliderValueForSharpen, animated: true)
         }
+    }
+    
+    private func _applyFilter(_ intensity: Float) {
+        let image = _editedImage ?? _croppedImage
+        guard let imageToFilter = image  else {
+            fatalError("ERROR: No cropped image available for filtering")
+        }
+        
+        var editedImage: UIImage?
+        
+        switch currentFilter {
+        case .black_and_white:
+            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
+            lastSliderValueForBlackAndWhite = intensity
+        case .brightness:
+            editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
+            lastSliderValueForBrightness = intensity
+        case .sharpen:
+            editedImage = GPUImageHelper.shared.sharpenImage(imageToFilter, intensity: intensity)
+            lastSliderValueForSharpen = intensity
+        case .none:
+            break
+        }
+        
+        guard let newImage = editedImage else {
+            return
+        }
+        _editedImage = newImage
+        _imageView?.image = _editedImage
+        
     }
     
     //cancel editing
     @IBAction func didTapEditButtonOne(_ sender: UIButton) {
-        delegate?.cancelImageEditing(_controller: self)
+        guard let editingMode = imageEditingMode else {
+            fatalError("ERROR: Image editing mode not set")
+        }
+        
+        if editingMode == .filtering {
+            imageEditingMode = .correction
+        } else {
+            delegate?.cancelImageEditing(_controller: self)
+        }
     }
     
     // rescan image
@@ -233,7 +325,7 @@ class EditImageVC: UIViewController {
         case .correction:
             _rotateImage(.left)
         case .filtering:
-            _applyFilter(.black_and_white)
+            _filterSelected(.black_and_white)
         }
     }
     
@@ -249,7 +341,7 @@ class EditImageVC: UIViewController {
         case .correction:
             _initiateImageFiltering()
         case .filtering:
-            break
+            _filterSelected(.brightness)
         }
     }
     
@@ -264,7 +356,7 @@ class EditImageVC: UIViewController {
         case .correction:
             _rotateImage(.right)
         case .filtering:
-            break
+            _filterSelected(.sharpen)
         }
     }
     
@@ -293,6 +385,12 @@ class EditImageVC: UIViewController {
         present(alterView, animated: true)
     }
     
+    @IBAction func didChange(_ sender: UISlider) {
+        guard  let currentFilter = currentFilter else {
+            fatalError("ERROR: Slide shown without filter selection")
+        }
+        _applyFilter(sender.value)
+    }
     
 }
 

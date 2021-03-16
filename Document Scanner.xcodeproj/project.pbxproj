@@ -24,6 +24,16 @@
 		025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDAB025F0D394000834AE /* PickDocumentCoordinator.swift */; };
 		025DB19A2600B906006943C0 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025DB1752600B715006943C0 /* GPUImage.framework */; };
 		025DB19B2600B906006943C0 /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 025DB1752600B715006943C0 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1A62600FE86006943C0 /* SettingsVC.swift */; };
+		025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1A72600FE86006943C0 /* SettingsVC.xib */; };
+		025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1AF2600FF21006943C0 /* SettingsTableViewCell.swift */; };
+		025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1B02600FF21006943C0 /* SettingsTableViewCell.xib */; };
+		025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1B32601012B006943C0 /* SettingsCoordinator.swift */; };
+		025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1B52601045D006943C0 /* SettingsHelper.swift */; };
+		025DB1B8260106ED006943C0 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1B7260106ED006943C0 /* Setting.swift */; };
+		025DB1C126011214006943C0 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1BF26011214006943C0 /* WebViewVC.swift */; };
+		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
+		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F191542600783400D8CB8A /* UIView+Extension.swift */; };
 		02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */; };
@@ -39,7 +49,7 @@
 		02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F19222260096DF00D8CB8A /* HomeViewController.swift */; };
 		02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02F19223260096DF00D8CB8A /* ScannerVC.xib */; };
 		02F1922B260096F100D8CB8A /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1922A260096F100D8CB8A /* Document.swift */; };
-		2C8B3681A5047EB82E0DB67A /* libPods-Document Scanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */; };
+		941AD8826DFD46D39B058655 /* Pods_Document_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09A2702D76C8708F692FD96C /* Pods_Document_Scanner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +115,16 @@
 		025BDAA725F0A5B2000834AE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		025BDAB025F0D394000834AE /* PickDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickDocumentCoordinator.swift; sourceTree = "<group>"; };
 		025DB1692600B715006943C0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = framework/GPUImage.xcodeproj; sourceTree = SOURCE_ROOT; };
+		025DB1A62600FE86006943C0 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		025DB1A72600FE86006943C0 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
+		025DB1AF2600FF21006943C0 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		025DB1B02600FF21006943C0 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		025DB1B32601012B006943C0 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		025DB1B52601045D006943C0 /* SettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelper.swift; sourceTree = "<group>"; };
+		025DB1B7260106ED006943C0 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		025DB1BF26011214006943C0 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
+		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02F191542600783400D8CB8A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -122,7 +142,7 @@
 		02F19223260096DF00D8CB8A /* ScannerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScannerVC.xib; sourceTree = "<group>"; };
 		02F1922A260096F100D8CB8A /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		091CA3DF167A7F5E0B3F7B7E /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.release.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
-		2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Document Scanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		09A2702D76C8708F692FD96C /* Pods_Document_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Document_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		884AFBF96EDD573F7A96CAC1 /* Pods-Document Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,8 +151,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C8B3681A5047EB82E0DB67A /* libPods-Document Scanner.a in Frameworks */,
 				025DB19A2600B906006943C0 /* GPUImage.framework in Frameworks */,
+				941AD8826DFD46D39B058655 /* Pods_Document_Scanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				02F1922A260096F100D8CB8A /* Document.swift */,
+				025DB1B7260106ED006943C0 /* Setting.swift */,
+				025DB1C726011E8A006943C0 /* Filter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,14 +211,15 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				025DB1692600B715006943C0 /* GPUImage.xcodeproj */,
-				024F07CB25FFC5B80091C73C /* CollectionViewCell */,
 				025BDA9A25F09BAC000834AE /* App files */,
+				024F07CB25FFC5B80091C73C /* CollectionViewCell */,
 				02ACA17925F9F1970063A3ED /* Controls */,
 				025BDA9C25F09DF9000834AE /* Coordinators */,
 				024F074625FF3B6B0091C73C /* Extensions */,
+				025DB1692600B715006943C0 /* GPUImage.xcodeproj */,
 				02ACA18E25FA8F360063A3ED /* Helpers */,
 				024F072C25FF12640091C73C /* Models */,
+				025DB1AE2600FEFE006943C0 /* TableViewCells */,
 				025BDAA125F0A022000834AE /* ViewController */,
 			);
 			path = "Document Scanner";
@@ -223,6 +246,7 @@
 				025BDAA725F0A5B2000834AE /* ApplicationCoordinator.swift */,
 				025BDAB025F0D394000834AE /* PickDocumentCoordinator.swift */,
 				02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */,
+				025DB1B32601012B006943C0 /* SettingsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -236,6 +260,10 @@
 				02F19220260096DF00D8CB8A /* HomeViewController.xib */,
 				02F19221260096DF00D8CB8A /* ScannerVC.swift */,
 				02F19223260096DF00D8CB8A /* ScannerVC.xib */,
+				025DB1A62600FE86006943C0 /* SettingsVC.swift */,
+				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
+				025DB1BF26011214006943C0 /* WebViewVC.swift */,
+				025DB1C026011214006943C0 /* WebViewVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -249,6 +277,15 @@
 				025DB1772600B715006943C0 /* GPUImageTests_iOS.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		025DB1AE2600FEFE006943C0 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				025DB1AF2600FF21006943C0 /* SettingsTableViewCell.swift */,
+				025DB1B02600FF21006943C0 /* SettingsTableViewCell.xib */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		02ACA17925F9F1970063A3ED /* Controls */ = {
@@ -267,6 +304,7 @@
 				02F19219260096C100D8CB8A /* FileHelper.swift */,
 				02F19216260096C100D8CB8A /* GPUImageHelper.swift */,
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
+				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -274,7 +312,7 @@
 		4C0B03C443DA94E9FFA99851 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */,
+				09A2702D76C8708F692FD96C /* Pods_Document_Scanner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -299,8 +337,8 @@
 				025BDA7E25F09AA1000834AE /* Sources */,
 				025BDA7F25F09AA1000834AE /* Frameworks */,
 				025BDA8025F09AA1000834AE /* Resources */,
-				717A2C0563468C0D3F70833A /* [CP] Copy Pods Resources */,
 				02751F7B26006CAB00E8BE90 /* Embed Frameworks */,
+				3DFD0DE4229EA0CA09E74CA6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -385,36 +423,39 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				024F075325FF656D0091C73C /* FilterController.xib in Resources */,
 				025BDA8D25F09AA1000834AE /* Main.storyboard in Resources */,
+				025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
+				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		717A2C0563468C0D3F70833A /* [CP] Copy Pods Resources */ = {
+		3DFD0DE4229EA0CA09E74CA6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E099BA5590F922F048D847FB /* [CP] Check Pods Manifest.lock */ = {
@@ -447,8 +488,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
+				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
+				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
 				02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */,
+				025DB1B8260106ED006943C0 /* Setting.swift in Sources */,
 				024F077925FFB97A0091C73C /* Foundation+Extension.swift in Sources */,
 				02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */,
 				02F1922B260096F100D8CB8A /* Document.swift in Sources */,
@@ -457,14 +501,18 @@
 				025BDA8A25F09AA1000834AE /* ViewController.swift in Sources */,
 				02F1921D260096C100D8CB8A /* FileHelper.swift in Sources */,
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
+				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,
 				02F19227260096DF00D8CB8A /* ScannerVC.swift in Sources */,
 				025BDA8625F09AA1000834AE /* AppDelegate.swift in Sources */,
 				024F075E25FF6A350091C73C /* FilterController.swift in Sources */,
 				025BDA8825F09AA1000834AE /* SceneDelegate.swift in Sources */,
 				024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */,
+				025DB1C826011E8A006943C0 /* Filter.swift in Sources */,
 				02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */,
 				025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */,
+				025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */,
+				025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */,
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
 				02F1921C260096C100D8CB8A /* Constants.swift in Sources */,
 			);

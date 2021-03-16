@@ -1,4 +1,4 @@
-module LGButton {
+framework module LGButton {
   umbrella header "LGButton-umbrella.h"
 
   export *

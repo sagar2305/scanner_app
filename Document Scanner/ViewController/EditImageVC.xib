@@ -24,7 +24,10 @@
                 <outlet property="editButtonTwo" destination="OC6-qj-kGe" id="hiS-zR-vbF"/>
                 <outlet property="editButtonTwoContainer" destination="ygq-47-q1s" id="3Ff-Iv-36E"/>
                 <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
+                <outlet property="footerViewHeightConstraint" destination="ZMe-Pb-7nz" id="2yd-RF-crK"/>
                 <outlet property="imageEditorView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
+                <outlet property="slider" destination="Dpo-yV-mB9" id="OwP-ZU-ATL"/>
+                <outlet property="sliderViewContainer" destination="QXs-gS-mqv" id="LYC-3Q-Z0p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,157 +37,179 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO">
-                    <rect key="frame" x="12" y="56" width="390" height="722"/>
+                    <rect key="frame" x="12" y="56" width="390" height="662"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh">
-                    <rect key="frame" x="12" y="790" width="390" height="60"/>
+                    <rect key="frame" x="12" y="730" width="390" height="120"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4p5-2d-AdV">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hLL-7C-PYn">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="120"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4c-fV-XOc">
-                                    <rect key="frame" x="0.0" y="0.0" width="71.5" height="60"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXs-gS-mqv">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qty-BB-CHH">
-                                            <rect key="frame" x="14" y="8" width="44" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="PIN-hs-g2o"/>
-                                                <constraint firstAttribute="height" constant="44" id="vEw-y2-dmG"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="cancel" symbolScale="large" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dpo-yV-mB9">
+                                            <rect key="frame" x="14" y="15" width="362" height="31"/>
                                             <connections>
-                                                <action selector="didTapEditButtonOne:" destination="-1" eventType="touchUpInside" id="3bA-pf-SI5"/>
+                                                <action selector="didChange:" destination="-1" eventType="valueChanged" id="WJP-g6-Gcb"/>
                                             </connections>
-                                        </button>
+                                        </slider>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstItem="qty-BB-CHH" firstAttribute="centerY" secondItem="u4c-fV-XOc" secondAttribute="centerY" id="6gf-HR-ehM"/>
-                                        <constraint firstItem="qty-BB-CHH" firstAttribute="centerX" secondItem="u4c-fV-XOc" secondAttribute="centerX" id="pQy-GT-wcC"/>
+                                        <constraint firstAttribute="trailing" secondItem="Dpo-yV-mB9" secondAttribute="trailing" constant="16" id="Rp3-2i-6wj"/>
+                                        <constraint firstItem="Dpo-yV-mB9" firstAttribute="centerY" secondItem="QXs-gS-mqv" secondAttribute="centerY" id="bWS-Km-dz9"/>
+                                        <constraint firstItem="Dpo-yV-mB9" firstAttribute="leading" secondItem="QXs-gS-mqv" secondAttribute="leading" constant="16" id="vm6-HH-9vj"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygq-47-q1s">
-                                    <rect key="frame" x="79.5" y="0.0" width="71.5" height="60"/>
+                                <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4p5-2d-AdV">
+                                    <rect key="frame" x="0.0" y="60" width="390" height="60"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC6-qj-kGe">
-                                            <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4c-fV-XOc">
+                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qty-BB-CHH">
+                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="PIN-hs-g2o"/>
+                                                        <constraint firstAttribute="height" constant="44" id="vEw-y2-dmG"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="cancel" symbolScale="large" renderingMode="original"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapEditButtonOne:" destination="-1" eventType="touchUpInside" id="3bA-pf-SI5"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="8dM-Oy-8wn"/>
-                                                <constraint firstAttribute="height" constant="44" id="WQT-DN-VP7"/>
+                                                <constraint firstItem="qty-BB-CHH" firstAttribute="centerY" secondItem="u4c-fV-XOc" secondAttribute="centerY" id="6gf-HR-ehM"/>
+                                                <constraint firstItem="qty-BB-CHH" firstAttribute="centerX" secondItem="u4c-fV-XOc" secondAttribute="centerX" id="pQy-GT-wcC"/>
                                             </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="rotate-left" symbolScale="large" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapEditButtonTwo:" destination="-1" eventType="touchUpInside" id="t4u-9N-j1d"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="OC6-qj-kGe" firstAttribute="centerY" secondItem="ygq-47-q1s" secondAttribute="centerY" id="cT2-b0-Ica"/>
-                                        <constraint firstItem="OC6-qj-kGe" firstAttribute="centerX" secondItem="ygq-47-q1s" secondAttribute="centerX" id="xbO-ud-eyV"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-u9-fWz">
-                                    <rect key="frame" x="159" y="0.0" width="72" height="60"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEe-dA-cHx">
-                                            <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygq-47-q1s">
+                                            <rect key="frame" x="79.5" y="0.0" width="71.5" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC6-qj-kGe">
+                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="8dM-Oy-8wn"/>
+                                                        <constraint firstAttribute="height" constant="44" id="WQT-DN-VP7"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="rotate-left" symbolScale="large" renderingMode="original"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapEditButtonTwo:" destination="-1" eventType="touchUpInside" id="t4u-9N-j1d"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="cBN-Bl-Dpc"/>
-                                                <constraint firstAttribute="height" constant="44" id="dlA-dc-h5s"/>
+                                                <constraint firstItem="OC6-qj-kGe" firstAttribute="centerY" secondItem="ygq-47-q1s" secondAttribute="centerY" id="cT2-b0-Ica"/>
+                                                <constraint firstItem="OC6-qj-kGe" firstAttribute="centerX" secondItem="ygq-47-q1s" secondAttribute="centerX" id="xbO-ud-eyV"/>
                                             </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapEditButtonThree:" destination="-1" eventType="touchUpInside" id="u5N-4T-i3c"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="nEe-dA-cHx" firstAttribute="centerX" secondItem="MW2-u9-fWz" secondAttribute="centerX" id="4sM-pq-w9U"/>
-                                        <constraint firstItem="nEe-dA-cHx" firstAttribute="centerY" secondItem="MW2-u9-fWz" secondAttribute="centerY" id="XGW-Xh-x19"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-eb-cfl">
-                                    <rect key="frame" x="239" y="0.0" width="71.5" height="60"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lmp-RQ-8ek">
-                                            <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-u9-fWz">
+                                            <rect key="frame" x="159" y="0.0" width="72" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEe-dA-cHx">
+                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="cBN-Bl-Dpc"/>
+                                                        <constraint firstAttribute="height" constant="44" id="dlA-dc-h5s"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapEditButtonThree:" destination="-1" eventType="touchUpInside" id="u5N-4T-i3c"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="N5Y-Ja-NuI"/>
-                                                <constraint firstAttribute="width" constant="44" id="jN8-6Q-n3z"/>
+                                                <constraint firstItem="nEe-dA-cHx" firstAttribute="centerX" secondItem="MW2-u9-fWz" secondAttribute="centerX" id="4sM-pq-w9U"/>
+                                                <constraint firstItem="nEe-dA-cHx" firstAttribute="centerY" secondItem="MW2-u9-fWz" secondAttribute="centerY" id="XGW-Xh-x19"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                            <state key="normal">
-                                                <imageReference key="image" image="rotate-right" symbolScale="medium" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapEditButtonFour:" destination="-1" eventType="touchUpInside" id="4mS-UB-n8P"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="Lmp-RQ-8ek" firstAttribute="centerX" secondItem="KJm-eb-cfl" secondAttribute="centerX" id="1pM-1l-z5a"/>
-                                        <constraint firstItem="Lmp-RQ-8ek" firstAttribute="centerY" secondItem="KJm-eb-cfl" secondAttribute="centerY" id="cFd-TN-B2E"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyi-hp-S9O">
-                                    <rect key="frame" x="318.5" y="0.0" width="71.5" height="60"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT0-kV-zkW">
-                                            <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-eb-cfl">
+                                            <rect key="frame" x="239" y="0.0" width="71.5" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lmp-RQ-8ek">
+                                                    <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="N5Y-Ja-NuI"/>
+                                                        <constraint firstAttribute="width" constant="44" id="jN8-6Q-n3z"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="rotate-right" symbolScale="medium" renderingMode="original"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapEditButtonFour:" destination="-1" eventType="touchUpInside" id="4mS-UB-n8P"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="e9h-6n-ZqC"/>
-                                                <constraint firstAttribute="width" constant="44" id="w8r-Gx-mA7"/>
+                                                <constraint firstItem="Lmp-RQ-8ek" firstAttribute="centerX" secondItem="KJm-eb-cfl" secondAttribute="centerX" id="1pM-1l-z5a"/>
+                                                <constraint firstItem="Lmp-RQ-8ek" firstAttribute="centerY" secondItem="KJm-eb-cfl" secondAttribute="centerY" id="cFd-TN-B2E"/>
                                             </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="done" symbolScale="medium" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="bold">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapEditButtonFive:" destination="-1" eventType="touchUpInside" id="3PU-nQ-jpP"/>
-                                            </connections>
-                                        </button>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyi-hp-S9O">
+                                            <rect key="frame" x="318.5" y="0.0" width="71.5" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT0-kV-zkW">
+                                                    <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="e9h-6n-ZqC"/>
+                                                        <constraint firstAttribute="width" constant="44" id="w8r-Gx-mA7"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="done" symbolScale="medium" renderingMode="original"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="bold">
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapEditButtonFive:" destination="-1" eventType="touchUpInside" id="3PU-nQ-jpP"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="gT0-kV-zkW" firstAttribute="centerX" secondItem="dyi-hp-S9O" secondAttribute="centerX" id="Ekf-b6-G1Z"/>
+                                                <constraint firstItem="gT0-kV-zkW" firstAttribute="centerY" secondItem="dyi-hp-S9O" secondAttribute="centerY" id="ZVv-O5-BNY"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="gT0-kV-zkW" firstAttribute="centerX" secondItem="dyi-hp-S9O" secondAttribute="centerX" id="Ekf-b6-G1Z"/>
-                                        <constraint firstItem="gT0-kV-zkW" firstAttribute="centerY" secondItem="dyi-hp-S9O" secondAttribute="centerY" id="ZVv-O5-BNY"/>
-                                    </constraints>
-                                </view>
+                                    <color key="backgroundColor" name="app-theme"/>
+                                </stackView>
                             </subviews>
-                            <color key="backgroundColor" name="app-theme"/>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="4p5-2d-AdV" secondAttribute="trailing" id="5uM-uI-MK4"/>
-                        <constraint firstItem="4p5-2d-AdV" firstAttribute="leading" secondItem="QLe-Fr-nQh" secondAttribute="leading" id="TNR-Ay-4uk"/>
-                        <constraint firstAttribute="height" constant="60" id="ZMe-Pb-7nz"/>
-                        <constraint firstItem="4p5-2d-AdV" firstAttribute="top" secondItem="QLe-Fr-nQh" secondAttribute="top" id="jJq-5A-aC0"/>
-                        <constraint firstAttribute="bottom" secondItem="4p5-2d-AdV" secondAttribute="bottom" id="mXn-eU-ujD"/>
+                        <constraint firstItem="hLL-7C-PYn" firstAttribute="top" secondItem="QLe-Fr-nQh" secondAttribute="top" id="MEP-4h-Kfj"/>
+                        <constraint firstItem="hLL-7C-PYn" firstAttribute="leading" secondItem="QLe-Fr-nQh" secondAttribute="leading" id="W9b-Cs-0df"/>
+                        <constraint firstAttribute="trailing" secondItem="hLL-7C-PYn" secondAttribute="trailing" id="YMV-Zd-JrZ"/>
+                        <constraint firstAttribute="height" constant="120" id="ZMe-Pb-7nz"/>
+                        <constraint firstAttribute="bottom" secondItem="hLL-7C-PYn" secondAttribute="bottom" id="d9z-vQ-Fsl"/>
                     </constraints>
                 </view>
             </subviews>
@@ -201,146 +226,6 @@
             </constraints>
             <point key="canvasLocation" x="-139.13043478260872" y="-141.29464285714286"/>
         </view>
-        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" id="eD0-Xl-o09">
-            <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8qW-uq-1tZ">
-                    <rect key="frame" x="0.0" y="0.0" width="71.5" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJL-1s-8ni">
-                            <rect key="frame" x="14" y="8" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="44" id="YRU-qQ-D6f"/>
-                                <constraint firstAttribute="height" constant="44" id="y6y-Hw-WA1"/>
-                            </constraints>
-                            <state key="normal">
-                                <imageReference key="image" image="cancel" symbolScale="large" renderingMode="original"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                </preferredSymbolConfiguration>
-                            </state>
-                            <connections>
-                                <action selector="didTapEditButtonOne:" destination="-1" eventType="touchUpInside" id="b2S-L8-nLA"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="CJL-1s-8ni" firstAttribute="centerY" secondItem="8qW-uq-1tZ" secondAttribute="centerY" id="ADb-rr-CJx"/>
-                        <constraint firstItem="CJL-1s-8ni" firstAttribute="centerX" secondItem="8qW-uq-1tZ" secondAttribute="centerX" id="HVh-1j-Sfw"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbV-pz-a76">
-                    <rect key="frame" x="79.5" y="0.0" width="71.5" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6et-pR-LKC">
-                            <rect key="frame" x="14" y="8" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="44" id="3jc-gA-vc7"/>
-                                <constraint firstAttribute="height" constant="44" id="AfX-cd-1wH"/>
-                            </constraints>
-                            <state key="normal">
-                                <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                </preferredSymbolConfiguration>
-                            </state>
-                            <connections>
-                                <action selector="didTapEditButtonTwo:" destination="-1" eventType="touchUpInside" id="1S7-ED-jNa"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="6et-pR-LKC" firstAttribute="centerY" secondItem="AbV-pz-a76" secondAttribute="centerY" id="KyI-nj-lCo"/>
-                        <constraint firstItem="6et-pR-LKC" firstAttribute="centerX" secondItem="AbV-pz-a76" secondAttribute="centerX" id="ODU-o6-4AE"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8W-Ob-iIZ">
-                    <rect key="frame" x="159" y="0.0" width="72" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkF-00-8cR">
-                            <rect key="frame" x="14" y="8" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="4PC-YG-dlh"/>
-                                <constraint firstAttribute="width" constant="44" id="xF3-pa-JeN"/>
-                            </constraints>
-                            <state key="normal">
-                                <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                </preferredSymbolConfiguration>
-                            </state>
-                            <connections>
-                                <action selector="didTapEditButtonThree:" destination="-1" eventType="touchUpInside" id="Xc2-Wc-d65"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="RkF-00-8cR" firstAttribute="centerY" secondItem="Q8W-Ob-iIZ" secondAttribute="centerY" id="HYR-AC-iYz"/>
-                        <constraint firstItem="RkF-00-8cR" firstAttribute="centerX" secondItem="Q8W-Ob-iIZ" secondAttribute="centerX" id="tmb-NL-GlX"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFQ-yy-lfP">
-                    <rect key="frame" x="239" y="0.0" width="71.5" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DAX-nE-OfA">
-                            <rect key="frame" x="13.5" y="8" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="OVZ-lj-N8g"/>
-                                <constraint firstAttribute="width" constant="44" id="y5G-Ag-bkT"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                            <state key="normal">
-                                <imageReference key="image" image="rotate-right" symbolScale="medium" renderingMode="original"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                </preferredSymbolConfiguration>
-                            </state>
-                            <connections>
-                                <action selector="didTapEditButtonFour:" destination="-1" eventType="touchUpInside" id="Hs5-8I-OLf"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="DAX-nE-OfA" firstAttribute="centerY" secondItem="iFQ-yy-lfP" secondAttribute="centerY" id="l82-Oq-Fpt"/>
-                        <constraint firstItem="DAX-nE-OfA" firstAttribute="centerX" secondItem="iFQ-yy-lfP" secondAttribute="centerX" id="s6B-Mb-VUM"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeI-VE-Nsm">
-                    <rect key="frame" x="318.5" y="0.0" width="71.5" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b60-S4-BRa">
-                            <rect key="frame" x="13.5" y="8" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="44" id="9xJ-Kb-gf4"/>
-                                <constraint firstAttribute="height" constant="44" id="gBF-fh-D2X"/>
-                            </constraints>
-                            <state key="normal">
-                                <imageReference key="image" image="done" symbolScale="medium" renderingMode="original"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="bold">
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                </preferredSymbolConfiguration>
-                            </state>
-                            <connections>
-                                <action selector="didTapEditButtonFive:" destination="-1" eventType="touchUpInside" id="fJI-1O-e1w"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="b60-S4-BRa" firstAttribute="centerY" secondItem="CeI-VE-Nsm" secondAttribute="centerY" id="I5a-An-lbY"/>
-                        <constraint firstItem="b60-S4-BRa" firstAttribute="centerX" secondItem="CeI-VE-Nsm" secondAttribute="centerX" id="orN-lV-kx3"/>
-                    </constraints>
-                </view>
-            </subviews>
-            <viewLayoutGuide key="safeArea" id="xr3-J4-2wZ"/>
-            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <point key="canvasLocation" x="-164" y="226"/>
-        </stackView>
     </objects>
     <resources>
         <image name="camera" width="33" height="33"/>
