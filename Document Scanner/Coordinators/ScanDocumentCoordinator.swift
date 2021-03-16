@@ -74,9 +74,7 @@ extension ScanDocumentCoordinator: EditImageVCDelegate {
     
     func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage, documentName: String, controller: EditImageVC) {
         var quadPoints = [CGPoint]()
-        guard let quad = editImageVC.quad else {
-            fatalError("ERROR: No points available")
-        }
+       
         
         let activityIndicator = NVActivityIndicatorView(frame: rootViewController.view.frame,
                                                         type: .ballRotateChase,
@@ -84,10 +82,13 @@ extension ScanDocumentCoordinator: EditImageVCDelegate {
                                                         padding: 16)
         activityIndicator.startAnimating()
         
-        quadPoints.append(quad.topLeft)
-        quadPoints.append(quad.topRight)
-        quadPoints.append(quad.bottomLeft)
-        quadPoints.append(quad.bottomRight)
+        if let quad = controller.quad  {
+            quadPoints = []
+            quadPoints.append(quad.topLeft)
+            quadPoints.append(quad.topRight)
+            quadPoints.append(quad.bottomLeft)
+            quadPoints.append(quad.bottomRight)
+        }
         
         let document = Document(documentName,
                                 originalImage: originalImage,

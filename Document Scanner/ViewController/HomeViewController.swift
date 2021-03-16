@@ -22,10 +22,7 @@ class HomeViewController: UIViewController {
     private var footerCornerRadius: CGFloat = 24
     private lazy var dateSource = _getDocumentCollectionViewDataSource()
     
-    private var documents: [Document] {
-        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
-        return documents
-    }
+    private var documents = [Document]()
     
     @IBOutlet weak private var footerView: UIView!
     @IBOutlet weak private var documentsCollectionView: UICollectionView!
@@ -38,7 +35,13 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        documentsCollectionView.reloadData()
+        _getDocuments()
+    }
+    
+    func _getDocuments() {
+        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
+        self.documents = documents
+        applySnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
@@ -51,6 +54,7 @@ class HomeViewController: UIViewController {
         documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.identifier, bundle: nil),
                                          forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
         documentsCollectionView.collectionViewLayout = _collectionViewLayout()
+        documentsCollectionView.delegate = self
         applySnapshot()
     }
     
@@ -71,6 +75,7 @@ class HomeViewController: UIViewController {
             guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.identifier, for: indexPath) as? DocumentCollectionViewCell else {
                 fatalError("ERROR: Unable to find and dequeue cell with identifier \(DocumentCollectionViewCell.identifier)")
             }
+            collectionViewCell.document = document
             return collectionViewCell
         }
         return dataSource
@@ -96,4 +101,15 @@ class HomeViewController: UIViewController {
         delegate?.showSettings(self)
     }
     
+}
+
+
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let document = documents[indexPath.row]
+        let reviewImageVC = DocumentReviewVC()
+        reviewImageVC.modalPresentationStyle = .fullScreen
+        reviewImageVC.document = document
+        present(reviewImageVC, animated: true)
+    }
 }

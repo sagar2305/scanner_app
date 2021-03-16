@@ -185,8 +185,8 @@ class EditImageVC: UIViewController {
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
         editButtonTwo.setImage(Icons.blackAndWhite, for: .normal)
-        editButtonThree.setImage(Icons.filter, for: .normal)
-        editButtonFour.setImage(Icons.rotateRight, for: .normal)
+        editButtonThree.setImage(Icons.brightness, for: .normal)
+        editButtonFour.setImage(Icons.sharpen, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
         
         sliderViewContainer.isHidden = true
@@ -271,8 +271,7 @@ class EditImageVC: UIViewController {
     }
     
     private func _applyFilter(_ intensity: Float) {
-        let image = _editedImage ?? _croppedImage
-        guard let imageToFilter = image  else {
+        guard let imageToFilter = _croppedImage  else {
             fatalError("ERROR: No cropped image available for filtering")
         }
         

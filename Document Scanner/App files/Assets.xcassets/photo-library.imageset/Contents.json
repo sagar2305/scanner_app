@@ -15,7 +15,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "photo-library-light@2x.png",
+      "filename" : "photo-library-dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -26,12 +26,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "photo-library-dark@2x.png",
+      "filename" : "photo-library-light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "photo-library-light@3x.png",
+      "filename" : "photo-library-dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -42,7 +42,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "photo-library-dark@3x.png",
+      "filename" : "photo-library-light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

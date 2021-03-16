@@ -86,21 +86,22 @@ extension PickDocumentCoordinator: EditImageVCDelegate {
     }
     
     func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage, documentName: String, controller: EditImageVC) {
-        var quadPoints = [CGPoint]()
-        guard let quad = controller.quad else {
-            fatalError("ERROR: No points available")
-        }
-        
+        var quadPoints: [CGPoint] = []
         let activityIndicator = NVActivityIndicatorView(frame: rootViewController.view.frame,
                                                         type: .ballRotateChase,
                                                         color: UIColor.blue,
                                                         padding: 16)
         activityIndicator.startAnimating()
         
-        quadPoints.append(quad.topLeft)
-        quadPoints.append(quad.topRight)
-        quadPoints.append(quad.bottomLeft)
-        quadPoints.append(quad.bottomRight)
+        if let quad = controller.quad  {
+            quadPoints = []
+            quadPoints.append(quad.topLeft)
+            quadPoints.append(quad.topRight)
+            quadPoints.append(quad.bottomLeft)
+            quadPoints.append(quad.bottomRight)
+        }
+        
+        
         
         let document = Document(documentName,
                                 originalImage: originalImage,

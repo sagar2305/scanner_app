@@ -35,6 +35,8 @@
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
+		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
+		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
 		02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F191542600783400D8CB8A /* UIView+Extension.swift */; };
 		02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */; };
 		02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02F1915E260083AD00D8CB8A /* FilterSelectionCollectionViewCell.xib */; };
@@ -126,6 +128,8 @@
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
+		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
+		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
 		02F191542600783400D8CB8A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		02F1915E260083AD00D8CB8A /* FilterSelectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterSelectionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
 				025DB1BF26011214006943C0 /* WebViewVC.swift */,
 				025DB1C026011214006943C0 /* WebViewVC.xib */,
+				02E77073260143F300C1887F /* DocumentReviewVC.swift */,
+				02E77074260143F300C1887F /* DocumentReviewVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
+				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
 				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
 			);
@@ -490,6 +497,7 @@
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
+				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
 				02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */,
 				025DB1B8260106ED006943C0 /* Setting.swift in Sources */,

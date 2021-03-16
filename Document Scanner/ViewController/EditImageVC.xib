@@ -211,6 +211,11 @@
                         <constraint firstAttribute="height" constant="120" id="ZMe-Pb-7nz"/>
                         <constraint firstAttribute="bottom" secondItem="hLL-7C-PYn" secondAttribute="bottom" id="d9z-vQ-Fsl"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

@@ -30,13 +30,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="248" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUV-VL-h1Q">
-                                                <rect key="frame" x="0.0" y="0.0" width="248" height="25.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="248" height="40"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" name="background"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wTR-Ab-FXj">
-                                                <rect key="frame" x="0.0" y="25.5" width="248" height="14.5"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wTR-Ab-FXj">
+                                                <rect key="frame" x="0.0" y="40" width="248" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <color key="textColor" name="background"/>
@@ -87,6 +87,10 @@
                     <real key="value" value="15"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="documentNameLabel" destination="zUV-VL-h1Q" id="2K7-iC-jkF"/>
+                <outlet property="documentThumbnail" destination="Aie-pm-1bI" id="BKW-5W-aqs"/>
+            </connections>
             <point key="canvasLocation" x="-11.594202898550726" y="152.34375"/>
         </collectionViewCell>
     </objects>

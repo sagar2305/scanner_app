@@ -15,7 +15,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "crop-light@2x.png",
+      "filename" : "crop-dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -26,12 +26,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "crop-dark@2x.png",
+      "filename" : "crop-light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "crop-light@3x.png",
+      "filename" : "crop-dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -42,7 +42,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "crop-dark@3x.png",
+      "filename" : "crop-light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

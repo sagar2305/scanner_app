@@ -22,10 +22,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gY2-MY-n3G">
-                    <rect key="frame" x="8" y="52" width="398" height="64"/>
+                    <rect key="frame" x="8" y="52" width="398" height="56"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ydZ-c1-fz7">
-                            <rect key="frame" x="8" y="5" width="72" height="54"/>
+                            <rect key="frame" x="8" y="1" width="72" height="54"/>
                             <color key="backgroundColor" name="app-theme"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="72" id="9C6-fT-eog"/>
@@ -47,13 +47,13 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="64" id="Sug-SS-ZC7"/>
+                        <constraint firstAttribute="height" constant="56" id="Sug-SS-ZC7"/>
                         <constraint firstItem="ydZ-c1-fz7" firstAttribute="leading" secondItem="gY2-MY-n3G" secondAttribute="leading" constant="8" id="veF-pp-Cxb"/>
                         <constraint firstItem="ydZ-c1-fz7" firstAttribute="centerY" secondItem="gY2-MY-n3G" secondAttribute="centerY" id="zDu-aT-Bic"/>
                     </constraints>
                 </view>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBA-Oy-bw8">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <rect key="frame" x="0.0" y="116" width="414" height="746"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
             </subviews>

@@ -12,7 +12,7 @@ class Document: Codable {
     var id = UUID()
     var name: String
     let originalImageName: String
-    let quadrilateral: [CGPoint]
+    let quadrilateral: [CGPoint]?
     var editedImageName: String
     var tag: String
     var thumbnailData: Data?
@@ -25,14 +25,17 @@ class Document: Codable {
         self.tag = ""
     }
     
-    var originalImage: UIImage? {
-        return UIImage()
-    }
+    lazy var originalImage: UIImage? = {
+        FileHelper.shared.getImage(originalImageName)
+    }()
     
-    var editedImage: UIImage? {
-        return UIImage()
-    }
+    lazy var editedImage: UIImage? = {
+        FileHelper.shared.getImage(editedImageName)
+    }()
     
+    var thumbNailImage: UIImage? {
+        return UIImage(data: thumbnailData ?? Data())
+    }
     func saveOriginalImage(_ image: UIImage) -> Bool {
         return FileHelper.shared.saveImage(image: image, withName: editedImageName)
     }
