@@ -37,6 +37,7 @@
 		02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F191542600783400D8CB8A /* UIView+Extension.swift */; };
 		02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */; };
 		02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02F1915E260083AD00D8CB8A /* FilterSelectionCollectionViewCell.xib */; };
+		02F19213260094BA00D8CB8A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02F19212260094BA00D8CB8A /* Info.plist */; };
 		2C8B3681A5047EB82E0DB67A /* libPods-Document Scanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		02F191542600783400D8CB8A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		02F1915E260083AD00D8CB8A /* FilterSelectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterSelectionCollectionViewCell.xib; sourceTree = "<group>"; };
+		02F19212260094BA00D8CB8A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		091CA3DF167A7F5E0B3F7B7E /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.release.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
 		2AE8BB2DBD682565F4428D74 /* libPods-Document Scanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Document Scanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		884AFBF96EDD573F7A96CAC1 /* Pods-Document Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.debug.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		025BDA9A25F09BAC000834AE /* App files */ = {
 			isa = PBXGroup;
 			children = (
+				02F19212260094BA00D8CB8A /* Info.plist */,
 				025BDA8B25F09AA1000834AE /* Main.storyboard */,
 				025BDA8925F09AA1000834AE /* ViewController.swift */,
 				025BDA8E25F09AA6000834AE /* Assets.xcassets */,
@@ -306,6 +309,7 @@
 				025BDAA525F0A05E000834AE /* HomeViewController.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				022471AB25F63731007D70FC /* EditImageVC.xib in Resources */,
+				02F19213260094BA00D8CB8A /* Info.plist in Resources */,
 				0224719725F5E4E3007D70FC /* ScannerVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
