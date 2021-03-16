@@ -20,4 +20,5 @@ struct Icons {
     static let settings = UIImage(named: "settings")
     static let reset = UIImage(named: "reset")
     static let filter = UIImage(named: "image-filter")
+    static let blackAndWhite = UIImage(named: "black_and_white")
 }

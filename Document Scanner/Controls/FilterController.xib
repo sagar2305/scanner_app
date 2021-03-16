@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="D9d-TC-r7y">
+        <view contentMode="scaleToFill" id="D9d-TC-r7y" customClass="FilterController" customModule="Document_Scanner" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="1071" height="426"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -45,7 +45,7 @@
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fzX-zE-MbI">
                             <rect key="frame" x="0.0" y="176" width="1039" height="164"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jXC-Zp-hKp">
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jXC-Zp-hKp">
                                 <size key="itemSize" width="128" height="128"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -66,6 +66,11 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="filterListCollectionView" destination="fzX-zE-MbI" id="VQV-Zq-rKT"/>
+                <outlet property="sliderOne" destination="7cT-Iw-UT7" id="ESa-XZ-w5N"/>
+                <outlet property="sliderTwo" destination="aey-8r-rIa" id="2NO-SD-AaR"/>
+            </connections>
             <point key="canvasLocation" x="-1084.7826086956522" y="-54.241071428571423"/>
         </view>
     </objects>

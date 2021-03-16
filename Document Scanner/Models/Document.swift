@@ -7,15 +7,15 @@
 
 import UIKit
 
-struct Document: Codable {
+class Document: Codable {
     
-    let id = UUID()
+    var id = UUID()
     var name: String
     let originalImageName: String
     let quadrilateral: [CGPoint]
     var editedImageName: String
     var tag: String
-    
+    var thumbnailData: Data?
     
     init(_ name: String, originalImage: UIImage, editedImage: UIImage, quadrilateral: [CGPoint]) {
         self.name = name
@@ -38,7 +38,11 @@ struct Document: Codable {
     }
     
     func saveEditedImage(_ image: UIImage) -> Bool {
-        return FileHelper.shared.saveImage(image: image, withName: editedImageName)
+        if FileHelper.shared.saveImage(image: image, withName: editedImageName) {
+            thumbnailData = image.jpegData(compressionQuality: 0.7)
+            return true
+        }
+        return false
     }
     
     func save() {
@@ -49,6 +53,10 @@ struct Document: Codable {
 }
 
 extension Document: Hashable {
+    static func == (lhs: Document, rhs: Document) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

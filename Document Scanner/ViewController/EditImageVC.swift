@@ -28,6 +28,10 @@ class EditImageVC: UIViewController {
         case left
         case right
     }
+    
+    enum ImageFilters {
+        case black_and_white
+    }
 
     // MARK: - Views
     private var _editVC: EditImageViewController!
@@ -140,7 +144,7 @@ class EditImageVC: UIViewController {
         editButtonFiveContainer.isHidden = false
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
+        editButtonTwo.setImage(Icons.blackAndWhite, for: .normal)
         editButtonThree.setImage(Icons.filter, for: .normal)
         editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
@@ -201,6 +205,17 @@ class EditImageVC: UIViewController {
         }
     }
     
+    private func _applyFilter(_ filter: ImageFilters) {
+        switch filter {
+        case .black_and_white:
+            guard  let filteredImage = GPUImageHelper.shared.convertToBlackAndWhite(_imageView!.image!) else {
+                return
+            }
+            _editedImage = filteredImage
+            _imageView?.image = _editedImage
+        }
+    }
+    
     //cancel editing
     @IBAction func didTapEditButtonOne(_ sender: UIButton) {
         delegate?.cancelImageEditing(_controller: self)
@@ -218,7 +233,7 @@ class EditImageVC: UIViewController {
         case .correction:
             _rotateImage(.left)
         case .filtering:
-            break
+            _applyFilter(.black_and_white)
         }
     }
     
