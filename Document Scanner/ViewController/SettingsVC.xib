@@ -5,13 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
-                <outlet property="cancelButton" destination="hZT-AT-Gfv" id="ROS-fC-N0h"/>
                 <outlet property="settingsTableView" destination="65H-ud-J3v" id="xQT-qC-CUV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,65 +19,26 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGz-XV-t0j">
-                    <rect key="frame" x="8" y="52" width="398" height="64"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hZT-AT-Gfv">
-                            <rect key="frame" x="8" y="5" width="72" height="54"/>
-                            <color key="backgroundColor" name="app-theme"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="54" id="NJI-4C-5eG"/>
-                                <constraint firstAttribute="width" constant="72" id="bSI-Sc-6Zx"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                            <state key="normal" title="Cancel">
-                                <color key="titleColor" name="inverted-background"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="8"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="didTapCancel:" destination="-1" eventType="touchUpInside" id="0iQ-a7-Sfc"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="64" id="H7E-XR-V4u"/>
-                        <constraint firstItem="hZT-AT-Gfv" firstAttribute="leading" secondItem="AGz-XV-t0j" secondAttribute="leading" constant="8" id="Nty-lF-jhH"/>
-                        <constraint firstItem="hZT-AT-Gfv" firstAttribute="centerY" secondItem="AGz-XV-t0j" secondAttribute="centerY" id="kSs-O1-Xbr"/>
-                    </constraints>
-                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="65H-ud-J3v">
-                    <rect key="frame" x="8" y="116" width="398" height="746"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <rect key="frame" x="8" y="44" width="398" height="818"/>
+                    <color key="backgroundColor" name="background"/>
+                    <color key="sectionIndexBackgroundColor" name="background"/>
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="background"/>
             <constraints>
                 <constraint firstItem="65H-ud-J3v" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="2zX-dp-atP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="65H-ud-J3v" secondAttribute="bottom" id="PeP-sm-2Ab"/>
-                <constraint firstItem="65H-ud-J3v" firstAttribute="top" secondItem="AGz-XV-t0j" secondAttribute="bottom" id="ZAU-UP-v6o"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AGz-XV-t0j" secondAttribute="trailing" constant="8" id="bQG-v6-lcJ"/>
-                <constraint firstItem="AGz-XV-t0j" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="d7e-JA-H5P"/>
-                <constraint firstItem="AGz-XV-t0j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="gWS-aG-B8K"/>
+                <constraint firstItem="65H-ud-J3v" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fIQ-fh-F40"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="65H-ud-J3v" secondAttribute="trailing" constant="8" id="sIt-HH-YBW"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="128.57142857142856"/>
         </view>
     </objects>
     <resources>
-        <namedColor name="app-theme">
-            <color red="0.25098039215686274" green="0.61960784313725492" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="background">
+            <color red="0.090196078431372548" green="0.11372549019607843" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="inverted-background">
-            <color red="0.0080000003799796104" green="0.0080000003799796104" blue="0.0080000003799796104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

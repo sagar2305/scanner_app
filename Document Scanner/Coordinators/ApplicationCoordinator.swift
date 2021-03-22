@@ -14,9 +14,10 @@ class ApplicationCoordinator: Coordinator {
     var rootViewController: UIViewController {
         return navigationController
     }
+    
     var childCoordinator: [Coordinator] = []
     
-    var navigationController: UINavigationController
+    var navigationController: DocumentScannerNavigationController
     var homeViewController: HomeViewController
     
     func start() {
@@ -28,8 +29,8 @@ class ApplicationCoordinator: Coordinator {
     init(_ window: UIWindow) {
         self.window = window
         homeViewController = HomeViewController()
-        navigationController = UINavigationController(rootViewController: homeViewController)
-        navigationController.isNavigationBarHidden = true
+        navigationController = DocumentScannerNavigationController(rootViewController: homeViewController)
+        //navigationController.isNavigationBarHidden = true
         homeViewController.delegate = self
     }
 }
@@ -51,7 +52,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func showSettings(_ controller: HomeViewController) {
-        let settingsCoordinator = SettingsCoordinator(self)
+        let settingsCoordinator = SettingsCoordinator(navigationController)
         childCoordinator.append(settingsCoordinator)
         settingsCoordinator.start()
     }

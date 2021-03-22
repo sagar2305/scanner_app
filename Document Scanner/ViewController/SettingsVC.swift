@@ -13,7 +13,7 @@ protocol SettingsVCDelegate: class {
     func settingsViewController(exit controller: SettingsVC)
 }
 
-class SettingsVC: UIViewController {
+class SettingsVC: DocumentScannerViewController {
 
     private lazy var settings: [Setting] = {
         SettingsHelper.shared.allSettings()
@@ -22,13 +22,12 @@ class SettingsVC: UIViewController {
     weak var delegate: SettingsVCDelegate?
     
     @IBOutlet private weak var settingsTableView: UITableView!
-    @IBOutlet private weak var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI(title: "Settings")
         _setupTableView()
     }
-
 
     private func _setupTableView() {
         registerNib()
@@ -40,10 +39,6 @@ class SettingsVC: UIViewController {
 
     private func registerNib() {
         settingsTableView.register(UINib(nibName: SettingsTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: SettingsTableViewCell.identifier)
-    }
-    
-    @IBAction func didTapCancel(_ sender: UIButton) {
-        delegate?.settingsViewController(exit: self)
     }
     
 }

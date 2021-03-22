@@ -1,1 +1,0 @@
-../../../WeScan/WeScan/WeScan.h

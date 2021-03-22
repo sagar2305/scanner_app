@@ -13,9 +13,8 @@ class SettingsCoordinator: Coordinator {
         return navigationController
     }
     
-    var parentCoordinator: Coordinator
     var childCoordinator: [Coordinator] = []
-    var navigationController: UINavigationController!
+    var navigationController: DocumentScannerNavigationController!
     var settingsVC: SettingsVC!
     var webVC: WebViewVC!
     
@@ -23,20 +22,20 @@ class SettingsCoordinator: Coordinator {
     func start() {
         settingsVC = SettingsVC()
         settingsVC.delegate = self
-        navigationController = UINavigationController(rootViewController: settingsVC)
-        navigationController.isNavigationBarHidden = true
+        settingsVC.heroModalAnimationType = .fade
         navigationController.modalPresentationStyle = .fullScreen
-        parentCoordinator.rootViewController.present(navigationController, animated: true)
+        navigationController.pushViewController(settingsVC, animated: true)
     }
     
-    init(_ parent: Coordinator) {
-        parentCoordinator = parent
+    init(_ navigationController: DocumentScannerNavigationController) {
+        self.navigationController = navigationController
     }
     
     
-    private func _presentWebView(for url: String) {
+    private func _presentWebView(for url: String, title: String) {
         webVC = WebViewVC()
         webVC.delegate = self
+        webVC.webPageTitle = title
         webVC.webPageLink = url
         navigationController.pushViewController(webVC, animated: true)
     }
@@ -46,9 +45,9 @@ extension SettingsCoordinator: SettingsVCDelegate {
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting) {
         switch setting.id {
         case .termsOfLaw:
-            _presentWebView(for: Constant.WebLinks.termsOfLaw)
+            _presentWebView(for: Constant.WebLinks.termsOfLaw, title: "Terms Of Law")
         case .privacyPolicy:
-            _presentWebView(for: Constant.WebLinks.privacyPolicy)
+            _presentWebView(for: Constant.WebLinks.privacyPolicy, title: "Privacy Policy")
         }
     }
     

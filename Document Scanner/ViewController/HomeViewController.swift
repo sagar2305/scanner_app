@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Hero
 
 protocol HomeViewControllerDelegate: class {
     func scanNewDocument(_ controller: HomeViewController)
@@ -13,19 +14,23 @@ protocol HomeViewControllerDelegate: class {
     func showSettings(_ controller: HomeViewController)
 }
 
-class HomeViewController: UIViewController {
+class HomeViewController: DocumentScannerViewController {
     
     weak var delegate: HomeViewControllerDelegate?
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var footerCornerRadius: CGFloat = 24
+    private var footerCornerRadius: CGFloat = 8
     private lazy var dateSource = _getDocumentCollectionViewDataSource()
     
     private var documents = [Document]()
     
-    @IBOutlet weak private var footerView: UIView!
-    @IBOutlet weak private var documentsCollectionView: UICollectionView!
+
+    @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +38,17 @@ class HomeViewController: UIViewController {
         _setupCollectionView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        _getDocuments()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        _setupFooterView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        _getDocuments()
+    }
+
     func _getDocuments() {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
         self.documents = documents
@@ -45,9 +56,26 @@ class HomeViewController: UIViewController {
     }
     
     private func _setupViews() {
-        footerView.layer.cornerRadius = footerCornerRadius
+        //headerLabel.font = UIFont.font(style: .largeTitle)
+        configureUI(title: "My Documents")
+        footerView.hero.id = "footer_view"
+        
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        
+    }
+    
+    private func _setupFooterView() {
         footerView.clipsToBounds = true
-        footerView.isUserInteractionEnabled = true
+        if UIDevice.current.hasNotch {
+            footerView.layer.cornerRadius = footerCornerRadius
+            footerViewLeadingConstraint.constant = 8
+            footerViewTrailingConstraint.constant = 8
+        } else {
+            footerView.layer.cornerRadius = 0
+            footerViewLeadingConstraint.constant = 0
+            footerViewTrailingConstraint.constant = 0
+        }
     }
     
     private func _setupCollectionView() {

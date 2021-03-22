@@ -15,13 +15,14 @@ protocol WebViewVCsDelegate: class {
 class WebViewVC: UIViewController {
 
     var webPageLink: String?
+    var webPageTitle: String?
     weak var delegate: WebViewVCsDelegate?
     
     @IBOutlet private weak var webView: WKWebView!
-    @IBOutlet private weak var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI(title: webPageTitle ?? "")
         webView.cornerRadius = 44
         guard let link = webPageLink else {
             fatalError("webPageLink is not set")
@@ -30,9 +31,5 @@ class WebViewVC: UIViewController {
             fatalError("Invalid URL")
         }
         webView.load(URLRequest(url: url))
-    }
-    
-    @IBAction func didTapCancel(_ sender: UIButton) {
-        delegate?.webViewVC(exit: self)
     }
 }

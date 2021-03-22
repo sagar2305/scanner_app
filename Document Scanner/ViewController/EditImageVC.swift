@@ -74,7 +74,7 @@ class EditImageVC: UIViewController {
     //temporary images
     private var _croppedImage: UIImage? //cropped image for filtering
     private var _editedImage: UIImage?
-    
+    private var footerCornerRadius: CGFloat = 8
     private var currentFilter: ImageFilters?
     //last slide values for filters defaults 0
     private var lastSliderValueForBlackAndWhite: Float = 0.0
@@ -85,6 +85,9 @@ class EditImageVC: UIViewController {
     @IBOutlet private weak var imageEditorView: UIView!
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var footerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var sliderViewContainer: UIView!
     @IBOutlet private weak var slider: UISlider!
     
@@ -115,7 +118,7 @@ class EditImageVC: UIViewController {
             fatalError("ERROR: No image is set for editing")
         }
         
-        _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad, strokeColor: UIColor(red: (69.0 / 255.0), green: (194.0 / 255.0), blue: (177.0 / 255.0), alpha: 1.0).cgColor)
+        _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
         _editVC.view.frame = imageEditorView.bounds
         _editVC.willMove(toParent: self)
         imageEditorView.addSubview(_editVC.view)
@@ -125,6 +128,19 @@ class EditImageVC: UIViewController {
         
         //recurring view setups
         _updateViewForEditing()
+    }
+    
+    private func _setupFooterView() {
+        footerView.clipsToBounds = true
+        if UIDevice.current.hasNotch {
+            footerView.layer.cornerRadius = footerCornerRadius
+            footerViewLeadingConstraint.constant = 8
+            footerViewTrailingConstraint.constant = 8
+        } else {
+            footerView.layer.cornerRadius = 0
+            footerViewLeadingConstraint.constant = 0
+            footerViewTrailingConstraint.constant = 0
+        }
     }
     
     private func _updateViewForEditing() {

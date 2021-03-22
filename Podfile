@@ -8,4 +8,5 @@ target 'Document Scanner' do
   pod 'WeScan', '>= 0.9'
   pod 'LGButton'
   pod 'NVActivityIndicatorView'
+  pod 'Hero'
 end
