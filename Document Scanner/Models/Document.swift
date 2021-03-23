@@ -10,43 +10,30 @@ import UIKit
 class Document: Codable {
     
     var id = UUID()
+    var pages: [Page]
     var name: String
-    let originalImageName: String
-    let quadrilateral: [CGPoint]?
-    var editedImageName: String
     var tag: String
-    var thumbnailData: Data?
     
-    init(_ name: String, originalImage: UIImage, editedImage: UIImage, quadrilateral: [CGPoint]) {
+    init?(_ name: String, originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
         self.name = name
-        self.originalImageName = name.appending("_original")
-        self.quadrilateral = quadrilateral
-        self.editedImageName = name.appending("_edited")
         self.tag = ""
-    }
-    
-    lazy var originalImage: UIImage? = {
-        FileHelper.shared.getImage(originalImageName)
-    }()
-    
-    lazy var editedImage: UIImage? = {
-        FileHelper.shared.getImage(editedImageName)
-    }()
-    
-    var thumbNailImage: UIImage? {
-        return UIImage(data: thumbnailData ?? Data())
-    }
-    func saveOriginalImage(_ image: UIImage) -> Bool {
-        return FileHelper.shared.saveImage(image: image, withName: editedImageName)
-    }
-    
-    func saveEditedImage(_ image: UIImage) -> Bool {
-        if FileHelper.shared.saveImage(image: image, withName: editedImageName) {
-            thumbnailData = image.jpegData(compressionQuality: 0.7)
-            return true
+        guard originalImages.count == editedImages.count && editedImages.count == quadrilaterals.count else {
+            fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count) \n Quadrilaterals: \(quadrilaterals.count)")
         }
-        return false
+        var pages = [Page]()
+        for index in 0 ..< originalImages.count {
+            let newPage = Page(originalImageName: name.appending("\(index)_original"),
+                                   originalImage: originalImages[index],
+                                   editedImageName: name.appending("\(index)_edited"),
+                                   editedImage: editedImages[index],
+                                   quadrilateral: quadrilaterals[index])
+            guard  let page = newPage else { return nil }
+            pages.append(page)
+        }
+        self.pages = pages
     }
+    
+    
     
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []

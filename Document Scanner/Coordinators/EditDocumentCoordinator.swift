@@ -19,8 +19,8 @@ class EditDocumentCoordinator: Coordinator {
     
     //document editing mode a document is passed for editing
     var document: Document?
-    // document capturing mode image is passed for editing
-    var image: UIImage?
+    // document capturing mode images is passed for editing
+    var image: [UIImage]?
     
     init(_ controller: UINavigationController) {
         navigationController = controller

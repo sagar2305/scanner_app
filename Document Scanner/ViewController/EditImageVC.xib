@@ -40,20 +40,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO">
-                    <rect key="frame" x="12" y="56" width="390" height="662"/>
+                    <rect key="frame" x="12" y="56" width="390" height="672"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
-                    <rect key="frame" x="12" y="730" width="390" height="120"/>
+                    <rect key="frame" x="12" y="740" width="390" height="110"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hLL-7C-PYn">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="120"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="110"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXs-gS-mqv">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
                                     <subviews>
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dpo-yV-mB9">
-                                            <rect key="frame" x="14" y="15" width="362" height="31"/>
+                                            <rect key="frame" x="14" y="12.5" width="362" height="31"/>
                                             <connections>
                                                 <action selector="didChange:" destination="-1" eventType="valueChanged" id="WJP-g6-Gcb"/>
                                             </connections>
@@ -67,13 +67,13 @@
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4p5-2d-AdV">
-                                    <rect key="frame" x="0.0" y="60" width="390" height="60"/>
+                                    <rect key="frame" x="0.0" y="55" width="390" height="55"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4c-fV-XOc">
-                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="55"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qty-BB-CHH">
-                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="14" y="5.5" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="PIN-hs-g2o"/>
                                                         <constraint firstAttribute="height" constant="44" id="vEw-y2-dmG"/>
@@ -96,10 +96,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygq-47-q1s">
-                                            <rect key="frame" x="79.5" y="0.0" width="71.5" height="60"/>
+                                            <rect key="frame" x="79.5" y="0.0" width="71.5" height="55"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC6-qj-kGe">
-                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="14" y="5.5" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="8dM-Oy-8wn"/>
                                                         <constraint firstAttribute="height" constant="44" id="WQT-DN-VP7"/>
@@ -122,10 +122,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-u9-fWz">
-                                            <rect key="frame" x="159" y="0.0" width="72" height="60"/>
+                                            <rect key="frame" x="159" y="0.0" width="72" height="55"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEe-dA-cHx">
-                                                    <rect key="frame" x="14" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="14" y="5.5" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="cBN-Bl-Dpc"/>
                                                         <constraint firstAttribute="height" constant="44" id="dlA-dc-h5s"/>
@@ -148,10 +148,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-eb-cfl">
-                                            <rect key="frame" x="239" y="0.0" width="71.5" height="60"/>
+                                            <rect key="frame" x="239" y="0.0" width="71.5" height="55"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lmp-RQ-8ek">
-                                                    <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="13.5" y="5.5" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="N5Y-Ja-NuI"/>
                                                         <constraint firstAttribute="width" constant="44" id="jN8-6Q-n3z"/>
@@ -175,10 +175,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyi-hp-S9O">
-                                            <rect key="frame" x="318.5" y="0.0" width="71.5" height="60"/>
+                                            <rect key="frame" x="318.5" y="0.0" width="71.5" height="55"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT0-kV-zkW">
-                                                    <rect key="frame" x="13.5" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="13.5" y="5.5" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="e9h-6n-ZqC"/>
                                                         <constraint firstAttribute="width" constant="44" id="w8r-Gx-mA7"/>
@@ -211,7 +211,7 @@
                         <constraint firstItem="hLL-7C-PYn" firstAttribute="top" secondItem="QLe-Fr-nQh" secondAttribute="top" id="MEP-4h-Kfj"/>
                         <constraint firstItem="hLL-7C-PYn" firstAttribute="leading" secondItem="QLe-Fr-nQh" secondAttribute="leading" id="W9b-Cs-0df"/>
                         <constraint firstAttribute="trailing" secondItem="hLL-7C-PYn" secondAttribute="trailing" id="YMV-Zd-JrZ"/>
-                        <constraint firstAttribute="height" constant="120" id="ZMe-Pb-7nz"/>
+                        <constraint firstAttribute="height" constant="110" id="ZMe-Pb-7nz"/>
                         <constraint firstAttribute="bottom" secondItem="hLL-7C-PYn" secondAttribute="bottom" id="d9z-vQ-Fsl"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>

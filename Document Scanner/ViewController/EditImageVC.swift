@@ -47,6 +47,8 @@ class EditImageVC: UIViewController {
     // MARK: - Constants
     private var _rotateLeftRadians: CGFloat = -1.5708
     private var _rotateRightRadians: CGFloat = 1.5708
+    private var _footerViewHightWithoutSlider: CGFloat = 55
+    private var _footerViewHightWithSlider: CGFloat = 110
     
     var imageEditingMode: ImageEditingMode? {
         didSet {
@@ -170,7 +172,7 @@ class EditImageVC: UIViewController {
         editButtonFour.setImage(Icons.crop, for: .normal)
         
         sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = 60
+        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         self.view.layoutIfNeeded()
     }
     
@@ -188,7 +190,7 @@ class EditImageVC: UIViewController {
         editButtonFive.setImage(Icons.done, for: .normal)
         
         sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = 60
+        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         self.view.layoutIfNeeded()
     }
     
@@ -206,7 +208,7 @@ class EditImageVC: UIViewController {
         editButtonFive.setImage(Icons.done, for: .normal)
         
         sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = 60
+        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         self.view.layoutIfNeeded()
     }
     
@@ -267,7 +269,7 @@ class EditImageVC: UIViewController {
     private func _filterSelected(_ filter: ImageFilters) {
         currentFilter = filter
         sliderViewContainer.isHidden = false
-        footerViewHeightConstraint.constant = 120
+        footerViewHeightConstraint.constant = _footerViewHightWithSlider
         self.view.layoutIfNeeded()
         
         switch filter {

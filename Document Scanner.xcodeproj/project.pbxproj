@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		023EC567260A56F30041E6BF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023EC566260A56F30041E6BF /* Page.swift */; };
 		024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F074725FF3B860091C73C /* UIImage+Extension.swift */; };
 		024F075325FF656D0091C73C /* FilterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 024F075225FF656D0091C73C /* FilterController.xib */; };
 		024F075E25FF6A350091C73C /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F075D25FF6A350091C73C /* FilterController.swift */; };
@@ -105,6 +106,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		023EC566260A56F30041E6BF /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		024F074725FF3B860091C73C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		024F075225FF656D0091C73C /* FilterController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterController.xib; sourceTree = "<group>"; };
 		024F075D25FF6A350091C73C /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				02F1922A260096F100D8CB8A /* Document.swift */,
 				025DB1B7260106ED006943C0 /* Setting.swift */,
 				025DB1C726011E8A006943C0 /* Filter.swift */,
+				023EC566260A56F30041E6BF /* Page.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
+				023EC567260A56F30041E6BF /* Page.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
 				02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */,
