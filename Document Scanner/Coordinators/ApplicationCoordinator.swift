@@ -59,7 +59,12 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
 }
 
 extension ApplicationCoordinator: ScanDocumentCoordinatorDelegate {
+    
     func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator) {
+        navigationController.popToViewController(homeViewController, animated: true)
+    }
+    
+    func didCancelScanningDocument(_ coordinator: ScanDocumentCoordinator) {
         navigationController.popToViewController(homeViewController, animated: true)
     }
 }

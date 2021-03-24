@@ -15,7 +15,7 @@ class DocumentCollectionViewCell: UICollectionViewCell {
         didSet {
             if document != nil {
                 documentNameLabel.text = document!.name
-                documentThumbnail.image = document!.thumbNailImage
+                documentThumbnail.image = document!.pages.first?.thumbNailImage
             }
         }
     }

@@ -16,6 +16,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 4
+        titleLabel.font = UIFont.font(style: .subheadline)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

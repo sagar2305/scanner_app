@@ -24,7 +24,7 @@ class DocumentReviewVC: UIViewController {
         guard  let document = document else {
             fatalError("ERROR: document is not set")
         }
-        documentImageView.image = document.editedImage
+        documentImageView.image = document.pages.first?.editedImage
     }
     
     @IBAction func didTapCancel(_ sender: UIButton) {

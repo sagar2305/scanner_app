@@ -16,12 +16,12 @@ class FilterController: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        loadView()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
+        loadView()
     }
     
     override func willMove(toSuperview newSuperview: UIView?) {
@@ -33,11 +33,20 @@ class FilterController: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        loadView()
     }
     
     private func _setupViews() {
         
+    }
+    
+    private func loadView() {
+        let allXibViews = Bundle.main.loadNibNamed("FilterController", owner: self, options: nil)
+        guard let filterView = allXibViews?.first as? UIView else { return }
+        filterView.frame = bounds
+        filterView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(filterView)
     }
     
 }

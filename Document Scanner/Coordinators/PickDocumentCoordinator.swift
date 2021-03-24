@@ -7,6 +7,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import WeScan
 
 protocol PickerDocumentCoordinatorDelegate {
     func didFinishedPickingImage(_ coordinator: PickDocumentCoordinator)
@@ -20,14 +21,14 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var childCoordinator: [Coordinator] = []
     
     var delegate: PickerDocumentCoordinatorDelegate?
-    var navigationController: UINavigationController
+    var navigationController: DocumentScannerNavigationController
     var editImageVC: EditImageVC?
     
     func start() {
        _pickDocument()
     }
     
-    init(_ rootViewController: UINavigationController) {
+    init(_ rootViewController: DocumentScannerNavigationController) {
         navigationController = rootViewController
     }
     
@@ -39,16 +40,11 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func presentImageCorrectionViewController(for image: UIImage) {
-        if editImageVC == nil {
-            editImageVC = EditImageVC()
-            editImageVC!.imageToEdit = image
-            editImageVC!.imageEditingMode = .basic
-            editImageVC!.imageSource = .photo_library
-            editImageVC!.delegate = self
-            navigationController.pushViewController(editImageVC!, animated: true)
-        } else {
-            editImageVC?.imageToEdit = image
-        }
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image], imageSource: .photo_library)
+        editDocumentCoordinator.delegate = self
+        editDocumentCoordinator.images = [image]
+        childCoordinator.append(editDocumentCoordinator)
+        editDocumentCoordinator.start()
     }
 
 }
@@ -66,54 +62,27 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
         guard  let selectedImage = info[.originalImage] as? UIImage else {
             fatalError("Failed to pick the image from photo library")
         }
+        childCoordinator.removeAll { $0 is EditDocumentCoordinator }
         presentImageCorrectionViewController(for: selectedImage)
         picker.dismiss(animated: true)
     }
     
 }
 
-extension PickDocumentCoordinator: EditImageVCDelegate {
-    func cancelImageEditing(_controller: EditImageVC) {
+extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
+    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
         delegate?.didCancelPickingImage(self)
     }
     
-    func filterImage(_ image: UIImage, controller: EditImageVC) {
-        
-    }
-    
-    func rescanImage(_ controller: EditImageVC) {
+    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
         _pickDocument()
     }
     
-    func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage, documentName: String, controller: EditImageVC) {
-        var quadPoints: [CGPoint] = []
-        let activityIndicator = NVActivityIndicatorView(frame: rootViewController.view.frame,
-                                                        type: .ballRotateChase,
-                                                        color: UIColor.blue,
-                                                        padding: 16)
-        activityIndicator.startAnimating()
-        
-        if let quad = controller.quad  {
-            quadPoints = []
-            quadPoints.append(quad.topLeft)
-            quadPoints.append(quad.topRight)
-            quadPoints.append(quad.bottomLeft)
-            quadPoints.append(quad.bottomRight)
-        }
-        
-        
-        
-        let document = Document(documentName,
-                                originalImage: originalImage,
-                                editedImage: finalImage,
-                                quadrilateral: quadPoints)
-        
-        if document.saveOriginalImage(originalImage) && document.saveEditedImage(finalImage) {
-            document.save()
-            activityIndicator.stopAnimating()
-            delegate?.didFinishedPickingImage(self)
-        }
+    func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
+        delegate?.didCancelPickingImage(self)
     }
+    
+    
     
     
 }

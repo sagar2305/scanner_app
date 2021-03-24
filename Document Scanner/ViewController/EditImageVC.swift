@@ -10,12 +10,15 @@ import WeScan
 
 protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
-    func filterImage(_ image: UIImage, controller: EditImageVC)
     func rescanImage(_ controller: EditImageVC)
-    func finishedImageEditing(_ finalImage: UIImage, originalImage: UIImage,documentName: String, controller: EditImageVC)
+    func finishedImageEditing(_ finalImage: [UIImage], originalImage: [UIImage],documentName: String, controller: EditImageVC)
 }
 
-class EditImageVC: UIViewController {
+protocol EditImageVCDataSource: class {
+    var imageSource: EditDocumentCoordinator.ImageSource? { get }
+}
+
+class EditImageVC: DocumentScannerViewController {
     
     // MARK: - ViewController specific enums
     enum ImageEditingMode {
@@ -24,9 +27,9 @@ class EditImageVC: UIViewController {
         case filtering
     }
     
-    enum ImageRotationDirection {
-        case left
-        case right
+    enum ImageRotationDirection: CGFloat {
+        case left = -1.5708
+        case right = 1.5708
     }
     
     enum ImageFilters {
@@ -35,21 +38,15 @@ class EditImageVC: UIViewController {
         case sharpen
     }
     
-    enum ImageSource {
-        case photo_library
-        case camera
-    }
-
     // MARK: - Views
     private var _editVC: EditImageViewController!
     private var _imageView: UIImageView?
     
     // MARK: - Constants
-    private var _rotateLeftRadians: CGFloat = -1.5708
-    private var _rotateRightRadians: CGFloat = 1.5708
     private var _footerViewHightWithoutSlider: CGFloat = 55
     private var _footerViewHightWithSlider: CGFloat = 110
     
+    // MARK: - Variables
     var imageEditingMode: ImageEditingMode? {
         didSet {
             if _editVC != nil {
@@ -60,24 +57,25 @@ class EditImageVC: UIViewController {
     
     //set externally
     var quad: Quadrilateral?
-    var imageSource: ImageSource!
-    var imageToEdit: UIImage? {
+    var imagesToEdit: [UIImage]? {
         didSet {
             if imageEditorView != nil {
-                _croppedImage = nil
-                _editedImage = nil
+                _croppedImages = []
+                _editedImagesBuffer = []
                 imageEditorView.subviews.forEach {  $0.removeFromSuperview() }
                 _setupViews()
             }
         }
     } //original image
     weak var delegate: EditImageVCDelegate?
+    weak var dateSource: EditImageVCDataSource?
     
     //temporary images
-    private var _croppedImage: UIImage? //cropped image for filtering
-    private var _editedImage: UIImage?
-    private var footerCornerRadius: CGFloat = 8
-    private var currentFilter: ImageFilters?
+    private var _croppedImages = [UIImage]() //cropped image for filtering
+    private var _editedImagesBuffer = [[UIImage]]()
+    private var _footerCornerRadius: CGFloat = 8
+    private var _currentFilter: ImageFilters?
+    private var _currentIndexOfImage = 0
     //last slide values for filters defaults 0
     private var lastSliderValueForBlackAndWhite: Float = 0.0
     private var lastSliderValueForBrightness: Float = 0.0
@@ -85,6 +83,25 @@ class EditImageVC: UIViewController {
     
     // MARK:- IBoutlets
     @IBOutlet private weak var imageEditorView: UIView!
+    
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var headerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var headerViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var headerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var headerViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private weak var filterButtonOneContainer: UIView!
+    @IBOutlet private weak var filterButtonOne: UIButton!
+    @IBOutlet private weak var filterButtonTwoContainer: UIView!
+    @IBOutlet private weak var filterButtonTwo: UIButton!
+    @IBOutlet private weak var filterButtonThreeContainer: UIView!
+    @IBOutlet private weak var filterButtonThree:UIButton!
+    @IBOutlet private weak var filterButtonFourContainer: UIView!
+    @IBOutlet private weak var filterButtonFour: UIButton!
+    @IBOutlet private weak var filterButtonFiveContainer: UIView!
+    @IBOutlet private weak var filterButtonFive: UIButton!
+    
+    
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var footerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
@@ -110,39 +127,70 @@ class EditImageVC: UIViewController {
         _setupViews()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-
     private func _setupViews() {
         //one time view setups
-        guard let imageToEdit = imageToEdit else {
-            fatalError("ERROR: No image is set for editing")
+        guard let imagesToEdit = imagesToEdit, !imagesToEdit.isEmpty else {
+            fatalError("ERROR: No images is set for editing")
         }
         
-        _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
-        _editVC.view.frame = imageEditorView.bounds
-        _editVC.willMove(toParent: self)
-        imageEditorView.addSubview(_editVC.view)
-        self.addChild(_editVC)
-        _editVC.didMove(toParent: self)
-        _editVC.delegate = self
-        
+        _setupImageEditorView()
+        _setupFooterView()
         //recurring view setups
         _updateViewForEditing()
+    }
+    
+    private func _setupImageEditorView() {
+        
+        guard  let editingMode = imageEditingMode, let imageToEdit = imagesToEdit?.first else {
+            fatalError("ERROR: Image editing mode or image is not set")
+        }
+        
+        imageEditorView.subviews.forEach { $0.removeFromSuperview() }
+        
+        switch editingMode {
+        case .basic:
+            if _editVC == nil {
+                _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
+            }
+            _editVC.view.frame = imageEditorView.bounds
+            _editVC.willMove(toParent: self)
+            imageEditorView.addSubview(_editVC.view)
+            self.addChild(_editVC)
+            _editVC.didMove(toParent: self)
+            _editVC.delegate = self
+        case .correction, .filtering:
+            if _imageView == nil {
+                _imageView = UIImageView()
+            }
+            _imageView?.image = _croppedImages[_currentIndexOfImage]
+            _imageView?.frame = imageEditorView.bounds
+            imageEditorView.addSubview(_imageView!)
+            imageEditorView.bringSubviewToFront(_imageView!)
+            _imageView?.contentMode = .scaleAspectFit
+            _editVC.view.removeFromSuperview()
+        }
+        
     }
     
     private func _setupFooterView() {
         footerView.clipsToBounds = true
         if UIDevice.current.hasNotch {
-            footerView.layer.cornerRadius = footerCornerRadius
+            footerView.layer.cornerRadius = _footerCornerRadius
             footerViewLeadingConstraint.constant = 8
             footerViewTrailingConstraint.constant = 8
         } else {
             footerView.layer.cornerRadius = 0
             footerViewLeadingConstraint.constant = 0
             footerViewTrailingConstraint.constant = 0
+            footerViewBottomConstraint.constant = 0
         }
+    }
+    
+    private func _setupHeaderView() {
+        filterButtonOne.setImage(Icons.blackAndWhite, for: .normal)
+        filterButtonTwo.setImage(Icons.brightness, for: .normal)
+        filterButtonThree.setImage(Icons.sharpen, for: .normal)
+        
     }
     
     private func _updateViewForEditing() {
@@ -157,6 +205,7 @@ class EditImageVC: UIViewController {
     }
     
     private func _setupEditorViewForBasicEditingMode() {
+        
         editButtonOneContainer.isHidden = false
         editButtonTwoContainer.isHidden = false
         editButtonThreeContainer.isHidden = true
@@ -164,7 +213,7 @@ class EditImageVC: UIViewController {
         editButtonFiveContainer.isHidden = true
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
-        if imageSource! == .camera {
+        if dateSource?.imageSource == .camera {
             editButtonTwo.setImage(Icons.camera, for: .normal)
         } else {
             editButtonTwo.setImage(Icons.photoLibrary, for: .normal)
@@ -173,7 +222,14 @@ class EditImageVC: UIViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        self.view.layoutIfNeeded()
+        
+        headerView.isHidden = true
+        headerViewHeightConstraint.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        
+        
     }
     
     private func _setupEditorViewForCorrectionMode() {
@@ -191,10 +247,17 @@ class EditImageVC: UIViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        self.view.layoutIfNeeded()
+        
+        headerView.isHidden = true
+        headerViewHeightConstraint.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        
     }
     
     private func _setupEditorViewForFilteringMode() {
+    
         editButtonOneContainer.isHidden = false
         editButtonTwoContainer.isHidden = false
         editButtonThreeContainer.isHidden = false
@@ -209,68 +272,77 @@ class EditImageVC: UIViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        self.view.layoutIfNeeded()
+        
+        headerView.isHidden = false
+        headerViewHeightConstraint.constant = 52
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     //rotation of images is available in cropped mode only
     private func _rotateImage(_ direction: ImageRotationDirection) {
+        let imageToRotate = _croppedImages[_currentIndexOfImage]
         switch  direction {
         case .left:
-            _croppedImage = _croppedImage?.rotate(withRotation: _rotateLeftRadians)
+            _croppedImages[_currentIndexOfImage] = imageToRotate.rotate(withRotation: direction.rawValue)
         case .right:
-            _croppedImage = _croppedImage?.rotate(withRotation: _rotateRightRadians)
+            _croppedImages[_currentIndexOfImage] = imageToRotate.rotate(withRotation: direction.rawValue)
         }
-        _imageView?.image = _croppedImage
+        _imageView?.image = _croppedImages[_currentIndexOfImage]
         
     }
     
     private func _initiateImageFiltering() {
-        /**
-         1 save original image temporary to user defaults
-         2 pass edited image(cropped)  to editing VC */
+        
+         //1 set cropped image as initial image of edited images buffer
+        guard _croppedImages.count > 0 else {
+            fatalError("ERROR: No cropped image available to edit")
+        }
+        _editedImagesBuffer = [[_croppedImages[_currentIndexOfImage]]]
         imageEditingMode = .filtering
-        delegate?.filterImage(_croppedImage!, controller: self)
     }
     
     private func _saveDocument(withName name: String) {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
         }
-        guard  let originalImage = imageToEdit else {
+        guard  let originalImages = imagesToEdit else {
             fatalError("ERROR: Original Image is not available")
         }
         
         switch editingMode {
         case .basic:
-            delegate?.finishedImageEditing(originalImage,
-                                           originalImage: originalImage,
+            delegate?.finishedImageEditing(originalImages,
+                                           originalImage: originalImages,
                                            documentName: name,
                                            controller: self)
         case .correction:
-            guard let croppedImage = _croppedImage else {
-                fatalError("ERROR: Cropped Image is not available")
+            guard _croppedImages.count == originalImages.count else {
+                fatalError("ERROR: Cropped Images count does not original images count")
             }
-            delegate?.finishedImageEditing(croppedImage,
-                                           originalImage: originalImage,
+            delegate?.finishedImageEditing(_croppedImages,
+                                           originalImage: originalImages,
                                            documentName: name,
                                            controller: self)
             
         case .filtering:
-            guard let editedImage = _editedImage else {
-                fatalError("ERROR: Edited Image is not available")
+            guard  _editedImagesBuffer.count == originalImages.count, let finalImage =  _editedImagesBuffer[_currentIndexOfImage].last else {
+                fatalError("ERROR: Edited Images count does not original images count")
             }
-            delegate?.finishedImageEditing(editedImage,
-                                           originalImage: originalImage,
+            delegate?.finishedImageEditing([finalImage],
+                                           originalImage: originalImages,
                                            documentName: name,
                                            controller: self)
         }
     }
     
     private func _filterSelected(_ filter: ImageFilters) {
-        currentFilter = filter
+        _editedImagesBuffer[_currentIndexOfImage].append((_imageView?.image)!)
+        _currentFilter = filter
         sliderViewContainer.isHidden = false
         footerViewHeightConstraint.constant = _footerViewHightWithSlider
-        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
         
         switch filter {
         case .black_and_white:
@@ -289,13 +361,13 @@ class EditImageVC: UIViewController {
     }
     
     private func _applyFilter(_ intensity: Float) {
-        guard let imageToFilter = _croppedImage  else {
-            fatalError("ERROR: No cropped image available for filtering")
+        guard let imageToFilter = _editedImagesBuffer[_currentIndexOfImage].last else {
+            fatalError("ERROR: No image is found for filtering")
         }
         
         var editedImage: UIImage?
         
-        switch currentFilter {
+        switch _currentFilter {
         case .black_and_white:
             editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
             lastSliderValueForBlackAndWhite = intensity
@@ -309,11 +381,8 @@ class EditImageVC: UIViewController {
             break
         }
         
-        guard let newImage = editedImage else {
-            return
-        }
-        _editedImage = newImage
-        _imageView?.image = _editedImage
+        guard let newImage = editedImage else { return }
+        _imageView?.image = newImage
         
     }
     
@@ -403,7 +472,7 @@ class EditImageVC: UIViewController {
     }
     
     @IBAction func didChange(_ sender: UISlider) {
-        guard  let currentFilter = currentFilter else {
+        guard  _currentFilter != nil else {
             fatalError("ERROR: Slide shown without filter selection")
         }
         _applyFilter(sender.value)
@@ -413,14 +482,8 @@ class EditImageVC: UIViewController {
 
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        _croppedImage = image
-        _imageView = UIImageView()
-        _imageView?.image = image
-        _imageView?.frame = imageEditorView.bounds
-        imageEditorView.addSubview(_imageView!)
-        imageEditorView.bringSubviewToFront(_imageView!)
-        _imageView?.contentMode = .scaleAspectFit
-        _editVC.view.removeFromSuperview()
+        _croppedImages = [image]
         imageEditingMode = .correction
+        _setupImageEditorView()
     }
 }

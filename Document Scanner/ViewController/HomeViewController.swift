@@ -58,7 +58,7 @@ class HomeViewController: DocumentScannerViewController {
     private func _setupViews() {
         //headerLabel.font = UIFont.font(style: .largeTitle)
         configureUI(title: "My Documents")
-        footerView.hero.id = "footer_view"
+        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
         
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
@@ -71,10 +71,15 @@ class HomeViewController: DocumentScannerViewController {
             footerView.layer.cornerRadius = footerCornerRadius
             footerViewLeadingConstraint.constant = 8
             footerViewTrailingConstraint.constant = 8
+            footerViewBottomConstraint.constant = 8
+            footerView.shadowColor = UIColor.primary.cgColor
+            footerView.shadowOpacity = 0.2
+            footerView.shadowRadius = footerCornerRadius
         } else {
             footerView.layer.cornerRadius = 0
             footerViewLeadingConstraint.constant = 0
             footerViewTrailingConstraint.constant = 0
+            footerViewBottomConstraint.constant = 0
         }
     }
     

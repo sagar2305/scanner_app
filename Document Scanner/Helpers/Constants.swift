@@ -16,4 +16,8 @@ struct Constant {
         static let termsOfLaw = "https://eztape.app/terms-and-conditions.html"
         static let privacyPolicy = "https://eztape.app/privacy-policy.html"
     }
+    
+    struct HeroIdentifiers {
+        static let footerIdentifier = "footer_view"
+    }
 }

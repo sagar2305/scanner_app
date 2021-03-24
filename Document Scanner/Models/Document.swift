@@ -17,7 +17,7 @@ class Document: Codable {
     init?(_ name: String, originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
         self.name = name
         self.tag = ""
-        guard originalImages.count == editedImages.count && editedImages.count == quadrilaterals.count else {
+        guard originalImages.count == editedImages.count else {
             fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count) \n Quadrilaterals: \(quadrilaterals.count)")
         }
         var pages = [Page]()
@@ -26,7 +26,7 @@ class Document: Codable {
                                    originalImage: originalImages[index],
                                    editedImageName: name.appending("\(index)_edited"),
                                    editedImage: editedImages[index],
-                                   quadrilateral: quadrilaterals[index])
+                                   quadrilateral: [])
             guard  let page = newPage else { return nil }
             pages.append(page)
         }

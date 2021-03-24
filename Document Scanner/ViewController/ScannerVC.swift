@@ -29,6 +29,10 @@ class ScannerVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet private weak var cameraPreview: UIView!
     @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
+    
     @IBOutlet private weak var scanImage: UIButton!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var flashButton: UIButton!
@@ -40,9 +44,36 @@ class ScannerVC: UIViewController {
         _setupCameraPreview()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     private func _setupViews() {
-        footerView.layer.cornerRadius = footerCornerRadius
+        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
+        _setupFooterView()
+    }
+    
+    private func _setupFooterView() {
         footerView.clipsToBounds = true
+        if UIDevice.current.hasNotch {
+            footerView.layer.cornerRadius = footerCornerRadius
+            footerViewLeadingConstraint.constant = 8
+            footerViewTrailingConstraint.constant = 8
+            footerViewBottomConstraint.constant = 8
+            footerView.shadowColor = UIColor.primary.cgColor
+            footerView.shadowOpacity = 0.2
+            footerView.shadowRadius = footerCornerRadius
+        } else {
+            footerView.layer.cornerRadius = 0
+            footerViewLeadingConstraint.constant = 0
+            footerViewTrailingConstraint.constant = 0
+            footerViewBottomConstraint.constant = 0
+        }
     }
     
     private func _setupCameraPreview() {
