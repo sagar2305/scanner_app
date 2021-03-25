@@ -42,7 +42,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     private func presentImageCorrectionViewController(for image: UIImage) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image], imageSource: .photo_library)
         editDocumentCoordinator.delegate = self
-        editDocumentCoordinator.documentStatus = .new
+        editDocumentCoordinator.documentEditingStatus = .new
         childCoordinator.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }

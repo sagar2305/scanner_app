@@ -39,7 +39,7 @@ class EditDocumentCoordinator: Coordinator {
     //document editing mode a document is passed for editing
     var document: Document?
     var editedImages: [UIImage]?
-    var documentStatus: DocumentStatus?
+    var documentEditingStatus: DocumentStatus?
     // document capturing mode images is passed for editing
     var images: [UIImage]?
     
@@ -61,8 +61,6 @@ class EditDocumentCoordinator: Coordinator {
         var originalImages: [UIImage] = []
         var lastEditedImages: [UIImage] = []
         document.pages.forEach { page in
-            print(page.originalImage)
-            print(page.editedImage)
             if let originalImage =  page.originalImage, let editedImage = page.editedImage {
                 originalImages.append(originalImage)
                 lastEditedImages.append(editedImage)
@@ -88,7 +86,7 @@ class EditDocumentCoordinator: Coordinator {
     }
     
     private func _getInitialEditingMode() -> EditImageVC.ImageEditingMode {
-        guard let documentStatus = documentStatus else {
+        guard let documentStatus = documentEditingStatus else {
             fatalError("ERROR: Document status is not set")
         }
         switch documentStatus {
@@ -100,6 +98,16 @@ class EditDocumentCoordinator: Coordinator {
 
 
 extension EditDocumentCoordinator: EditImageVCDelegate {
+    func finishedEditing(_ pages: [Page], controller: EditImageVC) {
+        guard let document = document else {
+            fatalError("ERROR: Document not available")
+        }
+        
+        document.pages = pages
+        document.update()
+        delegate?.didFinishSavingDocument(self, document: document)
+    }
+    
   
     func cancelImageEditing(_controller: EditImageVC) {
         delegate?.didCancelEditing(self)
@@ -138,8 +146,8 @@ extension EditDocumentCoordinator: EditImageVCDelegate {
 }
 
 extension EditDocumentCoordinator: EditImageVCDataSource {
-    var documentStatues: DocumentStatus {
-        guard  let documentStatus = documentStatus else {
+    var documentStatus: DocumentStatus {
+        guard  let documentStatus = documentEditingStatus else {
             fatalError("ERROR: Document status is not set")
         }
         return documentStatus

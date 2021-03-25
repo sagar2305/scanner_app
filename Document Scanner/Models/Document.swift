@@ -42,6 +42,13 @@ class Document: Codable {
         UserDefaults.standard.save(documents, forKey: Constant.DocumentScannerDefaults.documentsListKey)
     }
     
+    func update() {
+        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
+        documents.removeAll { $0.id == id }
+        documents.append(self)
+        UserDefaults.standard.save(documents, forKey: Constant.DocumentScannerDefaults.documentsListKey)
+    }
+    
     func convertToPDF() -> String?{
         do {
             var pdfPages: [PDFPage] = []

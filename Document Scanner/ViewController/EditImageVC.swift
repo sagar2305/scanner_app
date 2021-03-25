@@ -12,11 +12,12 @@ protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
     func rescanImage(_ controller: EditImageVC)
     func finishedImageEditing(_ finalImage: [UIImage], originalImage: [UIImage],documentName: String, controller: EditImageVC)
+    func finishedEditing(_ pages: [Page], controller: EditImageVC)
 }
 
 protocol EditImageVCDataSource: class {
     var imageSource: EditDocumentCoordinator.ImageSource? { get }
-    var documentStatues: EditDocumentCoordinator.DocumentStatus { get }
+    var documentStatus: EditDocumentCoordinator.DocumentStatus { get }
 }
 
 class EditImageVC: DocumentScannerViewController {
@@ -147,7 +148,7 @@ class EditImageVC: DocumentScannerViewController {
         }
         imageEditorView.backgroundColor = .backgroundColor
     
-        switch dataSource.documentStatues {
+        switch dataSource.documentStatus {
         case .new:
             guard let imageToEdit = imagesToEdit?.first else {
                 fatalError("ERROR: Images are not set for editing")
@@ -356,13 +357,30 @@ class EditImageVC: DocumentScannerViewController {
                                            controller: self)
             
         case .filtering:
-            guard  _editedImagesBuffer.count == originalImages.count, let finalImage =  _editedImagesBuffer[_currentIndexOfImage].last else {
+            guard  _editedImagesBuffer.count == originalImages.count, let finalImage = _imageView?.image else {
                 fatalError("ERROR: Edited Images count does not original images count")
             }
             delegate?.finishedImageEditing([finalImage],
                                            originalImage: originalImages,
                                            documentName: name,
                                            controller: self)
+        }
+    }
+    
+    private func _updateDocument() {
+        guard let pages = pages else {
+            fatalError("ERROR: Pages are not set for editing")
+        }
+        if let editedImage = _imageView?.image {
+            if pages[_currentIndexOfImage].saveEditedImage(editedImage) {
+                delegate?.finishedEditing(pages, controller: self)
+            }
+        } else if _croppedImages.count > 0 {
+            if pages[_currentIndexOfImage].saveEditedImage(_croppedImages[_currentIndexOfImage]) {
+                delegate?.finishedEditing(pages, controller: self)
+            }
+        } else {
+            delegate?.cancelImageEditing(_controller: self)
         }
     }
     
@@ -476,28 +494,40 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     @IBAction func didTapEditButtonFive(_ sender: Any) {
-        let alterView = UIAlertController(title: "Saving Image",
-                                           message: "Enter document name",
-                                           preferredStyle: .alert)
-        
-        alterView.addTextField { textField in
-            textField.placeholder = "Documents Name!"
+        guard let dataSource = dateSource else {
+            fatalError("ERROR: Datasource is not set")
         }
         
-        alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
-            guard let textField = alterView?.textFields![0],
-                  let documentName = textField.text,
-                  !documentName.isEmpty else {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error)
-                return
+        func saveDocument() {
+            let alterView = UIAlertController(title: "Saving Image",
+                                              message: "Enter document name",
+                                              preferredStyle: .alert)
+            
+            alterView.addTextField { textField in
+                textField.placeholder = "Documents Name!"
             }
-            // Force unwrapping because we know it exists.
-            self._saveDocument(withName: documentName)
-        }))
+            
+            alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
+                guard let textField = alterView?.textFields![0],
+                      let documentName = textField.text,
+                      !documentName.isEmpty else {
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.error)
+                    return
+                }
+                // Force unwrapping because we know it exists.
+                self._saveDocument(withName: documentName)
+            }))
+            
+            alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            present(alterView, animated: true)
+        }
         
-        alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-        present(alterView, animated: true)
+        switch dataSource.documentStatus {
+        case .new: saveDocument()
+        case .existing : _updateDocument()
+        }
+        
     }
     
     @IBAction func didChange(_ sender: UISlider) {
