@@ -25,4 +25,5 @@ struct Icons {
     static let brightness = UIImage(named: "bright")!
     static let edit = UIImage(named: "edit")!
     static let share = UIImage(named: "share")!
+    static let backArrow = UIImage(named: "back-arrow")!
 }

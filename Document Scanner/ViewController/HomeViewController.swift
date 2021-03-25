@@ -12,6 +12,7 @@ protocol HomeViewControllerDelegate: class {
     func scanNewDocument(_ controller: HomeViewController)
     func pickNewDocument(_ controller: HomeViewController)
     func showSettings(_ controller: HomeViewController)
+    func viewDocument(_ controller: HomeViewController, document: Document)
 }
 
 class HomeViewController: DocumentScannerViewController {
@@ -31,6 +32,8 @@ class HomeViewController: DocumentScannerViewController {
     @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
+    @IBOutlet private weak var documentsCollectionViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var documentsCollectionViewTrailingConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +48,7 @@ class HomeViewController: DocumentScannerViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.navigationBar.isHidden = false
         _getDocuments()
     }
 
@@ -63,6 +66,13 @@ class HomeViewController: DocumentScannerViewController {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         
+        if UIDevice.current.hasNotch {
+            documentsCollectionViewLeadingConstraint.constant = 8
+            documentsCollectionViewTrailingConstraint.constant = 8
+        } else {
+            documentsCollectionViewLeadingConstraint.constant = 0
+            documentsCollectionViewTrailingConstraint.constant = 0
+        }
     }
     
     private func _setupFooterView() {
@@ -140,9 +150,6 @@ class HomeViewController: DocumentScannerViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let document = documents[indexPath.row]
-        let reviewImageVC = DocumentReviewVC()
-        reviewImageVC.modalPresentationStyle = .fullScreen
-        reviewImageVC.document = document
-        present(reviewImageVC, animated: true)
+        delegate?.viewDocument(self, document: document)
     }
 }

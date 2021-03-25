@@ -8,7 +8,8 @@
 import UIKit
 
 class DocumentScannerViewController: UIViewController {
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor

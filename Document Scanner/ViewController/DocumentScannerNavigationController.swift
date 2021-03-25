@@ -37,9 +37,9 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         
-        let backImage = Icons.cancel
-        UINavigationBar.appearance().backIndicatorImage = backImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
+        
+        UINavigationBar.appearance().backIndicatorImage = Icons.backArrow
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = Icons.backArrow
         UINavigationBar.appearance().backgroundColor = .backgroundColor
     }
     

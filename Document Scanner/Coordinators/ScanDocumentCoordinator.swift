@@ -34,12 +34,6 @@ class ScanDocumentCoordinator: Coordinator {
         scanDocumentVC.delegate = self
         navigationController.pushViewController(scanDocumentVC, animated: true)
     }
-    
-    private func _startScanning() {
-        let scanDocumentVC = ScannerVC()
-        scanDocumentVC.delegate = self
-        navigationController.pushViewController(scanDocumentVC, animated: true)
-    }
 }
 
 
@@ -51,6 +45,7 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image],quad: quad, imageSource: .camera)
         editDocumentCoordinator.delegate = self
+        editDocumentCoordinator.documentStatus = .new
         childCoordinator.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }

@@ -16,6 +16,7 @@ protocol EditImageVCDelegate: class {
 
 protocol EditImageVCDataSource: class {
     var imageSource: EditDocumentCoordinator.ImageSource? { get }
+    var documentStatues: EditDocumentCoordinator.DocumentStatus { get }
 }
 
 class EditImageVC: DocumentScannerViewController {
@@ -49,7 +50,7 @@ class EditImageVC: DocumentScannerViewController {
     // MARK: - Variables
     var imageEditingMode: ImageEditingMode? {
         didSet {
-            if _editVC != nil {
+            if _editVC != nil || _imageView != nil {
                 _updateViewForEditing()
             }
         }
@@ -57,16 +58,8 @@ class EditImageVC: DocumentScannerViewController {
     
     //set externally
     var quad: Quadrilateral?
-    var imagesToEdit: [UIImage]? {
-        didSet {
-            if imageEditorView != nil {
-                _croppedImages = []
-                _editedImagesBuffer = []
-                imageEditorView.subviews.forEach {  $0.removeFromSuperview() }
-                _setupViews()
-            }
-        }
-    } //original image
+    var imagesToEdit: [UIImage]?
+    var pages: [Page]?
     weak var delegate: EditImageVCDelegate?
     weak var dateSource: EditImageVCDataSource?
     
@@ -83,6 +76,8 @@ class EditImageVC: DocumentScannerViewController {
     
     // MARK:- IBoutlets
     @IBOutlet private weak var imageEditorView: UIView!
+    @IBOutlet private weak var imageEditorViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var imageEditorViewTrailingConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var headerViewLeadingConstraint: NSLayoutConstraint!
@@ -124,55 +119,86 @@ class EditImageVC: DocumentScannerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        _croppedImages = []
+        _editedImagesBuffer = []
         _setupViews()
     }
     
     private func _setupViews() {
-        //one time view setups
-        guard let imagesToEdit = imagesToEdit, !imagesToEdit.isEmpty else {
-            fatalError("ERROR: No images is set for editing")
-        }
+        headerView.isHidden = true
         
         _setupImageEditorView()
         _setupFooterView()
         //recurring view setups
         _updateViewForEditing()
+        
     }
     
+    //initial setup
     private func _setupImageEditorView() {
-        
-        guard  let editingMode = imageEditingMode, let imageToEdit = imagesToEdit?.first else {
-            fatalError("ERROR: Image editing mode or image is not set")
-        }
-        
         imageEditorView.subviews.forEach { $0.removeFromSuperview() }
-        
-        switch editingMode {
-        case .basic:
-            if _editVC == nil {
-                _editVC = WeScan.EditImageViewController(image: imageToEdit, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
+        guard let dataSource = dateSource else {
+            fatalError("ERROR: Datasource is not set")
+        }
+        imageEditorView.backgroundColor = .backgroundColor
+    
+        switch dataSource.documentStatues {
+        case .new:
+            guard let imageToEdit = imagesToEdit?.first else {
+                fatalError("ERROR: Images are not set for editing")
             }
-            _editVC.view.frame = imageEditorView.bounds
-            _editVC.willMove(toParent: self)
-            imageEditorView.addSubview(_editVC.view)
-            self.addChild(_editVC)
-            _editVC.didMove(toParent: self)
-            _editVC.delegate = self
-        case .correction, .filtering:
-            if _imageView == nil {
-                _imageView = UIImageView()
+            _presentWeScanImageControllerInImageEditorView(for: imageToEdit)
+        case .existing:
+            guard  let firstPage = pages?.first,
+                   let imageToEdit = firstPage.editedImage else {
+                fatalError("ERROR: documents pages is not set, or page does't have edited image for editing")
             }
-            _imageView?.image = _croppedImages[_currentIndexOfImage]
-            _imageView?.frame = imageEditorView.bounds
-            imageEditorView.addSubview(_imageView!)
-            imageEditorView.bringSubviewToFront(_imageView!)
-            _imageView?.contentMode = .scaleAspectFit
-            _editVC.view.removeFromSuperview()
+            _presentImageViewInImageEditorView(for: imageToEdit)
         }
         
+        if UIDevice.current.hasNotch {
+            imageEditorViewLeadingConstraint.constant = 8
+            imageEditorViewTrailingConstraint.constant = 8
+        } else {
+            imageEditorViewTrailingConstraint.constant = 0
+            imageEditorViewLeadingConstraint.constant = 0
+        }
+    }
+    
+    private func _presentWeScanImageControllerInImageEditorView(for image: UIImage) {
+        if _editVC == nil {
+            _editVC = WeScan.EditImageViewController(image: image, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
+            _editVC.view.backgroundColor = .backgroundColor
+        }
+        _editVC.view.frame = imageEditorView.bounds
+        _editVC.willMove(toParent: self)
+        imageEditorView.addSubview(_editVC.view)
+        self.addChild(_editVC)
+        _editVC.didMove(toParent: self)
+        _editVC.delegate = self
+    }
+    
+    private func _presentImageViewInImageEditorView(for image: UIImage) {
+        if _imageView == nil {
+            _imageView = UIImageView()
+        }
+        _imageView?.image = image
+        _imageView?.backgroundColor = .backgroundColor
+        _croppedImages = [image]
+        _imageView?.frame = imageEditorView.bounds
+        imageEditorView.addSubview(_imageView!)
+        imageEditorView.bringSubviewToFront(_imageView!)
+        _imageView?.contentMode = .scaleAspectFit
+        _editVC?.view.removeFromSuperview()
     }
     
     private func _setupFooterView() {
+        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
         footerView.clipsToBounds = true
         if UIDevice.current.hasNotch {
             footerView.layer.cornerRadius = _footerCornerRadius
@@ -222,6 +248,7 @@ class EditImageVC: DocumentScannerViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
+        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
         
         headerView.isHidden = true
         headerViewHeightConstraint.constant = 0
@@ -247,6 +274,7 @@ class EditImageVC: DocumentScannerViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
+        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
         
         headerView.isHidden = true
         headerViewHeightConstraint.constant = 0
@@ -272,9 +300,10 @@ class EditImageVC: DocumentScannerViewController {
         
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
+        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
         
-        headerView.isHidden = false
-        headerViewHeightConstraint.constant = 52
+        headerView.isHidden = true
+        headerViewHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -482,8 +511,7 @@ class EditImageVC: DocumentScannerViewController {
 
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        _croppedImages = [image]
         imageEditingMode = .correction
-        _setupImageEditorView()
+        _presentImageViewInImageEditorView(for: image)
     }
 }

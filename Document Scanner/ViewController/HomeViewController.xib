@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -13,6 +14,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="documentsCollectionView" destination="a9B-JH-h6P" id="yOH-cH-nLp"/>
+                <outlet property="documentsCollectionViewLeadingConstraint" destination="WrG-nm-PI4" id="iJS-j5-NEU"/>
+                <outlet property="documentsCollectionViewTrailingConstraint" destination="oOS-hL-qYf" id="Lfc-GI-hIa"/>
                 <outlet property="footerView" destination="RTZ-Om-6jC" id="YbG-1G-kjj"/>
                 <outlet property="footerViewBottomConstraint" destination="XWg-sv-FEE" id="pVv-v8-SYT"/>
                 <outlet property="footerViewLeadingConstraint" destination="2Cg-Qj-3UU" id="0zf-RR-OGo"/>

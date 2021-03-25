@@ -27,7 +27,7 @@ class Page: Codable {
     }
     
     func saveOriginalImage(_ image: UIImage) -> Bool {
-        return FileHelper.shared.saveImage(image: image, withName: editedImageName)
+        return FileHelper.shared.saveImage(image: image, withName: originalImageName)
     }
     
     func saveEditedImage(_ image: UIImage) -> Bool {

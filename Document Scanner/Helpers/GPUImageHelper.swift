@@ -8,7 +8,7 @@
 import UIKit
 import GPUImage
 
-struct GPUImageHelper {
+class GPUImageHelper {
     static let shared = GPUImageHelper()
     private init() { }
         

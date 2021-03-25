@@ -36,6 +36,8 @@ class ApplicationCoordinator: Coordinator {
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
+  
+    
     
     func scanNewDocument(_ controller: HomeViewController) {
         let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
@@ -55,6 +57,12 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
         let settingsCoordinator = SettingsCoordinator(navigationController)
         childCoordinator.append(settingsCoordinator)
         settingsCoordinator.start()
+    }
+    
+    func viewDocument(_ controller: HomeViewController, document: Document) {
+        let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+        childCoordinator.append(documentViewerCoordinator)
+        documentViewerCoordinator.start()
     }
 }
 

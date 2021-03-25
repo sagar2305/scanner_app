@@ -4,6 +4,7 @@ PODS:
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
+  - PDFGenerator (3.1.0)
   - SwiftLint (0.43.1)
   - WeScan (1.7.0)
 
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - Hero
   - LGButton
   - NVActivityIndicatorView
+  - PDFGenerator (~> 3.1)
   - SwiftLint
   - WeScan (>= 0.9)
 
@@ -19,6 +21,7 @@ SPEC REPOS:
     - Hero
     - LGButton
     - NVActivityIndicatorView
+    - PDFGenerator
     - SwiftLint
     - WeScan
 
@@ -26,9 +29,10 @@ SPEC CHECKSUMS:
   Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
+  PDFGenerator: 17d6bc525db0a3fcd156fbf00f9d1b8d5cc75d1e
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 3a610bf5da954265ab66a7509692d5bbe398346b
+PODFILE CHECKSUM: 69d5db67e1817b566f9aa8ad27f66e5fc7ba4be6
 
 COCOAPODS: 1.10.0

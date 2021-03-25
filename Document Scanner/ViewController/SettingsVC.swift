@@ -35,6 +35,7 @@ class SettingsVC: DocumentScannerViewController {
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
         settingsTableView.reloadData()
+        navigationController?.navigationBar.isHidden = false
     }
 
     private func registerNib() {

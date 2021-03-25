@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -14,6 +15,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DocumentReviewVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="documentImageView" destination="MW2-p0-E8v" id="zPb-go-dLL"/>
+                <outlet property="documentImageViewLeadingConstraint" destination="UAo-lf-Tl4" id="lfh-1x-8zg"/>
+                <outlet property="documentImageViewTrailingConstraint" destination="zNx-JZ-Qwv" id="qWI-2p-E9r"/>
+                <outlet property="editButton" destination="Eak-O3-R52" id="d4F-sy-1Kv"/>
+                <outlet property="footerView" destination="hyw-q2-wj5" id="DGO-mT-Hx9"/>
+                <outlet property="footerViewBottomConstraint" destination="Mpc-et-YAn" id="BnA-PS-JJS"/>
+                <outlet property="footerViewLeadingConstraint" destination="aCD-N7-QR9" id="tea-r7-DxR"/>
+                <outlet property="footerViewTrailingConstraint" destination="dc4-dH-zdc" id="VFb-9Z-JsZ"/>
+                <outlet property="shareButton" destination="0rA-Ay-O7a" id="kGv-b8-AMK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,17 +31,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyw-q2-wj5">
-                    <rect key="frame" x="8" y="794" width="398" height="60"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyw-q2-wj5" userLabel="footerView">
+                    <rect key="frame" x="8" y="802" width="398" height="52"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4u9-qE-LJN">
-                            <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
+                            <rect key="frame" x="0.0" y="0.0" width="398" height="52"/>
                             <subviews>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YKF-cH-wMJ">
-                                    <rect key="frame" x="-4" y="0.0" width="0.0" height="60"/>
+                                    <rect key="frame" x="-4" y="0.0" width="0.0" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oB8-Or-fKg">
-                                            <rect key="frame" x="-22" y="8" width="44" height="44"/>
+                                            <rect key="frame" x="-22" y="4" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="77h-pi-Dtm"/>
                                                 <constraint firstAttribute="width" constant="44" id="dbB-JO-YT7"/>
@@ -52,10 +61,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZd-kV-INr">
-                                    <rect key="frame" x="0.0" y="0.0" width="195" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="195" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rA-Ay-O7a">
-                                            <rect key="frame" x="75.5" y="8" width="44" height="44"/>
+                                            <rect key="frame" x="75.5" y="4" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="2L3-Re-JHO"/>
                                                 <constraint firstAttribute="width" constant="44" id="JqJ-hC-gLV"/>
@@ -66,6 +75,9 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 </preferredSymbolConfiguration>
                                             </state>
+                                            <connections>
+                                                <action selector="didTapShare:" destination="-1" eventType="touchUpInside" id="SRa-sh-XkJ"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,10 +87,10 @@
                                     </constraints>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-Tp-Ffp">
-                                    <rect key="frame" x="199" y="0.0" width="0.0" height="60"/>
+                                    <rect key="frame" x="199" y="0.0" width="0.0" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZR-cI-r3b">
-                                            <rect key="frame" x="-22" y="8" width="44" height="44"/>
+                                            <rect key="frame" x="-22" y="4" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="aaF-zm-WxT"/>
                                                 <constraint firstAttribute="width" constant="44" id="eep-b0-SHJ"/>
@@ -98,10 +110,10 @@
                                     </constraints>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onp-vJ-5wi">
-                                    <rect key="frame" x="199" y="0.0" width="0.0" height="60"/>
+                                    <rect key="frame" x="199" y="0.0" width="0.0" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0t1-qu-RX0">
-                                            <rect key="frame" x="-22" y="8" width="44" height="44"/>
+                                            <rect key="frame" x="-22" y="4" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="QXB-W1-sHv"/>
                                                 <constraint firstAttribute="width" constant="44" id="v3H-U4-y0r"/>
@@ -122,10 +134,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kB3-5C-fe1">
-                                    <rect key="frame" x="203" y="0.0" width="195" height="60"/>
+                                    <rect key="frame" x="203" y="0.0" width="195" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eak-O3-R52">
-                                            <rect key="frame" x="75.5" y="8" width="44" height="44"/>
+                                            <rect key="frame" x="75.5" y="4" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="pUE-hu-xwn"/>
                                                 <constraint firstAttribute="width" constant="44" id="xvQ-sC-HdH"/>
@@ -136,6 +148,9 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 </preferredSymbolConfiguration>
                                             </state>
+                                            <connections>
+                                                <action selector="didTapEdit:" destination="-1" eventType="touchUpInside" id="f2N-ts-gvj"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -150,7 +165,7 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="DB8-Hf-rTX"/>
+                        <constraint firstAttribute="height" constant="52" id="DB8-Hf-rTX"/>
                         <constraint firstAttribute="trailing" secondItem="4u9-qE-LJN" secondAttribute="trailing" id="Fpj-OW-mRc"/>
                         <constraint firstItem="4u9-qE-LJN" firstAttribute="top" secondItem="hyw-q2-wj5" secondAttribute="top" id="Trt-o5-LUc"/>
                         <constraint firstAttribute="bottom" secondItem="4u9-qE-LJN" secondAttribute="bottom" id="jE5-ij-TxT"/>
@@ -163,7 +178,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-p0-E8v">
-                    <rect key="frame" x="8" y="44" width="398" height="742"/>
+                    <rect key="frame" x="8" y="44" width="398" height="750"/>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

@@ -14,7 +14,7 @@ protocol ScannerVCDelegate: class {
 }
 class ScannerVC: UIViewController {
     
-    private var footerCornerRadius: CGFloat = 24
+    private var footerCornerRadius: CGFloat = 8
     private var scannerVC: CameraScannerViewController!
     private var images = [UIImage]() {
         didSet {
@@ -51,7 +51,7 @@ class ScannerVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
     }
     private func _setupViews() {
         footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier

@@ -36,6 +36,7 @@
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
+		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
 		02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661E226039EC4008CCF36 /* UIKit+Extension.swift */; };
 		02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */; };
@@ -135,6 +136,7 @@
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
+		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		02B661E226039EC4008CCF36 /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
 		02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerNavigationController.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */,
 				025DB1B32601012B006943C0 /* SettingsCoordinator.swift */,
 				02E008B826023BF000278002 /* EditDocumentCoordinator.swift */,
+				02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,
 				02F1921C260096C100D8CB8A /* Constants.swift in Sources */,
+				02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,7 +627,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -678,7 +682,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

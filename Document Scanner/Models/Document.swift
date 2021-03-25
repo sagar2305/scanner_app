@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFGenerator
 
 class Document: Codable {
     
@@ -39,6 +40,25 @@ class Document: Codable {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
         UserDefaults.standard.save(documents, forKey: Constant.DocumentScannerDefaults.documentsListKey)
+    }
+    
+    func convertToPDF() -> String?{
+        do {
+            var pdfPages: [PDFPage] = []
+            for page in pages {
+                guard let image = page.editedImage else {
+                    fatalError("ERROR: No edited image was found in document")
+                }
+                pdfPages.append(.image(image))
+            }
+            
+            let temporaryPath = NSTemporaryDirectory().appending("\(name).pfd")
+            try PDFGenerator.generate(pdfPages, to: temporaryPath)
+            return temporaryPath
+        } catch let error {
+            print("PDF generation failed: \(error)")
+        }
+        return nil
     }
 }
 
