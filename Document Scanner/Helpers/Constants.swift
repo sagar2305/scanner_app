@@ -19,5 +19,6 @@ struct Constant {
     
     struct HeroIdentifiers {
         static let footerIdentifier = "footer_view"
+        static let imageView = "image_view"
     }
 }

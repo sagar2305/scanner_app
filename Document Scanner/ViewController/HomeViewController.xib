@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -14,12 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="documentsCollectionView" destination="a9B-JH-h6P" id="yOH-cH-nLp"/>
-                <outlet property="documentsCollectionViewLeadingConstraint" destination="WrG-nm-PI4" id="iJS-j5-NEU"/>
-                <outlet property="documentsCollectionViewTrailingConstraint" destination="oOS-hL-qYf" id="Lfc-GI-hIa"/>
                 <outlet property="footerView" destination="RTZ-Om-6jC" id="YbG-1G-kjj"/>
-                <outlet property="footerViewBottomConstraint" destination="XWg-sv-FEE" id="pVv-v8-SYT"/>
-                <outlet property="footerViewLeadingConstraint" destination="2Cg-Qj-3UU" id="0zf-RR-OGo"/>
-                <outlet property="footerViewTrailingConstraint" destination="coc-Va-gh5" id="cTx-4R-WFH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
-                    <rect key="frame" x="8" y="44" width="374" height="706"/>
+                    <rect key="frame" x="0.0" y="44" width="390" height="714"/>
                     <color key="backgroundColor" name="background"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
                         <size key="itemSize" width="128" height="128"/>
@@ -39,111 +33,86 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTZ-Om-6jC" userLabel="footerView" colorLabel="IBBuiltInLabel-Gray">
-                    <rect key="frame" x="8" y="750" width="374" height="52"/>
+                    <rect key="frame" x="0.0" y="758" width="390" height="86"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0t6-Aa-RdM">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="52"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGb-l1-xpX">
-                                    <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="52"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hZK-qH-Px3">
-                                            <rect key="frame" x="37.666666666666664" y="4" width="43.999999999999993" height="44"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="Byd-sv-yZP"/>
-                                                <constraint firstAttribute="width" constant="44" id="iQP-Ld-tNl"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="photo-library" symbolScale="large" renderingMode="original"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="eVC-9n-sij"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGb-l1-xpX" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="124.66666666666667" height="52"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="hZK-qH-Px3" firstAttribute="centerY" secondItem="kGb-l1-xpX" secondAttribute="centerY" id="1Nf-KF-M0E"/>
-                                        <constraint firstItem="hZK-qH-Px3" firstAttribute="centerX" secondItem="kGb-l1-xpX" secondAttribute="centerX" id="F0x-1T-z6k"/>
-                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="photo-library"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Photo Library"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="oiN-fn-SZN"/>
+                                    </connections>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Nl-zw-6qB">
-                                    <rect key="frame" x="127.33333333333334" y="0.0" width="119.33333333333334" height="52"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dea-aw-wfr">
-                                            <rect key="frame" x="37.666666666666657" y="4" width="44" height="44"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="2JX-jJ-T9S"/>
-                                                <constraint firstAttribute="width" constant="44" id="WCk-Va-0Ho"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="camera" symbolScale="large" renderingMode="original"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="wyb-Wf-0DW"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Nl-zw-6qB" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="132.66666666666666" y="0.0" width="124.66666666666666" height="52"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="Dea-aw-wfr" firstAttribute="centerY" secondItem="0Nl-zw-6qB" secondAttribute="centerY" id="0rC-wT-bbY"/>
-                                        <constraint firstItem="Dea-aw-wfr" firstAttribute="centerX" secondItem="0Nl-zw-6qB" secondAttribute="centerX" id="uFc-vI-7RV"/>
-                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="camera"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Camera"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="87O-NM-hcB"/>
+                                    </connections>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y1Q-ZH-AYS">
-                                    <rect key="frame" x="254.66666666666671" y="0.0" width="119.33333333333334" height="52"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPl-c7-24D">
-                                            <rect key="frame" x="37.666666666666629" y="4" width="44" height="44"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="Anh-Bx-Q1n"/>
-                                                <constraint firstAttribute="height" constant="44" id="fSf-Ah-RGw"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="settings" symbolScale="large" renderingMode="original"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="pN1-Gr-FKT"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y1Q-ZH-AYS" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="265.33333333333331" y="0.0" width="124.66666666666669" height="52"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="cPl-c7-24D" firstAttribute="centerX" secondItem="y1Q-ZH-AYS" secondAttribute="centerX" id="agG-fS-90c"/>
-                                        <constraint firstItem="cPl-c7-24D" firstAttribute="centerY" secondItem="y1Q-ZH-AYS" secondAttribute="centerY" id="kTu-Fe-c6a"/>
-                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="settings"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Settings"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="miN-HP-E1r"/>
+                                    </connections>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" name="app-theme"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="I21-92-TnI"/>
+                            </constraints>
                         </stackView>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="TCb-1U-dLT"/>
                     <color key="backgroundColor" name="app-theme"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="0t6-Aa-RdM" secondAttribute="bottom" id="31e-ho-oPF"/>
-                        <constraint firstItem="0t6-Aa-RdM" firstAttribute="leading" secondItem="RTZ-Om-6jC" secondAttribute="leading" id="6QJ-UO-6Zj"/>
-                        <constraint firstAttribute="trailing" secondItem="0t6-Aa-RdM" secondAttribute="trailing" id="BKv-Rl-XPW"/>
-                        <constraint firstItem="0t6-Aa-RdM" firstAttribute="top" secondItem="RTZ-Om-6jC" secondAttribute="top" id="dSg-RX-GTy"/>
-                        <constraint firstAttribute="height" constant="52" id="t1D-R0-3bV"/>
+                        <constraint firstItem="TCb-1U-dLT" firstAttribute="bottom" secondItem="0t6-Aa-RdM" secondAttribute="bottom" id="3Y6-g7-7Te"/>
+                        <constraint firstItem="TCb-1U-dLT" firstAttribute="trailing" secondItem="0t6-Aa-RdM" secondAttribute="trailing" id="Kh1-nJ-586"/>
+                        <constraint firstItem="0t6-Aa-RdM" firstAttribute="leading" secondItem="TCb-1U-dLT" secondAttribute="leading" id="OxL-5R-8H2"/>
+                        <constraint firstItem="0t6-Aa-RdM" firstAttribute="top" secondItem="TCb-1U-dLT" secondAttribute="top" id="czJ-2A-CBx"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="RTZ-Om-6jC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="2Cg-Qj-3UU"/>
+                <constraint firstAttribute="bottom" secondItem="RTZ-Om-6jC" secondAttribute="bottom" id="1L8-K4-Y1Z"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RTZ-Om-6jC" secondAttribute="trailing" id="DCQ-Of-TD9"/>
                 <constraint firstItem="a9B-JH-h6P" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="H4c-Wy-jGZ"/>
-                <constraint firstItem="RTZ-Om-6jC" firstAttribute="top" secondItem="a9B-JH-h6P" secondAttribute="bottom" id="LO6-Xf-zqJ"/>
-                <constraint firstItem="a9B-JH-h6P" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="WrG-nm-PI4"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="RTZ-Om-6jC" secondAttribute="bottom" constant="8" id="XWg-sv-FEE"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RTZ-Om-6jC" secondAttribute="trailing" constant="8" id="coc-Va-gh5"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9B-JH-h6P" secondAttribute="trailing" constant="8" id="oOS-hL-qYf"/>
+                <constraint firstItem="a9B-JH-h6P" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WrG-nm-PI4"/>
+                <constraint firstItem="RTZ-Om-6jC" firstAttribute="top" secondItem="a9B-JH-h6P" secondAttribute="bottom" id="jii-pN-YWx"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9B-JH-h6P" secondAttribute="trailing" id="oOS-hL-qYf"/>
+                <constraint firstItem="RTZ-Om-6jC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tbE-SZ-Nw5"/>
             </constraints>
             <point key="canvasLocation" x="130.40000000000001" y="123.68815592203899"/>
         </view>
     </objects>
+    <designables>
+        <designable name="0Nl-zw-6qB">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="kGb-l1-xpX">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="y1Q-ZH-AYS">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+    </designables>
     <resources>
         <image name="camera" width="33.333332061767578" height="33.333332061767578"/>
         <image name="photo-library" width="33.333332061767578" height="33.333332061767578"/>

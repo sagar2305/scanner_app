@@ -35,6 +35,8 @@
 		025DB1C126011214006943C0 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1BF26011214006943C0 /* WebViewVC.swift */; };
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
+		02616243260DBF100095B727 /* FooterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02616242260DBF100095B727 /* FooterButton.swift */; };
+		02616249260DBF200095B727 /* FooterButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02616248260DBF200095B727 /* FooterButton.xib */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
@@ -135,6 +137,8 @@
 		025DB1BF26011214006943C0 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		02616242260DBF100095B727 /* FooterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterButton.swift; sourceTree = "<group>"; };
+		02616248260DBF200095B727 /* FooterButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterButton.xib; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
@@ -320,6 +324,8 @@
 			children = (
 				024F075225FF656D0091C73C /* FilterController.xib */,
 				024F075D25FF6A350091C73C /* FilterController.swift */,
+				02616242260DBF100095B727 /* FooterButton.swift */,
+				02616248260DBF200095B727 /* FooterButton.xib */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 			files = (
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
+				02616249260DBF200095B727 /* FooterButton.xib in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
@@ -520,6 +527,7 @@
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
+				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
 				02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */,

@@ -20,12 +20,14 @@ class DocumentCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var documentNameLabel: UILabel!
     @IBOutlet private weak var documentThumbnail: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 16
+        documentThumbnail.hero.id = Constant.HeroIdentifiers.imageView
     }
 
 }

@@ -28,22 +28,12 @@ class HomeViewController: DocumentScannerViewController {
     
 
     @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
-    @IBOutlet private weak var documentsCollectionViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var documentsCollectionViewTrailingConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         _setupViews()
         _setupCollectionView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        _setupFooterView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,32 +55,6 @@ class HomeViewController: DocumentScannerViewController {
         
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-        
-        if UIDevice.current.hasNotch {
-            documentsCollectionViewLeadingConstraint.constant = 8
-            documentsCollectionViewTrailingConstraint.constant = 8
-        } else {
-            documentsCollectionViewLeadingConstraint.constant = 0
-            documentsCollectionViewTrailingConstraint.constant = 0
-        }
-    }
-    
-    private func _setupFooterView() {
-        footerView.clipsToBounds = true
-        if UIDevice.current.hasNotch {
-            footerView.layer.cornerRadius = footerCornerRadius
-            footerViewLeadingConstraint.constant = 8
-            footerViewTrailingConstraint.constant = 8
-            footerViewBottomConstraint.constant = 8
-            footerView.shadowColor = UIColor.primary.cgColor
-            footerView.shadowOpacity = 0.2
-            footerView.shadowRadius = footerCornerRadius
-        } else {
-            footerView.layer.cornerRadius = 0
-            footerViewLeadingConstraint.constant = 0
-            footerViewTrailingConstraint.constant = 0
-            footerViewBottomConstraint.constant = 0
-        }
     }
     
     private func _setupCollectionView() {
@@ -103,7 +67,7 @@ class HomeViewController: DocumentScannerViewController {
     
     private func _collectionViewLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.48),
+            widthDimension: .fractionalWidth(0.5),
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
@@ -132,15 +96,15 @@ class HomeViewController: DocumentScannerViewController {
     }
     
     
-    @IBAction func didTapPickImageButton(_ sender: UIButton) {
+    @IBAction func didTapPickImageButton(_ sender: FooterButton) {
         delegate?.pickNewDocument(self)
     }
     
-    @IBAction func didTapScanButton(_ sender: UIButton) {
+    @IBAction func didTapScanButton(_ sender: FooterButton) {
         delegate?.scanNewDocument(self)
     }
     
-    @IBAction func didTapSettingsButton(_ sender: UIButton) {
+    @IBAction func didTapSettingsButton(_ sender: FooterButton) {
         delegate?.showSettings(self)
     }
     

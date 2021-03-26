@@ -15,14 +15,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DocumentReviewVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="documentImageView" destination="MW2-p0-E8v" id="zPb-go-dLL"/>
-                <outlet property="documentImageViewLeadingConstraint" destination="UAo-lf-Tl4" id="lfh-1x-8zg"/>
-                <outlet property="documentImageViewTrailingConstraint" destination="zNx-JZ-Qwv" id="qWI-2p-E9r"/>
-                <outlet property="editButton" destination="Eak-O3-R52" id="d4F-sy-1Kv"/>
+                <outlet property="editButton" destination="kB3-5C-fe1" id="iWZ-HI-LgB"/>
                 <outlet property="footerView" destination="hyw-q2-wj5" id="DGO-mT-Hx9"/>
-                <outlet property="footerViewBottomConstraint" destination="Mpc-et-YAn" id="BnA-PS-JJS"/>
-                <outlet property="footerViewLeadingConstraint" destination="aCD-N7-QR9" id="tea-r7-DxR"/>
-                <outlet property="footerViewTrailingConstraint" destination="dc4-dH-zdc" id="VFb-9Z-JsZ"/>
-                <outlet property="shareButton" destination="0rA-Ay-O7a" id="kGv-b8-AMK"/>
+                <outlet property="shareButton" destination="rZd-kV-INr" id="DIe-CN-Dsa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,10 +27,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyw-q2-wj5" userLabel="footerView">
-                    <rect key="frame" x="8" y="802" width="398" height="52"/>
+                    <rect key="frame" x="0.0" y="810" width="414" height="86"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4u9-qE-LJN">
-                            <rect key="frame" x="0.0" y="0.0" width="398" height="52"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
                             <subviews>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YKF-cH-wMJ">
                                     <rect key="frame" x="-4" y="0.0" width="0.0" height="52"/>
@@ -60,34 +55,19 @@
                                         <constraint firstItem="oB8-Or-fKg" firstAttribute="centerX" secondItem="YKF-cH-wMJ" secondAttribute="centerX" id="w2C-DD-XuJ"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZd-kV-INr">
-                                    <rect key="frame" x="0.0" y="0.0" width="195" height="52"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rA-Ay-O7a">
-                                            <rect key="frame" x="75.5" y="4" width="44" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="2L3-Re-JHO"/>
-                                                <constraint firstAttribute="width" constant="44" id="JqJ-hC-gLV"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="share" symbolScale="large" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapShare:" destination="-1" eventType="touchUpInside" id="SRa-sh-XkJ"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZd-kV-INr" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="203" height="52"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="0rA-Ay-O7a" firstAttribute="centerX" secondItem="rZd-kV-INr" secondAttribute="centerX" id="9MB-WN-bbt"/>
-                                        <constraint firstItem="0rA-Ay-O7a" firstAttribute="centerY" secondItem="rZd-kV-INr" secondAttribute="centerY" id="Buz-VI-7rK"/>
-                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="share"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Share"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapShare:" destination="-1" eventType="touchUpInside" id="jS8-vZ-iTp"/>
+                                    </connections>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-Tp-Ffp">
-                                    <rect key="frame" x="199" y="0.0" width="0.0" height="52"/>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-Tp-Ffp" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="0.0" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZR-cI-r3b">
                                             <rect key="frame" x="-22" y="4" width="44" height="44"/>
@@ -108,9 +88,13 @@
                                         <constraint firstItem="AZR-cI-r3b" firstAttribute="centerX" secondItem="hyc-Tp-Ffp" secondAttribute="centerX" id="EGX-XK-2j7"/>
                                         <constraint firstItem="AZR-cI-r3b" firstAttribute="centerY" secondItem="hyc-Tp-Ffp" secondAttribute="centerY" id="pxy-nQ-4m2"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="share"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Share"/>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onp-vJ-5wi">
-                                    <rect key="frame" x="199" y="0.0" width="0.0" height="52"/>
+                                    <rect key="frame" x="207" y="0.0" width="0.0" height="52"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0t1-qu-RX0">
                                             <rect key="frame" x="-22" y="4" width="44" height="44"/>
@@ -133,43 +117,31 @@
                                         <constraint firstItem="0t1-qu-RX0" firstAttribute="centerX" secondItem="onp-vJ-5wi" secondAttribute="centerX" id="sjp-w5-RUq"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kB3-5C-fe1">
-                                    <rect key="frame" x="203" y="0.0" width="195" height="52"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eak-O3-R52">
-                                            <rect key="frame" x="75.5" y="4" width="44" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="pUE-hu-xwn"/>
-                                                <constraint firstAttribute="width" constant="44" id="xvQ-sC-HdH"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <imageReference key="image" image="edit" symbolScale="medium" renderingMode="original"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="bold">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                </preferredSymbolConfiguration>
-                                            </state>
-                                            <connections>
-                                                <action selector="didTapEdit:" destination="-1" eventType="touchUpInside" id="f2N-ts-gvj"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kB3-5C-fe1" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
+                                    <rect key="frame" x="211" y="0.0" width="203" height="52"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="Eak-O3-R52" firstAttribute="centerX" secondItem="kB3-5C-fe1" secondAttribute="centerX" id="3cH-AZ-KMZ"/>
-                                        <constraint firstItem="Eak-O3-R52" firstAttribute="centerY" secondItem="kB3-5C-fe1" secondAttribute="centerY" id="N81-OU-DGY"/>
-                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="edit"/>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Edit"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapEdit:" destination="-1" eventType="touchUpInside" id="iDE-WP-SeP"/>
+                                    </connections>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" name="app-theme"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="W1P-eX-xKf"/>
+                            </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <viewLayoutGuide key="safeArea" id="nX9-h5-2yj"/>
+                    <color key="backgroundColor" name="app-theme"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="52" id="DB8-Hf-rTX"/>
-                        <constraint firstAttribute="trailing" secondItem="4u9-qE-LJN" secondAttribute="trailing" id="Fpj-OW-mRc"/>
-                        <constraint firstItem="4u9-qE-LJN" firstAttribute="top" secondItem="hyw-q2-wj5" secondAttribute="top" id="Trt-o5-LUc"/>
-                        <constraint firstAttribute="bottom" secondItem="4u9-qE-LJN" secondAttribute="bottom" id="jE5-ij-TxT"/>
-                        <constraint firstItem="4u9-qE-LJN" firstAttribute="leading" secondItem="hyw-q2-wj5" secondAttribute="leading" id="p9b-yi-2Iz"/>
+                        <constraint firstItem="4u9-qE-LJN" firstAttribute="leading" secondItem="hyw-q2-wj5" secondAttribute="leading" id="DbT-29-0kj"/>
+                        <constraint firstItem="4u9-qE-LJN" firstAttribute="top" secondItem="hyw-q2-wj5" secondAttribute="top" id="PjH-1l-R9h"/>
+                        <constraint firstAttribute="trailing" secondItem="4u9-qE-LJN" secondAttribute="trailing" id="jrU-ns-T9b"/>
+                        <constraint firstItem="nX9-h5-2yj" firstAttribute="bottom" secondItem="4u9-qE-LJN" secondAttribute="bottom" id="tEw-3T-tir"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -178,19 +150,19 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-p0-E8v">
-                    <rect key="frame" x="8" y="44" width="398" height="750"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="766"/>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="hyw-q2-wj5" firstAttribute="top" secondItem="MW2-p0-E8v" secondAttribute="bottom" constant="8" id="EiD-ff-Dvz"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hyw-q2-wj5" secondAttribute="bottom" constant="8" id="Mpc-et-YAn"/>
                 <constraint firstItem="MW2-p0-E8v" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Ody-XS-YOG"/>
-                <constraint firstItem="MW2-p0-E8v" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="UAo-lf-Tl4"/>
-                <constraint firstItem="hyw-q2-wj5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="aCD-N7-QR9"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hyw-q2-wj5" secondAttribute="trailing" constant="8" id="dc4-dH-zdc"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MW2-p0-E8v" secondAttribute="trailing" constant="8" id="zNx-JZ-Qwv"/>
+                <constraint firstItem="MW2-p0-E8v" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="UAo-lf-Tl4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hyw-q2-wj5" secondAttribute="trailing" id="XFp-dX-KOL"/>
+                <constraint firstItem="hyw-q2-wj5" firstAttribute="top" secondItem="MW2-p0-E8v" secondAttribute="bottom" id="rUJ-eX-UBm"/>
+                <constraint firstItem="hyw-q2-wj5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="svu-Ev-jCo"/>
+                <constraint firstAttribute="bottom" secondItem="hyw-q2-wj5" secondAttribute="bottom" id="xGb-qQ-vup"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MW2-p0-E8v" secondAttribute="trailing" id="zNx-JZ-Qwv"/>
             </constraints>
             <point key="canvasLocation" x="13.043478260869566" y="128.57142857142856"/>
         </view>

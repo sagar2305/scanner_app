@@ -77,46 +77,18 @@ class EditImageVC: DocumentScannerViewController {
     
     // MARK:- IBoutlets
     @IBOutlet private weak var imageEditorView: UIView!
-    @IBOutlet private weak var imageEditorViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var imageEditorViewTrailingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private weak var headerView: UIView!
-    @IBOutlet private weak var headerViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var headerViewTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var headerViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var headerViewHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private weak var filterButtonOneContainer: UIView!
-    @IBOutlet private weak var filterButtonOne: UIButton!
-    @IBOutlet private weak var filterButtonTwoContainer: UIView!
-    @IBOutlet private weak var filterButtonTwo: UIButton!
-    @IBOutlet private weak var filterButtonThreeContainer: UIView!
-    @IBOutlet private weak var filterButtonThree:UIButton!
-    @IBOutlet private weak var filterButtonFourContainer: UIView!
-    @IBOutlet private weak var filterButtonFour: UIButton!
-    @IBOutlet private weak var filterButtonFiveContainer: UIView!
-    @IBOutlet private weak var filterButtonFive: UIButton!
-    
     
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var footerViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var footerViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var footerViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var sliderViewContainer: UIView!
     @IBOutlet private weak var slider: UISlider!
     
     //button  left to right in xib
-    @IBOutlet private weak var editButtonOneContainer: UIView!
-    @IBOutlet private weak var editButtonOne: UIButton!
-    @IBOutlet private weak var editButtonTwoContainer: UIView!
-    @IBOutlet private weak var editButtonTwo: UIButton!
-    @IBOutlet private weak var editButtonThreeContainer: UIView!
-    @IBOutlet private weak var editButtonThree:UIButton!
-    @IBOutlet private weak var editButtonFourContainer: UIView!
-    @IBOutlet private weak var editButtonFour: UIButton!
-    @IBOutlet private weak var editButtonFiveContainer: UIView!
-    @IBOutlet private weak var editButtonFive: UIButton!
+    @IBOutlet private weak var editButtonOne: FooterButton!
+    @IBOutlet private weak var editButtonTwo: FooterButton!
+    @IBOutlet private weak var editButtonThree: FooterButton!
+    @IBOutlet private weak var editButtonFour: FooterButton!
+    @IBOutlet private weak var editButtonFive: FooterButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,22 +103,18 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     private func _setupViews() {
-        headerView.isHidden = true
-        
         _setupImageEditorView()
-        _setupFooterView()
-        //recurring view setups
         _updateViewForEditing()
-        
     }
     
     //initial setup
     private func _setupImageEditorView() {
+        imageEditorView.backgroundColor = .backgroundColor
         imageEditorView.subviews.forEach { $0.removeFromSuperview() }
+        
         guard let dataSource = dateSource else {
             fatalError("ERROR: Datasource is not set")
         }
-        imageEditorView.backgroundColor = .backgroundColor
     
         switch dataSource.documentStatus {
         case .new:
@@ -160,14 +128,6 @@ class EditImageVC: DocumentScannerViewController {
                 fatalError("ERROR: documents pages is not set, or page does't have edited image for editing")
             }
             _presentImageViewInImageEditorView(for: imageToEdit)
-        }
-        
-        if UIDevice.current.hasNotch {
-            imageEditorViewLeadingConstraint.constant = 8
-            imageEditorViewTrailingConstraint.constant = 8
-        } else {
-            imageEditorViewTrailingConstraint.constant = 0
-            imageEditorViewLeadingConstraint.constant = 0
         }
     }
     
@@ -198,28 +158,6 @@ class EditImageVC: DocumentScannerViewController {
         _editVC?.view.removeFromSuperview()
     }
     
-    private func _setupFooterView() {
-        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
-        footerView.clipsToBounds = true
-        if UIDevice.current.hasNotch {
-            footerView.layer.cornerRadius = _footerCornerRadius
-            footerViewLeadingConstraint.constant = 8
-            footerViewTrailingConstraint.constant = 8
-        } else {
-            footerView.layer.cornerRadius = 0
-            footerViewLeadingConstraint.constant = 0
-            footerViewTrailingConstraint.constant = 0
-            footerViewBottomConstraint.constant = 0
-        }
-    }
-    
-    private func _setupHeaderView() {
-        filterButtonOne.setImage(Icons.blackAndWhite, for: .normal)
-        filterButtonTwo.setImage(Icons.brightness, for: .normal)
-        filterButtonThree.setImage(Icons.sharpen, for: .normal)
-        
-    }
-    
     private func _updateViewForEditing() {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
@@ -233,12 +171,11 @@ class EditImageVC: DocumentScannerViewController {
     
     private func _setupEditorViewForBasicEditingMode() {
         
-        editButtonOneContainer.isHidden = false
-        editButtonTwoContainer.isHidden = false
-        editButtonThreeContainer.isHidden = true
-        editButtonFourContainer.isHidden = false
-        editButtonFiveContainer.isHidden = true
-        
+        editButtonOne.isHidden = false
+        editButtonTwo.isHidden = false
+        editButtonThree.isHidden = true
+        editButtonFour.isHidden = false
+        editButtonFive.isHidden = true
         editButtonOne.setImage(Icons.cancel, for: .normal)
         if dateSource?.imageSource == .camera {
             editButtonTwo.setImage(Icons.camera, for: .normal)
@@ -250,22 +187,14 @@ class EditImageVC: DocumentScannerViewController {
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
-        
-        headerView.isHidden = true
-        headerViewHeightConstraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        
-        
     }
     
     private func _setupEditorViewForCorrectionMode() {
-        editButtonOneContainer.isHidden = false
-        editButtonTwoContainer.isHidden = false
-        editButtonThreeContainer.isHidden = false
-        editButtonFourContainer.isHidden = false
-        editButtonFiveContainer.isHidden = false
+        editButtonOne.isHidden = false
+        editButtonTwo.isHidden = false
+        editButtonThree.isHidden = false
+        editButtonFour.isHidden = false
+        editButtonFive.isHidden = false
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
         editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
@@ -276,22 +205,15 @@ class EditImageVC: DocumentScannerViewController {
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
-        
-        headerView.isHidden = true
-        headerViewHeightConstraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        
     }
     
     private func _setupEditorViewForFilteringMode() {
     
-        editButtonOneContainer.isHidden = false
-        editButtonTwoContainer.isHidden = false
-        editButtonThreeContainer.isHidden = false
-        editButtonFourContainer.isHidden = false
-        editButtonFiveContainer.isHidden = false
+        editButtonOne.isHidden = false
+        editButtonTwo.isHidden = false
+        editButtonThree.isHidden = false
+        editButtonFour.isHidden = false
+        editButtonFive.isHidden = false
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
         editButtonTwo.setImage(Icons.blackAndWhite, for: .normal)
@@ -302,12 +224,6 @@ class EditImageVC: DocumentScannerViewController {
         sliderViewContainer.isHidden = true
         footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
         UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
-        
-        headerView.isHidden = true
-        headerViewHeightConstraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
     }
     
     //rotation of images is available in cropped mode only
@@ -434,7 +350,7 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     //cancel editing
-    @IBAction func didTapEditButtonOne(_ sender: UIButton) {
+    @IBAction func didTapEditButtonOne(_ sender: FooterButton) {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
         }
@@ -462,7 +378,6 @@ class EditImageVC: DocumentScannerViewController {
         }
     }
     
-    //
     @IBAction func didTapEditButtonThree(_ sender: UIButton) {
         guard let editingMode = imageEditingMode else {
             fatalError("ERROR: Image editing mode not set")
@@ -493,6 +408,7 @@ class EditImageVC: DocumentScannerViewController {
         }
     }
     
+
     @IBAction func didTapEditButtonFive(_ sender: Any) {
         guard let dataSource = dateSource else {
             fatalError("ERROR: Datasource is not set")
