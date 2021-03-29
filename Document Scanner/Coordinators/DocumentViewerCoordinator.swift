@@ -37,7 +37,6 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: document)
         editDocumentCoordinator.delegate = self
-        editDocumentCoordinator.documentEditingStatus = .existing
         childCoordinator.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }

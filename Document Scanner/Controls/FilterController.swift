@@ -7,46 +7,46 @@
 
 import UIKit
 
+@IBDesignable
 class FilterController: UIView {
 
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, Filter>
+    private var containerView: UIView?
     @IBOutlet private weak var sliderOne: UISlider!
     @IBOutlet private weak var sliderTwo: UISlider!
-    @IBOutlet private weak var filterListCollectionView: UICollectionView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        loadView()
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        loadView()
-    }
-    
-    override func willMove(toSuperview newSuperview: UIView?) {
-            
-    }
-    
-    override func didMoveToSuperview() {
-        
+        _loadView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        loadView()
+        _loadView()
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     
     private func _setupViews() {
         
     }
     
-    private func loadView() {
-        let allXibViews = Bundle.main.loadNibNamed("FilterController", owner: self, options: nil)
-        guard let filterView = allXibViews?.first as? UIView else { return }
-        filterView.frame = bounds
-        filterView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(filterView)
+    private func _loadView() {
+        guard  let view = _loadViewFromNib() else {
+            return
+        }
+        view.frame = bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(view)
+        containerView = view
+        //containerView?.isUserInteractionEnabled = false
     }
     
+    private func _loadViewFromNib() -> UIView? {
+        let bundle = Bundle(for: type(of: self))
+        let guideViewNib = UINib(nibName: "FilterController", bundle: bundle)
+        return guideViewNib.instantiate(withOwner: self, options: nil).first as? UIView
+    }
 }

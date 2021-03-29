@@ -17,7 +17,7 @@ protocol EditImageVCDelegate: class {
 
 protocol EditImageVCDataSource: class {
     var imageSource: EditDocumentCoordinator.ImageSource? { get }
-    var documentStatus: EditDocumentCoordinator.DocumentStatus { get }
+    var isNewDocument: Bool { get }
 }
 
 class EditImageVC: DocumentScannerViewController {
@@ -79,7 +79,7 @@ class EditImageVC: DocumentScannerViewController {
     @IBOutlet private weak var imageEditorView: UIView!
     
     @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var footerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var footerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var sliderViewContainer: UIView!
     @IBOutlet private weak var slider: UISlider!
     
@@ -113,16 +113,16 @@ class EditImageVC: DocumentScannerViewController {
         imageEditorView.subviews.forEach { $0.removeFromSuperview() }
         
         guard let dataSource = dateSource else {
-            fatalError("ERROR: Datasource is not set")
+            fatalError("ERROR: Datasource is not set is not set")
         }
     
-        switch dataSource.documentStatus {
-        case .new:
+        switch dataSource.isNewDocument {
+        case true:
             guard let imageToEdit = imagesToEdit?.first else {
                 fatalError("ERROR: Images are not set for editing")
             }
             _presentWeScanImageControllerInImageEditorView(for: imageToEdit)
-        case .existing:
+        case false:
             guard  let firstPage = pages?.first,
                    let imageToEdit = firstPage.editedImage else {
                 fatalError("ERROR: documents pages is not set, or page does't have edited image for editing")
@@ -177,16 +177,21 @@ class EditImageVC: DocumentScannerViewController {
         editButtonFour.isHidden = false
         editButtonFive.isHidden = true
         editButtonOne.setImage(Icons.cancel, for: .normal)
+        editButtonOne.setTitle("Cancel", for: .normal)
         if dateSource?.imageSource == .camera {
             editButtonTwo.setImage(Icons.camera, for: .normal)
+            editButtonOne.setTitle("Rescan", for: .normal)
         } else {
             editButtonTwo.setImage(Icons.photoLibrary, for: .normal)
+            editButtonOne.setTitle("Pick Again", for: .normal)
         }
         editButtonFour.setImage(Icons.crop, for: .normal)
+        editButtonFour.setTitle("Crop", for: .normal)
         
-        sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
+        UIView.animate(withDuration: 0.3) {
+            self.sliderViewContainer.isHidden = true
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func _setupEditorViewForCorrectionMode() {
@@ -197,14 +202,16 @@ class EditImageVC: DocumentScannerViewController {
         editButtonFive.isHidden = false
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
+        editButtonOne.setTitle("Cancel", for: .normal)
         editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
         editButtonThree.setImage(Icons.filter, for: .normal)
         editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
-        
-        sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
+
+        UIView.animate(withDuration: 0.3) {
+            self.sliderViewContainer.isHidden = true
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func _setupEditorViewForFilteringMode() {
@@ -221,9 +228,10 @@ class EditImageVC: DocumentScannerViewController {
         editButtonFour.setImage(Icons.sharpen, for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
         
-        sliderViewContainer.isHidden = true
-        footerViewHeightConstraint.constant = _footerViewHightWithoutSlider
-        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
+        UIView.animate(withDuration: 0.3) {
+            self.sliderViewContainer.isHidden = true
+            self.view.layoutIfNeeded()
+        }
     }
     
     //rotation of images is available in cropped mode only
@@ -303,9 +311,10 @@ class EditImageVC: DocumentScannerViewController {
     private func _filterSelected(_ filter: ImageFilters) {
         _editedImagesBuffer[_currentIndexOfImage].append((_imageView?.image)!)
         _currentFilter = filter
-        sliderViewContainer.isHidden = false
-        footerViewHeightConstraint.constant = _footerViewHightWithSlider
-        UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.sliderViewContainer.isHidden = false
+        }
         
         switch filter {
         case .black_and_white:
@@ -408,7 +417,6 @@ class EditImageVC: DocumentScannerViewController {
         }
     }
     
-
     @IBAction func didTapEditButtonFive(_ sender: Any) {
         guard let dataSource = dateSource else {
             fatalError("ERROR: Datasource is not set")
@@ -438,12 +446,7 @@ class EditImageVC: DocumentScannerViewController {
             alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
             present(alterView, animated: true)
         }
-        
-        switch dataSource.documentStatus {
-        case .new: saveDocument()
-        case .existing : _updateDocument()
-        }
-        
+        dataSource.isNewDocument ? saveDocument() : _updateDocument()
     }
     
     @IBAction func didChange(_ sender: UISlider) {

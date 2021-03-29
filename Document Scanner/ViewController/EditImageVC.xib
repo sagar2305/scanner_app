@@ -19,7 +19,7 @@
                 <outlet property="editButtonThree" destination="MW2-u9-fWz" id="IdH-xI-eEQ"/>
                 <outlet property="editButtonTwo" destination="ygq-47-q1s" id="3Ff-Iv-36E"/>
                 <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
-                <outlet property="footerViewHeightConstraint" destination="uUp-ju-Cql" id="aB9-9f-V1Z"/>
+                <outlet property="footerViewTopConstraint" destination="3wT-ll-R46" id="LY1-Wu-P2f"/>
                 <outlet property="imageEditorView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
                 <outlet property="slider" destination="Dpo-yV-mB9" id="OwP-ZU-ATL"/>
                 <outlet property="sliderViewContainer" destination="QXs-gS-mqv" id="LYC-3Q-Z0p"/>
@@ -31,21 +31,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="708"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
-                    <rect key="frame" x="0.0" y="752" width="414" height="144"/>
+                    <rect key="frame" x="0.0" y="758" width="414" height="138"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hLL-7C-PYn">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXs-gS-mqv">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
                                     <subviews>
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dpo-yV-mB9">
-                                            <rect key="frame" x="14" y="12.5" width="386" height="31"/>
+                                            <rect key="frame" x="14" y="11" width="386" height="31"/>
                                             <connections>
                                                 <action selector="didChange:" destination="-1" eventType="valueChanged" id="WJP-g6-Gcb"/>
                                             </connections>
@@ -53,16 +49,17 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstAttribute="height" constant="52" id="Djt-2m-eTz"/>
                                         <constraint firstAttribute="trailing" secondItem="Dpo-yV-mB9" secondAttribute="trailing" constant="16" id="Rp3-2i-6wj"/>
                                         <constraint firstItem="Dpo-yV-mB9" firstAttribute="centerY" secondItem="QXs-gS-mqv" secondAttribute="centerY" id="bWS-Km-dz9"/>
                                         <constraint firstItem="Dpo-yV-mB9" firstAttribute="leading" secondItem="QXs-gS-mqv" secondAttribute="leading" constant="16" id="vm6-HH-9vj"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4p5-2d-AdV">
-                                    <rect key="frame" x="0.0" y="55" width="414" height="55"/>
+                                    <rect key="frame" x="0.0" y="52" width="414" height="52"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4c-fV-XOc" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="76.5" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="76.5" height="52"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="cancel"/>
@@ -76,10 +73,10 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygq-47-q1s" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="84.5" y="0.0" width="76.5" height="55"/>
+                                            <rect key="frame" x="84.5" y="0.0" width="76.5" height="52"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="black_and_white"/>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="B&amp;W"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
@@ -87,7 +84,7 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-u9-fWz" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="169" y="0.0" width="76" height="55"/>
+                                            <rect key="frame" x="169" y="0.0" width="76" height="52"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="image-filter"/>
@@ -98,10 +95,10 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-eb-cfl" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="253" y="0.0" width="76.5" height="55"/>
+                                            <rect key="frame" x="253" y="0.0" width="76.5" height="52"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="sharpe"/>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="capture"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="Sharpen"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
@@ -109,11 +106,11 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyi-hp-S9O" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="337.5" y="0.0" width="76.5" height="55"/>
+                                            <rect key="frame" x="337.5" y="0.0" width="76.5" height="52"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="Done"/>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="done"/>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="background">
                                                     <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </userDefinedRuntimeAttribute>
@@ -124,11 +121,11 @@
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" name="app-theme"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="52" id="x2R-e7-hVC"/>
+                                    </constraints>
                                 </stackView>
                             </subviews>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="110" id="uUp-ju-Cql"/>
-                            </constraints>
                         </stackView>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="546-Pr-Fmq"/>
@@ -140,11 +137,15 @@
                         <constraint firstItem="hLL-7C-PYn" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="w1W-xN-aOt"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="714"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" id="3wT-ll-R46"/>
+                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" priority="250" id="3wT-ll-R46"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JCo-HO-DcO" secondAttribute="trailing" id="7nf-QL-4Fb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLe-Fr-nQh" secondAttribute="trailing" id="AOj-pl-I03"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Em4-tw-A8W"/>
@@ -173,16 +174,15 @@
         </designable>
     </designables>
     <resources>
-        <image name="black_and_white" width="33" height="33"/>
-        <image name="cancel" width="33" height="33"/>
-        <image name="done" width="33" height="33"/>
-        <image name="image-filter" width="33" height="33"/>
-        <image name="sharpe" width="33" height="33"/>
+        <image name="BKS" width="50" height="50"/>
+        <image name="cancel" width="50" height="50"/>
+        <image name="capture" width="50" height="50"/>
+        <image name="image-filter" width="50" height="50"/>
         <namedColor name="app-theme">
             <color red="0.25098039215686274" green="0.61960784313725492" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="background">
-            <color red="0.090196078431372548" green="0.11372549019607843" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

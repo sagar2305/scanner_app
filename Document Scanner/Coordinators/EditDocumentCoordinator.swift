@@ -21,13 +21,7 @@ class EditDocumentCoordinator: Coordinator {
         case photo_library
         case camera
     }
-    
-    //whether creating new document or editing existing one
-    enum DocumentStatus {
-        case new
-        case existing
-    }
-    
+
     var navigationController: DocumentScannerNavigationController
     var childCoordinator: [Coordinator] = []
     var rootViewController: UIViewController {
@@ -39,7 +33,7 @@ class EditDocumentCoordinator: Coordinator {
     //document editing mode a document is passed for editing
     var document: Document?
     var editedImages: [UIImage]?
-    var documentEditingStatus: DocumentStatus?
+    var isNewDocument: Bool
     // document capturing mode images is passed for editing
     var images: [UIImage]?
     
@@ -47,11 +41,15 @@ class EditDocumentCoordinator: Coordinator {
     var quad: Quadrilateral?
     var delegate: EditDocumentCoordinatorDelegate?
     
-    init(_ controller: DocumentScannerNavigationController, edit images: [UIImage],quad: Quadrilateral? = nil, imageSource: ImageSource) {
+    init(_ controller: DocumentScannerNavigationController,
+         edit images: [UIImage],
+         quad: Quadrilateral? = nil,
+         imageSource: ImageSource) {
         navigationController = controller
         self.images = images
         self.quad = quad
         self.imageSource = imageSource
+        self.isNewDocument = true
     }
     
     init(_ controller: DocumentScannerNavigationController, edit document: Document) {
@@ -69,12 +67,13 @@ class EditDocumentCoordinator: Coordinator {
         
         images = originalImages
         editedImages = lastEditedImages
+        self.isNewDocument = false
     }
     
     func start() {
         editImageVC = EditImageVC()
-        editImageVC!.imageEditingMode = _getInitialEditingMode()
-        if _getInitialEditingMode() == .basic {
+        editImageVC!.imageEditingMode = isNewDocument ? .basic : .correction
+        if isNewDocument {
             editImageVC!.imagesToEdit = images
             editImageVC!.quad = quad
         } else {
@@ -83,16 +82,6 @@ class EditDocumentCoordinator: Coordinator {
         editImageVC!.delegate = self
         editImageVC.dateSource = self
         navigationController.pushViewController(editImageVC!, animated: true)
-    }
-    
-    private func _getInitialEditingMode() -> EditImageVC.ImageEditingMode {
-        guard let documentStatus = documentEditingStatus else {
-            fatalError("ERROR: Document status is not set")
-        }
-        switch documentStatus {
-        case .new: return .basic
-        case .existing: return .correction
-        }
     }
 }
 
@@ -145,13 +134,4 @@ extension EditDocumentCoordinator: EditImageVCDelegate {
     }
 }
 
-extension EditDocumentCoordinator: EditImageVCDataSource {
-    var documentStatus: DocumentStatus {
-        guard  let documentStatus = documentEditingStatus else {
-            fatalError("ERROR: Document status is not set")
-        }
-        return documentStatus
-    }
-    
-
-}
+extension EditDocumentCoordinator: EditImageVCDataSource { }

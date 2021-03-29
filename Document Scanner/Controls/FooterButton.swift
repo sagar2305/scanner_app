@@ -47,11 +47,17 @@ class FooterButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadView()
+        _setupView()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         isEnabled = true
+        _setupView()
+    }
+    
+    private func _setupView() {
+        buttonTitle.font = UIFont.font(style: .caption1)
     }
     
     

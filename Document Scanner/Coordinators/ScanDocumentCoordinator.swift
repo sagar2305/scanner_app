@@ -45,7 +45,6 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image],quad: quad, imageSource: .camera)
         editDocumentCoordinator.delegate = self
-        editDocumentCoordinator.documentEditingStatus = .new
         childCoordinator.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }

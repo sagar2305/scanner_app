@@ -167,6 +167,17 @@
             <point key="canvasLocation" x="13.043478260869566" y="128.57142857142856"/>
         </view>
     </objects>
+    <designables>
+        <designable name="hyc-Tp-Ffp">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="kB3-5C-fe1">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="rZd-kV-INr">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+    </designables>
     <resources>
         <image name="camera" width="33" height="33"/>
         <image name="cancel" width="33" height="33"/>

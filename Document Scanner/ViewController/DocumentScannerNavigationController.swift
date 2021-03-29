@@ -30,8 +30,8 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
         
        
         
-        UINavigationBar.appearance().barTintColor = .backgroundColor
-        UINavigationBar.appearance().tintColor = .text
+        UINavigationBar.appearance().barTintColor = .primary
+        UINavigationBar.appearance().tintColor = .primary
         UINavigationBar.appearance().isTranslucent = false
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -40,7 +40,7 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
         
         UINavigationBar.appearance().backIndicatorImage = Icons.backArrow
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Icons.backArrow
-        UINavigationBar.appearance().backgroundColor = .backgroundColor
+        UINavigationBar.appearance().backgroundColor = .primary
     }
     
     override func viewWillAppear(_ animated: Bool) {
