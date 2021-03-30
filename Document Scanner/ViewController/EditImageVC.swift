@@ -42,7 +42,7 @@ class EditImageVC: DocumentScannerViewController {
     
     // MARK: - Views
     private var _editVC: EditImageViewController!
-    private var _imageView: UIImageView?
+    private var imageView: UIImageView?
     
     // MARK: - Constants
     private var _footerViewHightWithoutSlider: CGFloat = 55
@@ -51,7 +51,7 @@ class EditImageVC: DocumentScannerViewController {
     // MARK: - Variables
     var imageEditingMode: ImageEditingMode? {
         didSet {
-            if _editVC != nil || _imageView != nil {
+            if _editVC != nil || imageView != nil {
                 _updateViewForEditing()
             }
         }
@@ -105,6 +105,7 @@ class EditImageVC: DocumentScannerViewController {
     private func _setupViews() {
         _setupImageEditorView()
         _updateViewForEditing()
+        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
     }
     
     //initial setup
@@ -145,16 +146,25 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     private func _presentImageViewInImageEditorView(for image: UIImage) {
-        if _imageView == nil {
-            _imageView = UIImageView()
+        if imageView == nil {
+            imageView = UIImageView()
         }
-        _imageView?.image = image
-        _imageView?.backgroundColor = .backgroundColor
+        imageView?.image = image
+        imageView?.backgroundColor = .backgroundColor
         _croppedImages = [image]
-        _imageView?.frame = imageEditorView.bounds
-        imageEditorView.addSubview(_imageView!)
-        imageEditorView.bringSubviewToFront(_imageView!)
-        _imageView?.contentMode = .scaleAspectFit
+        imageView?.frame = imageEditorView.bounds
+        imageEditorView.addSubview(imageView!)
+        imageView?.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageView!.leftAnchor.constraint(equalTo: imageEditorView.leftAnchor),
+            imageView!.topAnchor.constraint(equalTo: imageEditorView.topAnchor),
+            imageView!.rightAnchor.constraint(equalTo: imageEditorView.rightAnchor),
+            imageView!.bottomAnchor.constraint(equalTo: imageEditorView.bottomAnchor)
+        ])
+        
+        imageView?.contentMode = .scaleAspectFit
+        imageEditorView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
     }
     
@@ -203,13 +213,18 @@ class EditImageVC: DocumentScannerViewController {
         
         editButtonOne.setImage(Icons.cancel, for: .normal)
         editButtonOne.setTitle("Cancel", for: .normal)
-        editButtonTwo.setImage(Icons.rotateLeft, for: .normal)
+        editButtonTwo.setImage(Icons.reset, for: .normal)
+        editButtonTwo.setTitle("Reset", for: .normal)
         editButtonThree.setImage(Icons.filter, for: .normal)
         editButtonFour.setImage(Icons.rotateRight, for: .normal)
+        editButtonThree.setTitle("Filter", for: .normal)
+        editButtonFour.setTitle("Rotate", for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
-
+        editButtonFive.setTitle("Done", for: .normal)
+                
+        sliderViewContainer.isHidden = true
         UIView.animate(withDuration: 0.3) {
-            self.sliderViewContainer.isHidden = true
+            
             self.view.layoutIfNeeded()
         }
     }
@@ -221,15 +236,15 @@ class EditImageVC: DocumentScannerViewController {
         editButtonThree.isHidden = false
         editButtonFour.isHidden = false
         editButtonFive.isHidden = false
-        
-        editButtonOne.setImage(Icons.cancel, for: .normal)
+
         editButtonTwo.setImage(Icons.blackAndWhite, for: .normal)
+        editButtonTwo.setTitle("B&W", for: .normal)
         editButtonThree.setImage(Icons.brightness, for: .normal)
+        editButtonThree.setTitle("Brightness", for: .normal)
         editButtonFour.setImage(Icons.sharpen, for: .normal)
-        editButtonFive.setImage(Icons.done, for: .normal)
-        
+        editButtonFour.setTitle("Sharpen", for: .normal)
+        self.sliderViewContainer.isHidden = true
         UIView.animate(withDuration: 0.3) {
-            self.sliderViewContainer.isHidden = true
             self.view.layoutIfNeeded()
         }
     }
@@ -243,8 +258,7 @@ class EditImageVC: DocumentScannerViewController {
         case .right:
             _croppedImages[_currentIndexOfImage] = imageToRotate.rotate(withRotation: direction.rawValue)
         }
-        _imageView?.image = _croppedImages[_currentIndexOfImage]
-        
+        imageView?.image = _croppedImages[_currentIndexOfImage]
     }
     
     private func _initiateImageFiltering() {
@@ -258,11 +272,9 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     private func _saveDocument(withName name: String) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        guard  let originalImages = imagesToEdit else {
-            fatalError("ERROR: Original Image is not available")
+        guard let editingMode = imageEditingMode,
+              let originalImages = imagesToEdit else {
+            fatalError("ERROR: Image editing mode or Original Images not set")
         }
         
         switch editingMode {
@@ -281,7 +293,7 @@ class EditImageVC: DocumentScannerViewController {
                                            controller: self)
             
         case .filtering:
-            guard  _editedImagesBuffer.count == originalImages.count, let finalImage = _imageView?.image else {
+            guard  _editedImagesBuffer.count == originalImages.count, let finalImage = imageView?.image else {
                 fatalError("ERROR: Edited Images count does not original images count")
             }
             delegate?.finishedImageEditing([finalImage],
@@ -295,7 +307,7 @@ class EditImageVC: DocumentScannerViewController {
         guard let pages = pages else {
             fatalError("ERROR: Pages are not set for editing")
         }
-        if let editedImage = _imageView?.image {
+        if let editedImage = imageView?.image {
             if pages[_currentIndexOfImage].saveEditedImage(editedImage) {
                 delegate?.finishedEditing(pages, controller: self)
             }
@@ -309,7 +321,7 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     private func _filterSelected(_ filter: ImageFilters) {
-        _editedImagesBuffer[_currentIndexOfImage].append((_imageView?.image)!)
+        _editedImagesBuffer[_currentIndexOfImage].append((imageView?.image)!)
         _currentFilter = filter
         
         UIView.animate(withDuration: 0.3) {
@@ -354,8 +366,7 @@ class EditImageVC: DocumentScannerViewController {
         }
         
         guard let newImage = editedImage else { return }
-        _imageView?.image = newImage
-        
+        imageView?.image = newImage
     }
     
     //cancel editing
@@ -381,7 +392,7 @@ class EditImageVC: DocumentScannerViewController {
         case .basic:
             delegate?.rescanImage(self)
         case .correction:
-            _rotateImage(.left)
+            imageView?.image = _croppedImages[_currentIndexOfImage]
         case .filtering:
             _filterSelected(.black_and_white)
         }

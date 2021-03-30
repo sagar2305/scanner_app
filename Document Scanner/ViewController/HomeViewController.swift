@@ -24,8 +24,8 @@ class HomeViewController: DocumentScannerViewController {
     private var footerCornerRadius: CGFloat = 8
     private lazy var dateSource = _getDocumentCollectionViewDataSource()
     
-    private var documents = [Document]()
-    
+    private var allDocuments = [Document]()
+    private var filteredDocuments = [Document]()
 
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
@@ -44,7 +44,8 @@ class HomeViewController: DocumentScannerViewController {
 
     func _getDocuments() {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
-        self.documents = documents
+        self.allDocuments = documents
+        self.filteredDocuments = documents
         applySnapshot(animatingDifferences: true)
     }
     
@@ -52,12 +53,19 @@ class HomeViewController: DocumentScannerViewController {
         //headerLabel.font = UIFont.font(style: .largeTitle)
         configureUI(title: "My Documents")
         footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
-        
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.tintColor = .text
+        searchController.searchBar.showsCancelButton = true
+        searchController.searchBar.placeholder = "Search Document"
         navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func _setupCollectionView() {
+        documentsCollectionView.isHeroEnabled = true
+        documentsCollectionView.hero.modifiers = [.cascade]
         documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.identifier, bundle: nil),
                                          forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
         documentsCollectionView.collectionViewLayout = _collectionViewLayout()
@@ -91,7 +99,7 @@ class HomeViewController: DocumentScannerViewController {
     func applySnapshot(animatingDifferences: Bool = true) {
         var snapShot = SnapShot()
         snapShot.appendSections([0])
-        snapShot.appendItems(documents)
+        snapShot.appendItems(filteredDocuments)
         dateSource.apply(snapShot, animatingDifferences: animatingDifferences)
     }
     
@@ -107,13 +115,30 @@ class HomeViewController: DocumentScannerViewController {
     @IBAction func didTapSettingsButton(_ sender: FooterButton) {
         delegate?.showSettings(self)
     }
-    
+
 }
 
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let document = documents[indexPath.row]
+        let document = filteredDocuments[indexPath.row]
         delegate?.viewDocument(self, document: document)
     }
+
+}
+
+
+extension HomeViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        
+        if searchText == nil || searchText!.isEmpty {
+            filteredDocuments = allDocuments
+            applySnapshot()
+        } else {
+            filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText!.lowercased()) }
+            applySnapshot()
+        }
+    }
+    
 }

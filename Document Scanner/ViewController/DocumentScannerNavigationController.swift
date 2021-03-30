@@ -31,7 +31,7 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
        
         
         UINavigationBar.appearance().barTintColor = .primary
-        UINavigationBar.appearance().tintColor = .primary
+        UINavigationBar.appearance().tintColor = .text
         UINavigationBar.appearance().isTranslucent = false
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)

@@ -12,7 +12,7 @@ class DocumentScannerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .primary
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -31,6 +31,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="714"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
                     <rect key="frame" x="0.0" y="758" width="414" height="138"/>
                     <subviews>
@@ -137,15 +141,11 @@
                         <constraint firstItem="hLL-7C-PYn" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="w1W-xN-aOt"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="714"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" priority="250" id="3wT-ll-R46"/>
+                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" id="3wT-ll-R46"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JCo-HO-DcO" secondAttribute="trailing" id="7nf-QL-4Fb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLe-Fr-nQh" secondAttribute="trailing" id="AOj-pl-I03"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Em4-tw-A8W"/>

@@ -16,6 +16,7 @@ class DocumentCollectionViewCell: UICollectionViewCell {
             if document != nil {
                 documentNameLabel.text = document!.name
                 documentThumbnail.image = document!.pages.first?.thumbNailImage
+                hero.id = document!.id.uuidString
             }
         }
     }
@@ -27,7 +28,6 @@ class DocumentCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 16
-        documentThumbnail.hero.id = Constant.HeroIdentifiers.imageView
     }
 
 }
