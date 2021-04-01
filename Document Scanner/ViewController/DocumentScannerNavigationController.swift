@@ -32,16 +32,13 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
     }
     
     private func _customizeNavigationBar() {
-        
-       
-        
+                
         UINavigationBar.appearance().barTintColor = .primary
         UINavigationBar.appearance().tintColor = .text
         UINavigationBar.appearance().isTranslucent = false
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-        
         
         UINavigationBar.appearance().backIndicatorImage = Icons.backArrow
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Icons.backArrow

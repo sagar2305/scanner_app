@@ -13,6 +13,11 @@ class DocumentScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .primary
+        if #available(iOS 13, *) { } else {
+            let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+            statusBar?.backgroundColor = UIColor.primary
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

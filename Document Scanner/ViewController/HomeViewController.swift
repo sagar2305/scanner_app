@@ -167,6 +167,7 @@ extension HomeViewController: UISearchResultsUpdating {
     }
 }
 
+@available(iOS 13.0, *)
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchController.searchBar.showsCancelButton = true

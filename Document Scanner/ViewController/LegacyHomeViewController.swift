@@ -13,6 +13,28 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     var filteredDocuments: [Document] = [Document]()
     
     var delegate: HomeViewControllerDelegate?
+    
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = .text
+        searchController.searchBar.showsCancelButton = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchController.searchBar.backgroundColor = .primary
+        
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.backgroundColor = .primary
+            textField.subviews.first?.backgroundColor = .backgroundColor
+            textField.textColor = .text
+            textField.attributedPlaceholder = NSAttributedString(string: "Search Document",
+                                                                 attributes: [.foregroundColor: UIColor.text])
+        }
+        
+        return searchController
+    }()
 
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
@@ -40,14 +62,13 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         //headerLabel.font = UIFont.font(style: .largeTitle)
         configureUI(title: "My Documents")
         footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.tintColor = .text
-        searchController.searchBar.showsCancelButton = true
-        searchController.searchBar.placeholder = "Search Document"
-        navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped(_:)))
+    }
+    
+    @objc private func searchButtonTapped(_ sender: UIBarButtonItem) {
+        UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = self.searchController }
     }
     
     private func _setupCollectionView() {
@@ -134,6 +155,17 @@ extension LegacyHomeViewController: UISearchResultsUpdating {
             documentsCollectionView.reloadData()
         }
     }
+}
+
+extension LegacyHomeViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsCancelButton = true
+    }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = nil }
+        filteredDocuments = allDocuments
+        documentsCollectionView.reloadData()
+    }
 }
 
