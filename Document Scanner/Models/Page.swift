@@ -33,6 +33,7 @@ class Page: Codable {
     func saveEditedImage(_ image: UIImage) -> Bool {
         if FileHelper.shared.saveImage(image: image, withName: editedImageName) {
             previewData = image.jpegData(compressionQuality: 0.7)
+            editedImage = image
             return true
         }
         return false

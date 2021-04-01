@@ -56,7 +56,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vF-1T-1aD" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -69,7 +69,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Fm-lkU" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -82,7 +82,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAd-ys-KTe" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -95,7 +95,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scb-rk-TXG" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -108,7 +108,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eu2-On-7hB" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -121,7 +121,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djo-k5-yxG" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
@@ -134,7 +134,7 @@
                                         <userDefinedRuntimeAttribute type="color" keyPath="background">
                                             <color key="value" systemColor="systemGray6Color"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="BKS"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="bright"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
@@ -197,7 +197,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="BKS" width="50" height="50"/>
+        <image name="bright" width="50" height="50"/>
         <namedColor name="app-theme">
             <color red="0.25098039215686274" green="0.61960784313725492" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
