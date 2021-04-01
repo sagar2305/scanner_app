@@ -8,25 +8,31 @@
 import UIKit
 import Hero
 
-protocol HomeViewControllerDelegate: class {
-    func scanNewDocument(_ controller: HomeViewController)
-    func pickNewDocument(_ controller: HomeViewController)
-    func showSettings(_ controller: HomeViewController)
-    func viewDocument(_ controller: HomeViewController, document: Document)
+protocol HomeVC: DocumentScannerViewController {
+    var delegate: HomeViewControllerDelegate? { get set }
+    var allDocuments: [Document] { get }
+    var filteredDocuments: [Document] { get }
 }
 
-class HomeViewController: DocumentScannerViewController {
+protocol HomeViewControllerDelegate: class {
+    func scanNewDocument(_ controller: HomeVC)
+    func pickNewDocument(_ controller: HomeVC)
+    func showSettings(_ controller: HomeVC)
+    func viewDocument(_ controller: HomeVC, document: Document)
+}
+
+@available(iOS 13.0, *)
+class HomeViewController: DocumentScannerViewController, HomeVC {
     
     weak var delegate: HomeViewControllerDelegate?
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var footerCornerRadius: CGFloat = 8
     private lazy var dateSource = _getDocumentCollectionViewDataSource()
     
-    private var allDocuments = [Document]()
-    private var filteredDocuments = [Document]()
-
+    var allDocuments: [Document] = [Document]()
+    var filteredDocuments: [Document]  = [Document]()
+    
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
@@ -118,7 +124,7 @@ class HomeViewController: DocumentScannerViewController {
 
 }
 
-
+@available(iOS 13.0, *)
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let document = filteredDocuments[indexPath.row]
@@ -127,7 +133,7 @@ extension HomeViewController: UICollectionViewDelegate {
 
 }
 
-
+@available(iOS 13.0, *)
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text

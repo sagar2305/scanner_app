@@ -14,7 +14,6 @@ protocol ScannerVCDelegate: class {
 }
 class ScannerVC: UIViewController {
     
-    private var footerCornerRadius: CGFloat = 8
     private var scannerVC: CameraScannerViewController!
     private var images = [UIImage]() {
         didSet {
