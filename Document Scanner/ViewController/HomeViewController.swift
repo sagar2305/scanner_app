@@ -33,6 +33,26 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document]  = [Document]()
     
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = .text
+        searchController.searchBar.showsCancelButton = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.backgroundColor = .primary
+            textField.subviews.first?.backgroundColor = .backgroundColor
+            textField.textColor = .text
+            textField.attributedPlaceholder = NSAttributedString(string: "Search Document",
+                                                                 attributes: [.foregroundColor: UIColor.text])
+        }
+        
+        return searchController
+    }()
+
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
@@ -52,21 +72,20 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
         self.allDocuments = documents
         self.filteredDocuments = documents
-        applySnapshot(animatingDifferences: true)
+        _applySnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
         //headerLabel.font = UIFont.font(style: .largeTitle)
         configureUI(title: "My Documents")
         footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.tintColor = .text
-        searchController.searchBar.showsCancelButton = true
-        searchController.searchBar.placeholder = "Search Document"
-        navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped(_:)))
+    }
+    
+    @objc private func searchButtonTapped(_ sender: UIBarButtonItem) {
+        UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = self.searchController }
     }
     
     private func _setupCollectionView() {
@@ -76,7 +95,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                                          forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
         documentsCollectionView.collectionViewLayout = _collectionViewLayout()
         documentsCollectionView.delegate = self
-        applySnapshot()
+        _applySnapshot()
     }
     
     private func _collectionViewLayout() -> UICollectionViewLayout {
@@ -102,7 +121,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         return dataSource
     }
     
-    func applySnapshot(animatingDifferences: Bool = true) {
+    private func _applySnapshot(animatingDifferences: Bool = true) {
         var snapShot = SnapShot()
         snapShot.appendSections([0])
         snapShot.appendItems(filteredDocuments)
@@ -140,11 +159,23 @@ extension HomeViewController: UISearchResultsUpdating {
         
         if searchText == nil || searchText!.isEmpty {
             filteredDocuments = allDocuments
-            applySnapshot()
+            _applySnapshot()
         } else {
             filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText!.lowercased()) }
-            applySnapshot()
+            _applySnapshot()
         }
     }
-    
 }
+
+extension HomeViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = nil }
+        filteredDocuments = allDocuments
+        _applySnapshot()
+    }
+}
+

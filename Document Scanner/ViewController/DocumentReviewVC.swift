@@ -38,17 +38,13 @@ class DocumentReviewVC: DocumentScannerViewController {
         _setupFooterView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        _setupView()
-    }
-
     private func _setupView() {
         guard  let document = document else {
             fatalError("ERROR: document is not set")
         }
         configureUI(title: document.name)
         documentImageView.hero.id = document.id.uuidString
+        print(document.pages.first?.editedImage?.size)
         documentImageView.image = document.pages.first?.editedImage
     }
     
