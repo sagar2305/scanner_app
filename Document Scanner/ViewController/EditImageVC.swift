@@ -67,7 +67,6 @@ class EditImageVC: DocumentScannerViewController {
     //temporary images
     private var _croppedImages = [UIImage]() //cropped image for filtering
     private var _editedImagesBuffer = [[UIImage]]()
-    private var _footerCornerRadius: CGFloat = 8
     private var _currentFilter: ImageFilters?
     private var _currentIndexOfImage = 0
     //last slide values for filters defaults 0
@@ -190,16 +189,16 @@ class EditImageVC: DocumentScannerViewController {
         editButtonOne.setTitle("Cancel", for: .normal)
         if dateSource?.imageSource == .camera {
             editButtonTwo.setImage(Icons.camera, for: .normal)
-            editButtonOne.setTitle("Rescan", for: .normal)
+            editButtonTwo.setTitle("Rescan", for: .normal)
         } else {
             editButtonTwo.setImage(Icons.photoLibrary, for: .normal)
-            editButtonOne.setTitle("Pick Again", for: .normal)
+            editButtonTwo.setTitle("Pick Again", for: .normal)
         }
         editButtonFour.setImage(Icons.crop, for: .normal)
         editButtonFour.setTitle("Crop", for: .normal)
+        self.sliderViewContainer.isHidden = true
         
         UIView.animate(withDuration: 0.3) {
-            self.sliderViewContainer.isHidden = true
             self.view.layoutIfNeeded()
         }
     }
@@ -224,7 +223,6 @@ class EditImageVC: DocumentScannerViewController {
                 
         sliderViewContainer.isHidden = true
         UIView.animate(withDuration: 0.3) {
-            
             self.view.layoutIfNeeded()
         }
     }

@@ -19,6 +19,11 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
         _customizeNavigationBar()
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.prefersLargeTitles = false
@@ -27,16 +32,13 @@ class DocumentScannerNavigationController: UINavigationController, UINavigationC
     }
     
     private func _customizeNavigationBar() {
-        
-       
-        
+                
         UINavigationBar.appearance().barTintColor = .primary
         UINavigationBar.appearance().tintColor = .text
         UINavigationBar.appearance().isTranslucent = false
         
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-        
         
         UINavigationBar.appearance().backIndicatorImage = Icons.backArrow
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Icons.backArrow
