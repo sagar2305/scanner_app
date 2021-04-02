@@ -67,7 +67,6 @@ class EditImageVC: DocumentScannerViewController {
     //temporary images
     private var _croppedImages = [UIImage]() //cropped image for filtering
     private var _editedImagesBuffer = [[UIImage]]()
-    private var _footerCornerRadius: CGFloat = 8
     private var _currentFilter: ImageFilters?
     private var _currentIndexOfImage = 0
     //last slide values for filters defaults 0

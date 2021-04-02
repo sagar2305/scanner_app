@@ -1,37 +1,18 @@
 //
-//  HomeViewController.swift
+//  LegacyHomeViewController.swift
 //  Document Scanner
 //
-//  Created by Sandesh on 04/03/21.
+//  Created by Sandesh on 31/03/21.
 //
 
 import UIKit
-import Hero
 
-protocol HomeVC: DocumentScannerViewController {
-    var delegate: HomeViewControllerDelegate? { get set }
-    var allDocuments: [Document] { get }
-    var filteredDocuments: [Document] { get }
-}
-
-protocol HomeViewControllerDelegate: class {
-    func scanNewDocument(_ controller: HomeVC)
-    func pickNewDocument(_ controller: HomeVC)
-    func showSettings(_ controller: HomeVC)
-    func viewDocument(_ controller: HomeVC, document: Document)
-}
-
-@available(iOS 13.0, *)
-class HomeViewController: DocumentScannerViewController, HomeVC {
-    
-    weak var delegate: HomeViewControllerDelegate?
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
-    
-    private lazy var dateSource = _getDocumentCollectionViewDataSource()
+class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     
     var allDocuments: [Document] = [Document]()
-    var filteredDocuments: [Document]  = [Document]()
+    var filteredDocuments: [Document] = [Document]()
+    
+    var delegate: HomeViewControllerDelegate?
     
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -41,6 +22,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         searchController.searchBar.tintColor = .text
         searchController.searchBar.showsCancelButton = true
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchController.searchBar.backgroundColor = .primary
         
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             textField.backgroundColor = .primary
@@ -66,13 +49,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         _getDocuments()
+        documentsCollectionView.reloadData()
     }
 
     func _getDocuments() {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
         self.allDocuments = documents
         self.filteredDocuments = documents
-        _applySnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
@@ -90,42 +73,19 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupCollectionView() {
         documentsCollectionView.isHeroEnabled = true
-        documentsCollectionView.hero.modifiers = [.cascade]
         documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.identifier, bundle: nil),
                                          forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
-        documentsCollectionView.collectionViewLayout = _collectionViewLayout()
+        let layout = UICollectionViewFlowLayout()
+        documentsCollectionView.collectionViewLayout = layout
+        layout.sectionHeadersPinToVisibleBounds = true
+        documentsCollectionView.dataSource = self
         documentsCollectionView.delegate = self
-        _applySnapshot()
     }
-    
-    private func _collectionViewLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5),
-            heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        return UICollectionViewCompositionalLayout(section: section)
-    }
-    
-    private func _getDocumentCollectionViewDataSource() -> DataSource {
-        let dataSource = DataSource(collectionView: documentsCollectionView) { (collectionView, indexPath, document) -> UICollectionViewCell? in
-            guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.identifier, for: indexPath) as? DocumentCollectionViewCell else {
-                fatalError("ERROR: Unable to find and dequeue cell with identifier \(DocumentCollectionViewCell.identifier)")
-            }
-            collectionViewCell.document = document
-            return collectionViewCell
-        }
-        return dataSource
-    }
-    
-    private func _applySnapshot(animatingDifferences: Bool = true) {
-        var snapShot = SnapShot()
-        snapShot.appendSections([0])
-        snapShot.appendItems(filteredDocuments)
-        dateSource.apply(snapShot, animatingDifferences: animatingDifferences)
+     
+    private func _collectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        return layout
     }
     
     
@@ -143,8 +103,39 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
 
 }
 
-@available(iOS 13.0, *)
-extension HomeViewController: UICollectionViewDelegate {
+
+extension LegacyHomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.size.width * 0.45, height: 200)
+    }
+}
+
+
+extension LegacyHomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filteredDocuments.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.identifier, for: indexPath) as? DocumentCollectionViewCell else {
+            fatalError("ERROR: Unable to dequeue collection view cell with identifier \(DocumentCollectionViewCell.identifier)")
+        }
+        documentCell.document = filteredDocuments[indexPath.row]
+        return documentCell
+    }
+}
+
+
+extension LegacyHomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let document = filteredDocuments[indexPath.row]
         delegate?.viewDocument(self, document: document)
@@ -152,23 +143,21 @@ extension HomeViewController: UICollectionViewDelegate {
 
 }
 
-@available(iOS 13.0, *)
-extension HomeViewController: UISearchResultsUpdating {
+extension LegacyHomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text
         
         if searchText == nil || searchText!.isEmpty {
             filteredDocuments = allDocuments
-            _applySnapshot()
+            documentsCollectionView.reloadData()
         } else {
             filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText!.lowercased()) }
-            _applySnapshot()
+            documentsCollectionView.reloadData()
         }
     }
 }
 
-@available(iOS 13.0, *)
-extension HomeViewController: UISearchBarDelegate {
+extension LegacyHomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchController.searchBar.showsCancelButton = true
     }
@@ -176,7 +165,7 @@ extension HomeViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = nil }
         filteredDocuments = allDocuments
-        _applySnapshot()
+        documentsCollectionView.reloadData()
     }
 }
 

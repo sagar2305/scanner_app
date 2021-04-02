@@ -18,7 +18,7 @@ class ApplicationCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     
     var navigationController: DocumentScannerNavigationController
-    var homeViewController: HomeViewController
+    var homeViewController: HomeVC
     
     func start() {
         window.rootViewController = rootViewController
@@ -28,7 +28,12 @@ class ApplicationCoordinator: Coordinator {
     
     init(_ window: UIWindow) {
         self.window = window
-        homeViewController = HomeViewController()
+        
+        if #available(iOS 13.0, *) {
+            homeViewController = HomeViewController()
+        } else {
+            homeViewController = LegacyHomeViewController(nibName: "HomeViewController", bundle: .main)
+        }
         navigationController = DocumentScannerNavigationController(rootViewController: homeViewController)
         //navigationController.isNavigationBarHidden = true
         homeViewController.delegate = self
@@ -36,30 +41,27 @@ class ApplicationCoordinator: Coordinator {
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
-  
-    
-    
-    func scanNewDocument(_ controller: HomeViewController) {
+    func scanNewDocument(_ controller: HomeVC) {
         let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
         scanDocumentCoordinator.delegate = self
         childCoordinator.append(scanDocumentCoordinator)
         scanDocumentCoordinator.start()
     }
     
-    func pickNewDocument(_ controller: HomeViewController) {
+    func pickNewDocument(_ controller: HomeVC) {
         let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
         pickDocumentCoordinator.delegate = self
         childCoordinator.append(pickDocumentCoordinator)
         pickDocumentCoordinator.start()
     }
     
-    func showSettings(_ controller: HomeViewController) {
+    func showSettings(_ controller: HomeVC) {
         let settingsCoordinator = SettingsCoordinator(navigationController)
         childCoordinator.append(settingsCoordinator)
         settingsCoordinator.start()
     }
     
-    func viewDocument(_ controller: HomeViewController, document: Document) {
+    func viewDocument(_ controller: HomeVC, document: Document) {
         let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
         childCoordinator.append(documentViewerCoordinator)
         documentViewerCoordinator.start()
