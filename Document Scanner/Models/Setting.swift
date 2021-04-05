@@ -10,6 +10,7 @@ import Foundation
 enum SettingIdentifier: Int {
     case termsOfLaw = 6684
     case privacyPolicy = 6685
+    case featureRequest = 6686
 }
 
 struct Setting {

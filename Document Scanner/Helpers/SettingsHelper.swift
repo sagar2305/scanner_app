@@ -15,7 +15,8 @@ struct SettingsHelper {
     func allSettings() -> [Setting] {
         return [
             Setting(id: .privacyPolicy, name: "Privacy Policy"),
-            Setting(id: .termsOfLaw, name: "Terms of Law")
+            Setting(id: .termsOfLaw, name: "Terms of Law"),
+            Setting(id: .featureRequest, name: "Request feature")
         ]
     }
 }

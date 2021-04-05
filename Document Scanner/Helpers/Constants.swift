@@ -21,4 +21,8 @@ struct Constant {
         static let footerIdentifier = "footer_view"
         static let imageView = "image_view"
     }
+    
+    struct  SettingDefaults {
+        static let feedbackEmail = "support@eztape.app"
+    }
 }

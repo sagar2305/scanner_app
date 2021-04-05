@@ -462,6 +462,7 @@ class EditImageVC: DocumentScannerViewController {
         guard  _currentFilter != nil else {
             fatalError("ERROR: Slide shown without filter selection")
         }
+        print("Slider Value:" + " \(sender.value)")
         _applyFilter(sender.value)
     }
     
