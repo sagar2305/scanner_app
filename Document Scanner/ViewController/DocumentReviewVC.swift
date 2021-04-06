@@ -44,7 +44,6 @@ class DocumentReviewVC: DocumentScannerViewController {
         }
         configureUI(title: document.name)
         documentImageView.hero.id = document.id.uuidString
-        print(document.pages.first?.editedImage?.size)
         documentImageView.image = document.pages.first?.editedImage
     }
     

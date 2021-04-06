@@ -127,6 +127,7 @@ class EditImageVC: DocumentScannerViewController {
                    let imageToEdit = firstPage.editedImage else {
                 fatalError("ERROR: documents pages is not set, or page does't have edited image for editing")
             }
+            imagesToEdit = [imageToEdit]
             _presentImageViewInImageEditorView(for: imageToEdit)
         }
     }
@@ -148,13 +149,13 @@ class EditImageVC: DocumentScannerViewController {
         if imageView == nil {
             imageView = UIImageView()
         }
-        imageView?.image = image
-        imageView?.backgroundColor = .backgroundColor
+        imageView!.image = image
+        imageView!.backgroundColor = .backgroundColor
         _croppedImages = [image]
-        imageView?.frame = imageEditorView.bounds
+        imageView!.frame = imageEditorView.bounds
         imageEditorView.addSubview(imageView!)
-        imageView?.translatesAutoresizingMaskIntoConstraints = false
-        
+        imageView!.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             imageView!.leftAnchor.constraint(equalTo: imageEditorView.leftAnchor),
             imageView!.topAnchor.constraint(equalTo: imageEditorView.topAnchor),
@@ -162,9 +163,11 @@ class EditImageVC: DocumentScannerViewController {
             imageView!.bottomAnchor.constraint(equalTo: imageEditorView.bottomAnchor)
         ])
         
-        imageView?.contentMode = .scaleAspectFit
+        imageView!.contentMode = .scaleAspectFit
         imageEditorView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
+        _rotateImage(.left)
+        _rotateImage(.right)
     }
     
     private func _updateViewForEditing() {
@@ -215,8 +218,8 @@ class EditImageVC: DocumentScannerViewController {
         editButtonTwo.setImage(Icons.reset, for: .normal)
         editButtonTwo.setTitle("Reset", for: .normal)
         editButtonThree.setImage(Icons.filter, for: .normal)
-        editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonThree.setTitle("Filter", for: .normal)
+        editButtonFour.setImage(Icons.rotateRight, for: .normal)
         editButtonFour.setTitle("Rotate", for: .normal)
         editButtonFive.setImage(Icons.done, for: .normal)
         editButtonFive.setTitle("Done", for: .normal)
@@ -262,6 +265,7 @@ class EditImageVC: DocumentScannerViewController {
     private func _initiateImageFiltering() {
         
          //1 set cropped image as initial image of edited images buffer
+        
         guard _croppedImages.count > 0 else {
             fatalError("ERROR: No cropped image available to edit")
         }
@@ -321,9 +325,10 @@ class EditImageVC: DocumentScannerViewController {
     private func _filterSelected(_ filter: ImageFilters) {
         _editedImagesBuffer[_currentIndexOfImage].append((imageView?.image)!)
         _currentFilter = filter
-        
+       
+        self.sliderViewContainer.isHidden = false
         UIView.animate(withDuration: 0.3) {
-            self.sliderViewContainer.isHidden = false
+            self.view.layoutIfNeeded()
         }
         
         switch filter {
@@ -346,7 +351,7 @@ class EditImageVC: DocumentScannerViewController {
         guard let imageToFilter = _editedImagesBuffer[_currentIndexOfImage].last else {
             fatalError("ERROR: No image is found for filtering")
         }
-        
+        print(imageToFilter)
         var editedImage: UIImage?
         
         switch _currentFilter {
