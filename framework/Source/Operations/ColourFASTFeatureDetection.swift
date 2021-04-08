@@ -11,7 +11,8 @@ public class ColourFASTFeatureDetection: OperationGroup {
     public var blurRadiusInPixels:Float = 2.0 { didSet { boxBlur.blurRadiusInPixels = blurRadiusInPixels } }
     
     let boxBlur = BoxBlur()
-    let colourFASTFeatureDescriptors = TextureSamplingOperation(vertexShader:ColourFASTDecriptorVertexShader, fragmentShader:ColourFASTDecriptorFragmentShader, numberOfInputs:2)
+    let colourFASTFeatureDescriptors = TextureSamplingOperation(vertexFunctionName:"colourFASTDecriptorVertex", fragmentFunctionName:"colourFASTDecriptorFragment", numberOfInputs:2)
+    // Do I need to encode the texturer coordinants here? If so, how do I do that?
     
     public override init() {
         super.init()

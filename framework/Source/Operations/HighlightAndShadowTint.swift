@@ -5,7 +5,7 @@ public class HighlightAndShadowTint: BasicOperation {
     public var highlightTintColor:Color = Color.blue { didSet { uniformSettings["highlightTintColor"] = highlightTintColor } }
     
     public init() {
-        super.init(fragmentShader:HighlightShadowTintFragmentShader, numberOfInputs:1)
+        super.init(fragmentFunctionName:"highlightShadowTintFragment", numberOfInputs:1)
         
         ({shadowTintIntensity = 0.0})()
         ({highlightTintIntensity = 0.0})()

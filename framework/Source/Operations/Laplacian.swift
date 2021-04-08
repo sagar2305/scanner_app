@@ -1,5 +1,5 @@
 public class Laplacian: TextureSamplingOperation {
     public init() {
-        super.init(fragmentShader:LaplacianFragmentShader)
+        super.init(fragmentFunctionName:"laplacianFilter")        
     }
 }

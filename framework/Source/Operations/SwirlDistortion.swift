@@ -4,7 +4,7 @@ public class SwirlDistortion: BasicOperation {
     public var center:Position = Position.center { didSet { uniformSettings["center"] = center } }
     
     public init() {
-        super.init(fragmentShader:SwirlFragmentShader, numberOfInputs:1)
+        super.init(fragmentFunctionName:"swirlFragment", numberOfInputs:1)
         
         ({radius = 0.5})()
         ({angle = 1.0})()

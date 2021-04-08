@@ -1,7 +1,6 @@
 // MARK: -
 // MARK: Basic types
 import Foundation
-import Dispatch
 
 public protocol ImageSource {
     var targets:TargetContainer { get }
@@ -12,7 +11,7 @@ public protocol ImageConsumer:AnyObject {
     var maximumInputs:UInt { get }
     var sources:SourceContainer { get }
     
-    func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt)
+    func newTextureAvailable(_ texture:Texture, fromSourceIndex:UInt)
 }
 
 public protocol ImageProcessingOperation: ImageConsumer, ImageSource {
@@ -52,18 +51,18 @@ public extension ImageSource {
         targets.removeAll()
     }
     
-    func updateTargetsWithFramebuffer(_ framebuffer:Framebuffer) {
-        if targets.count == 0 { // Deal with the case where no targets are attached by immediately returning framebuffer to cache
-            framebuffer.lock()
-            framebuffer.unlock()
-        } else {
-            // Lock first for each output, to guarantee proper ordering on multi-output operations
-            for _ in targets {
-                framebuffer.lock()
-            }
-        }
+    func updateTargetsWithTexture(_ texture:Texture) {
+//        if targets.count == 0 { // Deal with the case where no targets are attached by immediately returning framebuffer to cache
+//            framebuffer.lock()
+//            framebuffer.unlock()
+//        } else {
+//            // Lock first for each output, to guarantee proper ordering on multi-output operations
+//            for _ in targets {
+//                framebuffer.lock()
+//            }
+//        }
         for (target, index) in targets {
-            target.newFramebufferAvailable(framebuffer, fromSourceIndex:index)
+            target.newTextureAvailable(texture, fromSourceIndex:index)
         }
     }
 }
@@ -166,7 +165,7 @@ public class SourceContainer {
 }
 
 public class ImageRelay: ImageProcessingOperation {
-    public var newImageCallback:((Framebuffer) -> ())?
+    public var newImageCallback:((Texture) -> ())?
     
     public let sources = SourceContainer()
     public let targets = TargetContainer()
@@ -180,23 +179,23 @@ public class ImageRelay: ImageProcessingOperation {
         sources.sources[0]?.transmitPreviousImage(to:self, atIndex:0)
     }
 
-    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
+    public func newTextureAvailable(_ texture: Texture, fromSourceIndex: UInt) {
         if let newImageCallback = newImageCallback {
-            newImageCallback(framebuffer)
+            newImageCallback(texture)
         }
         if (!preventRelay) {
-            relayFramebufferOnward(framebuffer)
+            relayTextureOnward(texture)
         }
     }
     
-    public func relayFramebufferOnward(_ framebuffer:Framebuffer) {
+    public func relayTextureOnward(_ texture:Texture) {
         // Need to override to guarantee a removal of the previously applied lock
-        for _ in targets {
-            framebuffer.lock()
-        }
-        framebuffer.unlock()
+//        for _ in targets {
+//            framebuffer.lock()
+//        }
+//        framebuffer.unlock()
         for (target, index) in targets {
-            target.newFramebufferAvailable(framebuffer, fromSourceIndex:index)
+            target.newTextureAvailable(texture, fromSourceIndex:index)
         }
     }
 }

@@ -1,9 +1,9 @@
 public class ZoomBlur: BasicOperation {
-    public var blurSize:Float = 1.0 { didSet { uniformSettings["blurSize"] = blurSize } }
-    public var blurCenter:Position = Position.center { didSet { uniformSettings["blurCenter"] = blurCenter } }
+    public var blurSize:Float = 1.0 { didSet { uniformSettings["size"] = blurSize } }
+    public var blurCenter:Position = Position.center { didSet { uniformSettings["center"] = blurCenter } }
     
     public init() {
-        super.init(fragmentShader:ZoomBlurFragmentShader, numberOfInputs:1)
+        super.init(fragmentFunctionName:"zoomBlurFragment", numberOfInputs:1)
         
         ({blurSize = 1.0})()
         ({blurCenter = Position.center})()

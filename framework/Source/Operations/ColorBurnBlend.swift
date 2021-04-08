@@ -1,5 +1,5 @@
 public class ColorBurnBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:ColorBurnBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"colorBurnBlendFragment", numberOfInputs:2)
     }
 }

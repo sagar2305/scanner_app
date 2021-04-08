@@ -11,9 +11,8 @@
  01101101
  76543210
  */
-
 public class ColorLocalBinaryPattern: TextureSamplingOperation {
     public init() {
-        super.init(fragmentShader:ColorLocalBinaryPatternFragmentShader)
+        super.init(fragmentFunctionName:"colorLocalBinaryPatternFragment")
     }
 }

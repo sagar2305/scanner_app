@@ -1,5 +1,5 @@
 public class ColorDodgeBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:ColorDodgeBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"colorDodgeBlendFragment", numberOfInputs:2)
     }
 }

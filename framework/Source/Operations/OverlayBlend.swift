@@ -1,5 +1,5 @@
 public class OverlayBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:OverlayBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"overlayBlendFragment", numberOfInputs:2)
     }
 }

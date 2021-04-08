@@ -1,5 +1,5 @@
 public class MedianFilter: TextureSamplingOperation {
     public init() {
-        super.init(fragmentShader:MedianFragmentShader)
+        super.init(fragmentFunctionName:"medianFilter")
     }
 }

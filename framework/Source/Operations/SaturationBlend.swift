@@ -1,5 +1,5 @@
 public class SaturationBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:SaturationBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"saturationBlendFragment", numberOfInputs:2)
     }
 }

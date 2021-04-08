@@ -101,6 +101,9 @@ class EditImageVC: DocumentScannerViewController {
         _setupViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     private func _setupViews() {
         _setupImageEditorView()
         _updateViewForEditing()
@@ -166,8 +169,6 @@ class EditImageVC: DocumentScannerViewController {
         imageView!.contentMode = .scaleAspectFit
         imageEditorView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
-        _rotateImage(.left)
-        _rotateImage(.right)
     }
     
     private func _updateViewForEditing() {
