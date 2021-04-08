@@ -4,7 +4,7 @@ public class BulgeDistortion: BasicOperation {
     public var center:Position = Position.center { didSet { uniformSettings["center"] = center } }
     
     public init() {
-        super.init(fragmentShader:BulgeDistortionFragmentShader, numberOfInputs:1)
+        super.init(fragmentFunctionName:"bulgeDistortionFragment", numberOfInputs:1)
         
         ({radius = 0.25})()
         ({scale = 0.5})()

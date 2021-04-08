@@ -3,7 +3,7 @@ public class AdaptiveThreshold: OperationGroup {
     
     let luminance = Luminance()
     let boxBlur = BoxBlur()
-    let adaptiveThreshold = BasicOperation(fragmentShader:AdaptiveThresholdFragmentShader, numberOfInputs:2)
+    let adaptiveThreshold = BasicOperation(fragmentFunctionName:"adaptiveThresholdFragment", numberOfInputs:2)
     
     public override init() {
         blurRadiusInPixels = 4.0

@@ -72,26 +72,12 @@
 			remoteGlobalIDString = BC6E7CAB1C39A9D8006DF678;
 			remoteInfo = GPUImage_macOS;
 		};
-		025DB1722600B715006943C0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 025DB1692600B715006943C0 /* GPUImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC6E7CB51C39A9D8006DF678;
-			remoteInfo = GPUImageTests_macOS;
-		};
 		025DB1742600B715006943C0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 025DB1692600B715006943C0 /* GPUImage.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BC9E34E91E524A2200B8604F;
 			remoteInfo = GPUImage_iOS;
-		};
-		025DB1762600B715006943C0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 025DB1692600B715006943C0 /* GPUImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC9E34F11E524A2200B8604F;
-			remoteInfo = GPUImageTests_iOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -305,10 +291,8 @@
 		025DB16A2600B715006943C0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				025DB1712600B715006943C0 /* GPUImage.framework */,
-				025DB1732600B715006943C0 /* GPUImageTests_macOS.xctest */,
 				025DB1752600B715006943C0 /* GPUImage.framework */,
-				025DB1772600B715006943C0 /* GPUImageTests_iOS.xctest */,
+				025DB1712600B715006943C0 /* GPUImage.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -431,25 +415,11 @@
 			remoteRef = 025DB1702600B715006943C0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		025DB1732600B715006943C0 /* GPUImageTests_macOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GPUImageTests_macOS.xctest;
-			remoteRef = 025DB1722600B715006943C0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		025DB1752600B715006943C0 /* GPUImage.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = GPUImage.framework;
 			remoteRef = 025DB1742600B715006943C0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		025DB1772600B715006943C0 /* GPUImageTests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GPUImageTests_iOS.xctest;
-			remoteRef = 025DB1762600B715006943C0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -713,7 +683,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -737,7 +707,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -747,7 +717,7 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.triviatribe.scanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Scanner_Appstore_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Scanner_Adhoc_profile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

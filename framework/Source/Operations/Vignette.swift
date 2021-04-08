@@ -5,7 +5,7 @@ public class Vignette: BasicOperation {
     public var end:Float = 0.75 { didSet { uniformSettings["vignetteEnd"] = end } }
     
     public init() {
-        super.init(fragmentShader:VignetteFragmentShader, numberOfInputs:1)
+        super.init(fragmentFunctionName:"vignetteFragment", numberOfInputs:1)
         
         ({center = Position.center})()
         ({color = Color.black})()

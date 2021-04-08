@@ -13,6 +13,7 @@ public class LowPassFilter: OperationGroup {
         self.configureGroup{input, output in
             // This is needed to break the cycle on the very first pass through the blend loop
             self.dissolveBlend.activatePassthroughOnNextFrame = true
+//            self.buffer.activatePassthroughOnNextFrame = true
             // TODO: this may be a retain cycle
             input --> self.dissolveBlend --> self.buffer --> self.dissolveBlend --> output
         }

@@ -1,4 +1,3 @@
-#if !os(Linux)
 public class SoftElegance: OperationGroup {
     let lookup1 = LookupFilter()
     let lookup2 = LookupFilter()
@@ -13,10 +12,9 @@ public class SoftElegance: OperationGroup {
             self.lookup2.lookupImage = PictureInput(imageName:"lookup_soft_elegance_2.png")
             self.gaussianBlur.blurRadiusInPixels = 10.0
             self.alphaBlend.mix = 0.14
-
+            
             input --> self.lookup1 --> self.alphaBlend --> self.lookup2 --> output
-                      self.lookup1 --> self.gaussianBlur --> self.alphaBlend
+            self.lookup1 --> self.gaussianBlur --> self.alphaBlend
         }
     }
 }
-#endif

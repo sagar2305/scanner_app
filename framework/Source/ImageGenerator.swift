@@ -2,23 +2,18 @@ public class ImageGenerator: ImageSource {
     public var size:Size
 
     public let targets = TargetContainer()
-    var imageFramebuffer:Framebuffer!
+    var internalTexture:Texture!
 
     public init(size:Size) {
         self.size = size
-        do {
-            imageFramebuffer = try Framebuffer(context:sharedImageProcessingContext, orientation:.portrait, size:GLSize(size))
-        } catch {
-            fatalError("Could not construct framebuffer of size: \(size), error:\(error)")
-        }
+        internalTexture = Texture(device:sharedMetalRenderingDevice.device, orientation:.portrait, width:Int(size.width), height:Int(size.height), timingStyle:.stillImage)
     }
     
     public func transmitPreviousImage(to target:ImageConsumer, atIndex:UInt) {
-        imageFramebuffer.lock()
-        target.newFramebufferAvailable(imageFramebuffer, fromSourceIndex:atIndex)
+        target.newTextureAvailable(internalTexture, fromSourceIndex:atIndex)
     }
     
     func notifyTargets() {
-        updateTargetsWithFramebuffer(imageFramebuffer)
+        updateTargetsWithTexture(internalTexture)
     }
 }

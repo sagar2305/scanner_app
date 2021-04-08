@@ -1,5 +1,5 @@
 public class DifferenceBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:DifferenceBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"differenceBlendFragment", numberOfInputs:2)
     }
 }

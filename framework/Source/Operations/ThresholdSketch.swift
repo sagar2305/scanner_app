@@ -3,7 +3,7 @@ public class ThresholdSketchFilter: TextureSamplingOperation {
     public var threshold:Float = 0.25 { didSet { uniformSettings["threshold"] = threshold } }
     
     public init() {
-        super.init(fragmentShader:ThresholdSketchFragmentShader)
+        super.init(fragmentFunctionName:"thresholdSketchFragment", numberOfInputs:1)
         
         ({edgeStrength = 1.0})()
         ({threshold = 0.25})()

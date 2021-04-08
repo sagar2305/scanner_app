@@ -9,10 +9,10 @@ open class OperationGroup: ImageProcessingOperation {
     public init() {
     }
     
-    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
-        inputImageRelay.newFramebufferAvailable(framebuffer, fromSourceIndex:fromSourceIndex)
+    public func newTextureAvailable(_ texture:Texture, fromSourceIndex:UInt) {
+        inputImageRelay.newTextureAvailable(texture, fromSourceIndex:fromSourceIndex)
     }
-
+    
     public func configureGroup(_ configurationOperation:(_ input:ImageRelay, _ output:ImageRelay) -> ()) {
         configurationOperation(inputImageRelay, outputImageRelay)
     }

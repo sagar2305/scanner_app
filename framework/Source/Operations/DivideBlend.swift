@@ -1,5 +1,5 @@
 public class DivideBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:DivideBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName: "divideBlendFragment", numberOfInputs:2)
     }
 }

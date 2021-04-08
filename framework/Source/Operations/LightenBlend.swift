@@ -1,5 +1,5 @@
 public class LightenBlend: BasicOperation {
     public init() {
-        super.init(fragmentShader:LightenBlendFragmentShader, numberOfInputs:2)
+        super.init(fragmentFunctionName:"lightenBlendFragment", numberOfInputs:2)
     }
 }

@@ -5,7 +5,7 @@ public class TiltShift: OperationGroup {
     public var focusFallOffRate:Float = 0.2 { didSet { tiltShift.uniformSettings["focusFallOffRate"] = focusFallOffRate } }
 
     let gaussianBlur = GaussianBlur()
-    let tiltShift = BasicOperation(fragmentShader:TiltShiftFragmentShader, numberOfInputs:2)
+    let tiltShift = BasicOperation(fragmentFunctionName:"tiltShiftFragment", numberOfInputs:2)
     
     public override init() {
         super.init()

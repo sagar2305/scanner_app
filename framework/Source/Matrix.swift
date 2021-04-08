@@ -1,6 +1,4 @@
-#if !os(Linux)
 import QuartzCore
-#endif
 
 public struct Matrix4x4 {
     public let m11:Float, m12:Float, m13:Float, m14:Float
@@ -93,7 +91,6 @@ func orthographicMatrix(_ left:Float, right:Float, bottom:Float, top:Float, near
 }
 
 
-#if !os(Linux)
 public extension Matrix4x4 {
     init (_ transform3D:CATransform3D) {
         self.m11 = Float(transform3D.m11)
@@ -121,4 +118,3 @@ public extension Matrix4x4 {
         self.init(CATransform3DMakeAffineTransform(transform))
     }
 }
-#endif

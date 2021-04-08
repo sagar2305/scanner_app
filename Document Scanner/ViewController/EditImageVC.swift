@@ -37,7 +37,7 @@ class EditImageVC: DocumentScannerViewController {
     enum ImageFilters {
         case black_and_white
         case brightness
-        case sharpen
+        case contrast
     }
     
     // MARK: - Views
@@ -72,7 +72,7 @@ class EditImageVC: DocumentScannerViewController {
     //last slide values for filters defaults 0
     private var lastSliderValueForBlackAndWhite: Float = 0.0
     private var lastSliderValueForBrightness: Float = 0.0
-    private var lastSliderValueForSharpen: Float = 0.0
+    private var lastSliderValueForContrast: Float = 1.0
     
     // MARK:- IBoutlets
     @IBOutlet private weak var imageEditorView: UIView!
@@ -101,6 +101,9 @@ class EditImageVC: DocumentScannerViewController {
         _setupViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     private func _setupViews() {
         _setupImageEditorView()
         _updateViewForEditing()
@@ -166,8 +169,6 @@ class EditImageVC: DocumentScannerViewController {
         imageView!.contentMode = .scaleAspectFit
         imageEditorView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
-        _rotateImage(.left)
-        _rotateImage(.right)
     }
     
     private func _updateViewForEditing() {
@@ -243,7 +244,7 @@ class EditImageVC: DocumentScannerViewController {
         editButtonThree.setImage(Icons.brightness, for: .normal)
         editButtonThree.setTitle("Brightness", for: .normal)
         editButtonFour.setImage(Icons.sharpen, for: .normal)
-        editButtonFour.setTitle("Sharpen", for: .normal)
+        editButtonFour.setTitle("Contrast", for: .normal)
         self.sliderViewContainer.isHidden = true
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -340,10 +341,10 @@ class EditImageVC: DocumentScannerViewController {
             slider.minimumValue = -1.0
             slider.maximumValue = 1.0
             slider.setValue(lastSliderValueForBrightness, animated: true)
-        case .sharpen:
+        case .contrast:
             slider.minimumValue = -4.0
             slider.maximumValue = 4.0
-            slider.setValue(lastSliderValueForSharpen, animated: true)
+            slider.setValue(lastSliderValueForContrast, animated: true)
         }
     }
     
@@ -361,9 +362,9 @@ class EditImageVC: DocumentScannerViewController {
         case .brightness:
             editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
             lastSliderValueForBrightness = intensity
-        case .sharpen:
-            editedImage = GPUImageHelper.shared.sharpenImage(imageToFilter, intensity: intensity)
-            lastSliderValueForSharpen = intensity
+        case .contrast:
+            editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
+            lastSliderValueForContrast = intensity
         case .none:
             break
         }
@@ -427,7 +428,7 @@ class EditImageVC: DocumentScannerViewController {
         case .correction:
             _rotateImage(.right)
         case .filtering:
-            _filterSelected(.sharpen)
+            _filterSelected(.contrast)
         }
     }
     

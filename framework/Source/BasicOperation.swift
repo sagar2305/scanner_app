@@ -1,193 +1,131 @@
 import Foundation
+import Metal
 
-public func defaultVertexShaderForInputs(_ inputCount:UInt) -> String {
+public func defaultVertexFunctionNameForInputs(_ inputCount:UInt) -> String {
     switch inputCount {
-        case 1: return OneInputVertexShader
-        case 2: return TwoInputVertexShader
-        case 3: return ThreeInputVertexShader
-        case 4: return FourInputVertexShader
-        case 5: return FiveInputVertexShader
-        default: return OneInputVertexShader
+    case 1:
+        return "oneInputVertex"
+    case 2:
+        return "twoInputVertex"
+    default:
+        return "oneInputVertex"
     }
 }
 
 open class BasicOperation: ImageProcessingOperation {
-    public let maximumInputs:UInt
-    public var overriddenOutputSize:Size?
-    public var overriddenOutputRotation:Rotation?
-    public var backgroundColor = Color.black
-    public var drawUnmodifiedImageOutsideOfMask:Bool = true
-    public var mask:ImageSource? {
-        didSet {
-            if let mask = mask {
-                maskImageRelay.newImageCallback = {[weak self] framebuffer in
-                    self?.maskFramebuffer?.unlock()
-                    framebuffer.lock()
-                    self?.maskFramebuffer = framebuffer
-                }
-                mask.addTarget(maskImageRelay)
-            } else {
-                maskFramebuffer?.unlock()
-                maskImageRelay.removeSourceAtIndex(0)
-                maskFramebuffer = nil
-            }
-        }
-    }
-    public var activatePassthroughOnNextFrame:Bool = false
-    public var uniformSettings = ShaderUniformSettings()
-
-    // MARK: -
-    // MARK: Internal
-
+    
+    public let maximumInputs: UInt
     public let targets = TargetContainer()
     public let sources = SourceContainer()
-    var shader:ShaderProgram
-    var inputFramebuffers = [UInt:Framebuffer]()
-    var renderFramebuffer:Framebuffer!
-    var outputFramebuffer:Framebuffer { get { return renderFramebuffer } }
-    let usesAspectRatio:Bool
-    let maskImageRelay = ImageRelay()
-    var maskFramebuffer:Framebuffer?
     
-    // MARK: -
-    // MARK: Initialization and teardown
-
-    public init(shader:ShaderProgram, numberOfInputs:UInt = 1) {
-        self.maximumInputs = numberOfInputs
-        self.shader = shader
-        usesAspectRatio = shader.uniformIndex("aspectRatio") != nil
-    }
-    
-    public init(vertexShader:String? = nil, fragmentShader:String, numberOfInputs:UInt = 1, operationName:String = #file) {
-        let compiledShader = crashOnShaderCompileFailure(operationName){try sharedImageProcessingContext.programForVertexShader(vertexShader ?? defaultVertexShaderForInputs(numberOfInputs), fragmentShader:fragmentShader)}
-        self.maximumInputs = numberOfInputs
-        self.shader = compiledShader
-        usesAspectRatio = shader.uniformIndex("aspectRatio") != nil
-    }
-
-    public init(vertexShaderFile:URL? = nil, fragmentShaderFile:URL, numberOfInputs:UInt = 1, operationName:String = #file) throws {
-        let compiledShader:ShaderProgram
-        if let vertexShaderFile = vertexShaderFile {
-            compiledShader = crashOnShaderCompileFailure(operationName){try sharedImageProcessingContext.programForVertexShader(vertexShaderFile, fragmentShader:fragmentShaderFile)}
-        } else {
-            compiledShader = crashOnShaderCompileFailure(operationName){try sharedImageProcessingContext.programForVertexShader(defaultVertexShaderForInputs(numberOfInputs), fragmentShader:fragmentShaderFile)}
-        }
-        self.maximumInputs = numberOfInputs
-        self.shader = compiledShader
-        usesAspectRatio = shader.uniformIndex("aspectRatio") != nil
-    }
-    
-    deinit {
-        debugPrint("Deallocating operation: \(self)")
-    }
-    
-    // MARK: -
-    // MARK: Rendering
-    
-    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
-        if let previousFramebuffer = inputFramebuffers[fromSourceIndex] {
-            previousFramebuffer.unlock()
-        }
-        inputFramebuffers[fromSourceIndex] = framebuffer
-
-        guard (!activatePassthroughOnNextFrame) else { // Use this to allow a bootstrap of cyclical processing, like with a low pass filter
-            activatePassthroughOnNextFrame = false
-            updateTargetsWithFramebuffer(framebuffer)
-            return
-        }
-        
-        if (UInt(inputFramebuffers.count) >= maximumInputs) {
-            renderFrame()
-            
-            updateTargetsWithFramebuffer(outputFramebuffer)
-        }
-    }
-    
-    func renderFrame() {
-        renderFramebuffer = sharedImageProcessingContext.framebufferCache.requestFramebufferWithProperties(orientation:.portrait, size:sizeOfInitialStageBasedOnFramebuffer(inputFramebuffers[0]!), stencil:mask != nil)
-        
-        let textureProperties = initialTextureProperties()
-        configureFramebufferSpecificUniforms(inputFramebuffers[0]!)
-        
-        renderFramebuffer.activateFramebufferForRendering()
-        clearFramebufferWithColor(backgroundColor)
-        if let maskFramebuffer = maskFramebuffer {
-            if drawUnmodifiedImageOutsideOfMask {
-                renderQuadWithShader(sharedImageProcessingContext.passthroughShader, uniformSettings:nil, vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:textureProperties)
+    public var activatePassthroughOnNextFrame: Bool = false
+    public var uniformSettings:ShaderUniformSettings
+    public var useMetalPerformanceShaders: Bool = false {
+        didSet {
+            if !sharedMetalRenderingDevice.metalPerformanceShadersAreSupported {
+                print("Warning: Metal Performance Shaders are not supported on this device")
+                useMetalPerformanceShaders = false
             }
-            renderStencilMaskFromFramebuffer(maskFramebuffer)
-            internalRenderFunction(inputFramebuffers[0]!, textureProperties:textureProperties)
-            disableStencil()
-        } else {
-            internalRenderFunction(inputFramebuffers[0]!, textureProperties:textureProperties)
         }
     }
-    
-    func internalRenderFunction(_ inputFramebuffer:Framebuffer, textureProperties:[InputTextureProperties]) {
-        renderQuadWithShader(shader, uniformSettings:uniformSettings, vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:textureProperties)
-        releaseIncomingFramebuffers()
+
+    let renderPipelineState: MTLRenderPipelineState
+    let operationName: String
+    var inputTextures = [UInt:Texture]()
+    let textureInputSemaphore = DispatchSemaphore(value:1)
+    var useNormalizedTextureCoordinates = true
+    var metalPerformanceShaderPathway: ((MTLCommandBuffer, [UInt:Texture], Texture) -> ())?
+
+    public init(vertexFunctionName: String? = nil, fragmentFunctionName: String, numberOfInputs: UInt = 1, operationName: String = #file) {
+        self.maximumInputs = numberOfInputs
+        self.operationName = operationName
+        
+        let concreteVertexFunctionName = vertexFunctionName ?? defaultVertexFunctionNameForInputs(numberOfInputs)
+        let (pipelineState, lookupTable) = generateRenderPipelineState(device:sharedMetalRenderingDevice, vertexFunctionName:concreteVertexFunctionName, fragmentFunctionName:fragmentFunctionName, operationName:operationName)
+        self.renderPipelineState = pipelineState
+        self.uniformSettings = ShaderUniformSettings(uniformLookupTable:lookupTable)
     }
     
-    func releaseIncomingFramebuffers() {
-        var remainingFramebuffers = [UInt:Framebuffer]()
-        // If all inputs are still images, have this output behave as one
-        renderFramebuffer.timingStyle = .stillImage
+    public func transmitPreviousImage(to target: ImageConsumer, atIndex: UInt) {
+        // TODO: Finish implementation later
+    }
+    
+    public func newTextureAvailable(_ texture: Texture, fromSourceIndex: UInt) {
+        let _ = textureInputSemaphore.wait(timeout:DispatchTime.distantFuture)
+        defer {
+            textureInputSemaphore.signal()
+        }
         
-        var latestTimestamp:Timestamp?
-        for (key, framebuffer) in inputFramebuffers {
+        inputTextures[fromSourceIndex] = texture
+        
+        if (UInt(inputTextures.count) >= maximumInputs) || activatePassthroughOnNextFrame {
+            let outputWidth:Int
+            let outputHeight:Int
             
-            // When there are multiple transient input sources, use the latest timestamp as the value to pass along
-            if let timestamp = framebuffer.timingStyle.timestamp {
-                if !(timestamp < (latestTimestamp ?? timestamp)) {
-                    latestTimestamp = timestamp
-                    renderFramebuffer.timingStyle = .videoFrame(timestamp:timestamp)
-                }
-                
-                framebuffer.unlock()
+            let firstInputTexture = inputTextures[0]!
+            if firstInputTexture.orientation.rotationNeeded(for:.portrait).flipsDimensions() {
+                outputWidth = firstInputTexture.texture.height
+                outputHeight = firstInputTexture.texture.width
             } else {
-                remainingFramebuffers[key] = framebuffer
+                outputWidth = firstInputTexture.texture.width
+                outputHeight = firstInputTexture.texture.height
             }
-        }
-        inputFramebuffers = remainingFramebuffers
-    }
-    
-    func sizeOfInitialStageBasedOnFramebuffer(_ inputFramebuffer:Framebuffer) -> GLSize {
-        if let outputSize = overriddenOutputSize {
-            return GLSize(outputSize)
-        } else {
-            return inputFramebuffer.sizeForTargetOrientation(.portrait)
-        }
-    }
-    
-    func initialTextureProperties() -> [InputTextureProperties] {
-        var inputTextureProperties = [InputTextureProperties]()
-        
-        if let outputRotation = overriddenOutputRotation {
-            for framebufferIndex in 0..<inputFramebuffers.count {
-                inputTextureProperties.append(inputFramebuffers[UInt(framebufferIndex)]!.texturePropertiesForOutputRotation(outputRotation))
+
+            if uniformSettings.usesAspectRatio {
+                let outputRotation = firstInputTexture.orientation.rotationNeeded(for:.portrait)
+                uniformSettings["aspectRatio"] = firstInputTexture.aspectRatio(for: outputRotation)
             }
-        } else {
-            for framebufferIndex in 0..<inputFramebuffers.count {
-                inputTextureProperties.append(inputFramebuffers[UInt(framebufferIndex)]!.texturePropertiesForTargetOrientation(.portrait))
-            }
-        }
-        
-        return inputTextureProperties
-    }
-    
-    func configureFramebufferSpecificUniforms(_ inputFramebuffer:Framebuffer) {
-        if usesAspectRatio {
-            let outputRotation = overriddenOutputRotation ?? inputFramebuffer.orientation.rotationNeededForOrientation(.portrait)
-            uniformSettings["aspectRatio"] = inputFramebuffer.aspectRatioForRotation(outputRotation)
-        }
-    }
-    
-    public func transmitPreviousImage(to target:ImageConsumer, atIndex:UInt) {
-        sharedImageProcessingContext.runOperationAsynchronously{
-            guard let renderFramebuffer = self.renderFramebuffer, (!renderFramebuffer.timingStyle.isTransient()) else { return }
             
-            renderFramebuffer.lock()
-            target.newFramebufferAvailable(renderFramebuffer, fromSourceIndex:atIndex)
+            guard let commandBuffer = sharedMetalRenderingDevice.commandQueue.makeCommandBuffer() else {return}
+
+            let outputTexture = Texture(device:sharedMetalRenderingDevice.device, orientation: .portrait, width: outputWidth, height: outputHeight, timingStyle: firstInputTexture.timingStyle)
+            
+            guard (!activatePassthroughOnNextFrame) else { // Use this to allow a bootstrap of cyclical processing, like with a low pass filter
+                activatePassthroughOnNextFrame = false
+                // TODO: Render rotated passthrough image here
+                
+                removeTransientInputs()
+                textureInputSemaphore.signal()
+                updateTargetsWithTexture(outputTexture)
+                let _ = textureInputSemaphore.wait(timeout:DispatchTime.distantFuture)
+
+                return
+            }
+            
+            if let alternateRenderingFunction = metalPerformanceShaderPathway, useMetalPerformanceShaders {
+                var rotatedInputTextures: [UInt:Texture]
+                if (firstInputTexture.orientation.rotationNeeded(for:.portrait) != .noRotation) {
+                    let rotationOutputTexture = Texture(device:sharedMetalRenderingDevice.device, orientation: .portrait, width: outputWidth, height: outputHeight)
+                    guard let rotationCommandBuffer = sharedMetalRenderingDevice.commandQueue.makeCommandBuffer() else {return}
+                    rotationCommandBuffer.renderQuad(pipelineState: sharedMetalRenderingDevice.passthroughRenderState, uniformSettings: uniformSettings, inputTextures: inputTextures, useNormalizedTextureCoordinates: useNormalizedTextureCoordinates, outputTexture: rotationOutputTexture)
+                    rotationCommandBuffer.commit()
+                    rotatedInputTextures = inputTextures
+                    rotatedInputTextures[0] = rotationOutputTexture
+                } else {
+                    rotatedInputTextures = inputTextures
+                }
+                alternateRenderingFunction(commandBuffer, rotatedInputTextures, outputTexture)
+            } else {
+                internalRenderFunction(commandBuffer: commandBuffer, outputTexture: outputTexture)
+            }
+            commandBuffer.commit()
+            
+            removeTransientInputs()
+            textureInputSemaphore.signal()
+            updateTargetsWithTexture(outputTexture)
+            let _ = textureInputSemaphore.wait(timeout:DispatchTime.distantFuture)
         }
+    }
+    
+    func removeTransientInputs() {
+        for index in 0..<self.maximumInputs {
+            if let texture = inputTextures[index], texture.timingStyle.isTransient() {
+                inputTextures[index] = nil
+            }
+        }
+    }
+    
+    func internalRenderFunction(commandBuffer: MTLCommandBuffer, outputTexture: Texture) {
+        commandBuffer.renderQuad(pipelineState: renderPipelineState, uniformSettings: uniformSettings, inputTextures: inputTextures, useNormalizedTextureCoordinates: useNormalizedTextureCoordinates, outputTexture: outputTexture)
     }
 }

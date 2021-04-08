@@ -3,7 +3,7 @@ public class ToonFilter: TextureSamplingOperation {
     public var quantizationLevels:Float = 10.0 { didSet { uniformSettings["quantizationLevels"] = quantizationLevels } }
     
     public init() {
-        super.init(fragmentShader:ToonFragmentShader)
+        super.init(fragmentFunctionName:"toonFragment", numberOfInputs:1)
         
         ({threshold = 0.2})()
         ({quantizationLevels = 10.0})()
