@@ -20,7 +20,7 @@ class ScanDocumentCoordinator: Coordinator {
         return navigationController
     }
     
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: DocumentScannerNavigationController
     var editImageVC: EditImageVC!
     weak var delegate: ScanDocumentCoordinatorDelegate?
@@ -45,7 +45,7 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image],quad: quad, imageSource: .camera)
         editDocumentCoordinator.delegate = self
-        childCoordinator.append(editDocumentCoordinator)
+        childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }
     
@@ -58,7 +58,7 @@ extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
     
     func rescanDocument(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)
-        childCoordinator.removeAll { $0 is EditDocumentCoordinator }
+        childCoordinators.removeAll { $0 is EditDocumentCoordinator }
     }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {

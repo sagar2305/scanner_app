@@ -15,7 +15,7 @@ class ApplicationCoordinator: Coordinator {
         return navigationController
     }
     
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     
     var navigationController: DocumentScannerNavigationController
     var homeViewController: HomeVC
@@ -44,26 +44,26 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     func scanNewDocument(_ controller: HomeVC) {
         let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
         scanDocumentCoordinator.delegate = self
-        childCoordinator.append(scanDocumentCoordinator)
+        childCoordinators.append(scanDocumentCoordinator)
         scanDocumentCoordinator.start()
     }
     
     func pickNewDocument(_ controller: HomeVC) {
         let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
         pickDocumentCoordinator.delegate = self
-        childCoordinator.append(pickDocumentCoordinator)
+        childCoordinators.append(pickDocumentCoordinator)
         pickDocumentCoordinator.start()
     }
     
     func showSettings(_ controller: HomeVC) {
         let settingsCoordinator = SettingsCoordinator(navigationController)
-        childCoordinator.append(settingsCoordinator)
+        childCoordinators.append(settingsCoordinator)
         settingsCoordinator.start()
     }
     
     func viewDocument(_ controller: HomeVC, document: Document) {
         let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
-        childCoordinator.append(documentViewerCoordinator)
+        childCoordinators.append(documentViewerCoordinator)
         documentViewerCoordinator.start()
     }
 }

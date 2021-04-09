@@ -11,6 +11,7 @@ enum SettingIdentifier: Int {
     case termsOfLaw = 6684
     case privacyPolicy = 6685
     case featureRequest = 6686
+    case subscription = 6687
 }
 
 struct Setting {

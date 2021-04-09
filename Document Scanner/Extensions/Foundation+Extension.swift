@@ -24,3 +24,10 @@ extension UserDefaults {
         return nil
     }
 }
+
+extension String {
+    var localized: String {
+        let string = NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        return string
+    }
+}

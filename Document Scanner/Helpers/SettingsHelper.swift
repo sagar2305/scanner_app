@@ -16,7 +16,8 @@ struct SettingsHelper {
         return [
             Setting(id: .privacyPolicy, name: "Privacy Policy"),
             Setting(id: .termsOfLaw, name: "Terms of Law"),
-            Setting(id: .featureRequest, name: "Request feature")
+            Setting(id: .featureRequest, name: "Request feature"),
+            Setting(id: .subscription, name: "Upgrade")
         ]
     }
 }

@@ -1,22 +1,32 @@
 PODS:
   - Hero (1.6.1)
   - LGButton (1.1.6)
+  - lottie-ios (3.1.9)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - PDFGenerator (3.1.0)
+  - Purchases (3.9.2):
+    - PurchasesCoreSwift (= 3.9.2)
+  - PurchasesCoreSwift (3.9.2)
   - SwiftLint (0.43.1)
   - WeScan (1.7.0)
 
 DEPENDENCIES:
   - Hero
   - LGButton
+  - lottie-ios
   - NVActivityIndicatorView
   - PDFGenerator (~> 3.1)
+  - Purchases
   - SwiftLint
   - WeScan (>= 0.9)
 
 SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - lottie-ios
+    - Purchases
+    - PurchasesCoreSwift
   trunk:
     - Hero
     - LGButton
@@ -28,11 +38,14 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PDFGenerator: 17d6bc525db0a3fcd156fbf00f9d1b8d5cc75d1e
+  Purchases: d8a798c9c7552fe66b550bf314a143e94ffa70c8
+  PurchasesCoreSwift: ea4eabae180416e580ac60366f41aa1fefec0693
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 69d5db67e1817b566f9aa8ad27f66e5fc7ba4be6
+PODFILE CHECKSUM: dfec1bfd67c9b6f16b97f977f8ab3f3022aaa051
 
 COCOAPODS: 1.10.0

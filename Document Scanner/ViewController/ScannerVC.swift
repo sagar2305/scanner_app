@@ -50,7 +50,7 @@ class ScannerVC: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     private func _setupViews() {
-        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
+        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
     private func _setupCameraPreview() {

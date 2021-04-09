@@ -14,7 +14,7 @@ class SettingsCoordinator: NSObject, Coordinator {
         return navigationController
     }
     
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: DocumentScannerNavigationController!
     var settingsVC: SettingsVC!
     var webVC: WebViewVC!
@@ -45,7 +45,7 @@ class SettingsCoordinator: NSObject, Coordinator {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients([Constant.SettingDefaults.feedbackEmail])
+            mail.setToRecipients([Constants.SettingDefaults.feedbackEmail])
             let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
             mail.setSubject("\(appName ?? "Guess the Movie") " + "\(suffix)")
             mail.setMessageBody(messageBody(), isHTML: true)
@@ -66,11 +66,14 @@ extension SettingsCoordinator: SettingsVCDelegate {
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting) {
         switch setting.id {
         case .termsOfLaw:
-            _presentWebView(for: Constant.WebLinks.termsOfLaw, title: "Terms Of Law")
+            _presentWebView(for: Constants.WebLinks.termsOfLaw, title: "Terms Of Law")
         case .privacyPolicy:
-            _presentWebView(for: Constant.WebLinks.privacyPolicy, title: "Privacy Policy")
+            _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy")
         case .featureRequest:
             _presentEmail(suffix: "Feature Request")
+        case .subscription:
+            break
+        
         }
     }
     

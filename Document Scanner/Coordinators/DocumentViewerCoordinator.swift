@@ -13,7 +13,7 @@ class DocumentViewerCoordinator: Coordinator {
         return navigationController
     }
     
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     
     let navigationController: DocumentScannerNavigationController
     var documentReviewVC: DocumentScannerViewController!
@@ -37,7 +37,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: document)
         editDocumentCoordinator.delegate = self
-        childCoordinator.append(editDocumentCoordinator)
+        childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }
     

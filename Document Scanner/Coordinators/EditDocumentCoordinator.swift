@@ -23,7 +23,7 @@ class EditDocumentCoordinator: Coordinator {
     }
 
     var navigationController: DocumentScannerNavigationController
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var rootViewController: UIViewController {
         return navigationController
     }

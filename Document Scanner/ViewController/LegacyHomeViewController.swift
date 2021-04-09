@@ -53,7 +53,7 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     }
 
     func _getDocuments() {
-        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
+        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         self.allDocuments = documents
         self.filteredDocuments = documents
     }
@@ -61,7 +61,7 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     private func _setupViews() {
         //headerLabel.font = UIFont.font(style: .largeTitle)
         configureUI(title: "My Documents")
-        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
+        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         definesPresentationContext = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped(_:)))

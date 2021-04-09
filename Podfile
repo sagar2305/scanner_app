@@ -11,4 +11,6 @@ target 'Document Scanner' do
   pod 'NVActivityIndicatorView'
   pod 'Hero'
   pod 'PDFGenerator', '~> 3.1'
+  pod 'Purchases'
+  pod 'lottie-ios'
 end
