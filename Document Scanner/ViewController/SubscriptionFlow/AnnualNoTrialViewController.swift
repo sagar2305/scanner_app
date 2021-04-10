@@ -15,7 +15,7 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
     private let bounds = UIScreen.main.bounds
     private var featureLabelTextStyle: UIFont.TextStyle = .callout
     private var restoreButtonTextStyle: UIFont.TextStyle = .footnote
-    private let lottieView = AnimationView(name: "HelloAnimation")
+    private let lottieView = AnimationView(name: "scanner")
     
     weak var delegate: SubscriptionViewControllerDelegate?
     weak var uiProviderDelegate: UpgradeUIProviderDelegate?
@@ -73,8 +73,6 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
         lottieView.contentMode = .scaleAspectFit
         lottieView.loopMode = .loop
         lottieView.animationSpeed = 1.0
-        let xOffset: CGFloat = bounds.width >= 400 ? -18 : -40
-        lottieView.frame = lottieView.frame.offsetBy(dx: xOffset, dy: 0)
         animationView.addSubview(lottieView)
     }
     

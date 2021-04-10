@@ -31,3 +31,14 @@ extension String {
         return string
     }
 }
+
+extension NSNumber {
+    func toCurrency(locale: Locale?) -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        if locale != nil {
+            numberFormatter.locale = locale
+        }
+        return numberFormatter.string(from: self)
+    }
+}

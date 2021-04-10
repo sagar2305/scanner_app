@@ -33,7 +33,7 @@ class SubscribeCoordinator: Coordinator {
         
         set {
             _lastTimeUserShownSubscriptionScreen = newValue
-            UserDefaults.standard.save(newValue, forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
+            //UserDefaults.standard.save(newValue, forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
         }
     }
     
@@ -44,9 +44,7 @@ class SubscribeCoordinator: Coordinator {
         
         // after onboarding we need to show discounted rate and it will always be presented
         subscriptionVC = AnnualNoTrialViewController()
-        
-        _lastTimeUserShownSubscriptionScreen =
-            UserDefaults.standard.fetch(forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
+        //_lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
         
         subscriptionVC.giftOffer = giftOffer
         subscriptionVC.hideCloseButton = hideCloseButton
@@ -54,24 +52,19 @@ class SubscribeCoordinator: Coordinator {
     }
     
     func start() {
-        
         self._fetchAvailableProducts()
         subscriptionVC.delegate = self
         subscriptionVC.uiProviderDelegate = self
         subscriptionVC.specialOfferUIProviderDelegate = self
         
         if _presented {
-            let navigationController = CallRecorderNavigationController(rootViewController: subscriptionVC)
+            let navigationController = DocumentScannerNavigationController(rootViewController: subscriptionVC)
             navigationController.modalPresentationStyle = .fullScreen
             navigationController.modalTransitionStyle = .coverVertical
             navigationController.setNavigationBarHidden(true, animated: true)
             self.navigationController.present(navigationController, animated: true)
         } else {
             navigationController.pushViewController(subscriptionVC, animated: true)
-        }
-        
-        DispatchQueue.global().async {
-            AnalyticsHelper.shared.logEvent(.presentedSubscriptionScreen, properties: [.previousEvent: self._previousEvent()])
         }
     }
     
@@ -84,21 +77,13 @@ class SubscribeCoordinator: Coordinator {
                 NotificationCenter.default.post(name: .iapProductsFetchedNotification,
                                                 object: nil)
             } else {
-                AlertMessageHelper.shared.presentProductUnavailableAlert(onRetry: (self._fetchAvailableProducts ),
-                                                                         onCancel: self._dismiss )
+                //TODO: - Present product not available alert
             }
         }
     }
     
     private func _dismiss() {
-        if _presented {
-            navigationController.dismiss(animated: true)
-        } else {
-            let guideCoordinator = InteractiveUserGuideCoordinator(navigationController: navigationController,
-                                                                   presented: false)
-            childCoordinators.append(guideCoordinator)
-            guideCoordinator.start()
-        }
+        navigationController.dismiss(animated: true)
     }
     
     var rootViewController: UIViewController {
@@ -168,15 +153,11 @@ class SubscribeCoordinator: Coordinator {
     }
     
     private func _presentPurchaseFailedAlert(product: IAPProduct) {
-        AlertMessageHelper.shared.presentPurchaseFailedAlert(onRetry: { [weak self] in
-            self?._purchaseProduct(product)
-        }, onCancel: { [weak self] in
-            self?.navigationController.dismiss(animated: true) ?? { }()
-        })
+        //TODO: - Present purchase failed alert
     }
     
     private func _presentRestorationFailedAlert() {
-        AlertMessageHelper.shared.presentRestorationFailedAlert(onRetry: _restorePurchases, onCancel: {})
+        //TODO: - Present restoration failed alert
     }
     
     static func attributedFeatureText(_ feature: String) -> String {
@@ -194,32 +175,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
     }
     
     func headerMessage(for index: Int) -> String {
-        if let _ = subscriptionVC as? SubscriptionViewControllerProtocol {
-            switch currentEvent {
-            case .playRecording:
-                return "Please subscribe to listen to the complete recording".localized
-            case .transcribeRecording:
-                return "Please subscribe to transcribe the recording".localized
-            case .shareRecording:
-                return "Please subscribe to share the recording".localized
-            default:
-                if FireStoreHelper.shared.freeCallUsageStatus {
-                    return "Please subscribe to continue recording calls".localized
-                } else {
-                    return "Unlock premium and record calls now".localized
-                }
-            }
-        } else {
-            guard let availableProducts = availableProducts,
-                  availableProducts.count > index else {
-                return ""
-            }
-            
-            if ConfigurationHelper.shared.inReview || !availableProducts[index].offersFreeTrial {
-                return "Unlimited Access to All Features".localized
-            }
-            return "Try EZTape free for 7 days".localized
-        }
+        return "Try Document Scanner free for 7 days".localized
     }
     
     func subscriptionTitle(for index: Int) -> String {
@@ -263,10 +219,6 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
             return ""
         }
         
-        if ConfigurationHelper.shared.inReview || !availableProducts[index].offersFreeTrial {
-            return "Continue".localized
-        }
-        
         return "Try Free and Continue".localized
     }
     
@@ -285,25 +237,19 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
     func viewWillAppear(_ controller: SubscriptionViewControllerProtocol) {
         controller.navigationController?.setNavigationBarHidden(true, animated: true)
         if !_productsFetched {
-            NVActivityIndicatorView.start()
+          //TODO: - Add activity Indicator
         }
     }
     
     func viewDidAppear(_ controller: SubscriptionViewControllerProtocol) {
         if !_productsFetched {
-            NVActivityIndicatorView.start()
+            //TODO: - Add activity Indicator
         }
     }
     
     func exit(_ controller: SubscriptionViewControllerProtocol) {
-        AnalyticsHelper.shared.logEvent(.cancelledSubscriptionScreen)
         
         func showSpecialOffer() {
-            if ConfigurationHelper.shared.isLifetimePlanAvailable && PhoneNumberHelper.shared.isIndianUser {
-                _offeringIdentifier = Constants.Offering.lifetime
-                _fetchAvailableProducts()
-            }
-            AnalyticsHelper.shared.logEvent(.presentedOfferScreen)
             specialOfferVC = SpecialOfferViewController()
             specialOfferVC!.delegate = self
             specialOfferVC?.uiProviderDelegate = self
@@ -336,7 +282,6 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
     }
     
     func restorePurchases(_ controller: SubscriptionViewControllerProtocol) {
-        AnalyticsHelper.shared.logEvent(.restoredPurchase)
         _restorePurchases()
     }
     
@@ -356,10 +301,6 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
         guard let lastTime = lastTimeUserShownSubscriptionScreen  else {
             navigationController.dismiss(animated: true)
             return
-        }
-        
-        DispatchQueue.global().async {
-            AnalyticsHelper.shared.logEvent(.specialOfferScreenDidShow)
         }
         
         var timeRemainingForOffer = 300 - Date().timeIntervalSince(lastTime)
@@ -399,13 +340,11 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
     }
     
     func restorePurchases(_ controller: SpecialOfferViewController) {
-        AnalyticsHelper.shared.logEvent(.restoredPurchase)
         _restorePurchases()
     }
     
     func didTapBackButton(_ controller: SpecialOfferViewController) {
         timer?.invalidate()
-        AnalyticsHelper.shared.logEvent(.cancelledOfferScreen)
         navigationController.popViewController(animated: true)
     }
     

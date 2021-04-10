@@ -72,8 +72,7 @@ extension SettingsCoordinator: SettingsVCDelegate {
         case .featureRequest:
             _presentEmail(suffix: "Feature Request")
         case .subscription:
-            break
-        
+            SubscriptionHelper.shared.startSubscribeCoordinator(navigationController: navigationController, parentCoordinator: self)
         }
     }
     
