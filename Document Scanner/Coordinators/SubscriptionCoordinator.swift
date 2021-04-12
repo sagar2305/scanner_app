@@ -56,16 +56,7 @@ class SubscribeCoordinator: Coordinator {
         subscriptionVC.delegate = self
         subscriptionVC.uiProviderDelegate = self
         subscriptionVC.specialOfferUIProviderDelegate = self
-        
-        if _presented {
-            let navigationController = DocumentScannerNavigationController(rootViewController: subscriptionVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .coverVertical
-            navigationController.setNavigationBarHidden(true, animated: true)
-            self.navigationController.present(navigationController, animated: true)
-        } else {
-            navigationController.pushViewController(subscriptionVC, animated: true)
-        }
+        navigationController.pushViewController(subscriptionVC, animated: true)
     }
     
     private func _fetchAvailableProducts() {
@@ -257,7 +248,6 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
         }
         
         // - Do Not delete below commented code
-        if _showSpecialOffer {
             if lastTimeUserShownSubscriptionScreen == nil {
                 lastTimeUserShownSubscriptionScreen = Date()
                 showSpecialOffer()
@@ -269,9 +259,6 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
                     self._dismiss()
                 }
             }
-        } else {
-            _dismiss()
-        }
     }
     
     func selectPlan(at index: Int, controller: SubscriptionViewControllerProtocol) {

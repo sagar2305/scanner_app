@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		020AED7D261F04AC00998398 /* SubscriptionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED7C261F04AC00998398 /* SubscriptionCoordinator.swift */; };
-		020AED8B261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED81261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.swift */; };
-		020AED8C261F0A3B00998398 /* AnnualDiscountedNoTrialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020AED82261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.xib */; };
 		020AED8D261F0A3B00998398 /* AnnualNoTrialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */; };
 		020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */; };
 		020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */; };
@@ -111,8 +109,6 @@
 
 /* Begin PBXFileReference section */
 		020AED7C261F04AC00998398 /* SubscriptionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCoordinator.swift; sourceTree = "<group>"; };
-		020AED81261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnualDiscountedNoTrialViewController.swift; sourceTree = "<group>"; };
-		020AED82261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnualDiscountedNoTrialViewController.xib; sourceTree = "<group>"; };
 		020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnualNoTrialViewController.swift; sourceTree = "<group>"; };
 		020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnualNoTrialViewController.xib; sourceTree = "<group>"; };
 		020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialOfferViewController.swift; sourceTree = "<group>"; };
@@ -200,8 +196,6 @@
 		020AED80261F0A3A00998398 /* SubscriptionFlow */ = {
 			isa = PBXGroup;
 			children = (
-				020AED81261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.swift */,
-				020AED82261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.xib */,
 				020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */,
 				020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */,
 				020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */,
@@ -508,7 +502,6 @@
 				02616249260DBF200095B727 /* FooterButton.xib in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
-				020AED8C261F0A3B00998398 /* AnnualDiscountedNoTrialViewController.xib in Resources */,
 				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
@@ -611,7 +604,6 @@
 				024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */,
 				025DB1C826011E8A006943C0 /* Filter.swift in Sources */,
 				02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */,
-				020AED8B261F0A3A00998398 /* AnnualDiscountedNoTrialViewController.swift in Sources */,
 				025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */,
 				025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */,
 				025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */,
