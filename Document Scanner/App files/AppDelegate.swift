@@ -14,8 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootCoordinator: Coordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Override point for customisation after application launch.
         
+        //TODO: - Add configuration for Purchases
         window = UIWindow(frame: UIScreen.main.bounds)
         rootCoordinator = ApplicationCoordinator(window!)
         rootCoordinator?.start()

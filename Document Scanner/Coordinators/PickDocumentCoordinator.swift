@@ -18,7 +18,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var rootViewController: UIViewController {
         return navigationController
     }
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     
     var delegate: PickerDocumentCoordinatorDelegate?
     var navigationController: DocumentScannerNavigationController
@@ -42,7 +42,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     private func presentImageCorrectionViewController(for image: UIImage) {
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image], imageSource: .photo_library)
         editDocumentCoordinator.delegate = self
-        childCoordinator.append(editDocumentCoordinator)
+        childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }
 
@@ -61,7 +61,7 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
         guard  let selectedImage = info[.originalImage] as? UIImage else {
             fatalError("Failed to pick the image from photo library")
         }
-        childCoordinator.removeAll { $0 is EditDocumentCoordinator }
+        childCoordinators.removeAll { $0 is EditDocumentCoordinator }
         presentImageCorrectionViewController(for: selectedImage)
         picker.dismiss(animated: true)
     }

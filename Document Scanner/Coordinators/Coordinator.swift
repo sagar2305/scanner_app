@@ -9,7 +9,7 @@ import UIKit
 
 protocol Coordinator: class {
     var rootViewController: UIViewController { get }
-    var childCoordinator: [Coordinator] { get set }
+    var childCoordinators: [Coordinator] { get set }
     
     func start()
 }

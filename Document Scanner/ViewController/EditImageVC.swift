@@ -107,7 +107,7 @@ class EditImageVC: DocumentScannerViewController {
     private func _setupViews() {
         _setupImageEditorView()
         _updateViewForEditing()
-        footerView.hero.id = Constant.HeroIdentifiers.footerIdentifier
+        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
     //initial setup

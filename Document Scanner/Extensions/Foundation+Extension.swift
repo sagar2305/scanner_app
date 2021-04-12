@@ -24,3 +24,21 @@ extension UserDefaults {
         return nil
     }
 }
+
+extension String {
+    var localized: String {
+        let string = NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        return string
+    }
+}
+
+extension NSNumber {
+    func toCurrency(locale: Locale?) -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        if locale != nil {
+            numberFormatter.locale = locale
+        }
+        return numberFormatter.string(from: self)
+    }
+}

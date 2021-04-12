@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Constant {
+struct Constants {
     struct DocumentScannerDefaults {
         static let documentsListKey = "DocumentsListKey"
     }
@@ -25,4 +25,14 @@ struct Constant {
     struct  SettingDefaults {
         static let feedbackEmail = "support@eztape.app"
     }
+    
+    struct Offering {
+        static let onlyAnnualDiscountedNoTrialOnboarding = "onlyannualdiscounted_notrial_onboarding"
+        static let onlyAnnualDiscountedNoTrialHomeScreen = "onlyannualdiscounted_notrial_homescreen"
+        static let onlyAnnualDiscountedNoTrialRecordingScreen = "onlyannualdiscounted_notrial_recordingscreen"
+        static let weeklyAndAnnualReduced = "weeklyandannualreduced"
+        static let annualReducedSpecialOffer = "annualreduced"
+        static let lifetime = "lifetime"
+    }
+    
 }

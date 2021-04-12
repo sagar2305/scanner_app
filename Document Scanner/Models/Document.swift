@@ -37,16 +37,16 @@ class Document: Codable {
     
     
     func save() {
-        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
+        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
-        UserDefaults.standard.save(documents, forKey: Constant.DocumentScannerDefaults.documentsListKey)
+        UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
     func update() {
-        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constant.DocumentScannerDefaults.documentsListKey) ?? []
+        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.removeAll { $0.id == id }
         documents.append(self)
-        UserDefaults.standard.save(documents, forKey: Constant.DocumentScannerDefaults.documentsListKey)
+        UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
     func convertToPDF() -> String?{

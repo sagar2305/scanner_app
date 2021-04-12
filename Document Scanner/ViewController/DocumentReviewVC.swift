@@ -48,7 +48,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     }
     
     private func _setupFooterView() {
-        footerView?.hero.id = Constant.HeroIdentifiers.footerIdentifier
+        footerView?.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
     @IBAction func didTapEdit(_ sender: UIButton) {
