@@ -35,4 +35,12 @@ struct Constants {
         static let lifetime = "lifetime"
     }
     
+    enum Fonts: String {
+        case avenirBlack = "Avenir Black"
+        case avenirBook = "Avenir Book"
+        case avenirLight = "Avenir Light"
+        case avenirMedium = "Avenir Medium"
+        case avenirRegular = "Avenir Regular"
+    }
+    
 }

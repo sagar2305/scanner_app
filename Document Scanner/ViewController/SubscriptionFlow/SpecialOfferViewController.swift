@@ -107,7 +107,7 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
     }
     
     private func _configureCancelButton() {
-        cancelButton.titleLabel?.configure(with: .title2)
+        cancelButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .title2))
         cancelButton.setTitle("𝘅", for: .normal)
     }
     
@@ -137,7 +137,7 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.underlineStyle: 1,
             NSAttributedString.Key.foregroundColor: UIColor.gray,
-            NSAttributedString.Key.font: UIFont.font(style: .body)
+            NSAttributedString.Key.font: UIFont.font(.avenirBook, style: .body)
             ]
         let attributedHeader = NSAttributedString(string: "Restore Purchase".localized, attributes: attributes)
         restoreButton.setAttributedTitle(attributedHeader, for: .normal)
@@ -158,30 +158,30 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
     }
     
     private func _configureOfferDescriptionAndSubheadingLabel() {
-        offerDescriptionLabel.configure(with: .largeTitle)
+        offerDescriptionLabel.configure(with: UIFont.font(.avenirBook, style: .largeTitle))
         offerDescriptionLabel.text = "LIMITED \nTIME \nOFFER".localized
         
-        offerDescriptionSubheadingLabel.configure(with: .title2)
+        offerDescriptionSubheadingLabel.configure(with: UIFont.font(.avenirBook, style: .title2))
         offerDescriptionSubheadingLabel.text = "ENDS IN".localized
     }
     
     private func _configureOfferTimerLabel() {
-        offerTimerLabel.configure(with: .title1)
+        offerTimerLabel.configure(with: UIFont.font(.avenirBook, style: .title1))
     }
     
     private func _configureSaveExtraHeaderAndPercentageLabel() {            
-        saveExtraHeaderLabel.configure(with: .title3)
+        saveExtraHeaderLabel.configure(with: UIFont.font(.avenirBook, style: .title3))
         saveExtraHeaderLabel.adjustsFontForContentSizeCategory = true
         saveExtraHeaderLabel.adjustsFontSizeToFitWidth = true
         
-        savingPercentageLabel.configure(with: .largeTitle)
+        savingPercentageLabel.configure(with: UIFont.font(.avenirBook, style: .largeTitle))
         savingPercentageLabel.adjustsFontForContentSizeCategory = true
         savingPercentageLabel.adjustsFontSizeToFitWidth = true
         savingPercentageLabel.text = "\(uiProviderDelegate!.percentDiscount())%"
     }
     
     private func _configureActualPriceLabel() {
-        actualPriceLabel.configure(with: .title3)
+        actualPriceLabel.configure(with: UIFont.font(.avenirBook, style: .title3))
         let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.strikethroughStyle: 1,
                                                          NSAttributedString.Key.strikethroughColor: UIColor.text
         ]
@@ -192,14 +192,14 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
     private func _configureDiscountedPriceLabel() {
         discountedPriceLabel.adjustsFontForContentSizeCategory = true
         discountedPriceLabel.adjustsFontSizeToFitWidth = true
-        discountedPriceLabel.configure(with: .title2)
+        discountedPriceLabel.configure(with: UIFont.font(.avenirBook, style: .title2))
         discountedPriceLabel.text = "NOW".localized + "\(uiProviderDelegate!.discountedPrice())"
     }
     
     private func _configureSavingBreakdownLabel() {
-        savingBreakdownLabel.configure(with: .subheadline)
+        savingBreakdownLabel.configure(with: UIFont.font(.avenirBook, style: .subheadline))
         //styles definition
-        let blackFont = UIFont.font(style: .subheadline)
+        let blackFont = UIFont.font(.avenirBook, style: .subheadline)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .center
@@ -223,22 +223,22 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
         let bounds = UIScreen.main.bounds
         let style: UIFont.TextStyle = bounds.height > 812 ? .title3 : .callout
         
-        feature1Label.configure(with: style)
+        feature1Label.configure(with: UIFont.font(.avenirBook, style: style))
         feature1Label.text = "Automatic call recordings".localized
          
-        feature2Label.configure(with: style)
+        feature2Label.configure(with: UIFont.font(.avenirBook, style: style))
         feature2Label.text = "Unlimited recordings".localized
 
-        feature3Label.configure(with: style)
+        feature3Label.configure(with: UIFont.font(.avenirBook, style: style))
         feature3Label.text = "No per minute fees".localized
 
-        feature4Label.configure(with: style)
+        feature4Label.configure(with: UIFont.font(.avenirBook, style: style))
         feature4Label.text = "Cancel at any time".localized
     }
     
     private func _configureContinueButton() {
         continueButton.backgroundColor = .systemGreen
-        continueButton.titleLabel?.configure(with: .title3)
+        continueButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .title3))
         continueButton.titleLabel?.textColor = .text
         continueButton.setTitle("Continue".localized, for: .normal)
     }
@@ -259,7 +259,7 @@ class SpecialOfferViewController: UIViewController, SpecialOfferViewControllerPr
         paragraphStyle.alignment = .center
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: text.count))
         
-        privacyPolicyAndTermsLabel.configure(with: .subheadline)
+        privacyPolicyAndTermsLabel.configure(with: UIFont.font(.avenirBook, style: .subheadline))
         privacyPolicyAndTermsLabel.attributedText = attributedString
         
         //Adding Tap geture

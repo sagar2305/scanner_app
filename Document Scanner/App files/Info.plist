@@ -64,5 +64,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Avenir Black.ttf</string>
+		<string>Avenir Book.ttf</string>
+		<string>Avenir Light.ttf</string>
+		<string>Avenir Medium.ttf</string>
+		<string>Avenir Regular.ttf</string>
+	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

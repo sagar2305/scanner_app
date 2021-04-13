@@ -57,7 +57,7 @@ class FooterButton: UIButton {
     }
     
     private func _setupView() {
-        buttonTitle.font = UIFont.font(style: .caption1)
+        buttonTitle.font = UIFont.font(.avenirBook, style: .caption1)
     }
     
     

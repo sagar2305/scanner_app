@@ -3,16 +3,6 @@
     {
       "filename" : "capture.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "capture-dark.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {

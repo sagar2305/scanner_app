@@ -90,7 +90,7 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
     }
     
     private func _configureUI() {
-        primaryHeaderLabel.configure(with: .largeTitle)
+        primaryHeaderLabel.configure(with: UIFont.font(.avenirBook, style: .largeTitle))
         
         if bounds.height >= 896 {
         // 12 PRO MAX, 11 PRO MAX, XS MAX, XR , 11
@@ -98,16 +98,16 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
             // 12 PRO MAX
             stackViewHeightConstraint.constant = bounds.height >= 926 ? 170 : 160
             restoreButtonTextStyle = .body
-            pricingTopLabel.configure(with: .title2)
+            pricingTopLabel.configure(with: UIFont.font(.avenirBook, style: .title2))
         } else if bounds.height >= 812 {
         // 11 PRO, iPhoneXS  & iPhone X, iPhone 12 & 12 PRO
             featureLabelTextStyle = .body
             restoreButtonTextStyle = .body
-            pricingTopLabel.configure(with: .title3)
+            pricingTopLabel.configure(with: UIFont.font(.avenirBook, style: .title3))
         } else {
         // all the rest
             restoreButtonTextStyle = .callout
-            pricingTopLabel.configure(with: .headline)
+            pricingTopLabel.configure(with: UIFont.font(.avenirBook, style: .headline))
             featureLabelTextStyle = .body
         }
     }
@@ -137,36 +137,36 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
     private func _configurePricingBottomLabel() {
         // *** DO NOT DELETE - for introductory screen
         
-        pricingBottomLabel.configure(with: .subheadline)
+        pricingBottomLabel.configure(with: UIFont.font(.avenirBook, style: .subheadline))
         let price = specialOfferUIProviderDelegate!.monthlyComputedDiscountPrice(withIntroDiscount: false, withDurationSuffix: true)
         pricingBottomLabel.text = "( \(price) " + "only".localized + " )"
     }
     
     private func _configureFeatureLabel() {
         
-        feature1Label.configure(with: featureLabelTextStyle)
+        feature1Label.configure(with: UIFont.font(.avenirBook, style: featureLabelTextStyle))
         feature1Label.text = SubscribeCoordinator.attributedFeatureText("Automatic call recordings".localized)
         
-        feature2Label.configure(with: featureLabelTextStyle)
+        feature2Label.configure(with: UIFont.font(.avenirBook, style: featureLabelTextStyle))
         feature2Label.text = SubscribeCoordinator.attributedFeatureText("Unlimited recordings".localized)
         
-        feature3Label.configure(with: featureLabelTextStyle)
+        feature3Label.configure(with: UIFont.font(.avenirBook, style: featureLabelTextStyle))
         feature3Label.text = SubscribeCoordinator.attributedFeatureText("No per minute fees".localized)
         
-        feature4Label.configure(with: featureLabelTextStyle)
+        feature4Label.configure(with: UIFont.font(.avenirBook, style: featureLabelTextStyle))
         feature4Label.text = SubscribeCoordinator.attributedFeatureText("Cancel at any time".localized)
     }
     
     private func _configureContinueButton() {
         continueButton.layer.cornerRadius = 27
         continueButton.backgroundColor = .primary
-        continueButton.titleLabel?.configure(with: .headline)
+        continueButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .headline))
         let title = giftOffer ? "Redeem my offer".localized.uppercased() : "Continue".localized.uppercased()
         continueButton.setTitle(title, for: .normal)
     }
     
     private func _configureCancelButton() {
-        cancelButton.titleLabel?.configure(with: .title2)
+        cancelButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .title2))
         cancelButton.setTitle("𝘅", for: .normal)
         cancelButton.isHidden = hideCloseButton ? true : false
     }
@@ -175,7 +175,7 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.underlineStyle: 1,
             NSAttributedString.Key.foregroundColor: UIColor.text,
-            NSAttributedString.Key.font: UIFont.font(style: restoreButtonTextStyle)
+            NSAttributedString.Key.font: UIFont.font(.avenirBook, style: restoreButtonTextStyle)
         ]
         let attributedHeader = NSAttributedString(string: "Restore Purchase".localized, attributes: attributes)
         restorePurchasesButton.setAttributedTitle(attributedHeader, for: .normal)
@@ -191,7 +191,7 @@ class AnnualNoTrialViewController: UIViewController, SubscriptionViewControllerP
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: range2)
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.primary, range: range2)
         
-        privacyAndTermsOfLawLabel.configure(with: .footnote)
+        privacyAndTermsOfLawLabel.configure(with: UIFont.font(.avenirBook, style: .footnote))
         privacyAndTermsOfLawLabel.attributedText = attributedString
         
         //Adding Tap gesture

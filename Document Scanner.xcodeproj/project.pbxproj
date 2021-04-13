@@ -47,6 +47,14 @@
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02616243260DBF100095B727 /* FooterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02616242260DBF100095B727 /* FooterButton.swift */; };
 		02616249260DBF200095B727 /* FooterButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02616248260DBF200095B727 /* FooterButton.xib */; };
+		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
+		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
+		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
+		0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA77262583B100052565 /* Avenir Book.ttf */; };
+		0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA78262583B100052565 /* Avenir Light.ttf */; };
+		0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA79262583B100052565 /* Avenir Medium.ttf */; };
+		0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA7A262583B100052565 /* Avenir Regular.ttf */; };
+		0271CA812625B42700052565 /* QuickActionMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA802625B42700052565 /* QuickActionMenu.xib */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
@@ -148,6 +156,14 @@
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02616242260DBF100095B727 /* FooterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterButton.swift; sourceTree = "<group>"; };
 		02616248260DBF200095B727 /* FooterButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterButton.xib; sourceTree = "<group>"; };
+		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
+		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
+		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
+		0271CA77262583B100052565 /* Avenir Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Book.ttf"; sourceTree = "<group>"; };
+		0271CA78262583B100052565 /* Avenir Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Light.ttf"; sourceTree = "<group>"; };
+		0271CA79262583B100052565 /* Avenir Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Medium.ttf"; sourceTree = "<group>"; };
+		0271CA7A262583B100052565 /* Avenir Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Regular.ttf"; sourceTree = "<group>"; };
+		0271CA802625B42700052565 /* QuickActionMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickActionMenu.xib; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
@@ -335,6 +351,8 @@
 				02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */,
 				02B662232604691E008CCF36 /* DocumentScannerViewController.swift */,
 				02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */,
+				0271CA6F2625835300052565 /* IntroductionVC.swift */,
+				0271CA702625835300052565 /* IntroductionVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -357,6 +375,18 @@
 			path = TableViewCells;
 			sourceTree = "<group>";
 		};
+		0271CA75262583B100052565 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0271CA76262583B100052565 /* Avenir Black.ttf */,
+				0271CA77262583B100052565 /* Avenir Book.ttf */,
+				0271CA78262583B100052565 /* Avenir Light.ttf */,
+				0271CA79262583B100052565 /* Avenir Medium.ttf */,
+				0271CA7A262583B100052565 /* Avenir Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		02ACA17925F9F1970063A3ED /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +394,7 @@
 				024F075D25FF6A350091C73C /* FilterController.swift */,
 				02616242260DBF100095B727 /* FooterButton.swift */,
 				02616248260DBF200095B727 /* FooterButton.xib */,
+				0271CA802625B42700052565 /* QuickActionMenu.xib */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -393,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				02BA3CC226220D7B00FA9194 /* scanner.json */,
+				0271CA75262583B100052565 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -500,20 +532,27 @@
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
 				02616249260DBF200095B727 /* FooterButton.xib in Resources */,
+				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
+				0271CA812625B42700052565 /* QuickActionMenu.xib in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
+				0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
+				0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
 				024F075325FF656D0091C73C /* FilterController.xib in Resources */,
+				0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */,
 				02BA3CC326220D7B00FA9194 /* scanner.json in Resources */,
 				025BDA8D25F09AA1000834AE /* Main.storyboard in Resources */,
 				025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */,
+				0271CA722625835300052565 /* IntroductionVC.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
 				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
 				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
+				0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +647,7 @@
 				025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */,
 				025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */,
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
+				0271CA712625835300052565 /* IntroductionVC.swift in Sources */,
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
 				020AEDC22620409E00998398 /* IAPProduct.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,

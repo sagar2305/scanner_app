@@ -27,9 +27,9 @@ extension UIFont {
         }
     }
     
-    static func font( style: UIFont.TextStyle) -> UIFont {
+    static func font(_ name: Constants.Fonts, style: UIFont.TextStyle) -> UIFont {
         let fontSize = UIFont.sizeFor(style)
-        let font = UIFont(name: "Avenir Book", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
+        let font = UIFont(name: name.rawValue, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
         return UIFontMetrics(forTextStyle: style).scaledFont(for: font)
     }
 }
@@ -44,11 +44,15 @@ extension UIColor {
     }
     
     static var primary: UIColor {
-        UIColor(named: "app-theme")!
+        UIColor(named: "primary")!
     }
     
     static var text: UIColor {
         UIColor(named: "text")!
+    }
+    
+    static var shadow: UIColor {
+        UIColor(named: "shadow")!
     }
 }
 
@@ -57,7 +61,7 @@ extension UILabel {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 80))
         titleLabel.text = title ?? ""
         titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.font(style: .title3)
+        titleLabel.font = UIFont.font(.avenirBook, style: .title3)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textColor = .text
@@ -65,8 +69,8 @@ extension UILabel {
         return titleLabel
     }
     
-    func configure(with style: UIFont.TextStyle) {
-        self.font = UIFont.font(style: style)
+    func configure(with font: UIFont) {
+        self.font = font
         adjustsFontForContentSizeCategory = true
         adjustsFontSizeToFitWidth = true
     }
