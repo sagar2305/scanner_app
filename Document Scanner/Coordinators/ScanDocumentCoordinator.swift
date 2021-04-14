@@ -22,7 +22,7 @@ class ScanDocumentCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: DocumentScannerNavigationController
-    var editImageVC: EditImageVC!
+    var correctionVC: CorrectionVC!
     weak var delegate: ScanDocumentCoordinatorDelegate?
     
     init(_ controller: DocumentScannerNavigationController) {
@@ -43,10 +43,11 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     }
     
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image],quad: quad, imageSource: .camera)
-        editDocumentCoordinator.delegate = self
-        childCoordinators.append(editDocumentCoordinator)
-        editDocumentCoordinator.start()
+        correctionVC = CorrectionVC()
+        correctionVC.delegate = self
+        correctionVC.quad = quad
+        correctionVC.image = image
+        navigationController.pushViewController(correctionVC, animated: true)
     }
     
 }
@@ -66,4 +67,18 @@ extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
     }
     
     
+}
+
+extension ScanDocumentCoordinator: CorrectionVCDelegate {
+    func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
+        delegate?.didCancelScanningDocument(self)
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
+        navigationController.popViewController(animated: true)
+    }    
 }

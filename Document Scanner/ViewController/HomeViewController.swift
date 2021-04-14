@@ -42,6 +42,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var searchButton: UIButton!
     
     @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var quickAccessButton: FooterButton!
     @IBOutlet private weak var footerHeaderView: UIView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
@@ -72,6 +73,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupViews() {
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        footerView.layer.cornerRadius = 32
+        footerView.clipsToBounds = true
         headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
         headerLabel.text = "My Documents".localized
         definesPresentationContext = true
@@ -83,15 +86,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         print(footerViewHeight)
         print(footerHeaderHeight)
         
-        if presentQuickAccess {
-            footerViewBottomConstraint.constant = 0
-        } else {
-            print(footerViewHeight - footerHeaderHeight)
-            footerViewBottomConstraint.constant = -(footerViewHeight - footerHeaderHeight)
-        }
-        
-        UIView.animate(withDuration: 0.7, animations: {
-            //self.imageView.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.quickAccessButton.iconView.transform = self.presentQuickAccess ? CGAffineTransform(scaleX: 1, y: -1) : .identity
+            self.footerViewBottomConstraint.constant = self.presentQuickAccess ? -44 : -(footerViewHeight - footerHeaderHeight)
             self.view.layoutIfNeeded()
         })
     }
@@ -106,7 +103,6 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
             headerView.addSubview(searchBar)
             searchBar.delegate = self
             self.searchBar.searchTextField.becomeFirstResponder()
-            
             UIView.animateKeyframes(withDuration: 0.3,
                                     delay: 0,
                                     options: []) {
@@ -116,6 +112,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                                          height: self.headerView.frame.height - 8)
                 self.searchButton.alpha = 0
                 self.headerLabel.alpha = 0
+                
             } completion: { completed in
                 self.searchButton.isHidden = true
                 self.headerLabel.isHidden = true

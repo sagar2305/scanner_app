@@ -39,6 +39,8 @@ class FooterButton: UIButton {
     @IBInspectable
     @IBOutlet private weak var buttonTitle: UILabel!
     
+    var iconView: UIImageView { return iconImage }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadView()

@@ -22,7 +22,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     
     var delegate: PickerDocumentCoordinatorDelegate?
     var navigationController: DocumentScannerNavigationController
-    var editImageVC: EditImageVC?
+    var correctionVC: CorrectionVC!
     
     func start() {
        _pickDocument()
@@ -40,10 +40,10 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func presentImageCorrectionViewController(for image: UIImage) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image], imageSource: .photo_library)
-        editDocumentCoordinator.delegate = self
-        childCoordinators.append(editDocumentCoordinator)
-        editDocumentCoordinator.start()
+        correctionVC = CorrectionVC()
+        correctionVC.delegate = self
+        correctionVC.image = image
+        navigationController.pushViewController(correctionVC, animated: true)
     }
 
 }
@@ -79,5 +79,19 @@ extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         delegate?.didCancelPickingImage(self)
+    }
+}
+
+extension PickDocumentCoordinator: CorrectionVCDelegate {
+    func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
+        delegate?.didCancelPickingImage(self)
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
+        _pickDocument()
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
+        navigationController.popViewController(animated: true)
     }
 }
