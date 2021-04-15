@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="documentsCollectionView" destination="a9B-JH-h6P" id="yOH-cH-nLp"/>
+                <outlet property="footerContentView" destination="sfh-vY-Gkc" id="Tya-fy-Czg"/>
                 <outlet property="footerHeaderView" destination="gWU-uo-4ei" id="NbF-mY-bxg"/>
                 <outlet property="footerView" destination="RTZ-Om-6jC" id="YbG-1G-kjj"/>
                 <outlet property="footerViewBottomConstraint" destination="kCd-Q1-YDp" id="r3u-9V-3PF"/>
@@ -126,7 +127,7 @@
                                 <constraint firstAttribute="width" secondItem="Epl-xB-WYZ" secondAttribute="height" multiplier="1:1" id="FeD-Qx-Wcz"/>
                             </constraints>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" image="magnifyingglass" catalog="system"/>
+                            <state key="normal" image="search"/>
                             <connections>
                                 <action selector="didTapSearchButton:" destination="-1" eventType="touchUpInside" id="TDM-Ow-h7E"/>
                             </connections>
@@ -179,10 +180,24 @@
             <point key="canvasLocation" x="129.23076923076923" y="122.98578199052132"/>
         </view>
     </objects>
+    <designables>
+        <designable name="8yW-yO-nhP">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="Fk3-sq-d9B">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="kw8-CQ-Shx">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="u4S-FD-erc">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+    </designables>
     <resources>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="navigation-tip" width="24" height="24"/>
         <image name="scan-document" width="52" height="52"/>
+        <image name="search" width="24" height="24"/>
         <image name="settings" width="52" height="52"/>
         <image name="upload-document" width="52" height="52"/>
         <namedColor name="background">

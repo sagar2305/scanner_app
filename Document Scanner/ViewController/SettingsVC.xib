@@ -38,7 +38,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VTa-Zk-gk8">
-                            <rect key="frame" x="16" y="4" width="44" height="44"/>
+                            <rect key="frame" x="4" y="4" width="44" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="VTa-Zk-gk8" secondAttribute="height" multiplier="1:1" id="kxA-ai-n5m"/>
                             </constraints>
@@ -53,7 +53,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Rp4-av-PTo" firstAttribute="top" secondItem="eD1-3Y-P9s" secondAttribute="top" constant="4" id="36s-JO-99T"/>
-                        <constraint firstItem="VTa-Zk-gk8" firstAttribute="leading" secondItem="eD1-3Y-P9s" secondAttribute="leading" constant="16" id="O7d-xy-yzz"/>
+                        <constraint firstItem="VTa-Zk-gk8" firstAttribute="leading" secondItem="eD1-3Y-P9s" secondAttribute="leading" constant="4" id="O7d-xy-yzz"/>
                         <constraint firstItem="VTa-Zk-gk8" firstAttribute="top" secondItem="eD1-3Y-P9s" secondAttribute="top" constant="4" id="Rnq-qM-9IO"/>
                         <constraint firstAttribute="bottom" secondItem="Rp4-av-PTo" secondAttribute="bottom" constant="4" id="Rtz-4A-Hy1"/>
                         <constraint firstAttribute="height" constant="52" id="VaQ-se-ZD2"/>

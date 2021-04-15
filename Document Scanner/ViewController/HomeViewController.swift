@@ -44,6 +44,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var quickAccessButton: FooterButton!
     @IBOutlet private weak var footerHeaderView: UIView!
+    @IBOutlet private weak var footerContentView: UIStackView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
@@ -72,6 +73,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
     
     private func _setupViews() {
+        
+    
+        headerView.addSubview(view)
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         footerView.layer.cornerRadius = 32
         footerView.clipsToBounds = true
@@ -86,9 +90,17 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         print(footerViewHeight)
         print(footerHeaderHeight)
         
-        UIView.animate(withDuration: 0.3, animations: {
+        if presentQuickAccess {
+            footerViewBottomConstraint.constant = -44
+            footerContentView.isHidden = false
+        } else {
+            footerViewBottomConstraint.constant = UIDevice.current.hasNotch ? -(footerViewHeight - footerHeaderHeight - 22)
+                                        : -(footerViewHeight - footerHeaderHeight)
+            if UIDevice.current.hasNotch { self.footerContentView.isHidden = true }
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: { [self] in
             self.quickAccessButton.iconView.transform = self.presentQuickAccess ? CGAffineTransform(scaleX: 1, y: -1) : .identity
-            self.footerViewBottomConstraint.constant = self.presentQuickAccess ? -44 : -(footerViewHeight - footerHeaderHeight)
             self.view.layoutIfNeeded()
         })
     }
