@@ -43,6 +43,9 @@
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="image" keyPath="icon" value="navigation-tip"/>
                                         <userDefinedRuntimeAttribute type="string" keyPath="title" value="Quick Access"/>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                            <color key="value" name="primary-text"/>
+                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="didTapShowQuickAccessButton:" destination="-1" eventType="touchUpInside" id="5zE-XI-hRF"/>
@@ -68,6 +71,9 @@
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="upload-document"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="Pick Document"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="primary-text"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="rFO-z0-mQF"/>
@@ -79,6 +85,9 @@
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="scan-document"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="Scan Document"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="primary-text"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="Rze-jL-kZA"/>
@@ -90,6 +99,9 @@
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="settings"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="title" value="Settings"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="primary-text"/>
+                                                </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="bfp-Dd-gRu"/>
@@ -180,20 +192,6 @@
             <point key="canvasLocation" x="129.23076923076923" y="122.98578199052132"/>
         </view>
     </objects>
-    <designables>
-        <designable name="8yW-yO-nhP">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="Fk3-sq-d9B">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="kw8-CQ-Shx">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="u4S-FD-erc">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-    </designables>
     <resources>
         <image name="navigation-tip" width="24" height="24"/>
         <image name="scan-document" width="52" height="52"/>
@@ -205,6 +203,9 @@
         </namedColor>
         <namedColor name="primary">
             <color red="0.2800000011920929" green="0.48899999260902405" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="primary-text">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

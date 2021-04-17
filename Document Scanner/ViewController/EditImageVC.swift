@@ -28,12 +28,7 @@ class EditImageVC: DocumentScannerViewController {
         case correction
         case filtering
     }
-    
-    enum ImageRotationDirection: CGFloat {
-        case left = -1.5708
-        case right = 1.5708
-    }
-    
+
     enum ImageFilters {
         case black_and_white
         case brightness
@@ -251,18 +246,6 @@ class EditImageVC: DocumentScannerViewController {
         }
     }
     
-    //rotation of images is available in cropped mode only
-    private func _rotateImage(_ direction: ImageRotationDirection) {
-        let imageToRotate = _croppedImages[_currentIndexOfImage]
-        switch  direction {
-        case .left:
-            _croppedImages[_currentIndexOfImage] = imageToRotate.rotate(withRotation: direction.rawValue)
-        case .right:
-            _croppedImages[_currentIndexOfImage] = imageToRotate.rotate(withRotation: direction.rawValue)
-        }
-        imageView?.image = _croppedImages[_currentIndexOfImage]
-    }
-    
     private func _initiateImageFiltering() {
         
          //1 set cropped image as initial image of edited images buffer
@@ -426,7 +409,8 @@ class EditImageVC: DocumentScannerViewController {
         case .basic:
             _editVC.cropImage()
         case .correction:
-            _rotateImage(.right)
+            _croppedImages[_currentIndexOfImage] = _croppedImages[_currentIndexOfImage].rotateRight()
+            imageView?.image = _croppedImages[_currentIndexOfImage]
         case .filtering:
             _filterSelected(.contrast)
         }

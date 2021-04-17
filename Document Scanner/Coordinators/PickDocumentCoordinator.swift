@@ -88,10 +88,10 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
     }
     
     func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
-        _pickDocument()
+        //TODO: - go editing
     }
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
-        navigationController.popViewController(animated: true)
+        _pickDocument()
     }
 }

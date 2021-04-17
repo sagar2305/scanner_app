@@ -74,8 +74,6 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupViews() {
         
-    
-        headerView.addSubview(view)
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         footerView.layer.cornerRadius = 32
         footerView.clipsToBounds = true

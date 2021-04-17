@@ -75,7 +75,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
     }
     
     func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
-        navigationController.popViewController(animated: true)
+        //TODO: - go editing
     }
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {

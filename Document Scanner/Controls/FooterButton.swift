@@ -34,6 +34,13 @@ class FooterButton: UIButton {
     }
     
     @IBInspectable
+    var textColor: UIColor = .text {
+        didSet {
+            buttonTitle.textColor = textColor
+        }
+    }
+    
+    @IBInspectable
     @IBOutlet private weak var iconImage: UIImageView!
     
     @IBInspectable

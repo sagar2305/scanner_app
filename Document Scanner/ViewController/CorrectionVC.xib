@@ -16,6 +16,7 @@
                 <outlet property="doneButton" destination="mL2-VZ-YnN" id="JxF-vZ-K2F"/>
                 <outlet property="imageContainerView" destination="9e3-jf-zOO" id="0co-95-39f"/>
                 <outlet property="retakeButton" destination="1QE-yX-7TM" id="Q8E-7R-BMM"/>
+                <outlet property="rotateButton" destination="iz2-LB-AMa" id="OzS-do-Ykp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -60,37 +61,74 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-mX-4bG">
                     <rect key="frame" x="0.0" y="782" width="414" height="80"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QE-yX-7TM">
-                            <rect key="frame" x="127" y="8" width="64" height="64"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dgE-iV-y5q">
+                            <rect key="frame" x="39.5" y="0.0" width="335" height="80"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QE-yX-7TM" userLabel="Rescan">
+                                    <rect key="frame" x="0.0" y="8" width="64" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="1QE-yX-7TM" secondAttribute="height" multiplier="1:1" id="vku-g1-EJr"/>
+                                    </constraints>
+                                    <state key="normal" image="edit-ellipse"/>
+                                    <connections>
+                                        <action selector="didTapRescanButton:" destination="-1" eventType="touchUpInside" id="ahA-e7-Vy5"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgU-l9-rHw" userLabel="Rescan">
+                                    <rect key="frame" x="68" y="8" width="64" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="retake-ellipse"/>
+                                    <connections>
+                                        <action selector="didTapRescanButton:" destination="-1" eventType="touchUpInside" id="ffz-Zh-eOT"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mL2-VZ-YnN" userLabel="Done">
+                                    <rect key="frame" x="136" y="8.5" width="63" height="63"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="mL2-VZ-YnN" secondAttribute="height" multiplier="1:1" id="EXg-KO-Fuh"/>
+                                    </constraints>
+                                    <state key="normal" image="done-ellipse"/>
+                                    <connections>
+                                        <action selector="didTapDoneButton:" destination="-1" eventType="touchUpInside" id="cfD-Fs-amJ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iz2-LB-AMa" userLabel="Rotate">
+                                    <rect key="frame" x="203" y="8" width="64" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="rotate-ellipse"/>
+                                    <connections>
+                                        <action selector="didTapRotateButton:" destination="-1" eventType="touchUpInside" id="El5-57-cvj"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ug8-to-wCI" userLabel="Rotate">
+                                    <rect key="frame" x="271" y="8" width="64" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="crop-ellipse"/>
+                                    <connections>
+                                        <action selector="didTapRotateButton:" destination="-1" eventType="touchUpInside" id="C1Y-M9-NXe"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="1QE-yX-7TM" secondAttribute="height" multiplier="1:1" id="vku-g1-EJr"/>
+                                <constraint firstItem="ug8-to-wCI" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="IeY-tg-uSe"/>
+                                <constraint firstItem="ug8-to-wCI" firstAttribute="width" secondItem="ug8-to-wCI" secondAttribute="height" multiplier="1:1" id="Q3w-X3-5Mc"/>
+                                <constraint firstItem="LgU-l9-rHw" firstAttribute="width" secondItem="LgU-l9-rHw" secondAttribute="height" multiplier="1:1" id="VWO-Ea-1K6"/>
+                                <constraint firstItem="1QE-yX-7TM" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="YNU-OP-grn"/>
+                                <constraint firstItem="LgU-l9-rHw" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="gDI-x7-zaE"/>
+                                <constraint firstItem="iz2-LB-AMa" firstAttribute="width" secondItem="iz2-LB-AMa" secondAttribute="height" multiplier="1:1" id="n9w-AV-0eQ"/>
                             </constraints>
-                            <state key="normal" image="retake-ellipse"/>
-                            <connections>
-                                <action selector="didTapRescanButton:" destination="-1" eventType="touchUpInside" id="ahA-e7-Vy5"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mL2-VZ-YnN">
-                            <rect key="frame" x="223" y="8" width="64" height="64"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" image="done-ellipse"/>
-                            <connections>
-                                <action selector="didTapDoneButton:" destination="-1" eventType="touchUpInside" id="cfD-Fs-amJ"/>
-                            </connections>
-                        </button>
+                        </stackView>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="Xfa-DP-tVy"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="mL2-VZ-YnN" firstAttribute="leading" secondItem="Xfa-DP-tVy" secondAttribute="centerX" constant="16" id="09f-nb-KBq"/>
+                        <constraint firstItem="dgE-iV-y5q" firstAttribute="top" secondItem="Xfa-DP-tVy" secondAttribute="top" id="1ch-Eq-8G7"/>
                         <constraint firstAttribute="height" constant="80" id="9TH-Gq-EuI"/>
-                        <constraint firstItem="mL2-VZ-YnN" firstAttribute="height" secondItem="3MA-mX-4bG" secondAttribute="height" multiplier="0.8" id="H4S-0i-0nm"/>
-                        <constraint firstItem="Xfa-DP-tVy" firstAttribute="centerX" secondItem="1QE-yX-7TM" secondAttribute="trailing" constant="16" id="Vot-cb-Ol8"/>
-                        <constraint firstItem="1QE-yX-7TM" firstAttribute="centerY" secondItem="Xfa-DP-tVy" secondAttribute="centerY" id="juM-gu-X9a"/>
-                        <constraint firstItem="mL2-VZ-YnN" firstAttribute="centerY" secondItem="Xfa-DP-tVy" secondAttribute="centerY" id="sJ4-UX-bDN"/>
-                        <constraint firstItem="mL2-VZ-YnN" firstAttribute="width" secondItem="mL2-VZ-YnN" secondAttribute="height" multiplier="1:1" id="u1c-qF-riD"/>
-                        <constraint firstItem="1QE-yX-7TM" firstAttribute="height" secondItem="3MA-mX-4bG" secondAttribute="height" multiplier="0.8" id="uM4-98-maz"/>
+                        <constraint firstAttribute="bottom" secondItem="dgE-iV-y5q" secondAttribute="bottom" id="Ipq-xT-bxI"/>
+                        <constraint firstItem="dgE-iV-y5q" firstAttribute="centerX" secondItem="Xfa-DP-tVy" secondAttribute="centerX" id="wkh-Ce-Mf3"/>
+                        <constraint firstItem="iz2-LB-AMa" firstAttribute="height" secondItem="3MA-mX-4bG" secondAttribute="height" multiplier="0.8" id="xa1-Vg-MKr"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-jf-zOO">
@@ -117,8 +155,11 @@
     </objects>
     <resources>
         <image name="back-arrow" width="18" height="18"/>
+        <image name="crop-ellipse" width="280" height="280"/>
         <image name="done-ellipse" width="63" height="63"/>
+        <image name="edit-ellipse" width="280" height="280"/>
         <image name="retake-ellipse" width="280" height="280"/>
+        <image name="rotate-ellipse" width="280" height="280"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

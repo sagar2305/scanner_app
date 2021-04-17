@@ -11,6 +11,7 @@ import WeScan
 protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, final image: UIImage)
+    func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
 }
 
@@ -18,11 +19,13 @@ class CorrectionVC: DocumentScannerViewController {
 
     private var _editVC: EditImageViewController!
     var image: UIImage?
+    private var croppedImage: UIImage?
     var quad: Quadrilateral?
     
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var doneButton: UIButton!
     @IBOutlet private weak var retakeButton: UIButton!
+    @IBOutlet private weak var rotateButton: UIButton!
     @IBOutlet private weak var imageContainerView: UIView!
     
     weak var delegate: CorrectionVCDelegate?
@@ -30,6 +33,11 @@ class CorrectionVC: DocumentScannerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         _setupViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
     
     private func _setupViews() {
@@ -46,6 +54,14 @@ class CorrectionVC: DocumentScannerViewController {
         _editVC.delegate = self
     }
     
+    
+    @IBAction func didTapEditButton(_ sender: UIButton) {
+        guard let imageToEdit = croppedImage ?? image else {
+            fatalError("ERROR: No image found for editing")
+        }
+        delegate?.correctionVC(self, edit: imageToEdit)
+    }
+    
     @IBAction func didTapDoneButton(_ sender: UIButton) {
         _editVC.cropImage()
     }
@@ -57,6 +73,11 @@ class CorrectionVC: DocumentScannerViewController {
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
     }
+    
+    @IBAction func didTapRotateButton(_ sender: Any) {
+        _editVC.rotateImage()
+    }
+    
 }
 
 extension CorrectionVC: EditImageViewDelegate {
