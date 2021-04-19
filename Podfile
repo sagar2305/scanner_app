@@ -13,4 +13,6 @@ target 'Document Scanner' do
   pod 'PDFGenerator', '~> 3.1'
   pod 'Purchases'
   pod 'lottie-ios'
+  pod 'PMAlertController'
+  pod 'SnapKit', '~> 5.0.0'
 end

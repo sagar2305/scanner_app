@@ -74,6 +74,10 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
         delegate?.didCancelScanningDocument(self)
     }
     
+    func correctionVC(_ viewController: CorrectionVC, edit image: UIImage) {
+        //TODO: - go editing
+    }
+    
     func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
         //TODO: - go editing
     }

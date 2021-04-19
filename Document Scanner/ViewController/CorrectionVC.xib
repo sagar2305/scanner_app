@@ -13,9 +13,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CorrectionVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="Lg9-yT-tWI" id="2ZE-SB-yeC"/>
+                <outlet property="cropButton" destination="ug8-to-wCI" id="7VD-PJ-ZRP"/>
                 <outlet property="doneButton" destination="mL2-VZ-YnN" id="JxF-vZ-K2F"/>
+                <outlet property="editButton" destination="1QE-yX-7TM" id="tVq-dm-T8G"/>
+                <outlet property="headerLabel" destination="YNb-Q2-b5T" id="Qhe-pA-2Mc"/>
                 <outlet property="imageContainerView" destination="9e3-jf-zOO" id="0co-95-39f"/>
-                <outlet property="retakeButton" destination="1QE-yX-7TM" id="Q8E-7R-BMM"/>
+                <outlet property="retakeButton" destination="LgU-l9-rHw" id="4ye-RE-qJv"/>
                 <outlet property="rotateButton" destination="iz2-LB-AMa" id="OzS-do-Ykp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -64,7 +67,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dgE-iV-y5q">
                             <rect key="frame" x="39.5" y="0.0" width="335" height="80"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QE-yX-7TM" userLabel="Rescan">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QE-yX-7TM" userLabel="Edit">
                                     <rect key="frame" x="0.0" y="8" width="64" height="64"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -72,7 +75,7 @@
                                     </constraints>
                                     <state key="normal" image="edit-ellipse"/>
                                     <connections>
-                                        <action selector="didTapRescanButton:" destination="-1" eventType="touchUpInside" id="ahA-e7-Vy5"/>
+                                        <action selector="didTapEditButton:" destination="-1" eventType="touchUpInside" id="RdM-SV-FEg"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgU-l9-rHw" userLabel="Rescan">
@@ -102,12 +105,12 @@
                                         <action selector="didTapRotateButton:" destination="-1" eventType="touchUpInside" id="El5-57-cvj"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ug8-to-wCI" userLabel="Rotate">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ug8-to-wCI" userLabel="Crop">
                                     <rect key="frame" x="271" y="8" width="64" height="64"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" image="crop-ellipse"/>
                                     <connections>
-                                        <action selector="didTapRotateButton:" destination="-1" eventType="touchUpInside" id="C1Y-M9-NXe"/>
+                                        <action selector="cropImage:" destination="-1" eventType="touchUpInside" id="336-OW-K4M"/>
                                     </connections>
                                 </button>
                             </subviews>

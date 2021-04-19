@@ -156,23 +156,6 @@
             <point key="canvasLocation" x="-139.13043478260872" y="-141.29464285714286"/>
         </view>
     </objects>
-    <designables>
-        <designable name="KJm-eb-cfl">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="MW2-u9-fWz">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="dyi-hp-S9O">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="u4c-fV-XOc">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="ygq-47-q1s">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-    </designables>
     <resources>
         <image name="cancel" width="50" height="50"/>
         <image name="capture" width="330" height="330"/>

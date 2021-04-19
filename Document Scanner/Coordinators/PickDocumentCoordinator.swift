@@ -87,8 +87,12 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         delegate?.didCancelPickingImage(self)
     }
     
-    func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
+    func correctionVC(_ viewController: CorrectionVC, edit image: UIImage) {
         //TODO: - go editing
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, final image: UIImage) {
+        
     }
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
