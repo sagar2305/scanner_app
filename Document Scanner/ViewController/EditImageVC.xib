@@ -6,23 +6,15 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditImageVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
-                <outlet property="editButtonFive" destination="dyi-hp-S9O" id="eKO-8h-A8M"/>
-                <outlet property="editButtonFour" destination="KJm-eb-cfl" id="fxc-FF-vSA"/>
-                <outlet property="editButtonOne" destination="u4c-fV-XOc" id="ICJ-Lt-8eQ"/>
-                <outlet property="editButtonThree" destination="MW2-u9-fWz" id="IdH-xI-eEQ"/>
-                <outlet property="editButtonTwo" destination="ygq-47-q1s" id="3Ff-Iv-36E"/>
+                <outlet property="editControllerContainer" destination="jA4-sS-e0E" id="erw-rf-4m5"/>
                 <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
-                <outlet property="footerViewTopConstraint" destination="3wT-ll-R46" id="LY1-Wu-P2f"/>
                 <outlet property="imageEditorView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
-                <outlet property="slider" destination="Dpo-yV-mB9" id="OwP-ZU-ATL"/>
-                <outlet property="sliderViewContainer" destination="QXs-gS-mqv" id="LYC-3Q-Z0p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,140 +28,59 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
-                    <rect key="frame" x="0.0" y="758" width="414" height="138"/>
+                    <rect key="frame" x="0.0" y="810" width="414" height="86"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hLL-7C-PYn">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXs-gS-mqv">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
-                                    <subviews>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dpo-yV-mB9">
-                                            <rect key="frame" x="14" y="11" width="386" height="31"/>
-                                            <connections>
-                                                <action selector="didChange:" destination="-1" eventType="valueChanged" id="WJP-g6-Gcb"/>
-                                            </connections>
-                                        </slider>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="52" id="Djt-2m-eTz"/>
-                                        <constraint firstAttribute="trailing" secondItem="Dpo-yV-mB9" secondAttribute="trailing" constant="16" id="Rp3-2i-6wj"/>
-                                        <constraint firstItem="Dpo-yV-mB9" firstAttribute="centerY" secondItem="QXs-gS-mqv" secondAttribute="centerY" id="bWS-Km-dz9"/>
-                                        <constraint firstItem="Dpo-yV-mB9" firstAttribute="leading" secondItem="QXs-gS-mqv" secondAttribute="leading" constant="16" id="vm6-HH-9vj"/>
-                                    </constraints>
-                                </view>
-                                <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4p5-2d-AdV">
-                                    <rect key="frame" x="0.0" y="52" width="414" height="52"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4c-fV-XOc" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="76.5" height="52"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="cancel"/>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="title" value="Cancel"/>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="background">
-                                                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="didTapEditButtonOne:" destination="-1" eventType="touchUpInside" id="63X-Av-1bp"/>
-                                            </connections>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygq-47-q1s" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="84.5" y="0.0" width="76.5" height="52"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="reset"/>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="title" value="B&amp;W"/>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="didTapEditButtonTwo:" destination="-1" eventType="touchUpInside" id="fQh-wc-Phy"/>
-                                            </connections>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-u9-fWz" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="169" y="0.0" width="76" height="52"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="image-filter"/>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="title" value="Filter"/>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="didTapEditButtonThree:" destination="-1" eventType="touchUpInside" id="TWr-Hy-QTh"/>
-                                            </connections>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-eb-cfl" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="253" y="0.0" width="76.5" height="52"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="capture"/>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="title" value="Sharpen"/>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="didTapEditButtonFour:" destination="-1" eventType="touchUpInside" id="DGI-MK-naP"/>
-                                            </connections>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyi-hp-S9O" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="337.5" y="0.0" width="76.5" height="52"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="title" value="Done"/>
-                                                <userDefinedRuntimeAttribute type="image" keyPath="icon" value="done"/>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="background">
-                                                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="didTapEditButtonFive:" destination="-1" eventType="touchUpInside" id="ShB-ot-DDE"/>
-                                            </connections>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" name="app-theme"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="52" id="x2R-e7-hVC"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdC-BH-0eq">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+                            <color key="backgroundColor" systemColor="systemTealColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="a8v-pf-3XO"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="546-Pr-Fmq"/>
-                    <color key="backgroundColor" name="app-theme"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="546-Pr-Fmq" firstAttribute="bottom" secondItem="hLL-7C-PYn" secondAttribute="bottom" id="dzA-E7-SZv"/>
-                        <constraint firstItem="546-Pr-Fmq" firstAttribute="trailing" secondItem="hLL-7C-PYn" secondAttribute="trailing" id="p5U-6T-GVs"/>
-                        <constraint firstItem="hLL-7C-PYn" firstAttribute="leading" secondItem="546-Pr-Fmq" secondAttribute="leading" id="sAG-Ke-mDk"/>
-                        <constraint firstItem="hLL-7C-PYn" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="w1W-xN-aOt"/>
+                        <constraint firstItem="bdC-BH-0eq" firstAttribute="leading" secondItem="546-Pr-Fmq" secondAttribute="leading" id="DaP-q3-Dip"/>
+                        <constraint firstItem="546-Pr-Fmq" firstAttribute="bottom" secondItem="bdC-BH-0eq" secondAttribute="bottom" id="REO-qT-f5O"/>
+                        <constraint firstItem="bdC-BH-0eq" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="oQK-rx-Vx6"/>
+                        <constraint firstItem="546-Pr-Fmq" firstAttribute="trailing" secondItem="bdC-BH-0eq" secondAttribute="trailing" id="p9R-Yf-5Vi"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jA4-sS-e0E">
+                    <rect key="frame" x="0.0" y="758" width="414" height="48"/>
+                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="RDC-B5-VM9"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" id="3wT-ll-R46"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JCo-HO-DcO" secondAttribute="trailing" id="7nf-QL-4Fb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLe-Fr-nQh" secondAttribute="trailing" id="AOj-pl-I03"/>
+                <constraint firstItem="jA4-sS-e0E" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="C4D-po-VKv"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Em4-tw-A8W"/>
                 <constraint firstAttribute="bottom" secondItem="QLe-Fr-nQh" secondAttribute="bottom" id="Ira-XB-ai9"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jA4-sS-e0E" secondAttribute="trailing" id="ctn-Ls-D75"/>
+                <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="jA4-sS-e0E" secondAttribute="bottom" constant="4" id="dE1-o2-0Ml"/>
                 <constraint firstItem="QLe-Fr-nQh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jni-sP-yPu"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="lPq-nz-bxB"/>
+                <constraint firstItem="jA4-sS-e0E" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" id="qYh-BG-t3e"/>
             </constraints>
             <point key="canvasLocation" x="-139.13043478260872" y="-141.29464285714286"/>
         </view>
     </objects>
     <resources>
-        <image name="cancel" width="50" height="50"/>
-        <image name="capture" width="330" height="330"/>
-        <image name="done" width="50" height="50"/>
-        <image name="image-filter" width="50" height="50"/>
-        <image name="reset" width="50" height="50"/>
-        <namedColor name="app-theme">
-            <color red="0.25099998712539673" green="0.62000000476837158" blue="0.94499999284744263" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

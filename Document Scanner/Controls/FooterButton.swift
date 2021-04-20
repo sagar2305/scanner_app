@@ -9,24 +9,30 @@ import UIKit
 import SwiftUI
 import SnapKit
 
-//@IBDesignable
+@IBDesignable
 class FooterButton: UIButton {
 
     private var containerView: UIView?
     
+    var onTap: ((FooterButton) -> Void)?
+    
+    @IBInspectable
     private lazy var iconContainerView: UIView = {
         let view = UIView()
         //view.backgroundColor = .green
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
         return view
     }()
     
+    @IBInspectable
     private lazy var _titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello"
         label.textAlignment = .center
         label.font = UIFont.font(.avenirBook, style: .caption1)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -34,6 +40,7 @@ class FooterButton: UIButton {
         let imageView = UIImageView()
         //imageView.backgroundColor = .red
         imageView.translatesAutoresizingMaskIntoConstraints = true
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -47,7 +54,7 @@ class FooterButton: UIButton {
     @IBInspectable
     var icon: UIImage? {
         didSet {
-            //iconImage.image = icon
+            iconImageView.image = icon
         }
     }
 
@@ -71,7 +78,7 @@ class FooterButton: UIButton {
     @IBInspectable
     @IBOutlet private weak var buttonTitle: UILabel!
     
-    var iconView: UIImageView { return iconImage }
+    var iconView: UIImageView { return iconImageView }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,11 +94,12 @@ class FooterButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        isEnabled = true
+        
         //_setupView()
     }
     
     private func _setupView() {
+        isEnabled = true
         addSubview(iconContainerView)
         iconContainerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -115,6 +123,11 @@ class FooterButton: UIButton {
             make.height.equalToSuperview().multipliedBy(0.78)
             make.width.equalTo(iconImageView.snp.height)
         }
+        //addTarget(self, action: #selector(_buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func _buttonTapped() {
+        onTap?(self)
     }
     
     
@@ -146,7 +159,7 @@ class FooterButton: UIButton {
 }
 
 @available(iOS 13, *)
-struct ContentView_Previews: PreviewProvider {
+struct FooterButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             UIKitPreview(view: FooterButton())

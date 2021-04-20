@@ -79,6 +79,7 @@ class CorrectionVC: DocumentScannerViewController {
     private func _presentCroppedImage(_ image: UIImage) {
         imageContainerView.addSubview(_croppedImageView)
         _croppedImageView.image = image
+        croppedImage = image
         imageContainerView.bringSubviewToFront(_croppedImageView)
         _editVC.view.isHidden = true
         guard  let undoImage = UIImage(named: "undo-ellipse") else {
@@ -149,7 +150,7 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     @IBAction func didTapRotateButton(_ sender: Any) {
-        _editVC.rotateImage()
+        _croppedImageView.image = (croppedImage ?? image)?.rotateRight()
     }
     
     @IBAction func cropImage(_ sender: UIButton) {

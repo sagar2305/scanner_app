@@ -58,6 +58,10 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         _getDocuments()
+        
+        quickAccessButton.onTap = ({ [self] button in
+            presentQuickAccess.toggle()
+        })
     }
     
     override func viewDidLayoutSubviews() {

@@ -7,6 +7,7 @@
 
 import UIKit
 import WeScan
+import SnapKit
 
 protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
@@ -35,19 +36,29 @@ class EditImageVC: DocumentScannerViewController {
         case contrast
     }
     
+    private lazy var imageEditControls: ImageEditorControls = {
+        let imageEditControls = ImageEditorControls()
+        imageEditControls.onTransformTap = didTapTransformImage
+        imageEditControls.onAdjustTap = didTapAdjustImage
+        imageEditControls.onColorTap = didTapColorImage
+        imageEditControls.onOriginalTap = didTapOriginalImage
+        imageEditControls.onUndoTap = didTapUndoImage
+        imageEditControls.translatesAutoresizingMaskIntoConstraints = false
+        return imageEditControls
+    }()
+    
+    var transformView1:TransformImageControls!
+    var transformView2:TransformImageControls!
+    
     // MARK: - Views
     private var _editVC: EditImageViewController!
     private var imageView: UIImageView?
     
-    // MARK: - Constants
-    private var _footerViewHightWithoutSlider: CGFloat = 55
-    private var _footerViewHightWithSlider: CGFloat = 110
     
     // MARK: - Variables
     var imageEditingMode: ImageEditingMode? {
         didSet {
             if _editVC != nil || imageView != nil {
-                _updateViewForEditing()
             }
         }
     }
@@ -65,25 +76,12 @@ class EditImageVC: DocumentScannerViewController {
     private var _currentFilter: ImageFilters?
     private var _currentIndexOfImage = 0
     //last slide values for filters defaults 0
-    private var lastSliderValueForBlackAndWhite: Float = 0.0
-    private var lastSliderValueForBrightness: Float = 0.0
-    private var lastSliderValueForContrast: Float = 1.0
     
     // MARK:- IBoutlets
     @IBOutlet private weak var imageEditorView: UIView!
-    
+    @IBOutlet private weak var editControllerContainer: UIView!
     @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var footerViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var sliderViewContainer: UIView!
-    @IBOutlet private weak var slider: UISlider!
-    
-    //button  left to right in xib
-    @IBOutlet private weak var editButtonOne: FooterButton!
-    @IBOutlet private weak var editButtonTwo: FooterButton!
-    @IBOutlet private weak var editButtonThree: FooterButton!
-    @IBOutlet private weak var editButtonFour: FooterButton!
-    @IBOutlet private weak var editButtonFive: FooterButton!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -101,7 +99,8 @@ class EditImageVC: DocumentScannerViewController {
     }
     private func _setupViews() {
         _setupImageEditorView()
-        _updateViewForEditing()
+        footerView.addSubview(imageEditControls)
+        imageEditControls.snp.makeConstraints { make in make.left.right.top.bottom.equalToSuperview() }
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
@@ -165,86 +164,31 @@ class EditImageVC: DocumentScannerViewController {
         imageEditorView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
     }
-    
-    private func _updateViewForEditing() {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        switch  editingMode {
-        case .basic: _setupEditorViewForBasicEditingMode()
-        case .correction : _setupEditorViewForCorrectionMode()
-        case .filtering : _setupEditorViewForFilteringMode()
-        }
-    }
-    
-    private func _setupEditorViewForBasicEditingMode() {
+   
+    private func didTapTransformImage(_ sender: FooterButton) {
         
-        editButtonOne.isHidden = false
-        editButtonTwo.isHidden = false
-        editButtonThree.isHidden = true
-        editButtonFour.isHidden = false
-        editButtonFive.isHidden = true
-        editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonOne.setTitle("Cancel", for: .normal)
-        if dateSource?.imageSource == .camera {
-            editButtonTwo.setImage(Icons.camera, for: .normal)
-            editButtonTwo.setTitle("Rescan", for: .normal)
-        } else {
-            editButtonTwo.setImage(Icons.photoLibrary, for: .normal)
-            editButtonTwo.setTitle("Pick Again", for: .normal)
-        }
-        editButtonFour.setImage(Icons.crop, for: .normal)
-        editButtonFour.setTitle("Crop", for: .normal)
-        self.sliderViewContainer.isHidden = true
+    }
+    
+    private func didTapAdjustImage(_ sender: FooterButton) {
         
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
     }
     
-    private func _setupEditorViewForCorrectionMode() {
-        editButtonOne.isHidden = false
-        editButtonTwo.isHidden = false
-        editButtonThree.isHidden = false
-        editButtonFour.isHidden = false
-        editButtonFive.isHidden = false
+    private func didTapColorImage(_ sender: FooterButton) {
         
-        editButtonOne.setImage(Icons.cancel, for: .normal)
-        editButtonOne.setTitle("Cancel", for: .normal)
-        editButtonTwo.setImage(Icons.reset, for: .normal)
-        editButtonTwo.setTitle("Reset", for: .normal)
-        editButtonThree.setImage(Icons.filter, for: .normal)
-        editButtonThree.setTitle("Filter", for: .normal)
-        editButtonFour.setImage(Icons.rotateRight, for: .normal)
-        editButtonFour.setTitle("Rotate", for: .normal)
-        editButtonFive.setImage(Icons.done, for: .normal)
-        editButtonFive.setTitle("Done", for: .normal)
-                
-        sliderViewContainer.isHidden = true
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
     }
     
-    private func _setupEditorViewForFilteringMode() {
-    
-        editButtonOne.isHidden = false
-        editButtonTwo.isHidden = false
-        editButtonThree.isHidden = false
-        editButtonFour.isHidden = false
-        editButtonFive.isHidden = false
-
-        editButtonTwo.setImage(Icons.blackAndWhite, for: .normal)
-        editButtonTwo.setTitle("B&W", for: .normal)
-        editButtonThree.setImage(Icons.brightness, for: .normal)
-        editButtonThree.setTitle("Brightness", for: .normal)
-        editButtonFour.setImage(Icons.sharpen, for: .normal)
-        editButtonFour.setTitle("Contrast", for: .normal)
-        self.sliderViewContainer.isHidden = true
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+    private func didTapOriginalImage(_ sender: FooterButton) {
+        
     }
+    
+    private func didTapUndoImage(_ sender: FooterButton) {
+        
+    }
+    
+    
+    
+    
+    
     
     private func _initiateImageFiltering() {
         
@@ -306,146 +250,73 @@ class EditImageVC: DocumentScannerViewController {
         }
     }
     
-    private func _filterSelected(_ filter: ImageFilters) {
-        _editedImagesBuffer[_currentIndexOfImage].append((imageView?.image)!)
-        _currentFilter = filter
-       
-        self.sliderViewContainer.isHidden = false
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-        
-        switch filter {
-        case .black_and_white:
-            slider.minimumValue = 0.0
-            slider.maximumValue = 1.0
-            slider.setValue(lastSliderValueForBlackAndWhite, animated: true)
-        case .brightness:
-            slider.minimumValue = -1.0
-            slider.maximumValue = 1.0
-            slider.setValue(lastSliderValueForBrightness, animated: true)
-        case .contrast:
-            slider.minimumValue = -4.0
-            slider.maximumValue = 4.0
-            slider.setValue(lastSliderValueForContrast, animated: true)
-        }
-    }
     
-    private func _applyFilter(_ intensity: Float) {
-        guard let imageToFilter = _editedImagesBuffer[_currentIndexOfImage].last else {
-            fatalError("ERROR: No image is found for filtering")
-        }
-        print(imageToFilter)
-        var editedImage: UIImage?
-        
-        switch _currentFilter {
-        case .black_and_white:
-            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
-            lastSliderValueForBlackAndWhite = intensity
-        case .brightness:
-            editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
-            lastSliderValueForBrightness = intensity
-        case .contrast:
-            editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
-            lastSliderValueForContrast = intensity
-        case .none:
-            break
-        }
-        
-        guard let newImage = editedImage else { return }
-        imageView?.image = newImage
-    }
     
-    //cancel editing
-    @IBAction func didTapEditButtonOne(_ sender: FooterButton) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        
-        if editingMode == .filtering {
-            imageEditingMode = .correction
-        } else {
-            delegate?.cancelImageEditing(_controller: self)
-        }
-    }
-    
-    // rescan image
-    @IBAction func didTapEditButtonTwo(_ sender: UIButton) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        
-        switch editingMode {
-        case .basic:
-            delegate?.rescanImage(self)
-        case .correction:
-            imageView?.image = _croppedImages[_currentIndexOfImage]
-        case .filtering:
-            _filterSelected(.black_and_white)
-        }
-    }
-    
-    @IBAction func didTapEditButtonThree(_ sender: UIButton) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        
-        switch editingMode {
-        case .basic:
-            break
-        case .correction:
-            _initiateImageFiltering()
-        case .filtering:
-            _filterSelected(.brightness)
-        }
-    }
-    
-    @IBAction func didTapEditButtonFour(_ sender: UIButton) {
-        guard let editingMode = imageEditingMode else {
-            fatalError("ERROR: Image editing mode not set")
-        }
-        
-        switch editingMode {
-        case .basic:
-            _editVC.cropImage()
-        case .correction:
-            _croppedImages[_currentIndexOfImage] = _croppedImages[_currentIndexOfImage].rotateRight()
-            imageView?.image = _croppedImages[_currentIndexOfImage]
-        case .filtering:
-            _filterSelected(.contrast)
-        }
-    }
+//    private func _applyFilter(_ intensity: Float) {
+//        guard let imageToFilter = _editedImagesBuffer[_currentIndexOfImage].last else {
+//            fatalError("ERROR: No image is found for filtering")
+//        }
+//        print(imageToFilter)
+//        var editedImage: UIImage?
+//
+//        switch _currentFilter {
+//        case .black_and_white:
+//            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
+//            lastSliderValueForBlackAndWhite = intensity
+//        case .brightness:
+//            editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
+//            lastSliderValueForBrightness = intensity
+//        case .contrast:
+//            editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
+//            lastSliderValueForContrast = intensity
+//        case .none:
+//            break
+//        }
+//
+//        guard let newImage = editedImage else { return }
+//        imageView?.image = newImage
+//    }
     
     @IBAction func didTapEditButtonFive(_ sender: Any) {
         guard let dataSource = dateSource else {
             fatalError("ERROR: Datasource is not set")
         }
         
-        func saveDocument() {
-            let alterView = UIAlertController(title: "Saving Image",
-                                              message: "Enter document name",
-                                              preferredStyle: .alert)
-            
-            alterView.addTextField { textField in
-                textField.placeholder = "Documents Name!"
-            }
-            
-            alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
-                guard let textField = alterView?.textFields![0],
-                      let documentName = textField.text,
-                      !documentName.isEmpty else {
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.error)
-                    return
-                }
-                // Force unwrapping because we know it exists.
-                self._saveDocument(withName: documentName)
-            }))
-            
-            alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-            present(alterView, animated: true)
-        }
-        dataSource.isNewDocument ? saveDocument() : _updateDocument()
+        
+        
+//        func saveDocument() {
+//            let alterView = UIAlertController(title: "Saving Image",
+//                                              message: "Enter document name",
+//                                              preferredStyle: .alert)
+//
+//            alterView.addTextField { textField in
+//                textField.placeholder = "Documents Name!"
+//            }
+//
+//            alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
+//                guard let textField = alterView?.textFields![0],
+//                      let documentName = textField.text,
+//                      !documentName.isEmpty else {
+//                    let generator = UINotificationFeedbackGenerator()
+//                    generator.notificationOccurred(.error)
+//                    return
+//                }
+//                // Force unwrapping because we know it exists.
+//                self._saveDocument(withName: documentName)
+//            }))
+//
+//            alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+//            present(alterView, animated: true)
+//        }
+//        dataSource.isNewDocument ? saveDocument() : _updateDocument()
+    }
+    
+   
+    func presentAlerte(_ mes: String) {
+        let alert = UIAlertController(title: mes, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        
+        self.present(alert, animated: true)
     }
     
     @IBAction func didChange(_ sender: UISlider) {
@@ -453,7 +324,6 @@ class EditImageVC: DocumentScannerViewController {
             fatalError("ERROR: Slide shown without filter selection")
         }
         print("Slider Value:" + " \(sender.value)")
-        _applyFilter(sender.value)
     }
     
 }
