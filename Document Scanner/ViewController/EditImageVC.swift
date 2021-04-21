@@ -36,6 +36,7 @@ class EditImageVC: DocumentScannerViewController {
         case contrast
     }
     
+    // MARK: - ImageEditorControls
     private lazy var imageEditControls: ImageEditorControls = {
         let imageEditControls = ImageEditorControls()
         imageEditControls.onTransformTap = didTapTransformImage
@@ -47,12 +48,34 @@ class EditImageVC: DocumentScannerViewController {
         return imageEditControls
     }()
     
-    var transformView1:TransformImageControls!
-    var transformView2:TransformImageControls!
+    // MARK: - TransformImageControls
+    private lazy var transformImageControls: TransformImageControls = {
+        let imageTransformView = TransformImageControls()
+        imageTransformView.onRotationTap = didTapRotateImage
+        imageTransformView.onCropTap = didTapCropImageOption
+        imageTransformView.onMirrorTap = didTapMirrorImage
+        return imageTransformView
+    }()
+    
+    // MARK: - ImageAdjustControls
+    private lazy var imageAdjustControls: ImageAdjustControls = {
+        let imageAdjustControls = ImageAdjustControls()
+        return imageAdjustControls
+    }()
+    
+    // MARK: - ImageColorControls
+    lazy var imageColorControls: ImageColorControls = {
+        let imageColorControls = ImageColorControls()
+        imageColorControls.onOriginalTap = didTapOriginalImage
+        imageColorControls.onGrayScaleTap = didTapGrayScaleImage
+        imageColorControls.onBlackAndWhiteTap = didTapBlackAndWhitImage
+        return imageColorControls
+    }()
     
     // MARK: - Views
     private var _editVC: EditImageViewController!
     private var imageView: UIImageView?
+    private var currentEditingControlView: UIView?
     
     
     // MARK: - Variables
@@ -165,31 +188,6 @@ class EditImageVC: DocumentScannerViewController {
         _editVC?.view.removeFromSuperview()
     }
    
-    private func didTapTransformImage(_ sender: FooterButton) {
-        
-    }
-    
-    private func didTapAdjustImage(_ sender: FooterButton) {
-        
-    }
-    
-    private func didTapColorImage(_ sender: FooterButton) {
-        
-    }
-    
-    private func didTapOriginalImage(_ sender: FooterButton) {
-        
-    }
-    
-    private func didTapUndoImage(_ sender: FooterButton) {
-        
-    }
-    
-    
-    
-    
-    
-    
     private func _initiateImageFiltering() {
         
          //1 set cropped image as initial image of edited images buffer
@@ -326,6 +324,104 @@ class EditImageVC: DocumentScannerViewController {
         print("Slider Value:" + " \(sender.value)")
     }
     
+}
+
+// MARK: - Image Edit Options
+extension EditImageVC {
+    
+    private func didTapTransformImage(_ sender: FooterButton) {
+        if currentEditingControlView === transformImageControls { return }
+        editControllerContainer.addSubview(transformImageControls)
+        transformImageControls.frame = editControllerContainer.bounds
+        transformImageControls.frame.origin.x = editControllerContainer.frame.maxX
+        
+        UIView.animate(withDuration: 0.2) {
+            if self.currentEditingControlView is ImageAdjustControls {
+                
+            } else {
+                self.currentEditingControlView?.frame.origin.x = -self.editControllerContainer.frame.width
+            }
+            self.transformImageControls.frame.origin.x = 0
+        } completion: { completed in
+            self.currentEditingControlView?.removeFromSuperview()
+            self.currentEditingControlView = self.transformImageControls
+        }
+    }
+    
+    private func didTapAdjustImage(_ sender: FooterButton) {
+        if currentEditingControlView === imageAdjustControls { return }
+        view.addSubview(imageAdjustControls)
+        
+        let yPosition = footerView.frame.minY - 100
+        let imageAdjustControlsFrame = CGRect(x: 0,
+                                              y: yPosition,
+                                              width: view.frame.width,
+                                              height: 100)
+        
+        imageColorControls.frame = imageAdjustControlsFrame
+        imageColorControls.frame.origin.y = footerView.frame.minY
+        
+        UIView.animate(withDuration: 0.2) {
+            self.currentEditingControlView?.frame.origin.y = self.footerView.frame.maxY
+            self.imageColorControls.frame.origin.y = yPosition
+        } completion: { completed in
+            self.currentEditingControlView?.removeFromSuperview()
+            self.currentEditingControlView = self.imageAdjustControls
+        }
+    }
+    
+    private func didTapColorImage(_ sender: FooterButton) {
+        if currentEditingControlView === imageColorControls { return }
+        editControllerContainer.addSubview(imageColorControls)
+        imageColorControls.frame = editControllerContainer.bounds
+        imageColorControls.frame.origin.x = editControllerContainer.frame.maxX
+        
+        UIView.animate(withDuration: 0.2) {
+            self.currentEditingControlView?.frame.origin.x = -self.editControllerContainer.frame.width
+            self.imageColorControls.frame.origin.x = 0
+        } completion: { completed in
+            self.currentEditingControlView?.removeFromSuperview()
+            self.currentEditingControlView = self.imageColorControls
+        }
+    }
+    
+    private func didTapEditOriginalImage(_ sender: FooterButton) {
+        
+    }
+    
+    private func didTapUndoImage(_ sender: FooterButton) {
+        
+    }
+}
+
+// MARK: - Image Transform Option
+extension EditImageVC {
+    private func didTapRotateImage(_ sender: FooterButton) {
+        print("Rotate Image")
+    }
+    
+    private func didTapCropImageOption(_ sender: FooterButton) {
+        print("Crop Image")
+    }
+    
+    private func didTapMirrorImage(_ sender: FooterButton) {
+        print("Mirror Image")
+    }
+}
+
+// MARK: - Image Color Option
+extension EditImageVC {
+    private func didTapOriginalImage(_ sender: FooterButton) {
+        print("Original Image")
+    }
+    
+    private func didTapGrayScaleImage(_ sender: FooterButton) {
+        print("Gray Scale Image")
+    }
+    
+    private func didTapBlackAndWhitImage(_ sender: FooterButton) {
+        print("Black And White Image")
+    }
 }
 
 extension EditImageVC: EditImageViewDelegate {
