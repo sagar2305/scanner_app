@@ -11,29 +11,19 @@ import SnapKit
 
 protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
-    func rescanImage(_ controller: EditImageVC)
-    func finishedImageEditing(_ finalImage: [UIImage], originalImage: [UIImage],documentName: String, controller: EditImageVC)
-    func finishedEditing(_ pages: [Page], controller: EditImageVC)
+    func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC)
 }
 
 protocol EditImageVCDataSource: class {
-    var imageSource: EditDocumentCoordinator.ImageSource? { get }
+    var originalImage: UIImage? { get }
     var isNewDocument: Bool { get }
 }
 
 class EditImageVC: DocumentScannerViewController {
     
     // MARK: - ViewController specific enums
-    enum ImageEditingMode {
-        case basic
-        case correction
-        case filtering
-    }
-
-    enum ImageFilters {
-        case black_and_white
-        case brightness
-        case contrast
+    enum ImageAdjustmentOption {
+        case contrast, brightness, sharpness
     }
     
     // MARK: - ImageEditorControls
@@ -60,6 +50,9 @@ class EditImageVC: DocumentScannerViewController {
     // MARK: - ImageAdjustControls
     private lazy var imageAdjustControls: ImageAdjustControls = {
         let imageAdjustControls = ImageAdjustControls()
+        imageAdjustControls.onBrightnessSliderValueChanged = didChangeBrightness
+        imageAdjustControls.onContrastSliderValueChanged = didChangeContrast
+        imageAdjustControls.onSharpnessSliderValueChanged = didChangeSharpness
         return imageAdjustControls
     }()
     
@@ -79,29 +72,19 @@ class EditImageVC: DocumentScannerViewController {
     
     
     // MARK: - Variables
-    var imageEditingMode: ImageEditingMode? {
-        didSet {
-            if _editVC != nil || imageView != nil {
-            }
-        }
-    }
     
     //set externally
-    var quad: Quadrilateral?
-    var imagesToEdit: [UIImage]?
-    var pages: [Page]?
+    var imageToEdit: UIImage?
     weak var delegate: EditImageVCDelegate?
     weak var dateSource: EditImageVCDataSource?
     
     //temporary images
-    private var _croppedImages = [UIImage]() //cropped image for filtering
-    private var _editedImagesBuffer = [[UIImage]]()
-    private var _currentFilter: ImageFilters?
+    private var _editedImagesBuffer = [UIImage]()
     private var _currentIndexOfImage = 0
     //last slide values for filters defaults 0
     
     // MARK:- IBoutlets
-    @IBOutlet private weak var imageEditorView: UIView!
+    @IBOutlet private weak var imageEditorContainerView: UIView!
     @IBOutlet private weak var editControllerContainer: UIView!
     @IBOutlet private weak var footerView: UIView!
         
@@ -112,8 +95,6 @@ class EditImageVC: DocumentScannerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        _croppedImages = []
-        _editedImagesBuffer = []
         _setupViews()
     }
     
@@ -129,37 +110,23 @@ class EditImageVC: DocumentScannerViewController {
     
     //initial setup
     private func _setupImageEditorView() {
-        imageEditorView.backgroundColor = .backgroundColor
-        imageEditorView.subviews.forEach { $0.removeFromSuperview() }
+        imageEditorContainerView.subviews.forEach { $0.removeFromSuperview() }
+        guard let dataSource = dateSource, let imageToEdit = imageToEdit else {
+            fatalError("ERROR: Datasource or imageToEdit is not set is not set is not set")
+        }
         
-        guard let dataSource = dateSource else {
-            fatalError("ERROR: Datasource is not set is not set")
-        }
-    
-        switch dataSource.isNewDocument {
-        case true:
-            guard let imageToEdit = imagesToEdit?.first else {
-                fatalError("ERROR: Images are not set for editing")
-            }
-            _presentWeScanImageControllerInImageEditorView(for: imageToEdit)
-        case false:
-            guard  let firstPage = pages?.first,
-                   let imageToEdit = firstPage.editedImage else {
-                fatalError("ERROR: documents pages is not set, or page does't have edited image for editing")
-            }
-            imagesToEdit = [imageToEdit]
-            _presentImageViewInImageEditorView(for: imageToEdit)
-        }
+        imageEditControls.editOriginalImageOptionIsHidden = dataSource.isNewDocument
+        _presentImageViewInImageEditorView(for: imageToEdit)
     }
     
     private func _presentWeScanImageControllerInImageEditorView(for image: UIImage) {
         if _editVC == nil {
-            _editVC = WeScan.EditImageViewController(image: image, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
+            _editVC = WeScan.EditImageViewController(image: image, quad: nil,rotateImage: false, strokeColor: UIColor.primary.cgColor)
             _editVC.view.backgroundColor = .backgroundColor
         }
-        _editVC.view.frame = imageEditorView.bounds
+        _editVC.view.frame = imageEditorContainerView.bounds
         _editVC.willMove(toParent: self)
-        imageEditorView.addSubview(_editVC.view)
+        imageEditorContainerView.addSubview(_editVC.view)
         self.addChild(_editVC)
         _editVC.didMove(toParent: self)
         _editVC.delegate = self
@@ -171,142 +138,38 @@ class EditImageVC: DocumentScannerViewController {
         }
         imageView!.image = image
         imageView!.backgroundColor = .backgroundColor
-        _croppedImages = [image]
-        imageView!.frame = imageEditorView.bounds
-        imageEditorView.addSubview(imageView!)
+        imageView!.frame = imageEditorContainerView.bounds
+        imageEditorContainerView.addSubview(imageView!)
         imageView!.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            imageView!.leftAnchor.constraint(equalTo: imageEditorView.leftAnchor),
-            imageView!.topAnchor.constraint(equalTo: imageEditorView.topAnchor),
-            imageView!.rightAnchor.constraint(equalTo: imageEditorView.rightAnchor),
-            imageView!.bottomAnchor.constraint(equalTo: imageEditorView.bottomAnchor)
+            imageView!.leftAnchor.constraint(equalTo: imageEditorContainerView.leftAnchor),
+            imageView!.topAnchor.constraint(equalTo: imageEditorContainerView.topAnchor),
+            imageView!.rightAnchor.constraint(equalTo: imageEditorContainerView.rightAnchor),
+            imageView!.bottomAnchor.constraint(equalTo: imageEditorContainerView.bottomAnchor)
         ])
         
         imageView!.contentMode = .scaleAspectFit
-        imageEditorView.bringSubviewToFront(imageView!)
+        imageEditorContainerView.bringSubviewToFront(imageView!)
         _editVC?.view.removeFromSuperview()
     }
-   
-    private func _initiateImageFiltering() {
-        
-         //1 set cropped image as initial image of edited images buffer
-        
-        guard _croppedImages.count > 0 else {
-            fatalError("ERROR: No cropped image available to edit")
-        }
-        _editedImagesBuffer = [[_croppedImages[_currentIndexOfImage]]]
-        imageEditingMode = .filtering
-    }
     
-    private func _saveDocument(withName name: String) {
-        guard let editingMode = imageEditingMode,
-              let originalImages = imagesToEdit else {
-            fatalError("ERROR: Image editing mode or Original Images not set")
+    private func _adjustImage(_ option: ImageAdjustmentOption, intensity: Float) {
+        guard let imageToFilter = _editedImagesBuffer.last else {
+            fatalError("ERROR: No image is found for filtering")
         }
-        
-        switch editingMode {
-        case .basic:
-            delegate?.finishedImageEditing(originalImages,
-                                           originalImage: originalImages,
-                                           documentName: name,
-                                           controller: self)
-        case .correction:
-            guard _croppedImages.count == originalImages.count else {
-                fatalError("ERROR: Cropped Images count does not original images count")
-            }
-            delegate?.finishedImageEditing(_croppedImages,
-                                           originalImage: originalImages,
-                                           documentName: name,
-                                           controller: self)
-            
-        case .filtering:
-            guard  _editedImagesBuffer.count == originalImages.count, let finalImage = imageView?.image else {
-                fatalError("ERROR: Edited Images count does not original images count")
-            }
-            delegate?.finishedImageEditing([finalImage],
-                                           originalImage: originalImages,
-                                           documentName: name,
-                                           controller: self)
+        var editedImage: UIImage?
+
+        switch option {
+        case .brightness:
+            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
+        case .contrast:
+            editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
+        case .sharpness:
+            editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
         }
-    }
-    
-    private func _updateDocument() {
-        guard let pages = pages else {
-            fatalError("ERROR: Pages are not set for editing")
-        }
-        if let editedImage = imageView?.image {
-            if pages[_currentIndexOfImage].saveEditedImage(editedImage) {
-                delegate?.finishedEditing(pages, controller: self)
-            }
-        } else if _croppedImages.count > 0 {
-            if pages[_currentIndexOfImage].saveEditedImage(_croppedImages[_currentIndexOfImage]) {
-                delegate?.finishedEditing(pages, controller: self)
-            }
-        } else {
-            delegate?.cancelImageEditing(_controller: self)
-        }
-    }
-    
-    
-    
-//    private func _applyFilter(_ intensity: Float) {
-//        guard let imageToFilter = _editedImagesBuffer[_currentIndexOfImage].last else {
-//            fatalError("ERROR: No image is found for filtering")
-//        }
-//        print(imageToFilter)
-//        var editedImage: UIImage?
-//
-//        switch _currentFilter {
-//        case .black_and_white:
-//            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
-//            lastSliderValueForBlackAndWhite = intensity
-//        case .brightness:
-//            editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
-//            lastSliderValueForBrightness = intensity
-//        case .contrast:
-//            editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
-//            lastSliderValueForContrast = intensity
-//        case .none:
-//            break
-//        }
-//
-//        guard let newImage = editedImage else { return }
-//        imageView?.image = newImage
-//    }
-    
-    @IBAction func didTapEditButtonFive(_ sender: Any) {
-        guard let dataSource = dateSource else {
-            fatalError("ERROR: Datasource is not set")
-        }
-        
-        
-        
-//        func saveDocument() {
-//            let alterView = UIAlertController(title: "Saving Image",
-//                                              message: "Enter document name",
-//                                              preferredStyle: .alert)
-//
-//            alterView.addTextField { textField in
-//                textField.placeholder = "Documents Name!"
-//            }
-//
-//            alterView.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alterView] _ in
-//                guard let textField = alterView?.textFields![0],
-//                      let documentName = textField.text,
-//                      !documentName.isEmpty else {
-//                    let generator = UINotificationFeedbackGenerator()
-//                    generator.notificationOccurred(.error)
-//                    return
-//                }
-//                // Force unwrapping because we know it exists.
-//                self._saveDocument(withName: documentName)
-//            }))
-//
-//            alterView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-//            present(alterView, animated: true)
-//        }
-//        dataSource.isNewDocument ? saveDocument() : _updateDocument()
+        guard let newImage = editedImage else { return }
+        imageView?.image = newImage
     }
     
    
@@ -317,57 +180,48 @@ class EditImageVC: DocumentScannerViewController {
         self.present(alert, animated: true)
     }
     
-    @IBAction func didChange(_ sender: UISlider) {
-        guard  _currentFilter != nil else {
-            fatalError("ERROR: Slide shown without filter selection")
-        }
-        print("Slider Value:" + " \(sender.value)")
-    }
-    
 }
 
 // MARK: - Image Edit Options
 extension EditImageVC {
+    
+    private func presentImageEditing(control: UIView) {
+        UIView.animate(withDuration: 0.2) {
+            if self.currentEditingControlView is ImageAdjustControls {
+                self.editControllerContainer.isHidden = false
+                self.currentEditingControlView?.frame.origin.y = self.editControllerContainer.frame.maxY
+            } else {
+                self.currentEditingControlView?.frame.origin.x = -self.editControllerContainer.frame.width
+            }
+            if control is ImageAdjustControls {
+                self.editControllerContainer.isHidden = true
+                control.frame.origin.y = self.footerView.frame.minY - 135
+            } else {
+                control.frame.origin.x = 0
+            }
+        } completion: { completed in
+            self.currentEditingControlView?.removeFromSuperview()
+            self.currentEditingControlView = control
+        }
+    }
     
     private func didTapTransformImage(_ sender: FooterButton) {
         if currentEditingControlView === transformImageControls { return }
         editControllerContainer.addSubview(transformImageControls)
         transformImageControls.frame = editControllerContainer.bounds
         transformImageControls.frame.origin.x = editControllerContainer.frame.maxX
-        
-        UIView.animate(withDuration: 0.2) {
-            if self.currentEditingControlView is ImageAdjustControls {
-                
-            } else {
-                self.currentEditingControlView?.frame.origin.x = -self.editControllerContainer.frame.width
-            }
-            self.transformImageControls.frame.origin.x = 0
-        } completion: { completed in
-            self.currentEditingControlView?.removeFromSuperview()
-            self.currentEditingControlView = self.transformImageControls
-        }
+        presentImageEditing(control: transformImageControls)
     }
     
     private func didTapAdjustImage(_ sender: FooterButton) {
         if currentEditingControlView === imageAdjustControls { return }
-        view.addSubview(imageAdjustControls)
-        
-        let yPosition = footerView.frame.minY - 100
+        view.insertSubview(imageAdjustControls, belowSubview: footerView)
         let imageAdjustControlsFrame = CGRect(x: 0,
-                                              y: yPosition,
+                                              y: footerView.frame.minY,
                                               width: view.frame.width,
-                                              height: 100)
-        
-        imageColorControls.frame = imageAdjustControlsFrame
-        imageColorControls.frame.origin.y = footerView.frame.minY
-        
-        UIView.animate(withDuration: 0.2) {
-            self.currentEditingControlView?.frame.origin.y = self.footerView.frame.maxY
-            self.imageColorControls.frame.origin.y = yPosition
-        } completion: { completed in
-            self.currentEditingControlView?.removeFromSuperview()
-            self.currentEditingControlView = self.imageAdjustControls
-        }
+                                              height: 135)
+        imageAdjustControls.frame = imageAdjustControlsFrame
+        presentImageEditing(control: imageAdjustControls)
     }
     
     private func didTapColorImage(_ sender: FooterButton) {
@@ -375,14 +229,7 @@ extension EditImageVC {
         editControllerContainer.addSubview(imageColorControls)
         imageColorControls.frame = editControllerContainer.bounds
         imageColorControls.frame.origin.x = editControllerContainer.frame.maxX
-        
-        UIView.animate(withDuration: 0.2) {
-            self.currentEditingControlView?.frame.origin.x = -self.editControllerContainer.frame.width
-            self.imageColorControls.frame.origin.x = 0
-        } completion: { completed in
-            self.currentEditingControlView?.removeFromSuperview()
-            self.currentEditingControlView = self.imageColorControls
-        }
+        presentImageEditing(control: imageColorControls)
     }
     
     private func didTapEditOriginalImage(_ sender: FooterButton) {
@@ -424,9 +271,23 @@ extension EditImageVC {
     }
 }
 
+// MARK: - Image Adjust Controls
+extension EditImageVC {
+    private func didChangeBrightness(_ value: Float, sender: UISlider) {
+        _adjustImage(.brightness, intensity: value)
+    }
+    
+    private func didChangeContrast(_ value: Float, sender: UISlider) {
+        _adjustImage(.contrast, intensity: value)
+    }
+    
+    private func didChangeSharpness(_ value: Float, sender: UISlider) {
+        _adjustImage(.sharpness, intensity: value)
+    }
+}
+
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        imageEditingMode = .correction
-        _presentImageViewInImageEditorView(for: image)
+       
     }
 }

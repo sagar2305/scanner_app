@@ -34,8 +34,9 @@ class DocumentViewerCoordinator: Coordinator {
 }
 
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
+    //TODO: - Replace document with page as we update a page at a time
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: document)
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: document.pages.first!.editedImage!)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
@@ -68,14 +69,10 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
-        (documentReviewVC as! DocumentReviewVC).document = document
-        navigationController.popViewController(animated: true)
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
+        //TODO: - Update Document
     }
     
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
-        
-    }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)

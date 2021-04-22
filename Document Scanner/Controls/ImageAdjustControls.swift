@@ -11,9 +11,9 @@ import SnapKit
 
 class ImageAdjustControls: UIView {
     
-    var onBrightnessSliderValueChanged: ((UISlider, Float) -> Void)?
-    var onContrastSliderValueChanged: ((UISlider, Float) -> Void)?
-    var onSharpnessSliderValueChanged: ((UISlider, Float) -> Void)?
+    var onBrightnessSliderValueChanged: ((Float, UISlider) -> Void)?
+    var onContrastSliderValueChanged: ((Float, UISlider) -> Void)?
+    var onSharpnessSliderValueChanged: ((Float, UISlider) -> Void)?
     
     private lazy var brightnessLabel: UILabel = {
         let label = UILabel()
@@ -132,15 +132,15 @@ class ImageAdjustControls: UIView {
     }
     
     @objc private func _brightnessValueChanged(_ sender: UISlider) {
-        onBrightnessSliderValueChanged?(sender, sender.value)
+        onBrightnessSliderValueChanged?(sender.value, sender)
     }
     
     @objc private func _contrastValueChanged(_ sender: UISlider) {
-        onContrastSliderValueChanged?(sender, sender.value)
+        onContrastSliderValueChanged?(sender.value, sender)
     }
     
     @objc private func _sharpnessValueChanged(_ sender: UISlider) {
-        onSharpnessSliderValueChanged?(sender, sender.value)
+        onSharpnessSliderValueChanged?(sender.value, sender)
     }
     
     

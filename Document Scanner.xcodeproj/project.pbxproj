@@ -48,7 +48,6 @@
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02616243260DBF100095B727 /* FooterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02616242260DBF100095B727 /* FooterButton.swift */; };
-		02616249260DBF200095B727 /* FooterButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02616248260DBF200095B727 /* FooterButton.xib */; };
 		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
 		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
 		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
@@ -68,6 +67,7 @@
 		02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */; };
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
+		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
 		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
 		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
@@ -161,7 +161,6 @@
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02616242260DBF100095B727 /* FooterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterButton.swift; sourceTree = "<group>"; };
-		02616248260DBF200095B727 /* FooterButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterButton.xib; sourceTree = "<group>"; };
 		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
 		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
 		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
@@ -181,6 +180,7 @@
 		02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageHelper.swift; sourceTree = "<group>"; };
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
+		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
 		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
@@ -410,10 +410,10 @@
 			isa = PBXGroup;
 			children = (
 				02616242260DBF100095B727 /* FooterButton.swift */,
-				02616248260DBF200095B727 /* FooterButton.xib */,
 				0214005B262DEE5B008B0AEE /* TranformImageControls.swift */,
 				0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */,
 				02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */,
+				02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */,
 				024AFE8B262FE98000E3730C /* ImageColorControls.swift */,
 			);
 			path = Controls;
@@ -551,7 +551,6 @@
 			files = (
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
-				02616249260DBF200095B727 /* FooterButton.xib in Resources */,
 				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
 				0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */,
@@ -633,6 +632,7 @@
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
+				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,

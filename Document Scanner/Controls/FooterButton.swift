@@ -82,13 +82,11 @@ class FooterButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //loadView()
         _setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        //loadView()
         _setupView()
     }
     
@@ -137,24 +135,6 @@ class FooterButton: UIButton {
 
     override func setTitle(_ title: String?, for state: UIControl.State) {
         self._titleLabel.text = title ?? ""
-    }
-
-    func loadView() {
-        guard  let view = loadViewFromNib() else {
-            return
-        }
-        view.frame = bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(view)
-        containerView = view
-        containerView?.isUserInteractionEnabled = false
-
-    }
-
-    func loadViewFromNib() -> UIView? {
-        let bundle = Bundle(for: type(of: self))
-        let guideViewNib = UINib(nibName: "FooterButton", bundle: bundle)
-        return guideViewNib.instantiate(withOwner: self, options: nil).first as? UIView
     }
 }
 

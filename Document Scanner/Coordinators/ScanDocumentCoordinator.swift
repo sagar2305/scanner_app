@@ -49,24 +49,6 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
         correctionVC.image = image
         navigationController.pushViewController(correctionVC, animated: true)
     }
-    
-}
-
-extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
-        delegate?.didFinishScanningDocument(self)
-    }
-    
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
-        navigationController.popViewController(animated: true)
-        childCoordinators.removeAll { $0 is EditDocumentCoordinator }
-    }
-    
-    func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
-        delegate?.didCancelScanningDocument(self)
-    }
-    
-    
 }
 
 extension ScanDocumentCoordinator: CorrectionVCDelegate {

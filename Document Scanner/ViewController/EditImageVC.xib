@@ -14,7 +14,7 @@
             <connections>
                 <outlet property="editControllerContainer" destination="jA4-sS-e0E" id="erw-rf-4m5"/>
                 <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
-                <outlet property="imageEditorView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
+                <outlet property="imageEditorContainerView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="714"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="662"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
@@ -32,7 +32,7 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdC-BH-0eq">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
-                            <color key="backgroundColor" systemColor="systemTealColor"/>
+                            <color key="backgroundColor" name="background"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="52" id="a8v-pf-3XO"/>
                             </constraints>
@@ -49,38 +49,89 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jA4-sS-e0E">
                     <rect key="frame" x="0.0" y="758" width="414" height="48"/>
-                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                    <color key="backgroundColor" name="background"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="RDC-B5-VM9"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRP-SL-M28">
+                    <rect key="frame" x="0.0" y="44" width="414" height="52"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6R-tH-1RM">
+                            <rect key="frame" x="56" y="4" width="222" height="44"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MC-Qx-7rC">
+                            <rect key="frame" x="4" y="4" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="9MC-Qx-7rC" secondAttribute="height" multiplier="1:1" id="IHb-n3-FNR"/>
+                            </constraints>
+                            <state key="normal" image="back-arrow">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                            </state>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p52-YF-Eei">
+                            <rect key="frame" x="286" y="0.0" width="120" height="52"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-GD-UPQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="56" height="52"/>
+                                    <state key="normal" title="Undo"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqz-Cd-XPg">
+                                    <rect key="frame" x="64" y="0.0" width="56" height="52"/>
+                                    <state key="normal" title="Done"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="FRw-dB-88u"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="S6R-tH-1RM" firstAttribute="leading" secondItem="9MC-Qx-7rC" secondAttribute="trailing" constant="8" id="BvZ-yc-jyk"/>
+                        <constraint firstAttribute="bottom" secondItem="9MC-Qx-7rC" secondAttribute="bottom" constant="4" id="ImI-p1-wQI"/>
+                        <constraint firstItem="p52-YF-Eei" firstAttribute="top" secondItem="iRP-SL-M28" secondAttribute="top" id="MpN-k8-Me0"/>
+                        <constraint firstAttribute="bottom" secondItem="p52-YF-Eei" secondAttribute="bottom" id="V2B-PH-Jcq"/>
+                        <constraint firstItem="9MC-Qx-7rC" firstAttribute="leading" secondItem="iRP-SL-M28" secondAttribute="leading" constant="4" id="b4Z-83-ljV"/>
+                        <constraint firstAttribute="trailing" secondItem="p52-YF-Eei" secondAttribute="trailing" constant="8" id="d0i-S0-Wgf"/>
+                        <constraint firstItem="p52-YF-Eei" firstAttribute="leading" secondItem="S6R-tH-1RM" secondAttribute="trailing" constant="8" id="d8e-gq-y1d"/>
+                        <constraint firstAttribute="height" constant="52" id="mXG-eV-vqo"/>
+                        <constraint firstAttribute="bottom" secondItem="S6R-tH-1RM" secondAttribute="bottom" constant="4" id="rFw-xA-dxC"/>
+                        <constraint firstItem="9MC-Qx-7rC" firstAttribute="top" secondItem="iRP-SL-M28" secondAttribute="top" constant="4" id="uIx-HM-Ab7"/>
+                        <constraint firstItem="S6R-tH-1RM" firstAttribute="top" secondItem="iRP-SL-M28" secondAttribute="top" constant="4" id="vwL-uP-5yq"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
+                <constraint firstItem="iRP-SL-M28" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1WY-Jf-uZ8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JCo-HO-DcO" secondAttribute="trailing" id="7nf-QL-4Fb"/>
+                <constraint firstItem="iRP-SL-M28" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9O3-Y6-HCj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLe-Fr-nQh" secondAttribute="trailing" id="AOj-pl-I03"/>
                 <constraint firstItem="jA4-sS-e0E" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="C4D-po-VKv"/>
+                <constraint firstItem="JCo-HO-DcO" firstAttribute="top" secondItem="iRP-SL-M28" secondAttribute="bottom" id="CKv-tw-CXS"/>
                 <constraint firstItem="JCo-HO-DcO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Em4-tw-A8W"/>
                 <constraint firstAttribute="bottom" secondItem="QLe-Fr-nQh" secondAttribute="bottom" id="Ira-XB-ai9"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iRP-SL-M28" secondAttribute="trailing" id="KOc-rP-H9o"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jA4-sS-e0E" secondAttribute="trailing" id="ctn-Ls-D75"/>
                 <constraint firstItem="QLe-Fr-nQh" firstAttribute="top" secondItem="jA4-sS-e0E" secondAttribute="bottom" constant="4" id="dE1-o2-0Ml"/>
                 <constraint firstItem="QLe-Fr-nQh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jni-sP-yPu"/>
-                <constraint firstItem="JCo-HO-DcO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="lPq-nz-bxB"/>
                 <constraint firstItem="jA4-sS-e0E" firstAttribute="top" secondItem="JCo-HO-DcO" secondAttribute="bottom" id="qYh-BG-t3e"/>
             </constraints>
             <point key="canvasLocation" x="-139.13043478260872" y="-141.29464285714286"/>
         </view>
     </objects>
     <resources>
+        <image name="back-arrow" width="18" height="18"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

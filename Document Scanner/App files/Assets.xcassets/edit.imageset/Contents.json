@@ -3,16 +3,6 @@
     {
       "filename" : "edit.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "edit-dark.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {

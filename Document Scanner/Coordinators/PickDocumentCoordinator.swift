@@ -68,20 +68,6 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
     
 }
 
-extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
-        delegate?.didCancelPickingImage(self)
-    }
-    
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
-        _pickDocument()
-    }
-    
-    func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
-        delegate?.didCancelPickingImage(self)
-    }
-}
-
 extension PickDocumentCoordinator: CorrectionVCDelegate {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
         delegate?.didCancelPickingImage(self)

@@ -66,6 +66,10 @@ class ImageEditorControls: UIView {
         return footerButton
     }()
     
+    var editOriginalImageOptionIsHidden = false {
+        didSet { editOriginalFooterButton.isHidden = editOriginalImageOptionIsHidden }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         _setupView()
@@ -90,7 +94,7 @@ class ImageEditorControls: UIView {
         stackView.addArrangedSubview(adjustFooterButton)
         stackView.addArrangedSubview(colorFooterButton)
         stackView.addArrangedSubview(editOriginalFooterButton)
-        stackView.addArrangedSubview(undoFooterButton)
+        //stackView.addArrangedSubview(undoFooterButton)
     }
     
     @objc private func _transformButtonTapped(_ sender: FooterButton) {

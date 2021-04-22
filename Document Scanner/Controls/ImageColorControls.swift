@@ -86,15 +86,14 @@ class ImageColorControls: UIView {
     @objc private func _blackAndWhiteButtonTapped(_ sender: FooterButton) {
         onBlackAndWhiteTap?(sender)
     }
-    
 }
 
 @available(iOS 13, *)
-private struct ImageColorControls_Previews: PreviewProvider {
+struct ImageColorControls_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             UIKitPreview(view: ImageColorControls())
-                .previewLayout(.fixed(width: 320, height:52.0))
+                .previewLayout(.fixed(width: 320, height:52))
         }
     }
 }
