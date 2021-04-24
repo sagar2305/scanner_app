@@ -23,7 +23,7 @@ class EditImageVC: DocumentScannerViewController {
     
     // MARK: - ViewController specific enums
     enum ImageAdjustmentOption {
-        case contrast, brightness, sharpness
+        case contrast, brightness, saturation
     }
     
     // MARK: - ImageEditorControls
@@ -33,7 +33,6 @@ class EditImageVC: DocumentScannerViewController {
         imageEditControls.onAdjustTap = didTapAdjustImage
         imageEditControls.onColorTap = didTapColorImage
         imageEditControls.onOriginalTap = didTapOriginalImage
-        imageEditControls.onUndoTap = didTapUndoImage
         imageEditControls.translatesAutoresizingMaskIntoConstraints = false
         return imageEditControls
     }()
@@ -52,7 +51,7 @@ class EditImageVC: DocumentScannerViewController {
         let imageAdjustControls = ImageAdjustControls()
         imageAdjustControls.onBrightnessSliderValueChanged = didChangeBrightness
         imageAdjustControls.onContrastSliderValueChanged = didChangeContrast
-        imageAdjustControls.onSharpnessSliderValueChanged = didChangeSharpness
+        imageAdjustControls.onSaturationSliderValueChanged = didChangeSaturation
         return imageAdjustControls
     }()
     
@@ -74,13 +73,13 @@ class EditImageVC: DocumentScannerViewController {
     // MARK: - Variables
     
     //set externally
-    var imageToEdit: UIImage?
+    var imageToEdit: UIImage!
     weak var delegate: EditImageVCDelegate?
     weak var dateSource: EditImageVCDataSource?
     
     //temporary images
-    private var _editedImagesBuffer = [UIImage]()
-    private var _currentIndexOfImage = 0
+    private var editedImagesBufferStack = [UIImage]()
+    private var temporaryImageForColorAdjustment: UIImage?
     //last slide values for filters defaults 0
     
     // MARK:- IBoutlets
@@ -155,29 +154,35 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     private func _adjustImage(_ option: ImageAdjustmentOption, intensity: Float) {
-        guard let imageToFilter = _editedImagesBuffer.last else {
-            fatalError("ERROR: No image is found for filtering")
+        guard let imageToFilter =  temporaryImageForColorAdjustment else {
+            fatalError("ERROR: temporary image for color adjust is not set")
         }
+        
         var editedImage: UIImage?
-
         switch option {
         case .brightness:
-            editedImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter, intensity: intensity)
-        case .contrast:
+            //editedImage = FilterHelper.shared.adjustColor(.brightness, of: imageToFilter, intensity: intensity)
             editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
-        case .sharpness:
+        case .contrast:
+            //editedImage = FilterHelper.shared.adjustColor(.contrast, of: imageToFilter, intensity: intensity)
             editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
+            
+        case .saturation:
+            //editedImage = FilterHelper.shared.adjustColor(.saturation, of: imageToFilter, intensity: intensity)
+            editedImage = GPUImageHelper.shared.adjustSaturation(imageToFilter, intensity: intensity)
         }
         guard let newImage = editedImage else { return }
         imageView?.image = newImage
+        
     }
     
-   
-    func presentAlerte(_ mes: String) {
-        let alert = UIAlertController(title: mes, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+    
+    @IBAction private func didTapDone(_ sender: UIButton) {
+        delegate?.finishedImageEditing(editedImagesBufferStack.last ?? imageToEdit, controller: self)
+    }
+    
+    @IBAction private func didTapUndo(_ sender: UIButton) {
         
-        self.present(alert, animated: true)
     }
     
 }
@@ -188,6 +193,7 @@ extension EditImageVC {
     private func presentImageEditing(control: UIView) {
         UIView.animate(withDuration: 0.2) {
             if self.currentEditingControlView is ImageAdjustControls {
+                if self.imageView?.image != nil { self.editedImagesBufferStack.append((self.imageView?.image)!) }
                 self.editControllerContainer.isHidden = false
                 self.currentEditingControlView?.frame.origin.y = self.editControllerContainer.frame.maxY
             } else {
@@ -215,6 +221,7 @@ extension EditImageVC {
     
     private func didTapAdjustImage(_ sender: FooterButton) {
         if currentEditingControlView === imageAdjustControls { return }
+        temporaryImageForColorAdjustment = imageView?.image
         view.insertSubview(imageAdjustControls, belowSubview: footerView)
         let imageAdjustControlsFrame = CGRect(x: 0,
                                               y: footerView.frame.minY,
@@ -233,11 +240,7 @@ extension EditImageVC {
     }
     
     private func didTapEditOriginalImage(_ sender: FooterButton) {
-        
-    }
-    
-    private func didTapUndoImage(_ sender: FooterButton) {
-        
+        imageView?.image = dateSource?.originalImage
     }
 }
 
@@ -248,7 +251,10 @@ extension EditImageVC {
     }
     
     private func didTapCropImageOption(_ sender: FooterButton) {
-        print("Crop Image")
+        guard let imageToCrop = imageView?.image else {
+            fatalError("ERROR: no image available for cropping")
+        }
+       _presentWeScanImageControllerInImageEditorView(for: imageToCrop)
     }
     
     private func didTapMirrorImage(_ sender: FooterButton) {
@@ -263,11 +269,29 @@ extension EditImageVC {
     }
     
     private func didTapGrayScaleImage(_ sender: FooterButton) {
-        print("Gray Scale Image")
+        let imageToFilter = editedImagesBufferStack.last
+        if imageToFilter == nil {
+            guard let imageToFilter =  imageToEdit else {
+                fatalError("ERROR: There is no image to edit")
+            }
+            if let grayScaledImage = FilterHelper.shared.convertToGrayScale(imageToFilter) {
+                imageView?.image = grayScaledImage
+                editedImagesBufferStack.append(grayScaledImage)
+            }
+        }
     }
     
     private func didTapBlackAndWhitImage(_ sender: FooterButton) {
-        print("Black And White Image")
+        let imageToFilter = editedImagesBufferStack.last
+        if imageToFilter == nil {
+            guard let imageToFilter = imageToEdit else {
+                fatalError("ERROR: There is no image to edit")
+            }
+            if let grayScaledImage = FilterHelper.shared.convertToBlackAndWhit(imageToFilter) {
+                imageView?.image = grayScaledImage
+                editedImagesBufferStack.append(grayScaledImage)
+            }
+        }
     }
 }
 
@@ -281,8 +305,8 @@ extension EditImageVC {
         _adjustImage(.contrast, intensity: value)
     }
     
-    private func didChangeSharpness(_ value: Float, sender: UISlider) {
-        _adjustImage(.sharpness, intensity: value)
+    private func didChangeSaturation(_ value: Float, sender: UISlider) {
+        _adjustImage(.saturation, intensity: value)
     }
 }
 

@@ -30,6 +30,7 @@ class ImageEditorControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Transform"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "transform")!
         footerButton.addTarget(self, action: #selector(_transformButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
@@ -38,6 +39,7 @@ class ImageEditorControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Adjust"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "adjust")!
         footerButton.addTarget(self, action: #selector(_adjustButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
@@ -46,6 +48,7 @@ class ImageEditorControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Color"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "filter")!
         footerButton.addTarget(self, action: #selector(_colorButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
@@ -54,15 +57,8 @@ class ImageEditorControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Original"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "edit")!
         footerButton.addTarget(self, action: #selector(_originalButtonTapped(_:)), for: .touchUpInside)
-        return footerButton
-    }()
-    
-    private lazy var undoFooterButton: FooterButton = {
-        let footerButton = FooterButton()
-        footerButton.title = "Undo"
-        footerButton.textColor = .text
-        footerButton.addTarget(self, action: #selector(_undoButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
     

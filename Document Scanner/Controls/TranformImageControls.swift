@@ -29,6 +29,7 @@ class TransformImageControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Rotate"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "rotate")!
         footerButton.addTarget(self, action: #selector(_rotationButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
@@ -37,6 +38,7 @@ class TransformImageControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Crop"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "crop")!
         footerButton.addTarget(self, action: #selector(_cropButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
@@ -45,6 +47,7 @@ class TransformImageControls: UIView {
         let footerButton = FooterButton()
         footerButton.title = "Mirror"
         footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "mirror")!
         footerButton.addTarget(self, action: #selector(_mirrorButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()

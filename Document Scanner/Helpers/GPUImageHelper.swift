@@ -31,9 +31,9 @@ class GPUImageHelper {
         return image.filterWithOperation(filter)
     }
     
-    func adjustSharpness(_ image: UIImage, intensity: Float) -> UIImage? {
-        let filter = Sharpen()
-        filter.sharpness = intensity
+    func adjustSaturation(_ image: UIImage, intensity: Float) -> UIImage? {
+        let filter = SaturationAdjustment()
+        filter.saturation = intensity
         return image.filterWithOperation(filter)
     }
 }
