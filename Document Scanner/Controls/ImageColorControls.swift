@@ -70,9 +70,9 @@ class ImageColorControls: UIView {
         }
         
         stackView.spacing = self.bounds.width + 0.05
-        stackView.addArrangedSubview(originalFooterButton)
+        //stackView.addArrangedSubview(originalFooterButton)
         stackView.addArrangedSubview(grayScaleFooterButton)
-        stackView.addArrangedSubview(blackAndWhiteFooterButton)
+        //stackView.addArrangedSubview(blackAndWhiteFooterButton)
     }
     
     @objc private func _originalButtonTapped(_ sender: FooterButton) {

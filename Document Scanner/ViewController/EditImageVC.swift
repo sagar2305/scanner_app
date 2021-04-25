@@ -46,6 +46,14 @@ class EditImageVC: DocumentScannerViewController {
         return imageTransformView
     }()
     
+    // MARK: - Crop Footer Controls
+    private lazy var cropFooterControls: CropFooterControls = {
+        let cropFooterControls = CropFooterControls()
+        cropFooterControls.onCropTap = didTapCrop
+        cropFooterControls.onCancelTap = didTapCancel
+        return cropFooterControls
+    }()
+    
     // MARK: - ImageAdjustControls
     private lazy var imageAdjustControls: ImageAdjustControls = {
         let imageAdjustControls = ImageAdjustControls()
@@ -68,6 +76,11 @@ class EditImageVC: DocumentScannerViewController {
     private var _editVC: EditImageViewController!
     private var imageView: UIImageView?
     private var currentEditingControlView: UIView?
+    private var setFooterControlsHidden = false {
+        didSet {
+            imageEditControls.isHidden = setFooterControlsHidden
+        }
+    }
     
     
     // MARK: - Variables
@@ -83,8 +96,13 @@ class EditImageVC: DocumentScannerViewController {
     //last slide values for filters defaults 0
     
     // MARK:- IBoutlets
+    
+    
+    @IBOutlet private weak var undoButton: UIButton!
+    @IBOutlet private weak var doneButton: UIButton!
     @IBOutlet private weak var imageEditorContainerView: UIView!
     @IBOutlet private weak var editControllerContainer: UIView!
+    @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
         
     override func viewDidLoad() {
@@ -178,11 +196,17 @@ class EditImageVC: DocumentScannerViewController {
     
     
     @IBAction private func didTapDone(_ sender: UIButton) {
-        delegate?.finishedImageEditing(editedImagesBufferStack.last ?? imageToEdit, controller: self)
+        editedImagesBufferStack.append(imageView?.image ?? imageToEdit)
+        delegate?.finishedImageEditing(editedImagesBufferStack.last!, controller: self)
     }
     
     @IBAction private func didTapUndo(_ sender: UIButton) {
-        
+        editedImagesBufferStack.popLast()
+        imageView?.image = editedImagesBufferStack.last ?? imageToEdit
+    }
+    
+    @IBAction private func didTapBack(_ sender: UIButton) {
+        delegate?.cancelImageEditing(_controller: self)
     }
     
 }
@@ -201,7 +225,7 @@ extension EditImageVC {
             }
             if control is ImageAdjustControls {
                 self.editControllerContainer.isHidden = true
-                control.frame.origin.y = self.footerView.frame.minY - 135
+                control.frame.origin.y = self.footerContainerView.frame.minY - 135
             } else {
                 control.frame.origin.x = 0
             }
@@ -222,9 +246,9 @@ extension EditImageVC {
     private func didTapAdjustImage(_ sender: FooterButton) {
         if currentEditingControlView === imageAdjustControls { return }
         temporaryImageForColorAdjustment = imageView?.image
-        view.insertSubview(imageAdjustControls, belowSubview: footerView)
+        view.insertSubview(imageAdjustControls, belowSubview: footerContainerView)
         let imageAdjustControlsFrame = CGRect(x: 0,
-                                              y: footerView.frame.minY,
+                                              y: footerContainerView.frame.minY,
                                               width: view.frame.width,
                                               height: 135)
         imageAdjustControls.frame = imageAdjustControlsFrame
@@ -247,7 +271,10 @@ extension EditImageVC {
 // MARK: - Image Transform Option
 extension EditImageVC {
     private func didTapRotateImage(_ sender: FooterButton) {
-        print("Rotate Image")
+        guard let imageToRotate = imageView?.image else {
+            fatalError("ERROR: no image available for cropping")
+        }
+        imageView?.image = imageToRotate.rotateRight()
     }
     
     private func didTapCropImageOption(_ sender: FooterButton) {
@@ -255,10 +282,42 @@ extension EditImageVC {
             fatalError("ERROR: no image available for cropping")
         }
        _presentWeScanImageControllerInImageEditorView(for: imageToCrop)
+        footerView.addSubview(cropFooterControls)
+        cropFooterControls.frame = footerView.bounds
+        setFooterControlsHidden = true
+        editControllerContainer.isHidden = true
+        undoButton.isHidden = true
+        doneButton.isHidden = true
     }
     
     private func didTapMirrorImage(_ sender: FooterButton) {
-        print("Mirror Image")
+        guard let imageToMirror = imageView?.image else {
+            fatalError("ERROR: no image available for cropping")
+        }
+        if let mirroredImage = imageToMirror.mirror() {
+            imageView?.image = mirroredImage
+            editedImagesBufferStack.append(mirroredImage)
+        }
+    }
+    
+    private func didTapCrop(_ sender: UIButton) {
+        _editVC.cropImage()
+        editControllerContainer.isHidden = false
+        undoButton.isHidden = false
+        doneButton.isHidden = false
+    }
+    
+    private func didTapCancel(_ sender: UIButton) {
+        let lastAvailableImage = editedImagesBufferStack.last ?? imageToEdit
+        guard let image = lastAvailableImage else {
+            fatalError("ERROR: No image to present")
+        }
+        _presentImageViewInImageEditorView(for: image)
+        cropFooterControls.removeFromSuperview()
+        setFooterControlsHidden = false
+        editControllerContainer.isHidden = false
+        undoButton.isHidden = false
+        doneButton.isHidden = false
     }
 }
 
@@ -312,6 +371,7 @@ extension EditImageVC {
 
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-       
+        editedImagesBufferStack.append(image)
+        _presentImageViewInImageEditorView(for: image)
     }
 }

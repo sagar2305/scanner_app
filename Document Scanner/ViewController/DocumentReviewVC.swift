@@ -63,7 +63,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     }
     
     private func _setupFooterView() {
-        footerContainerView.addSubview(documentPreviewControls)
+        footerView.addSubview(documentPreviewControls)
         documentPreviewControls.snp.makeConstraints { make in
             make.left.top.right.bottom.equalToSuperview()
         }

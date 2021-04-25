@@ -35,7 +35,19 @@ extension UIImage {
     func rotateRight() -> UIImage {
         return self.rotate(withRotation: 1.5708)
     }
+    
     func rotateLeft() -> UIImage {
         return self.rotate(withRotation: -1.5708)
+    }
+    
+    func mirror() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+            let context = UIGraphicsGetCurrentContext()!
+            context.translateBy(x: self.size.width, y: self.size.height)
+            context.scaleBy(x: -self.scale, y: -self.scale)
+            context.draw(self.cgImage!, in: CGRect(origin:CGPoint.zero, size: self.size))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
     }
 }

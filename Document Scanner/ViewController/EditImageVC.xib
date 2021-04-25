@@ -12,9 +12,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditImageVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
+                <outlet property="doneButton" destination="dqz-Cd-XPg" id="3vI-3F-dW4"/>
                 <outlet property="editControllerContainer" destination="jA4-sS-e0E" id="erw-rf-4m5"/>
-                <outlet property="footerView" destination="QLe-Fr-nQh" id="M3t-WD-gu6"/>
+                <outlet property="footerContainerView" destination="QLe-Fr-nQh" id="cqK-sV-RJQ"/>
+                <outlet property="footerView" destination="bdC-BH-0eq" id="KN7-Mh-5dZ"/>
                 <outlet property="imageEditorContainerView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
+                <outlet property="undoButton" destination="Fxr-GD-UPQ" id="sHD-KK-nx6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,7 +42,7 @@
                         </view>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="546-Pr-Fmq"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" name="background"/>
                     <constraints>
                         <constraint firstItem="bdC-BH-0eq" firstAttribute="leading" secondItem="546-Pr-Fmq" secondAttribute="leading" id="DaP-q3-Dip"/>
                         <constraint firstItem="546-Pr-Fmq" firstAttribute="bottom" secondItem="bdC-BH-0eq" secondAttribute="bottom" id="REO-qT-f5O"/>
@@ -71,6 +74,9 @@
                             <state key="normal" image="back-arrow">
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                             </state>
+                            <connections>
+                                <action selector="didTapBack:" destination="-1" eventType="touchUpInside" id="0W5-kK-dmX"/>
+                            </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p52-YF-Eei">
                             <rect key="frame" x="286" y="0.0" width="120" height="52"/>
@@ -78,10 +84,16 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-GD-UPQ">
                                     <rect key="frame" x="0.0" y="0.0" width="56" height="52"/>
                                     <state key="normal" title="Undo"/>
+                                    <connections>
+                                        <action selector="didTapUndo:" destination="-1" eventType="touchUpInside" id="LrZ-ji-SDV"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqz-Cd-XPg">
                                     <rect key="frame" x="64" y="0.0" width="56" height="52"/>
                                     <state key="normal" title="Done"/>
+                                    <connections>
+                                        <action selector="didTapDone:" destination="-1" eventType="touchUpInside" id="7r5-CE-tP9"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>
