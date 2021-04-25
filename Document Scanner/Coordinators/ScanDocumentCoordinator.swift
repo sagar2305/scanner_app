@@ -79,7 +79,8 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
 
 extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
     func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
-        
+        correctionVC.update(image: editedImage)
+        navigationController.popViewController(animated: true)
     }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {

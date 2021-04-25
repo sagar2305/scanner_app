@@ -100,7 +100,8 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
 
 extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
     func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
-        
+        correctionVC.update(image: editedImage)
+        navigationController.popViewController(animated: true)
     }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {

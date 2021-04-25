@@ -140,6 +140,11 @@ class CorrectionVC: DocumentScannerViewController {
         delegate?.correctionVC(self, saveDocument: withName, originalImage: image, finalImage: croppedImage ?? image)
     }
     
+    func update(image newImage: UIImage) {
+        croppedImage = newImage
+        _presentCroppedImage(croppedImage!)
+    }
+    
     @IBAction func didTapEditButton(_ sender: UIButton) {
         guard let imageToEdit = croppedImage ?? image else {
             fatalError("ERROR: No image found for editing")
@@ -160,7 +165,8 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     @IBAction func didTapRotateButton(_ sender: Any) {
-        _croppedImageView.image = (croppedImage ?? image)?.rotateRight()
+        croppedImage = (croppedImage ?? image)?.rotateRight()
+        _croppedImageView.image = croppedImage
     }
     
     @IBAction func cropImage(_ sender: UIButton) {
@@ -179,6 +185,7 @@ class CorrectionVC: DocumentScannerViewController {
 
 extension CorrectionVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-       _presentCroppedImage(image)
+        croppedImage = image
+       _presentCroppedImage(croppedImage!)
     }
 }

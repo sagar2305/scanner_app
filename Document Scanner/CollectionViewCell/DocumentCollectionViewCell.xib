@@ -20,10 +20,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKd-I4-Os1">
-                        <rect key="frame" x="16" y="16" width="44" height="44"/>
+                        <rect key="frame" x="16" y="16" width="48" height="48"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file" translatesAutoresizingMaskIntoConstraints="NO" id="0gk-yR-QuX">
-                                <rect key="frame" x="8" y="8" width="28" height="28"/>
+                                <rect key="frame" x="12" y="12" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="pMa-av-zbN"/>
+                                    <constraint firstAttribute="height" constant="24" id="w1V-Zx-D1f"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="0.0"/>
@@ -33,16 +37,14 @@
                         </subviews>
                         <color key="backgroundColor" name="card-base"/>
                         <constraints>
-                            <constraint firstItem="0gk-yR-QuX" firstAttribute="leading" secondItem="zKd-I4-Os1" secondAttribute="leading" constant="8" id="7I8-Vc-g4J"/>
-                            <constraint firstAttribute="trailing" secondItem="0gk-yR-QuX" secondAttribute="trailing" constant="8" id="FyB-Mb-hqf"/>
-                            <constraint firstAttribute="height" constant="44" id="X3t-rM-h0Q"/>
-                            <constraint firstAttribute="bottom" secondItem="0gk-yR-QuX" secondAttribute="bottom" constant="8" id="aPw-UZ-co7"/>
-                            <constraint firstAttribute="width" constant="44" id="nW3-2g-eGQ"/>
-                            <constraint firstItem="0gk-yR-QuX" firstAttribute="top" secondItem="zKd-I4-Os1" secondAttribute="top" constant="8" id="pYx-4B-X7E"/>
+                            <constraint firstAttribute="height" constant="48" id="X3t-rM-h0Q"/>
+                            <constraint firstItem="0gk-yR-QuX" firstAttribute="centerY" secondItem="zKd-I4-Os1" secondAttribute="centerY" id="awF-F2-wku"/>
+                            <constraint firstAttribute="width" constant="48" id="nW3-2g-eGQ"/>
+                            <constraint firstItem="0gk-yR-QuX" firstAttribute="centerX" secondItem="zKd-I4-Os1" secondAttribute="centerX" id="tqW-29-esT"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="22"/>
+                                <real key="value" value="24"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
