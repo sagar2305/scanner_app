@@ -11,9 +11,9 @@ import PMAlertController
 
 protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
-    func correctionVC(_ viewController: CorrectionVC, final image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
+    func correctionVC(_ viewController: CorrectionVC, saveDocument name: String, originalImage: UIImage, finalImage: UIImage)
 }
 
 class CorrectionVC: DocumentScannerViewController {
@@ -30,6 +30,7 @@ class CorrectionVC: DocumentScannerViewController {
         imageView.frame = imageContainerView.bounds
         return imageView
     }()
+    
     private var croppedImage: UIImage?
     private var cropButtonState: CropButtonState = .crop
     
@@ -59,6 +60,8 @@ class CorrectionVC: DocumentScannerViewController {
     
     private func _setupViews() {
         headerLabel.text = ""
+        editButton.isHidden = true
+        rotateButton.isHidden = true
         _initiateEditImageVC()
     }
     
@@ -116,18 +119,25 @@ class CorrectionVC: DocumentScannerViewController {
                 generator.notificationOccurred(.error)
                 return
             }
-            // Force unwrapping because we know it exists.
-            //self._saveDocument(withName: documentName)
+            self._saveDocument(withName: documentName)
         }
         doneAction.setTitleColor(.primary, for: .normal)
         alertVC.addAction(doneAction)
         
         let cancelAction = PMAlertAction(title: "Cancel", style: .cancel) {  }
         alertVC.addAction(cancelAction)
-        
+        alertVC.gravityDismissAnimation = false
 
         
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    private func _saveDocument(withName: String) {
+        guard  let image = image else {
+            fatalError("ERROR: Image is not set")
+        }
+        
+        delegate?.correctionVC(self, saveDocument: withName, originalImage: image, finalImage: croppedImage ?? image)
     }
     
     @IBAction func didTapEditButton(_ sender: UIButton) {
@@ -154,21 +164,21 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     @IBAction func cropImage(_ sender: UIButton) {
-        _editVC.cropImage()
+        switch cropButtonState {
+        case .crop:
+            editButton.isHidden = false
+            rotateButton.isHidden = false
+            _editVC.cropImage()
+        case .undo:
+            editButton.isHidden = true
+            rotateButton.isHidden = true
+            _presentEditVC()
+        }
     }
-    
-    
 }
 
 extension CorrectionVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-    
-        switch cropButtonState {
-        case .crop:
-            _presentCroppedImage(image)
-        case .undo:
-            _presentEditVC()
-        }
-       
+       _presentCroppedImage(image)
     }
 }

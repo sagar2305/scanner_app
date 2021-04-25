@@ -14,6 +14,7 @@ class DocumentPreviewControls: UIView {
     var onPDFTap: ((FooterButton) -> Void)?
     var onShareTap: ((FooterButton) -> Void)?
     var onEditTap: ((FooterButton) -> Void)?
+    var onDeleteTap: ((FooterButton) ->Void)?
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -51,6 +52,15 @@ class DocumentPreviewControls: UIView {
         return footerButton
     }()
     
+    private lazy var deleteButton: FooterButton =  {
+        let footerButton = FooterButton()
+        footerButton.title = "Delete"
+        footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "delete")!
+        footerButton.addTarget(self, action: #selector(_deleteButtonTapped(_:)), for: .touchUpInside)
+        return footerButton
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         _setupView()
@@ -73,6 +83,7 @@ class DocumentPreviewControls: UIView {
         stackView.addArrangedSubview(showAsPDFButton)
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(editButton)
+        stackView.addArrangedSubview(deleteButton)
     }
     
     @objc private func _showAsPDFButtonTapped(_ sender: FooterButton) {
@@ -85,6 +96,10 @@ class DocumentPreviewControls: UIView {
     
     @objc private func _editButtonTapped(_ sender: FooterButton) {
         onEditTap?(sender)
+    }
+    
+    @objc private func _deleteButtonTapped(_ sender: FooterButton) {
+        onDeleteTap?(sender)
     }
 }
 

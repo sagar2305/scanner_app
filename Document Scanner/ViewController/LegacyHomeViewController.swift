@@ -181,7 +181,7 @@ extension LegacyHomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width * 0.45, height: 200)
+        return CGSize(width: UIScreen.main.bounds.size.width * 0.45, height: 150)
     }
 }
 

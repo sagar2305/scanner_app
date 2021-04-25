@@ -68,6 +68,15 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         navigationController.present(activityVC, animated: true)
     }
     
+    func documentReviewVC(exit controller: DocumentReviewVC) {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
+        document.delete()
+        navigationController.popViewController(animated: true)
+    }
+    
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
@@ -76,6 +85,7 @@ extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
             fatalError("ERROR: no page is set for editing")
         }
         if pageBeingEdited.saveEditedImage(editedImage) {
+            document.update()
             navigationController.popViewController(animated: true)
         }
     }

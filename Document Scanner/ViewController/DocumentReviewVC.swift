@@ -12,6 +12,8 @@ import SnapKit
 protocol DocumentReviewVCDelegate: class {
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC)
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC)
+    func documentReviewVC(exit controller: DocumentReviewVC)
+    func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -26,6 +28,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         controls.onEditTap = didTapEdit
         controls.onPDFTap = didTapPreviewAsPDF
         controls.onShareTap = didTapShare
+        controls.onDeleteTap = didTapDelete
         controls.translatesAutoresizingMaskIntoConstraints = false
         return controls
     }()
@@ -73,7 +76,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     }
     
     @IBAction private func didTaBackButton(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        delegate?.documentReviewVC(exit: self)
     }
     
     private func didTapPreviewAsPDF(_ sender: FooterButton) {
@@ -82,6 +85,13 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     private func didTapEdit(_ sender: FooterButton) {
         delegate?.documentReviewVC(edit: document!, controller: self)
+    }
+    
+    private func didTapDelete(_ sender: FooterButton) {
+        guard let document = document else {
+            fatalError("ERROR: No document is set")
+        }
+        delegate?.documentReviewVC(delete: document, controller: self)
     }
     
     private func didTapShare(_ sender: FooterButton) {
