@@ -18,8 +18,11 @@
                 <outlet property="footerViewBottomConstraint" destination="kCd-Q1-YDp" id="r3u-9V-3PF"/>
                 <outlet property="headerLabel" destination="RQm-4M-ek4" id="Mm9-aR-ODq"/>
                 <outlet property="headerView" destination="6jD-GA-5Zk" id="SwC-Nj-4kk"/>
+                <outlet property="pickDocumentFooterButton" destination="kw8-CQ-Shx" id="MUW-D0-Eyn"/>
                 <outlet property="quickAccessButton" destination="8yW-yO-nhP" id="Ov8-wY-78u"/>
+                <outlet property="scanDocumentFooterButton" destination="Fk3-sq-d9B" id="lBw-TR-zCw"/>
                 <outlet property="searchButton" destination="Epl-xB-WYZ" id="u5q-7y-nq2"/>
+                <outlet property="settingsFooterButton" destination="u4S-FD-erc" id="PPQ-03-2Yc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTZ-Om-6jC" userLabel="footerView" colorLabel="IBBuiltInLabel-Gray">
-                    <rect key="frame" x="0.0" y="660" width="390" height="228"/>
+                    <rect key="frame" x="0.0" y="719.33333333333337" width="390" height="168.66666666666663"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWU-uo-4ei">
                             <rect key="frame" x="0.0" y="0.0" width="390" height="57"/>
@@ -60,13 +63,13 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="p3B-br-WLM">
-                            <rect key="frame" x="0.0" y="65" width="390" height="85"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="90.666666666666671"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="sfh-vY-Gkc">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="85"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="90.666666666666671"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kw8-CQ-Shx" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="130" height="85"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="90.666666666666671"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="upload-document"/>
@@ -80,7 +83,7 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fk3-sq-d9B" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="130" y="0.0" width="130" height="85"/>
+                                            <rect key="frame" x="130" y="0.0" width="130" height="90.666666666666671"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="scan-document"/>
@@ -94,7 +97,7 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4S-FD-erc" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="0.0" width="130" height="85"/>
+                                            <rect key="frame" x="260" y="0.0" width="130" height="90.666666666666671"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="icon" value="settings"/>
@@ -116,19 +119,19 @@
                     <color key="backgroundColor" name="primary"/>
                     <constraints>
                         <constraint firstItem="gWU-uo-4ei" firstAttribute="top" secondItem="TCb-1U-dLT" secondAttribute="top" id="0S0-9s-Zrs"/>
+                        <constraint firstItem="p3B-br-WLM" firstAttribute="top" secondItem="TCb-1U-dLT" secondAttribute="top" id="Dao-Ba-2Pt"/>
                         <constraint firstItem="TCb-1U-dLT" firstAttribute="trailing" secondItem="gWU-uo-4ei" secondAttribute="trailing" id="I8b-mw-Z2x"/>
                         <constraint firstItem="p3B-br-WLM" firstAttribute="leading" secondItem="TCb-1U-dLT" secondAttribute="leading" id="Im1-Or-1Yz"/>
                         <constraint firstItem="TCb-1U-dLT" firstAttribute="bottom" secondItem="p3B-br-WLM" secondAttribute="bottom" constant="44" id="TML-za-oPd"/>
                         <constraint firstItem="gWU-uo-4ei" firstAttribute="leading" secondItem="TCb-1U-dLT" secondAttribute="leading" id="X0a-dV-Rpe"/>
-                        <constraint firstItem="p3B-br-WLM" firstAttribute="top" secondItem="gWU-uo-4ei" secondAttribute="bottom" constant="8" id="g2Z-2m-XO2"/>
                         <constraint firstItem="TCb-1U-dLT" firstAttribute="trailing" secondItem="p3B-br-WLM" secondAttribute="trailing" id="m3J-XT-8Dk"/>
                         <constraint firstItem="gWU-uo-4ei" firstAttribute="height" secondItem="RTZ-Om-6jC" secondAttribute="height" multiplier="0.25" id="wEW-3b-vvJ"/>
                     </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="40"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="gWU-uo-4ei"/>
+                        </mask>
+                    </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jD-GA-5Zk">
                     <rect key="frame" x="0.0" y="44" width="390" height="52"/>
@@ -164,7 +167,7 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
-                    <rect key="frame" x="0.0" y="96" width="390" height="564"/>
+                    <rect key="frame" x="0.0" y="96" width="390" height="623.33333333333337"/>
                     <color key="backgroundColor" name="background"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
                         <size key="itemSize" width="128" height="128"/>
@@ -181,7 +184,7 @@
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Auh-nz-obv"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="top" secondItem="a9B-JH-h6P" secondAttribute="bottom" id="FcF-yX-Umw"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Hqi-Sb-FhZ"/>
-                <constraint firstItem="RTZ-Om-6jC" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.27" id="Ijv-iY-ZE7"/>
+                <constraint firstItem="RTZ-Om-6jC" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2" id="Ijv-iY-ZE7"/>
                 <constraint firstItem="a9B-JH-h6P" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WrG-nm-PI4"/>
                 <constraint firstItem="6jD-GA-5Zk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="j8K-kG-KZN"/>
                 <constraint firstAttribute="bottom" secondItem="RTZ-Om-6jC" secondAttribute="bottom" constant="-44" id="kCd-Q1-YDp"/>
@@ -202,7 +205,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="primary">
-            <color red="0.2800000011920929" green="0.48899999260902405" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.27843137254901962" green="0.48627450980392156" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="primary-text">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

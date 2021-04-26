@@ -27,7 +27,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var presentQuickAccess: Bool = false { didSet { showOrHideQuickAccessMenu() } }
+    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
     private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
@@ -47,6 +47,10 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var footerContentView: UIStackView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
+    
+    @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var settingsFooterButton: FooterButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +82,12 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupViews() {
         
+        pickDocumentFooterButton.textColor = .primaryText
+        scanDocumentFooterButton.textColor = .primaryText
+        settingsFooterButton.textColor = .primaryText
+        
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
-        footerView.layer.cornerRadius = 32
+        footerView.layer.cornerRadius = 16
         footerView.clipsToBounds = true
         headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
         headerLabel.text = "My Documents".localized

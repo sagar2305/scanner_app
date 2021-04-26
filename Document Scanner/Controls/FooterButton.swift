@@ -68,7 +68,7 @@ class FooterButton: UIButton {
     @IBInspectable
     var textColor: UIColor = .text {
         didSet {
-           // buttonTitle.textColor = textColor
+            _titleLabel.textColor = textColor
         }
     }
 
