@@ -24,6 +24,14 @@
 	<string>App would like to access camera to scan your document</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App would like to acces photo library to pick documents</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Avenir Black.ttf</string>
+		<string>Avenir Book.ttf</string>
+		<string>Avenir Light.ttf</string>
+		<string>Avenir Medium.ttf</string>
+		<string>Avenir Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -63,14 +71,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Avenir Black.ttf</string>
-		<string>Avenir Book.ttf</string>
-		<string>Avenir Light.ttf</string>
-		<string>Avenir Medium.ttf</string>
-		<string>Avenir Regular.ttf</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
