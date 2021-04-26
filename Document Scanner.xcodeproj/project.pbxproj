@@ -17,10 +17,12 @@
 		020AEDBF26202A2C00998398 /* SubscriptionViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */; };
 		020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDBE26202A2C00998398 /* SubscriptionViewControllerDelegate.swift */; };
 		020AEDC22620409E00998398 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDC12620409E00998398 /* IAPProduct.swift */; };
+		0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214005B262DEE5B008B0AEE /* TranformImageControls.swift */; };
+		02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02140060262DF1CB008B0AEE /* UIKitPreview.swift */; };
+		0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */; };
 		023EC567260A56F30041E6BF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023EC566260A56F30041E6BF /* Page.swift */; };
+		024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024AFE8B262FE98000E3730C /* ImageColorControls.swift */; };
 		024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F074725FF3B860091C73C /* UIImage+Extension.swift */; };
-		024F075325FF656D0091C73C /* FilterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 024F075225FF656D0091C73C /* FilterController.xib */; };
-		024F075E25FF6A350091C73C /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F075D25FF6A350091C73C /* FilterController.swift */; };
 		024F077925FFB97A0091C73C /* Foundation+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F077825FFB97A0091C73C /* Foundation+Extension.swift */; };
 		024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025BDA8E25F09AA6000834AE /* Assets.xcassets */; };
 		024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F07CC25FFC5DD0091C73C /* DocumentCollectionViewCell.swift */; };
@@ -46,16 +48,28 @@
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02616243260DBF100095B727 /* FooterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02616242260DBF100095B727 /* FooterButton.swift */; };
-		02616249260DBF200095B727 /* FooterButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02616248260DBF200095B727 /* FooterButton.xib */; };
+		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
+		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
+		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
+		0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA77262583B100052565 /* Avenir Book.ttf */; };
+		0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA78262583B100052565 /* Avenir Light.ttf */; };
+		0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA79262583B100052565 /* Avenir Medium.ttf */; };
+		0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA7A262583B100052565 /* Avenir Regular.ttf */; };
+		028FE77E263531D40049C587 /* CropFooterControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FE77D263531D40049C587 /* CropFooterControls.swift */; };
+		02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */; };
+		0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */; };
+		0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
 		02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661E226039EC4008CCF36 /* UIKit+Extension.swift */; };
 		02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */; };
 		02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B662232604691E008CCF36 /* DocumentScannerViewController.swift */; };
+		02B91C98263325A300D2C5FD /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B91C97263325A300D2C5FD /* FilterHelper.swift */; };
 		02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */; };
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
+		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
 		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
 		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
@@ -118,10 +132,12 @@
 		020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewControllerProtocol.swift; sourceTree = "<group>"; };
 		020AEDBE26202A2C00998398 /* SubscriptionViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		020AEDC12620409E00998398 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
+		0214005B262DEE5B008B0AEE /* TranformImageControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranformImageControls.swift; sourceTree = "<group>"; };
+		02140060262DF1CB008B0AEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
+		0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditingControls.swift; sourceTree = "<group>"; };
 		023EC566260A56F30041E6BF /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		024AFE8B262FE98000E3730C /* ImageColorControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageColorControls.swift; sourceTree = "<group>"; };
 		024F074725FF3B860091C73C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		024F075225FF656D0091C73C /* FilterController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterController.xib; sourceTree = "<group>"; };
-		024F075D25FF6A350091C73C /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		024F077825FFB97A0091C73C /* Foundation+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extension.swift"; sourceTree = "<group>"; };
 		024F07CC25FFC5DD0091C73C /* DocumentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCollectionViewCell.swift; sourceTree = "<group>"; };
 		024F07CD25FFC5DD0091C73C /* DocumentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -147,16 +163,28 @@
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02616242260DBF100095B727 /* FooterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterButton.swift; sourceTree = "<group>"; };
-		02616248260DBF200095B727 /* FooterButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterButton.xib; sourceTree = "<group>"; };
+		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
+		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
+		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
+		0271CA77262583B100052565 /* Avenir Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Book.ttf"; sourceTree = "<group>"; };
+		0271CA78262583B100052565 /* Avenir Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Light.ttf"; sourceTree = "<group>"; };
+		0271CA79262583B100052565 /* Avenir Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Medium.ttf"; sourceTree = "<group>"; };
+		0271CA7A262583B100052565 /* Avenir Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Regular.ttf"; sourceTree = "<group>"; };
+		028FE77D263531D40049C587 /* CropFooterControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropFooterControls.swift; sourceTree = "<group>"; };
+		02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAdjustControls.swift; sourceTree = "<group>"; };
+		0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionVC.swift; sourceTree = "<group>"; };
+		0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CorrectionVC.xib; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		02B661E226039EC4008CCF36 /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
 		02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerNavigationController.swift; sourceTree = "<group>"; };
 		02B662232604691E008CCF36 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
+		02B91C97263325A300D2C5FD /* FilterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
 		02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageHelper.swift; sourceTree = "<group>"; };
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
+		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
 		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
@@ -211,6 +239,14 @@
 				020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0214005F262DF1B8008B0AEE /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				02140060262DF1CB008B0AEE /* UIKitPreview.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		024F072C25FF12640091C73C /* Models */ = {
@@ -270,6 +306,7 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				0214005F262DF1B8008B0AEE /* Debug */,
 				02BA3CC126220D6900FA9194 /* Resources */,
 				02BA3CBE2621CA2D00FA9194 /* Views */,
 				020AEDBC262029F400998398 /* Protocols */,
@@ -335,6 +372,10 @@
 				02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */,
 				02B662232604691E008CCF36 /* DocumentScannerViewController.swift */,
 				02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */,
+				0271CA6F2625835300052565 /* IntroductionVC.swift */,
+				0271CA702625835300052565 /* IntroductionVC.xib */,
+				0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */,
+				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -357,13 +398,28 @@
 			path = TableViewCells;
 			sourceTree = "<group>";
 		};
+		0271CA75262583B100052565 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0271CA76262583B100052565 /* Avenir Black.ttf */,
+				0271CA77262583B100052565 /* Avenir Book.ttf */,
+				0271CA78262583B100052565 /* Avenir Light.ttf */,
+				0271CA79262583B100052565 /* Avenir Medium.ttf */,
+				0271CA7A262583B100052565 /* Avenir Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		02ACA17925F9F1970063A3ED /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				024F075225FF656D0091C73C /* FilterController.xib */,
-				024F075D25FF6A350091C73C /* FilterController.swift */,
 				02616242260DBF100095B727 /* FooterButton.swift */,
-				02616248260DBF200095B727 /* FooterButton.xib */,
+				0214005B262DEE5B008B0AEE /* TranformImageControls.swift */,
+				0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */,
+				02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */,
+				02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */,
+				024AFE8B262FE98000E3730C /* ImageColorControls.swift */,
+				028FE77D263531D40049C587 /* CropFooterControls.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -378,6 +434,7 @@
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
 				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
 				020AED95261F0BBF00998398 /* SubscriptionHelper.swift */,
+				02B91C97263325A300D2C5FD /* FilterHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -393,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				02BA3CC226220D7B00FA9194 /* scanner.json */,
+				0271CA75262583B100052565 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -499,21 +557,26 @@
 			files = (
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
-				02616249260DBF200095B727 /* FooterButton.xib in Resources */,
+				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
+				0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */,
+				0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
+				0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
-				024F075325FF656D0091C73C /* FilterController.xib in Resources */,
+				0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */,
 				02BA3CC326220D7B00FA9194 /* scanner.json in Resources */,
 				025BDA8D25F09AA1000834AE /* Main.storyboard in Resources */,
 				025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */,
+				0271CA722625835300052565 /* IntroductionVC.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
 				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
 				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
+				0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,9 +634,12 @@
 				020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */,
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
+				02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
+				02B91C98263325A300D2C5FD /* FilterHelper.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
+				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
@@ -583,6 +649,7 @@
 				025DB1B8260106ED006943C0 /* Setting.swift in Sources */,
 				024F077925FFB97A0091C73C /* Foundation+Extension.swift in Sources */,
 				020AED8D261F0A3B00998398 /* AnnualNoTrialViewController.swift in Sources */,
+				0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */,
 				020AEDB926201AC800998398 /* Notification+Extension.swift in Sources */,
 				02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */,
 				02F1922B260096F100D8CB8A /* Document.swift in Sources */,
@@ -593,22 +660,27 @@
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
 				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
 				020AED96261F0BBF00998398 /* SubscriptionHelper.swift in Sources */,
+				024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */,
+				02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,
 				020AED7D261F04AC00998398 /* SubscriptionCoordinator.swift in Sources */,
 				020AEDBF26202A2C00998398 /* SubscriptionViewControllerProtocol.swift in Sources */,
+				0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */,
 				02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */,
 				02F19227260096DF00D8CB8A /* ScannerVC.swift in Sources */,
 				025BDA8625F09AA1000834AE /* AppDelegate.swift in Sources */,
-				024F075E25FF6A350091C73C /* FilterController.swift in Sources */,
 				025BDA8825F09AA1000834AE /* SceneDelegate.swift in Sources */,
 				024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */,
+				028FE77E263531D40049C587 /* CropFooterControls.swift in Sources */,
 				025DB1C826011E8A006943C0 /* Filter.swift in Sources */,
 				02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */,
 				025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */,
 				025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */,
 				025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */,
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
+				0271CA712625835300052565 /* IntroductionVC.swift in Sources */,
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
+				0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */,
 				020AEDC22620409E00998398 /* IAPProduct.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,
 				02F1921C260096C100D8CB8A /* Constants.swift in Sources */,
@@ -749,7 +821,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 			};

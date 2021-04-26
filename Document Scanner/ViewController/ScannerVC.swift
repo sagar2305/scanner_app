@@ -27,11 +27,10 @@ class ScannerVC: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var cameraPreview: UIView!
-    @IBOutlet private weak var footerView: UIView!
     
-    @IBOutlet private weak var scanImage: FooterButton!
-    @IBOutlet private weak var cancelButton: FooterButton!
-    @IBOutlet private weak var flashButton: FooterButton!
+    @IBOutlet private weak var scanImage: UIButton!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var flashButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -49,8 +48,8 @@ class ScannerVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
     }
+    
     private func _setupViews() {
-        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
     private func _setupCameraPreview() {

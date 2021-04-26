@@ -18,12 +18,13 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var rootViewController: UIViewController {
         return navigationController
     }
+
     var childCoordinators: [Coordinator] = []
-    
     var delegate: PickerDocumentCoordinatorDelegate?
     var navigationController: DocumentScannerNavigationController
-    var editImageVC: EditImageVC?
-    
+    var correctionVC: CorrectionVC!
+    private var isCorrectionVCPresented = false
+
     func start() {
        _pickDocument()
     }
@@ -40,10 +41,11 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func presentImageCorrectionViewController(for image: UIImage) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image], imageSource: .photo_library)
-        editDocumentCoordinator.delegate = self
-        childCoordinators.append(editDocumentCoordinator)
-        editDocumentCoordinator.start()
+        correctionVC = CorrectionVC()
+        correctionVC.delegate = self
+        correctionVC.image = image
+        navigationController.pushViewController(correctionVC, animated: true)
+        isCorrectionVCPresented = true
     }
 
 }
@@ -53,7 +55,9 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
                                    UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        if !isCorrectionVCPresented {
         delegate?.didCancelPickingImage(self)
+        }
         rootViewController.dismiss(animated: true)
     }
     
@@ -68,16 +72,39 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
     
 }
 
-extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
+extension PickDocumentCoordinator: CorrectionVCDelegate {
+    func correctionVC(_ viewController: CorrectionVC,
+                      saveDocument name: String, originalImage: UIImage,
+                      finalImage: UIImage) {
+        if let document = Document(name, originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
+            document.save()
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
         delegate?.didCancelPickingImage(self)
     }
     
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
+    func correctionVC(_ viewController: CorrectionVC, edit image: UIImage) {
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: image)
+        editDocumentCoordinator.delegate = self
+        childCoordinators.append(editDocumentCoordinator)
+        editDocumentCoordinator.start()
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
         _pickDocument()
+    }
+}
+
+extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
+        correctionVC.update(image: editedImage)
+        navigationController.popViewController(animated: true)
     }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
-        delegate?.didCancelPickingImage(self)
+        navigationController.popViewController(animated: true)
     }
 }

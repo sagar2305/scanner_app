@@ -20,9 +20,10 @@ class ScanDocumentCoordinator: Coordinator {
         return navigationController
     }
     
+    private var isCorrectionVCPresented = false
     var childCoordinators: [Coordinator] = []
     var navigationController: DocumentScannerNavigationController
-    var editImageVC: EditImageVC!
+    var correctionVC: CorrectionVC!
     weak var delegate: ScanDocumentCoordinatorDelegate?
     
     init(_ controller: DocumentScannerNavigationController) {
@@ -43,27 +44,46 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     }
     
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: [image],quad: quad, imageSource: .camera)
+        correctionVC = CorrectionVC()
+        correctionVC.delegate = self
+        correctionVC.quad = quad
+        correctionVC.image = image
+        navigationController.pushViewController(correctionVC, animated: true)
+        isCorrectionVCPresented = true
+    }
+}
+
+extension ScanDocumentCoordinator: CorrectionVCDelegate {
+    func correctionVC(_ viewController: CorrectionVC, saveDocument name: String, originalImage: UIImage, finalImage: UIImage) {
+        if let document = Document(name, originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
+            document.save()
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
+        delegate?.didCancelScanningDocument(self)
+    }
+    
+    func correctionVC(_ viewController: CorrectionVC, edit image: UIImage) {
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: image)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
     }
     
+    func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
+        navigationController.popViewController(animated: true)
+    }    
 }
 
 extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
-        delegate?.didFinishScanningDocument(self)
-    }
-    
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
+        correctionVC.update(image: editedImage)
         navigationController.popViewController(animated: true)
-        childCoordinators.removeAll { $0 is EditDocumentCoordinator }
     }
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
-        delegate?.didCancelScanningDocument(self)
+        navigationController.popViewController(animated: true)
     }
-    
-    
 }

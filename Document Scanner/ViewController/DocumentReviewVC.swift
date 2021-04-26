@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import SnapKit
+
 
 protocol DocumentReviewVCDelegate: class {
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC)
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC)
+    func documentReviewVC(exit controller: DocumentReviewVC)
+    func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -19,12 +23,25 @@ class DocumentReviewVC: DocumentScannerViewController {
         case jpg
     }
     
+    private lazy var documentPreviewControls: DocumentPreviewControls = {
+        let controls = DocumentPreviewControls()
+        controls.onEditTap = didTapEdit
+        controls.onPDFTap = didTapPreviewAsPDF
+        controls.onShareTap = didTapShare
+        controls.onDeleteTap = didTapDelete
+        controls.translatesAutoresizingMaskIntoConstraints = false
+        return controls
+    }()
+    
     weak var delegate: DocumentReviewVCDelegate?
     var document: Document?
     
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var headerLabel: UILabel!
+    
+    @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var shareButton: FooterButton!
-    @IBOutlet private weak var editButton: FooterButton!
     @IBOutlet private weak var documentImageView: UIImageView!
     
     override func viewDidLoad() {
@@ -33,7 +50,6 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
         _setupView()
         _setupFooterView()
     }
@@ -42,20 +58,43 @@ class DocumentReviewVC: DocumentScannerViewController {
         guard  let document = document else {
             fatalError("ERROR: document is not set")
         }
-        configureUI(title: document.name)
+        navigationController?.navigationBar.isHidden = true
+        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
+        headerLabel.text = document.name
         documentImageView.hero.id = document.id.uuidString
         documentImageView.image = document.pages.first?.editedImage
     }
     
     private func _setupFooterView() {
-        footerView?.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        footerView.addSubview(documentPreviewControls)
+        documentPreviewControls.snp.makeConstraints { make in
+            make.left.top.right.bottom.equalToSuperview()
+        }
+        
+        footerContainerView?.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        
     }
     
-    @IBAction func didTapEdit(_ sender: UIButton) {
+    @IBAction private func didTaBackButton(_ sender: UIButton) {
+        delegate?.documentReviewVC(exit: self)
+    }
+    
+    private func didTapPreviewAsPDF(_ sender: FooterButton) {
+        
+    }
+    
+    private func didTapEdit(_ sender: FooterButton) {
         delegate?.documentReviewVC(edit: document!, controller: self)
     }
     
-    @IBAction func didTapShare(_ sender: UIButton) {
+    private func didTapDelete(_ sender: FooterButton) {
+        guard let document = document else {
+            fatalError("ERROR: No document is set")
+        }
+        delegate?.documentReviewVC(delete: document, controller: self)
+    }
+    
+    private func didTapShare(_ sender: FooterButton) {
         let actionSheetController = UIAlertController(title: "Share document as", message: nil, preferredStyle: .actionSheet)
         actionSheetController.addAction(UIAlertAction(title: "PDF", style: .default, handler: { _ in
             self.shareDocument(shareAs: .pdf)

@@ -18,6 +18,7 @@ class DocumentViewerCoordinator: Coordinator {
     let navigationController: DocumentScannerNavigationController
     var documentReviewVC: DocumentScannerViewController!
     var document: Document
+    var pageBeingEdited: Page?
     
     init(_ navigationController: DocumentScannerNavigationController, document: Document) {
         self.navigationController = navigationController
@@ -34,8 +35,10 @@ class DocumentViewerCoordinator: Coordinator {
 }
 
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
+    //TODO: - Replace document with page as we update a page at a time
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: document)
+        pageBeingEdited = document.pages.first!
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: pageBeingEdited!.editedImage!)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
@@ -65,17 +68,28 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         navigationController.present(activityVC, animated: true)
     }
     
-}
-
-extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishSavingDocument(_ coordinator: EditDocumentCoordinator, document: Document) {
-        (documentReviewVC as! DocumentReviewVC).document = document
+    func documentReviewVC(exit controller: DocumentReviewVC) {
         navigationController.popViewController(animated: true)
     }
     
-    func rescanDocument(_ coordinator: EditDocumentCoordinator) {
-        
+    func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
+        document.delete()
+        navigationController.popViewController(animated: true)
     }
+    
+}
+
+extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
+        guard let  pageBeingEdited = pageBeingEdited else {
+            fatalError("ERROR: no page is set for editing")
+        }
+        if pageBeingEdited.saveEditedImage(editedImage) {
+            document.update()
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)

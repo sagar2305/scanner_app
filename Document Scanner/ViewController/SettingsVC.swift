@@ -21,27 +21,36 @@ class SettingsVC: DocumentScannerViewController {
     
     weak var delegate: SettingsVCDelegate?
     
+    @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet private weak var settingsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI(title: "Settings")
+        _setupViews()
         _setupTableView()
+    }
+    
+    private func _setupViews() {
+        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
+        headerLabel.text = "Settings".localized
     }
 
     private func _setupTableView() {
         registerNib()
-        settingsTableView.separatorStyle = .none
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
         settingsTableView.reloadData()
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
+        settingsTableView.tableFooterView = UIView()
     }
 
     private func registerNib() {
         settingsTableView.register(UINib(nibName: SettingsTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: SettingsTableViewCell.identifier)
     }
     
+    @IBAction func didTapBackButton(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension SettingsVC: UITableViewDataSource {

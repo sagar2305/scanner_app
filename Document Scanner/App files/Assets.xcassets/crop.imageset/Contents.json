@@ -3,16 +3,6 @@
     {
       "filename" : "crop.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "crop-dark.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {

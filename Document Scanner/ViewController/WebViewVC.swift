@@ -19,11 +19,12 @@ class WebViewVC: UIViewController {
     weak var delegate: WebViewVCsDelegate?
     
     @IBOutlet private weak var webView: WKWebView!
+    @IBOutlet private weak var headerLabel: UILabel!
+    @IBOutlet private weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI(title: webPageTitle ?? "")
-        webView.cornerRadius = 44
+        _setupView()
         guard let link = webPageLink else {
             fatalError("webPageLink is not set")
         }
@@ -32,4 +33,14 @@ class WebViewVC: UIViewController {
         }
         webView.load(URLRequest(url: url))
     }
+    
+    private func _setupView() {
+        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
+        headerLabel.text = webPageTitle?.localized ?? ""
+    }
+    
+    @IBAction func exit(_ sender: UIButton) {
+        delegate?.webViewVC(exit: self)
+    }
+    
 }

@@ -6,17 +6,15 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="cameraPreview" destination="CEP-yl-14l" id="dor-yN-Ijm"/>
-                <outlet property="cancelButton" destination="aRp-si-uUG" id="aJW-yh-Kt1"/>
-                <outlet property="flashButton" destination="9iJ-DF-lc6" id="bSr-Ot-JH0"/>
-                <outlet property="footerView" destination="CIs-OX-BK8" id="002-Gn-irT"/>
-                <outlet property="scanImage" destination="t6N-0v-7pX" id="OUF-Vy-lMu"/>
+                <outlet property="cancelButton" destination="5qz-vo-JPi" id="ddf-7g-YvV"/>
+                <outlet property="flashButton" destination="hhm-h0-HtI" id="FhX-qD-voz"/>
+                <outlet property="scanImage" destination="B46-PP-2rh" id="C3c-ci-RAc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,99 +24,67 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEP-yl-14l">
-                    <rect key="frame" x="0.0" y="44" width="414" height="766"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIs-OX-BK8" userLabel="footerView">
-                    <rect key="frame" x="0.0" y="810" width="414" height="86"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="txd-ai-aXt">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iJ-DF-lc6" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="132.5" height="52"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="flash"/>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Flash"/>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="flashButtonTapped:" destination="-1" eventType="touchUpInside" id="REm-nh-55a"/>
-                                    </connections>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-0v-7pX" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                    <rect key="frame" x="140.5" y="0.0" width="133" height="52"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="capture"/>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Capture"/>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="captureButtonTapped:" destination="-1" eventType="touchUpInside" id="erc-zd-UyP"/>
-                                    </connections>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRp-si-uUG" customClass="FooterButton" customModule="Document_Scanner" customModuleProvider="target">
-                                    <rect key="frame" x="281.5" y="0.0" width="132.5" height="52"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="icon" value="cancel"/>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="title" value="Cancel"/>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="QmE-4H-OZ7"/>
-                                    </connections>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" name="app-theme"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="52" id="0nd-7w-0hZ"/>
-                            </constraints>
-                        </stackView>
-                    </subviews>
-                    <viewLayoutGuide key="safeArea" id="w62-Fv-Epm"/>
-                    <color key="backgroundColor" name="app-theme"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-h0-HtI">
+                    <rect key="frame" x="354" y="60" width="44" height="44"/>
                     <constraints>
-                        <constraint firstItem="txd-ai-aXt" firstAttribute="top" secondItem="w62-Fv-Epm" secondAttribute="top" id="63M-30-AWm"/>
-                        <constraint firstItem="txd-ai-aXt" firstAttribute="leading" secondItem="CIs-OX-BK8" secondAttribute="leading" id="FMD-BV-Avv"/>
-                        <constraint firstItem="w62-Fv-Epm" firstAttribute="bottom" secondItem="txd-ai-aXt" secondAttribute="bottom" id="Wfy-gU-zRs"/>
-                        <constraint firstAttribute="trailing" secondItem="txd-ai-aXt" secondAttribute="trailing" id="er0-a8-ce1"/>
+                        <constraint firstAttribute="height" constant="44" id="0LQ-V4-sQJ"/>
+                        <constraint firstAttribute="width" constant="44" id="hFl-gc-tBT"/>
                     </constraints>
-                </view>
+                    <state key="normal" image="flash-ellipse"/>
+                    <connections>
+                        <action selector="flashButtonTapped:" destination="-1" eventType="touchUpInside" id="4i5-ly-fsw"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qz-vo-JPi">
+                    <rect key="frame" x="16" y="60" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="905-xB-9ff"/>
+                        <constraint firstAttribute="height" constant="44" id="wEZ-oS-gRh"/>
+                    </constraints>
+                    <state key="normal" image="back-arrow-ellipse"/>
+                    <connections>
+                        <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="Lxo-Zc-eOc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B46-PP-2rh">
+                    <rect key="frame" x="162" y="756" width="90" height="90"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="1ft-9F-F69"/>
+                        <constraint firstAttribute="width" constant="90" id="eDU-HY-5A4"/>
+                    </constraints>
+                    <state key="normal" image="capture"/>
+                    <connections>
+                        <action selector="captureButtonTapped:" destination="-1" eventType="touchUpInside" id="l4X-Om-Lao"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="CEP-yl-14l" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="3Ec-JI-na7"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CIs-OX-BK8" secondAttribute="trailing" id="72R-ZM-7wb"/>
-                <constraint firstItem="CIs-OX-BK8" firstAttribute="top" secondItem="CEP-yl-14l" secondAttribute="bottom" id="AzB-h4-dfY"/>
-                <constraint firstAttribute="bottom" secondItem="CIs-OX-BK8" secondAttribute="bottom" id="DAQ-OQ-b1l"/>
-                <constraint firstItem="CIs-OX-BK8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="QOf-ii-fWa"/>
+                <constraint firstItem="CEP-yl-14l" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3Ec-JI-na7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hhm-h0-HtI" secondAttribute="trailing" constant="16" id="L1B-XT-Xq6"/>
+                <constraint firstAttribute="bottom" secondItem="CEP-yl-14l" secondAttribute="bottom" id="Mdr-PY-kWw"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="B46-PP-2rh" secondAttribute="bottom" constant="16" id="Xeh-Oy-lcr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CEP-yl-14l" secondAttribute="trailing" id="c5S-wc-rAJ"/>
+                <constraint firstItem="B46-PP-2rh" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="d5V-pv-zsf"/>
+                <constraint firstItem="5qz-vo-JPi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="gO8-4x-Lea"/>
+                <constraint firstItem="CEP-yl-14l" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="k9E-3g-jb3"/>
                 <constraint firstItem="CEP-yl-14l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kCM-vJ-szr"/>
+                <constraint firstItem="hhm-h0-HtI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="p99-iU-MUG"/>
+                <constraint firstItem="5qz-vo-JPi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="sFO-i4-kFo"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="133.92857142857142"/>
         </view>
     </objects>
-    <designables>
-        <designable name="9iJ-DF-lc6">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="aRp-si-uUG">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-        <designable name="t6N-0v-7pX">
-            <size key="intrinsicContentSize" width="30" height="34"/>
-        </designable>
-    </designables>
     <resources>
-        <image name="cancel" width="50" height="50"/>
-        <image name="capture" width="50" height="50"/>
-        <image name="flash" width="50" height="50"/>
-        <namedColor name="app-theme">
-            <color red="0.25098039215686274" green="0.61960784313725492" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="back-arrow-ellipse" width="37" height="37"/>
+        <image name="capture" width="330" height="330"/>
+        <image name="flash-ellipse" width="37" height="37"/>
         <namedColor name="background">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

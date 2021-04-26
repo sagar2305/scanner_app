@@ -24,36 +24,28 @@ protocol HomeViewControllerDelegate: class {
 @available(iOS 13.0, *)
 class HomeViewController: DocumentScannerViewController, HomeVC {
     
-    weak var delegate: HomeViewControllerDelegate?
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private lazy var dateSource = _getDocumentCollectionViewDataSource()
+    private var presentQuickAccess: Bool = false { didSet { showOrHideQuickAccessMenu() } }
+    private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     
+    weak var delegate: HomeViewControllerDelegate?
+    private lazy var dateSource = _getDocumentCollectionViewDataSource()
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document]  = [Document]()
     
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.searchBar.tintColor = .text
-        searchController.searchBar.showsCancelButton = true
-        navigationItem.hidesSearchBarWhenScrolling = false
-        
-        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textField.backgroundColor = .primary
-            textField.subviews.first?.backgroundColor = .backgroundColor
-            textField.textColor = .text
-            textField.attributedPlaceholder = NSAttributedString(string: "Search Document",
-                                                                 attributes: [.foregroundColor: UIColor.text])
-        }
-        
-        return searchController
-    }()
+    private var searchBar: UISearchBar!
 
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var headerLabel: UILabel!
+    @IBOutlet private weak var searchButton: UIButton!
+    
     @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var quickAccessButton: FooterButton!
+    @IBOutlet private weak var footerHeaderView: UIView!
+    @IBOutlet private weak var footerContentView: UIStackView!
+    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -64,8 +56,17 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
         _getDocuments()
+        
+        quickAccessButton.onTap = ({ [self] button in
+            presentQuickAccess.toggle()
+        })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        showOrHideQuickAccessMenu()
     }
 
     func _getDocuments() {
@@ -76,16 +77,77 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
     
     private func _setupViews() {
-        //headerLabel.font = UIFont.font(style: .largeTitle)
-        configureUI(title: "My Documents")
-        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
-        definesPresentationContext = true
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped(_:)))
+        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        footerView.layer.cornerRadius = 32
+        footerView.clipsToBounds = true
+        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
+        headerLabel.text = "My Documents".localized
+        definesPresentationContext = true
     }
     
-    @objc private func searchButtonTapped(_ sender: UIBarButtonItem) {
-        UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = self.searchController }
+    private func showOrHideQuickAccessMenu() {
+        let footerViewHeight = footerView.getMyFrame(in: self.view).height
+        let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
+        print(footerViewHeight)
+        print(footerHeaderHeight)
+        
+        if presentQuickAccess {
+            footerViewBottomConstraint.constant = -44
+            footerContentView.isHidden = false
+        } else {
+            footerViewBottomConstraint.constant = UIDevice.current.hasNotch ? -(footerViewHeight - footerHeaderHeight - 22)
+                                        : -(footerViewHeight - footerHeaderHeight)
+            if UIDevice.current.hasNotch { self.footerContentView.isHidden = true }
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: { [self] in
+            self.quickAccessButton.iconView.transform = self.presentQuickAccess ? CGAffineTransform(scaleX: 1, y: -1) : .identity
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    private func showOrHideSearchBar() {
+        if presentSearchBar {
+            searchBar = UISearchBar(frame: searchButton.frame)
+            searchBar.searchBarStyle = .minimal
+            searchBar.searchTextField.backgroundColor = .clear
+            searchBar.searchTextField.layer.borderColor = UIColor.black.cgColor
+            searchBar.tintColor = .text
+            headerView.addSubview(searchBar)
+            searchBar.delegate = self
+            self.searchBar.searchTextField.becomeFirstResponder()
+            UIView.animateKeyframes(withDuration: 0.3,
+                                    delay: 0,
+                                    options: []) {
+                self.searchBar.frame = CGRect(x: 16,
+                                         y: 4,
+                                         width: self.headerView.frame.width - 32,
+                                         height: self.headerView.frame.height - 8)
+                self.searchButton.alpha = 0
+                self.headerLabel.alpha = 0
+                
+            } completion: { completed in
+                self.searchButton.isHidden = true
+                self.headerLabel.isHidden = true
+            }
+
+        } else {
+            if searchBar != nil {
+                UIView.animateKeyframes(withDuration: 0.3,
+                                        delay: 0,
+                                        options: []) {
+                    self.searchBar.frame = self.searchButton.frame
+                    self.searchButton.alpha = 1
+                    self.headerLabel.alpha = 1
+                } completion: { completed in
+                    self.searchButton.isHidden = false
+                    self.headerLabel.isHidden = false
+                    self.searchBar.removeFromSuperview()
+                    self.searchBar = nil
+                }
+            }
+        }
     }
     
     private func _setupCollectionView() {
@@ -104,7 +166,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: itemSize.widthDimension)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
@@ -128,6 +190,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         dateSource.apply(snapShot, animatingDifferences: animatingDifferences)
     }
     
+    @IBAction func didTapSearchButton(_ sender: UIButton) {
+        presentSearchBar.toggle()
+    }
+    
+    @IBAction func didTapShowQuickAccessButton(_ sender: FooterButton) {
+        presentQuickAccess.toggle()
+    }
     
     @IBAction func didTapPickImageButton(_ sender: FooterButton) {
         delegate?.pickNewDocument(self)
@@ -153,30 +222,27 @@ extension HomeViewController: UICollectionViewDelegate {
 }
 
 @available(iOS 13.0, *)
-extension HomeViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text
-        
-        if searchText == nil || searchText!.isEmpty {
-            filteredDocuments = allDocuments
-            _applySnapshot()
-        } else {
-            filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText!.lowercased()) }
-            _applySnapshot()
-        }
-    }
-}
-
-@available(iOS 13.0, *)
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchController.searchBar.showsCancelButton = true
+        searchBar.showsCancelButton = true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = nil }
         filteredDocuments = allDocuments
+        searchBar.searchTextField.endEditing(true)
+        presentSearchBar.toggle()
         _applySnapshot()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredDocuments = allDocuments
+            _applySnapshot()
+        } else {
+            filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            _applySnapshot()
+        }
     }
 }
 
