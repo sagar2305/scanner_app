@@ -13,7 +13,7 @@ class Document: Codable {
     var id = UUID()
     var pages: [Page]
     var name: String
-    var creationDate: Date
+    private var date: Date
     var tag: String
     
     init?(_ name: String, originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
@@ -22,7 +22,7 @@ class Document: Codable {
         guard originalImages.count == editedImages.count else {
             fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count) \n Quadrilaterals: \(quadrilaterals.count)")
         }
-        creationDate = Date()
+        date = Date()
         var pages = [Page]()
         for index in 0 ..< originalImages.count {
             let newPage = Page(originalImageName: name.appending("\(index)_original"),
@@ -36,7 +36,11 @@ class Document: Codable {
         self.pages = pages
     }
     
-    
+    var creationDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter.string(from: date)
+    }
     
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
