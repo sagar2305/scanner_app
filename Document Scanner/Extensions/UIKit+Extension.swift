@@ -51,6 +51,10 @@ extension UIColor {
         UIColor(named: "text")!
     }
     
+    static var secondaryText: UIColor {
+        UIColor(named: "secondary-text")!
+    }
+    
     static var shadow: UIColor {
         UIColor(named: "shadow")!
     }

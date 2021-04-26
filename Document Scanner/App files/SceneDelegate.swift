@@ -19,8 +19,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     
         guard let scene = (scene as? UIWindowScene) else { return }
+        
+        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboarded)
         window = UIWindow(windowScene: scene)
-        rootCoordinator = ApplicationCoordinator(window!)
+        if isUserOnboarded {
+            rootCoordinator = ApplicationCoordinator(window!)
+        } else {
+            rootCoordinator = OnboardingCoordinator(window!)
+        }
+        
         rootCoordinator.start()
     }
 
