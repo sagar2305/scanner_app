@@ -48,6 +48,10 @@
 		025DB1C226011214006943C0 /* WebViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 025DB1C026011214006943C0 /* WebViewVC.xib */; };
 		025DB1C826011E8A006943C0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DB1C726011E8A006943C0 /* Filter.swift */; };
 		02616243260DBF100095B727 /* FooterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02616242260DBF100095B727 /* FooterButton.swift */; };
+		02620D34263678B800AEB15F /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D32263678B800AEB15F /* OnboardingVC.swift */; };
+		02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02620D33263678B800AEB15F /* OnboardingVC.xib */; };
+		02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3826367B6700AEB15F /* OnboardingView.swift */; };
+		02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */; };
 		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
 		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
 		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
@@ -163,6 +167,10 @@
 		025DB1C026011214006943C0 /* WebViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewVC.xib; sourceTree = "<group>"; };
 		025DB1C726011E8A006943C0 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		02616242260DBF100095B727 /* FooterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterButton.swift; sourceTree = "<group>"; };
+		02620D32263678B800AEB15F /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		02620D33263678B800AEB15F /* OnboardingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingVC.xib; sourceTree = "<group>"; };
+		02620D3826367B6700AEB15F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
 		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
 		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
@@ -349,6 +357,7 @@
 				02E008B826023BF000278002 /* EditDocumentCoordinator.swift */,
 				02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */,
 				020AED7C261F04AC00998398 /* SubscriptionCoordinator.swift */,
+				02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -376,6 +385,8 @@
 				0271CA702625835300052565 /* IntroductionVC.xib */,
 				0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */,
 				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
+				02620D32263678B800AEB15F /* OnboardingVC.swift */,
+				02620D33263678B800AEB15F /* OnboardingVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -442,6 +453,7 @@
 		02BA3CBE2621CA2D00FA9194 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				02620D3826367B6700AEB15F /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,6 +567,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */,
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
 				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
@@ -630,12 +643,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */,
+				02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */,
 				02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */,
 				020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */,
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
 				02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
+				02620D34263678B800AEB15F /* OnboardingVC.swift in Sources */,
 				02B91C98263325A300D2C5FD /* FilterHelper.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
@@ -657,6 +672,7 @@
 				025BDA9E25F09E12000834AE /* Coordinator.swift in Sources */,
 				025BDA8A25F09AA1000834AE /* ViewController.swift in Sources */,
 				02F1921D260096C100D8CB8A /* FileHelper.swift in Sources */,
+				02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */,
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
 				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
 				020AED96261F0BBF00998398 /* SubscriptionHelper.swift in Sources */,

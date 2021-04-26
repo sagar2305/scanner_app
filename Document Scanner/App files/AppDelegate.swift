@@ -18,7 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //TODO: - Add configuration for Purchases
         window = UIWindow(frame: UIScreen.main.bounds)
-        rootCoordinator = ApplicationCoordinator(window!)
+        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboarded)
+        if isUserOnboarded {
+            rootCoordinator = ApplicationCoordinator(window!)
+        } else {
+            rootCoordinator = OnboardingCoordinator(window!)
+        }
         rootCoordinator?.start()
         return true
     }

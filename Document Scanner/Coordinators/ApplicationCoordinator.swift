@@ -17,7 +17,7 @@ class ApplicationCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     
-    var navigationController: DocumentScannerNavigationController
+    let navigationController: DocumentScannerNavigationController
     var homeViewController: HomeVC
     
     func start() {
