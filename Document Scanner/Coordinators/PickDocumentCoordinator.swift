@@ -44,6 +44,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.image = image
+        correctionVC.shouldRotateImage = false
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
@@ -73,10 +74,9 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
 }
 
 extension PickDocumentCoordinator: CorrectionVCDelegate {
-    func correctionVC(_ viewController: CorrectionVC,
-                      saveDocument name: String, originalImage: UIImage,
+    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage,
                       finalImage: UIImage) {
-        if let document = Document(name, originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
+        if let document = Document(originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
             document.save()
             navigationController.popViewController(animated: true)
         }

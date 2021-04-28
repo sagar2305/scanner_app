@@ -15,26 +15,24 @@ class DocumentCollectionViewCell: UICollectionViewCell {
         didSet {
             if document != nil {
                 documentNameLabel.text = document!.name
-                documentCreationDate.text = "\(document!.creationDate)"
+                previewImageView.image = document!.pages.first?.thumbNailImage
                 hero.id = document!.id.uuidString
             }
         }
     }
     
     @IBOutlet private weak var documentNameLabel: UILabel!
-    @IBOutlet private weak var documentCreationDate: UILabel!
-    
+    @IBOutlet private weak var previewImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         _configureCell()
         layer.cornerRadius = 16
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.cardBackground.cgColor
+        layer.shadowColor = UIColor.shadow.cgColor
     }
     
     private func _configureCell() {
         documentNameLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
-        documentCreationDate.configure(with: UIFont.font(.avenirRegular, style: .footnote))
+       
     }
 
 }

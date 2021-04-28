@@ -10,19 +10,19 @@ import WeScan
 
 class Page: Codable {
     
+    var id = UUID()
     var originalImageName: String
     var editedImageName: String
     var quadrilateral: [CGPoint]?
     var previewData: Data?
     
-    init?(originalImageName: String,
+    init?(documentID: String,
          originalImage: UIImage,
-         editedImageName: String,
         editedImage: UIImage,
         quadrilateral: [CGPoint]) {
-        self.originalImageName = originalImageName
+        self.originalImageName = documentID.appending("_\(id.uuid)_original")
         self.quadrilateral = quadrilateral
-        self.editedImageName = editedImageName
+        self.editedImageName = documentID.appending("_\(id.uuid)_edited")
         guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
     }
     

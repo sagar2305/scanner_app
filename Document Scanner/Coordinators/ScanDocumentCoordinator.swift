@@ -48,16 +48,17 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
         correctionVC.delegate = self
         correctionVC.quad = quad
         correctionVC.image = image
+        correctionVC.shouldRotateImage = true
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
 }
 
 extension ScanDocumentCoordinator: CorrectionVCDelegate {
-    func correctionVC(_ viewController: CorrectionVC, saveDocument name: String, originalImage: UIImage, finalImage: UIImage) {
-        if let document = Document(name, originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
+    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage, finalImage: UIImage) {
+        if let document = Document(originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
             document.save()
-            navigationController.popViewController(animated: true)
+            navigationController.popToRootViewController(animated: true)
         }
     }
     

@@ -18,6 +18,7 @@
                 <outlet property="footerViewBottomConstraint" destination="kCd-Q1-YDp" id="r3u-9V-3PF"/>
                 <outlet property="headerLabel" destination="RQm-4M-ek4" id="Mm9-aR-ODq"/>
                 <outlet property="headerView" destination="6jD-GA-5Zk" id="SwC-Nj-4kk"/>
+                <outlet property="noDocumentsMessageLabel" destination="Zae-Zj-2Hu" id="HgO-5m-QdU"/>
                 <outlet property="pickDocumentFooterButton" destination="kw8-CQ-Shx" id="MUW-D0-Eyn"/>
                 <outlet property="quickAccessButton" destination="8yW-yO-nhP" id="Ov8-wY-78u"/>
                 <outlet property="scanDocumentFooterButton" destination="Fk3-sq-d9B" id="lBw-TR-zCw"/>
@@ -133,6 +134,16 @@
                         </mask>
                     </variation>
                 </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
+                    <rect key="frame" x="0.0" y="96" width="390" height="623.33333333333337"/>
+                    <color key="backgroundColor" name="background"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jD-GA-5Zk">
                     <rect key="frame" x="0.0" y="44" width="390" height="52"/>
                     <subviews>
@@ -166,31 +177,31 @@
                         <constraint firstAttribute="bottom" secondItem="RQm-4M-ek4" secondAttribute="bottom" constant="4" id="v2u-w4-Z9B"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-JH-h6P">
-                    <rect key="frame" x="0.0" y="96" width="390" height="623.33333333333337"/>
-                    <color key="backgroundColor" name="background"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q2M-S5-dLh">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zae-Zj-2Hu">
+                    <rect key="frame" x="16" y="417" width="358" height="20.333333333333314"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="secondary-text"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zae-Zj-2Hu" secondAttribute="trailing" constant="16" id="1KJ-KQ-QQz"/>
                 <constraint firstItem="a9B-JH-h6P" firstAttribute="top" secondItem="6jD-GA-5Zk" secondAttribute="bottom" id="8z1-ad-MQx"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Auh-nz-obv"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="top" secondItem="a9B-JH-h6P" secondAttribute="bottom" id="FcF-yX-Umw"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Hqi-Sb-FhZ"/>
                 <constraint firstItem="RTZ-Om-6jC" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2" id="Ijv-iY-ZE7"/>
+                <constraint firstItem="Zae-Zj-2Hu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Ock-La-DUq"/>
                 <constraint firstItem="a9B-JH-h6P" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WrG-nm-PI4"/>
+                <constraint firstItem="Zae-Zj-2Hu" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="XaG-j7-p6m"/>
                 <constraint firstItem="6jD-GA-5Zk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="j8K-kG-KZN"/>
                 <constraint firstAttribute="bottom" secondItem="RTZ-Om-6jC" secondAttribute="bottom" constant="-44" id="kCd-Q1-YDp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9B-JH-h6P" secondAttribute="trailing" id="oOS-hL-qYf"/>
                 <constraint firstItem="6jD-GA-5Zk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="paP-Ie-BaN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6jD-GA-5Zk" secondAttribute="trailing" id="t7n-d0-ZPW"/>
+                <constraint firstItem="Zae-Zj-2Hu" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="wCI-ts-Kgn"/>
             </constraints>
             <point key="canvasLocation" x="129.23076923076923" y="122.98578199052132"/>
         </view>
@@ -209,6 +220,9 @@
         </namedColor>
         <namedColor name="primary-text">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="secondary-text">
+            <color red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

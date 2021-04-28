@@ -69,7 +69,6 @@
 		02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661E226039EC4008CCF36 /* UIKit+Extension.swift */; };
 		02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */; };
 		02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B662232604691E008CCF36 /* DocumentScannerViewController.swift */; };
-		02B91C98263325A300D2C5FD /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B91C97263325A300D2C5FD /* FilterHelper.swift */; };
 		02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */; };
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
@@ -188,7 +187,6 @@
 		02B661E226039EC4008CCF36 /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
 		02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerNavigationController.swift; sourceTree = "<group>"; };
 		02B662232604691E008CCF36 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
-		02B91C97263325A300D2C5FD /* FilterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
 		02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageHelper.swift; sourceTree = "<group>"; };
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
@@ -445,7 +443,6 @@
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
 				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
 				020AED95261F0BBF00998398 /* SubscriptionHelper.swift */,
-				02B91C97263325A300D2C5FD /* FilterHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -651,7 +648,6 @@
 				02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02620D34263678B800AEB15F /* OnboardingVC.swift in Sources */,
-				02B91C98263325A300D2C5FD /* FilterHelper.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
 				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
