@@ -51,6 +51,10 @@ extension UIColor {
         UIColor(named: "text")!
     }
     
+    static var primaryText: UIColor {
+        UIColor(named: "primary-text")!
+    }
+    
     static var secondaryText: UIColor {
         UIColor(named: "secondary-text")!
     }

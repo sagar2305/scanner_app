@@ -12,7 +12,7 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document] = [Document]()
     
-    private var presentQuickAccess: Bool = false { didSet { showOrHideQuickAccessMenu() } }
+    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
     private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     private var searchBar: UISearchBar!
     
@@ -21,6 +21,8 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var headerLabel: UILabel!
     @IBOutlet private weak var searchButton: UIButton!
+    @IBOutlet private weak var noDocumentsMessageLabel: UILabel!
+
     
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var quickAccessButton: FooterButton!
@@ -28,6 +30,10 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var footerContentView: UIStackView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
+    
+    @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var settingsFooterButton: FooterButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +57,21 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         self.allDocuments = documents
         self.filteredDocuments = documents
+        noDocumentsMessageLabel.isHidden = allDocuments.count > 0
+        documentsCollectionView.reloadData()
     }
     
     private func _setupViews() {
+        pickDocumentFooterButton.textColor = .primaryText
+        scanDocumentFooterButton.textColor = .primaryText
+        settingsFooterButton.textColor = .primaryText
+        
+        noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
+        noDocumentsMessageLabel.numberOfLines = 0
+        noDocumentsMessageLabel.text = "You don't have any documents at present. Scan or Pick you document and digitise them."
+        
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
-        footerView.layer.cornerRadius = 32
+        footerView.layer.cornerRadius = 16
         footerView.clipsToBounds = true
         headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
         headerLabel.text = "My Documents".localized
@@ -181,8 +197,7 @@ extension LegacyHomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.size.width * 0.45
-        return CGSize(width: width, height: width)
+        return CGSize(width: UIScreen.main.bounds.size.width * 0.92, height: 80)
     }
 }
 

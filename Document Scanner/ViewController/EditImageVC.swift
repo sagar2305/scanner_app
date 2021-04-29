@@ -139,7 +139,6 @@ class EditImageVC: DocumentScannerViewController {
     private func _presentWeScanImageControllerInImageEditorView(for image: UIImage) {
         if _editVC == nil {
             _editVC = WeScan.EditImageViewController(image: image, quad: nil,rotateImage: false, strokeColor: UIColor.primary.cgColor)
-            _editVC.view.backgroundColor = .backgroundColor
         }
         _editVC.view.frame = imageEditorContainerView.bounds
         _editVC.willMove(toParent: self)
@@ -333,7 +332,7 @@ extension EditImageVC {
             guard let imageToFilter =  imageToEdit else {
                 fatalError("ERROR: There is no image to edit")
             }
-            if let grayScaledImage = FilterHelper.shared.convertToGrayScale(imageToFilter) {
+            if let grayScaledImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
                 imageView?.image = grayScaledImage
                 editedImagesBufferStack.append(grayScaledImage)
             }
@@ -346,7 +345,7 @@ extension EditImageVC {
             guard let imageToFilter = imageToEdit else {
                 fatalError("ERROR: There is no image to edit")
             }
-            if let grayScaledImage = FilterHelper.shared.convertToBlackAndWhit(imageToFilter) {
+            if let grayScaledImage =  GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
                 imageView?.image = grayScaledImage
                 editedImagesBufferStack.append(grayScaledImage)
             }

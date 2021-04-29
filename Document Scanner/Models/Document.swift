@@ -16,29 +16,28 @@ class Document: Codable {
     private var date: Date
     var tag: String
     
-    init?(_ name: String, originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
-        self.name = name
+    init?(originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
+        date = Date()
         self.tag = ""
+        self.name = ""
         guard originalImages.count == editedImages.count else {
             fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count) \n Quadrilaterals: \(quadrilaterals.count)")
         }
-        date = Date()
         var pages = [Page]()
         for index in 0 ..< originalImages.count {
-            let newPage = Page(originalImageName: name.appending("\(index)_original"),
-                                   originalImage: originalImages[index],
-                                   editedImageName: name.appending("\(index)_edited"),
-                                   editedImage: editedImages[index],
-                                   quadrilateral: [])
+            let newPage = Page(documentID: id.uuidString,
+                               originalImage: originalImages[index],                                   editedImage: editedImages[index],
+                               quadrilateral: [])
             guard  let page = newPage else { return nil }
             pages.append(page)
         }
         self.pages = pages
+        self.name = creationDate
     }
     
     var creationDate: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
         return dateFormatter.string(from: date)
     }
     

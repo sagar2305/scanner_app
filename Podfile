@@ -15,4 +15,5 @@ target 'Document Scanner' do
   pod 'lottie-ios'
   pod 'PMAlertController'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'QCropper'
 end

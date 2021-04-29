@@ -12,7 +12,7 @@ class GPUImageHelper {
     static let shared = GPUImageHelper()
     private init() { }
         
-    func convertToBlackAndWhite(_ image: UIImage, intensity: Float) -> UIImage? {
+    func convertToBlackAndWhite(_ image: UIImage) -> UIImage? {
         let filter = MonochromeFilter()
         filter.intensity = 1.0
         filter.color = Color(red: 0, green: 0, blue: 0, alpha: 1.0)

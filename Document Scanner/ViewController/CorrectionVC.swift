@@ -8,16 +8,16 @@
 import UIKit
 import WeScan
 import PMAlertController
+import QCropper
 
 protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
-    func correctionVC(_ viewController: CorrectionVC, saveDocument name: String, originalImage: UIImage, finalImage: UIImage)
+    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage, finalImage: UIImage)
 }
 
 class CorrectionVC: DocumentScannerViewController {
-    
     private enum CropButtonState {
         case crop, undo
     }
@@ -36,6 +36,11 @@ class CorrectionVC: DocumentScannerViewController {
     
     var image: UIImage?
     var quad: Quadrilateral?
+    /**this is passed to WeScan.EditImageViewController
+     - set false if image is scanned from camera
+     -  set true if image is picked from documents
+     */
+    var shouldRotateImage: Bool?
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet private weak var backButton: UIButton!
@@ -66,10 +71,10 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     private func _initiateEditImageVC() {
-        guard  let image = image else {
-            fatalError("ERROR: Image is not set")
+        guard  let image = image,let shouldRotate = shouldRotateImage else {
+            fatalError("ERROR: Image or shouldRotateImage option is not set")
         }
-        _editVC = WeScan.EditImageViewController(image: image, quad: quad,rotateImage: false, strokeColor: UIColor.primary.cgColor)
+        _editVC = WeScan.EditImageViewController(image: image, quad: quad, rotateImage: shouldRotate, strokeColor: UIColor.primary.cgColor)
         _editVC?.view.backgroundColor = .backgroundColor
         _editVC.view.frame = imageContainerView.bounds
         _editVC.willMove(toParent: self)
@@ -119,7 +124,7 @@ class CorrectionVC: DocumentScannerViewController {
                 generator.notificationOccurred(.error)
                 return
             }
-            self._saveDocument(withName: documentName)
+           // self._saveDocument(withName: documentName)
         }
         doneAction.setTitleColor(.primary, for: .normal)
         alertVC.addAction(doneAction)
@@ -132,12 +137,14 @@ class CorrectionVC: DocumentScannerViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
-    private func _saveDocument(withName: String) {
+    private func croppingImage() {
+    }
+    
+    private func _saveDocument() {
         guard  let image = image else {
             fatalError("ERROR: Image is not set")
         }
-        
-        delegate?.correctionVC(self, saveDocument: withName, originalImage: image, finalImage: croppedImage ?? image)
+        delegate?.correctionVC(self, originalImage: image, finalImage: croppedImage ?? image)
     }
     
     func update(image newImage: UIImage) {
@@ -153,7 +160,7 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     @IBAction func didTapDoneButton(_ sender: UIButton) {
-        _presentAlertForDocumentName()
+        _saveDocument()
     }
     
     @IBAction func didTapRescanButton(_ sender: UIButton) {

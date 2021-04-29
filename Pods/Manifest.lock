@@ -10,6 +10,7 @@ PODS:
   - Purchases (3.9.2):
     - PurchasesCoreSwift (= 3.9.2)
   - PurchasesCoreSwift (3.9.2)
+  - QCropper (0.1.4)
   - SnapKit (5.0.1)
   - SwiftLint (0.43.1)
   - WeScan (1.7.0)
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - PDFGenerator (~> 3.1)
   - PMAlertController
   - Purchases
+  - QCropper
   - SnapKit (~> 5.0.0)
   - SwiftLint
   - WeScan (>= 0.9)
@@ -32,6 +34,7 @@ SPEC REPOS:
     - PMAlertController
     - Purchases
     - PurchasesCoreSwift
+    - QCropper
     - SnapKit
   trunk:
     - Hero
@@ -50,10 +53,11 @@ SPEC CHECKSUMS:
   PMAlertController: ab5fcf4d085b7878c9451466d701449c4bf6efb8
   Purchases: d8a798c9c7552fe66b550bf314a143e94ffa70c8
   PurchasesCoreSwift: ea4eabae180416e580ac60366f41aa1fefec0693
+  QCropper: 55bce5393c872d5f9c4bfa9ff277e0d98d9f282f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: ed7384517bdbda4364ca5eb47437e8865e475fa4
+PODFILE CHECKSUM: b10ad3ee43f021529ab8852d224a55bf66901666
 
 COCOAPODS: 1.10.0

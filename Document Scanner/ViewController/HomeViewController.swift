@@ -27,7 +27,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var presentQuickAccess: Bool = false { didSet { showOrHideQuickAccessMenu() } }
+    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
     private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
@@ -40,6 +40,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var headerLabel: UILabel!
     @IBOutlet private weak var searchButton: UIButton!
+    @IBOutlet private weak var noDocumentsMessageLabel: UILabel!
     
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var quickAccessButton: FooterButton!
@@ -47,6 +48,10 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var footerContentView: UIStackView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
+    
+    @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
+    @IBOutlet private weak var settingsFooterButton: FooterButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,13 +78,22 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         let documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         self.allDocuments = documents
         self.filteredDocuments = documents
+        noDocumentsMessageLabel.isHidden = allDocuments.count > 0
         _applySnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
         
+        pickDocumentFooterButton.textColor = .primaryText
+        scanDocumentFooterButton.textColor = .primaryText
+        settingsFooterButton.textColor = .primaryText
+        
+        noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
+        noDocumentsMessageLabel.numberOfLines = 0
+        noDocumentsMessageLabel.text = "You don't have any documents at present. Scan or Pick you document and digitise them."
+        
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
-        footerView.layer.cornerRadius = 32
+        footerView.layer.cornerRadius = 16
         footerView.clipsToBounds = true
         headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
         headerLabel.text = "My Documents".localized
@@ -162,11 +176,11 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _collectionViewLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5),
+            widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: itemSize.widthDimension)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
