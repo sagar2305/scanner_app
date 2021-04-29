@@ -44,7 +44,11 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.image = image
-        correctionVC.shouldRotateImage = false
+        print(image.imageOrientation.rawValue)
+        switch image.imageOrientation {
+        case .up, .down: correctionVC.shouldRotateImage = false
+        default: correctionVC.shouldRotateImage = true
+        }
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
