@@ -35,6 +35,10 @@ class DocumentViewerCoordinator: Coordinator {
 }
 
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
+    func documentReviewVC(rename document: Document, name: String) {
+        document.rename(new: name)
+    }
+    
     //TODO: - Replace document with page as we update a page at a time
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
         pageBeingEdited = document.pages.first!

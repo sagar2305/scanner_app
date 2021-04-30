@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import PMAlertController
 
 
 protocol DocumentReviewVCDelegate: class {
@@ -14,6 +15,8 @@ protocol DocumentReviewVCDelegate: class {
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC)
     func documentReviewVC(exit controller: DocumentReviewVC)
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
+    func documentReviewVC(rename document: Document, name: String
+    )
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -39,6 +42,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var headerLabel: UILabel!
+    @IBOutlet private weak var renameButton: UIButton!
     
     @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
@@ -63,6 +67,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         headerLabel.text = document.name
         documentImageView.hero.id = document.id.uuidString
         documentImageView.image = document.pages.first?.editedImage
+        renameButton.titleLabel?.configure(with: UIFont.font(.avenirBlack, style: .callout))
     }
     
     private func _setupFooterView() {
@@ -75,8 +80,44 @@ class DocumentReviewVC: DocumentScannerViewController {
         
     }
     
+    private func _presentAlertForDocumentName() {
+        let alertVC = PMAlertController(title: "Enter Name", description: nil, image: nil, style: .alert)
+        alertVC.alertTitle.textColor = .primary
+        
+        alertVC.addTextField { (textField) in
+                    textField?.placeholder = "Document Name"
+                }
+        
+        alertVC.alertActionStackView.axis = .horizontal
+        let doneAction = PMAlertAction(title: "Done", style: .default) {
+            let textField = alertVC.textFields[0]
+            guard let documentName = textField.text,
+                  !documentName.isEmpty else {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error)
+                return
+            }
+            self.delegate?.documentReviewVC(rename: self.document!, name: documentName)
+            self.headerLabel.text = documentName
+        }
+        doneAction.setTitleColor(.primary, for: .normal)
+        alertVC.addAction(doneAction)
+        
+        let cancelAction = PMAlertAction(title: "Cancel", style: .cancel) {  }
+        alertVC.addAction(cancelAction)
+        alertVC.gravityDismissAnimation = false
+
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    
     @IBAction private func didTaBackButton(_ sender: UIButton) {
         delegate?.documentReviewVC(exit: self)
+    }
+    
+    @IBAction func didTapRenameButton(_ sender: UIButton) {
+        _presentAlertForDocumentName()
     }
     
     private func didTapPreviewAsPDF(_ sender: FooterButton) {

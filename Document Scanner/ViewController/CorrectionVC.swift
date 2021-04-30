@@ -107,36 +107,6 @@ class CorrectionVC: DocumentScannerViewController {
         cropButtonState = .crop
     }
     
-    private func _presentAlertForDocumentName() {
-        let alertVC = PMAlertController(title: "Enter Name", description: nil, image: nil, style: .alert)
-        alertVC.alertTitle.textColor = .primary
-        
-        alertVC.addTextField { (textField) in
-                    textField?.placeholder = "Document Name"
-                }
-        
-        alertVC.alertActionStackView.axis = .horizontal
-        let doneAction = PMAlertAction(title: "Done", style: .default) {
-            let textField = alertVC.textFields[0]
-            guard let documentName = textField.text,
-                  !documentName.isEmpty else {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error)
-                return
-            }
-           // self._saveDocument(withName: documentName)
-        }
-        doneAction.setTitleColor(.primary, for: .normal)
-        alertVC.addAction(doneAction)
-        
-        let cancelAction = PMAlertAction(title: "Cancel", style: .cancel) {  }
-        alertVC.addAction(cancelAction)
-        alertVC.gravityDismissAnimation = false
-
-        
-        self.present(alertVC, animated: true, completion: nil)
-    }
-    
     private func croppingImage() {
     }
     

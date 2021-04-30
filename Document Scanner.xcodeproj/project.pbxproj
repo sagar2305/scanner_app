@@ -312,20 +312,20 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				0214005F262DF1B8008B0AEE /* Debug */,
-				02BA3CC126220D6900FA9194 /* Resources */,
-				02BA3CBE2621CA2D00FA9194 /* Views */,
-				020AEDBC262029F400998398 /* Protocols */,
 				025BDA9A25F09BAC000834AE /* App files */,
 				024F07CB25FFC5B80091C73C /* CollectionViewCell */,
 				02ACA17925F9F1970063A3ED /* Controls */,
 				025BDA9C25F09DF9000834AE /* Coordinators */,
+				0214005F262DF1B8008B0AEE /* Debug */,
 				024F074625FF3B6B0091C73C /* Extensions */,
 				025DB1692600B715006943C0 /* GPUImage.xcodeproj */,
 				02ACA18E25FA8F360063A3ED /* Helpers */,
 				024F072C25FF12640091C73C /* Models */,
+				020AEDBC262029F400998398 /* Protocols */,
+				02BA3CC126220D6900FA9194 /* Resources */,
 				025DB1AE2600FEFE006943C0 /* TableViewCells */,
 				025BDAA125F0A022000834AE /* ViewController */,
+				02BA3CBE2621CA2D00FA9194 /* Views */,
 			);
 			path = "Document Scanner";
 			sourceTree = "<group>";

@@ -60,6 +60,11 @@ class Document: Codable {
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
+    func rename(new name: String) {
+        self.name = name
+        update()
+    }
+    
     func convertToPDF() -> String?{
         do {
             var pdfPages: [PDFPage] = []
