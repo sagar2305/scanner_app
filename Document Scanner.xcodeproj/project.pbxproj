@@ -52,6 +52,8 @@
 		02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02620D33263678B800AEB15F /* OnboardingVC.xib */; };
 		02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3826367B6700AEB15F /* OnboardingView.swift */; };
 		02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */; };
+		026691EF263ACA4700498E7F /* DocumentPageViC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026691ED263ACA4700498E7F /* DocumentPageViC.swift */; };
+		026691F0263ACA4700498E7F /* DocumentPageViC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 026691EE263ACA4700498E7F /* DocumentPageViC.xib */; };
 		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
 		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
 		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
@@ -170,6 +172,8 @@
 		02620D33263678B800AEB15F /* OnboardingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingVC.xib; sourceTree = "<group>"; };
 		02620D3826367B6700AEB15F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		026691ED263ACA4700498E7F /* DocumentPageViC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPageViC.swift; sourceTree = "<group>"; };
+		026691EE263ACA4700498E7F /* DocumentPageViC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentPageViC.xib; sourceTree = "<group>"; };
 		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
 		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
 		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
@@ -385,6 +389,8 @@
 				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
 				02620D32263678B800AEB15F /* OnboardingVC.swift */,
 				02620D33263678B800AEB15F /* OnboardingVC.xib */,
+				026691ED263ACA4700498E7F /* DocumentPageViC.swift */,
+				026691EE263ACA4700498E7F /* DocumentPageViC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -574,6 +580,7 @@
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
 				0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */,
+				026691F0263ACA4700498E7F /* DocumentPageViC.xib in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
 				0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */,
@@ -650,6 +657,7 @@
 				02620D34263678B800AEB15F /* OnboardingVC.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
+				026691EF263ACA4700498E7F /* DocumentPageViC.swift in Sources */,
 				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,

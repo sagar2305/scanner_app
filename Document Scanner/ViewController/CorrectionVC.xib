@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CorrectionVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
+                <outlet property="addNewPageButton" destination="JCt-Nj-IAo" id="sey-fI-Ob7"/>
                 <outlet property="backButton" destination="Lg9-yT-tWI" id="2ZE-SB-yeC"/>
                 <outlet property="cropButton" destination="ug8-to-wCI" id="7VD-PJ-ZRP"/>
                 <outlet property="doneButton" destination="mL2-VZ-YnN" id="JxF-vZ-K2F"/>
@@ -49,9 +50,17 @@
                                 <action selector="didTapBackButton:" destination="-1" eventType="touchUpInside" id="Fu1-Ix-6wB"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCt-Nj-IAo">
+                            <rect key="frame" x="366" y="4" width="32" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="5yC-7H-a9Y"/>
+                            </constraints>
+                            <state key="normal" title="Add "/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="JCt-Nj-IAo" firstAttribute="centerY" secondItem="aUg-D9-dJt" secondAttribute="centerY" id="DEQ-nr-7II"/>
                         <constraint firstItem="Lg9-yT-tWI" firstAttribute="top" secondItem="aUg-D9-dJt" secondAttribute="top" constant="4" id="FzH-vA-YOi"/>
                         <constraint firstAttribute="height" constant="52" id="Oes-Iw-BN5"/>
                         <constraint firstAttribute="bottom" secondItem="Lg9-yT-tWI" secondAttribute="bottom" constant="4" id="TIC-za-xlR"/>
@@ -59,6 +68,7 @@
                         <constraint firstItem="YNb-Q2-b5T" firstAttribute="centerX" secondItem="aUg-D9-dJt" secondAttribute="centerX" id="enh-lQ-z95"/>
                         <constraint firstAttribute="bottom" secondItem="YNb-Q2-b5T" secondAttribute="bottom" constant="4" id="irk-ks-eRr"/>
                         <constraint firstItem="Lg9-yT-tWI" firstAttribute="leading" secondItem="aUg-D9-dJt" secondAttribute="leading" constant="16" id="tUV-v6-0GA"/>
+                        <constraint firstAttribute="trailing" secondItem="JCt-Nj-IAo" secondAttribute="trailing" constant="16" id="xxB-U5-DOL"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-mX-4bG">

@@ -43,6 +43,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     private func presentImageCorrectionViewController(for image: UIImage) {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
+        correctionVC.dataSource = self
         correctionVC.image = image
         print(image.imageOrientation.rawValue)
         switch image.imageOrientation {
@@ -99,6 +100,12 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
         _pickDocument()
+    }
+}
+
+extension PickDocumentCoordinator: CorrectionVCDataSource {
+    func correctionVC(_ viewController: CorrectionVC, titleFor nextPage: UIButton) -> String {
+        return "Pick Next"
     }
 }
 

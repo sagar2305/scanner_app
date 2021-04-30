@@ -8,13 +8,17 @@
 import UIKit
 import WeScan
 import PMAlertController
-import QCropper
+import SnapKit
 
 protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage, finalImage: UIImage)
+}
+
+protocol CorrectionVCDataSource: class {
+    
 }
 
 class CorrectionVC: DocumentScannerViewController {
@@ -31,10 +35,21 @@ class CorrectionVC: DocumentScannerViewController {
         return imageView
     }()
     
+    private lazy var _imagePageController: UIPageViewController = {
+        let pageController = UIPageViewController()
+        pageController.view.translatesAutoresizingMaskIntoConstraints = false
+        return pageController
+    }()
+    
     private var croppedImage: UIImage?
     private var cropButtonState: CropButtonState = .crop
     
-    var image: UIImage?
+    var image: [UIImage]? {
+        didSet {
+            
+        }
+    }
+    var currentPageIndex: Int?
     var quad: Quadrilateral?
     /**this is passed to WeScan.EditImageViewController
      - set false if image is scanned from camera
@@ -50,8 +65,10 @@ class CorrectionVC: DocumentScannerViewController {
     @IBOutlet private weak var rotateButton: UIButton!
     @IBOutlet private weak var cropButton: UIButton!
     @IBOutlet private weak var imageContainerView: UIView!
+    @IBOutlet private weak var addNewPageButton: UIButton!
     
     weak var delegate: CorrectionVCDelegate?
+    weak var dataSource: CorrectionVCDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +84,8 @@ class CorrectionVC: DocumentScannerViewController {
         headerLabel.text = ""
         editButton.isHidden = true
         rotateButton.isHidden = true
+        let title = dataSource?.correctionVC(self, titleFor: addNewPageButton)
+        addNewPageButton.setTitle(title, for: .normal)
         _initiateEditImageVC()
     }
     
@@ -74,6 +93,7 @@ class CorrectionVC: DocumentScannerViewController {
         guard  let image = image,let shouldRotate = shouldRotateImage else {
             fatalError("ERROR: Image or shouldRotateImage option is not set")
         }
+        
         _editVC = WeScan.EditImageViewController(image: image, quad: quad, rotateImage: shouldRotate, strokeColor: UIColor.primary.cgColor)
         _editVC?.view.backgroundColor = .backgroundColor
         _editVC.view.frame = imageContainerView.bounds

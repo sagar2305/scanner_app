@@ -46,6 +46,7 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
+        correctionVC.dataSource = self
         correctionVC.quad = quad
         correctionVC.image = image
         correctionVC.shouldRotateImage = true
@@ -76,6 +77,12 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
         navigationController.popViewController(animated: true)
     }    
+}
+
+extension ScanDocumentCoordinator: CorrectionVCDataSource {
+    func correctionVC(_ viewController: CorrectionVC, titleFor nextPage: UIButton) -> String {
+        return "Scan Next"
+    }
 }
 
 extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
