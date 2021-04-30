@@ -14,6 +14,14 @@ class OnboardingView: UIView {
     private var header: String
     private var desc: String
     private var image: UIImage
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .backgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.configure(with: UIFont.font(.avenirMedium, style: .title1))
@@ -58,21 +66,29 @@ class OnboardingView: UIView {
     }
     
     private func _setupView() {
-        addSubview(headerLabel)
+        
+        addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.bottom.right.lessThanOrEqualToSuperview()
+            //make.top.right.lessThanOrEqualToSuperview()
+        }
+        
+        containerView.addSubview(headerLabel)
         headerLabel.text = header
         headerLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(12)
             make.top.equalToSuperview().inset(16)
         }
         
-        addSubview(descriptionLabel)
+        containerView.addSubview(descriptionLabel)
         descriptionLabel.text = desc
         descriptionLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(8)
             make.top.equalTo(headerLabel.snp.bottom).offset(12)
         }
         
-        addSubview(imageView)
+        containerView.addSubview(imageView)
         imageView.image = image
         imageView.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(16)
