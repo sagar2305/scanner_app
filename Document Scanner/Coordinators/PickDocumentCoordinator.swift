@@ -24,6 +24,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var navigationController: DocumentScannerNavigationController
     var correctionVC: CorrectionVC!
     private var isCorrectionVCPresented = false
+    private var currentDocumentImages = [UIImage]()
 
     func start() {
        _pickDocument()
@@ -41,10 +42,11 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func presentImageCorrectionViewController(for image: UIImage) {
+        currentDocumentImages.append(image)
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self
-        correctionVC.image = image
+        correctionVC.image = currentDocumentImages
         print(image.imageOrientation.rawValue)
         switch image.imageOrientation {
         case .up, .down: correctionVC.shouldRotateImage = false

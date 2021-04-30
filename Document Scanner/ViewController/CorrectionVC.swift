@@ -14,11 +14,11 @@ protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
-    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage, finalImage: UIImage)
+    func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage])
 }
 
 protocol CorrectionVCDataSource: class {
-    
+    func correctionVC(_ viewController: CorrectionVC, titleFor nextPage: UIButton) -> String
 }
 
 class CorrectionVC: DocumentScannerViewController {
@@ -41,19 +41,22 @@ class CorrectionVC: DocumentScannerViewController {
         return pageController
     }()
     
-    private var croppedImage: UIImage?
+    private var croppedImages: [UIImage]?
     private var cropButtonState: CropButtonState = .crop
+    private var pageControllerItems: [UIViewController] = []
     
-    var image: [UIImage]? {
+    var images: [UIImage]? {
         didSet {
-            
+            if images != nil {
+                croppedImages = images!
+            }
         }
     }
     var currentPageIndex: Int?
-    var quad: Quadrilateral?
+    var quad: [Quadrilateral?]?
     /**this is passed to WeScan.EditImageViewController
      - set false if image is scanned from camera
-     -  set true if image is picked from documents
+     -  set true if image is picked from documents and there orientation is  left or right
      */
     var shouldRotateImage: Bool?
     
@@ -86,15 +89,37 @@ class CorrectionVC: DocumentScannerViewController {
         rotateButton.isHidden = true
         let title = dataSource?.correctionVC(self, titleFor: addNewPageButton)
         addNewPageButton.setTitle(title, for: .normal)
-        _initiateEditImageVC()
+        guard let images = images,
+              images.count > 0 else {
+            fatalError("ERROR: Images or shouldRotateImage option is not set")
+        }
+        _cropImage(at: images.count - 1)
     }
     
-    private func _initiateEditImageVC() {
-        guard  let image = image,let shouldRotate = shouldRotateImage else {
-            fatalError("ERROR: Image or shouldRotateImage option is not set")
+    private func _setupPageController() {
+        if !children.contains(_imagePageController) {
+            _imagePageController.willMove(toParent: self)
+            addChild(_imagePageController)
+            _imagePageController.didMove(toParent: self)
         }
         
-        _editVC = WeScan.EditImageViewController(image: image, quad: quad, rotateImage: shouldRotate, strokeColor: UIColor.primary.cgColor)
+        
+        //TODO: - Add completion
+        _imagePageController.setViewControllers([pageControllerItems.last!], direction: .reverse, animated: true)
+        
+    }
+    
+    private func _cropImage(at index: Int) {
+        guard let shouldRotate = shouldRotateImage,
+              let images = images,
+              let quadrilaterals = quad else {
+            fatalError("ERROR: Images or shouldRotateImage option is not set")
+        }
+        
+        _editVC = WeScan.EditImageViewController(image: images[index],
+                                                 quad: quadrilaterals[index],
+                                                 rotateImage: shouldRotate,
+                                                 strokeColor: UIColor.primary.cgColor)
         _editVC?.view.backgroundColor = .backgroundColor
         _editVC.view.frame = imageContainerView.bounds
         _editVC.willMove(toParent: self)
@@ -107,7 +132,6 @@ class CorrectionVC: DocumentScannerViewController {
     private func _presentCroppedImage(_ image: UIImage) {
         imageContainerView.addSubview(_croppedImageView)
         _croppedImageView.image = image
-        croppedImage = image
         imageContainerView.bringSubviewToFront(_croppedImageView)
         _editVC.view.isHidden = true
         guard  let undoImage = UIImage(named: "undo-ellipse") else {
@@ -161,10 +185,11 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     private func _saveDocument() {
-        guard  let image = image else {
-            fatalError("ERROR: Image is not set")
+        guard let images = images,
+              let croppedImages = croppedImages else {
+            fatalError("ERROR: images or cropped images are empty")
         }
-        delegate?.correctionVC(self, originalImage: image, finalImage: croppedImage ?? image)
+        delegate?.correctionVC(self, originalImages: images, finalImages: croppedImages ?? images)
     }
     
     func update(image newImage: UIImage) {
@@ -212,7 +237,7 @@ class CorrectionVC: DocumentScannerViewController {
 
 extension CorrectionVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        croppedImage = image
+        croppedImages.insert(image, at: currentPageIndex)
        _presentCroppedImage(croppedImage!)
     }
 }

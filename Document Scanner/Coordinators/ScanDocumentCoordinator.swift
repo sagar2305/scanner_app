@@ -25,6 +25,9 @@ class ScanDocumentCoordinator: Coordinator {
     var navigationController: DocumentScannerNavigationController
     var correctionVC: CorrectionVC!
     weak var delegate: ScanDocumentCoordinatorDelegate?
+    private var currentDocumentImages = [UIImage]()
+    private var currentDocumentImagesQuads = [Quadrilateral?]()
+
     
     init(_ controller: DocumentScannerNavigationController) {
         self.navigationController = controller
@@ -44,11 +47,13 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     }
     
     func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
+        currentDocumentImages.append(image)
+        currentDocumentImagesQuads.append(quad)
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self
-        correctionVC.quad = quad
-        correctionVC.image = image
+        correctionVC.quad = currentDocumentImagesQuads
+        correctionVC.image = currentDocumentImages
         correctionVC.shouldRotateImage = true
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true

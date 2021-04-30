@@ -27,6 +27,7 @@
 		024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025BDA8E25F09AA6000834AE /* Assets.xcassets */; };
 		024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F07CC25FFC5DD0091C73C /* DocumentCollectionViewCell.swift */; };
 		024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 024F07CD25FFC5DD0091C73C /* DocumentCollectionViewCell.xib */; };
+		02596832263C16AD00B5EDAE /* DocumentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02596831263C16AD00B5EDAE /* DocumentPageView.swift */; };
 		025BDA8625F09AA1000834AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDA8525F09AA1000834AE /* AppDelegate.swift */; };
 		025BDA8825F09AA1000834AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDA8725F09AA1000834AE /* SceneDelegate.swift */; };
 		025BDA8A25F09AA1000834AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BDA8925F09AA1000834AE /* ViewController.swift */; };
@@ -52,8 +53,6 @@
 		02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02620D33263678B800AEB15F /* OnboardingVC.xib */; };
 		02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3826367B6700AEB15F /* OnboardingView.swift */; };
 		02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */; };
-		026691EF263ACA4700498E7F /* DocumentPageViC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026691ED263ACA4700498E7F /* DocumentPageViC.swift */; };
-		026691F0263ACA4700498E7F /* DocumentPageViC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 026691EE263ACA4700498E7F /* DocumentPageViC.xib */; };
 		0271CA712625835300052565 /* IntroductionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271CA6F2625835300052565 /* IntroductionVC.swift */; };
 		0271CA722625835300052565 /* IntroductionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA702625835300052565 /* IntroductionVC.xib */; };
 		0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA76262583B100052565 /* Avenir Black.ttf */; };
@@ -146,6 +145,7 @@
 		024F077825FFB97A0091C73C /* Foundation+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extension.swift"; sourceTree = "<group>"; };
 		024F07CC25FFC5DD0091C73C /* DocumentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCollectionViewCell.swift; sourceTree = "<group>"; };
 		024F07CD25FFC5DD0091C73C /* DocumentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentCollectionViewCell.xib; sourceTree = "<group>"; };
+		02596831263C16AD00B5EDAE /* DocumentPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPageView.swift; sourceTree = "<group>"; };
 		025BDA8225F09AA1000834AE /* Document Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Document Scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		025BDA8525F09AA1000834AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		025BDA8725F09AA1000834AE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,8 +172,6 @@
 		02620D33263678B800AEB15F /* OnboardingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingVC.xib; sourceTree = "<group>"; };
 		02620D3826367B6700AEB15F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		02620D3A2636C8EE00AEB15F /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
-		026691ED263ACA4700498E7F /* DocumentPageViC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPageViC.swift; sourceTree = "<group>"; };
-		026691EE263ACA4700498E7F /* DocumentPageViC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentPageViC.xib; sourceTree = "<group>"; };
 		0271CA6F2625835300052565 /* IntroductionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionVC.swift; sourceTree = "<group>"; };
 		0271CA702625835300052565 /* IntroductionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroductionVC.xib; sourceTree = "<group>"; };
 		0271CA76262583B100052565 /* Avenir Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Black.ttf"; sourceTree = "<group>"; };
@@ -316,20 +314,20 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				0214005F262DF1B8008B0AEE /* Debug */,
-				02BA3CC126220D6900FA9194 /* Resources */,
-				02BA3CBE2621CA2D00FA9194 /* Views */,
-				020AEDBC262029F400998398 /* Protocols */,
 				025BDA9A25F09BAC000834AE /* App files */,
 				024F07CB25FFC5B80091C73C /* CollectionViewCell */,
 				02ACA17925F9F1970063A3ED /* Controls */,
 				025BDA9C25F09DF9000834AE /* Coordinators */,
+				0214005F262DF1B8008B0AEE /* Debug */,
 				024F074625FF3B6B0091C73C /* Extensions */,
 				025DB1692600B715006943C0 /* GPUImage.xcodeproj */,
 				02ACA18E25FA8F360063A3ED /* Helpers */,
 				024F072C25FF12640091C73C /* Models */,
+				020AEDBC262029F400998398 /* Protocols */,
+				02BA3CC126220D6900FA9194 /* Resources */,
 				025DB1AE2600FEFE006943C0 /* TableViewCells */,
 				025BDAA125F0A022000834AE /* ViewController */,
+				02BA3CBE2621CA2D00FA9194 /* Views */,
 			);
 			path = "Document Scanner";
 			sourceTree = "<group>";
@@ -389,8 +387,6 @@
 				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
 				02620D32263678B800AEB15F /* OnboardingVC.swift */,
 				02620D33263678B800AEB15F /* OnboardingVC.xib */,
-				026691ED263ACA4700498E7F /* DocumentPageViC.swift */,
-				026691EE263ACA4700498E7F /* DocumentPageViC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -457,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				02620D3826367B6700AEB15F /* OnboardingView.swift */,
+				02596831263C16AD00B5EDAE /* DocumentPageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -580,7 +577,6 @@
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
 				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
 				0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */,
-				026691F0263ACA4700498E7F /* DocumentPageViC.xib in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
 				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
 				0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */,
@@ -653,11 +649,11 @@
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
 				02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */,
+				02596832263C16AD00B5EDAE /* DocumentPageView.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
 				02620D34263678B800AEB15F /* OnboardingVC.swift in Sources */,
 				02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */,
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
-				026691EF263ACA4700498E7F /* DocumentPageViC.swift in Sources */,
 				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,
