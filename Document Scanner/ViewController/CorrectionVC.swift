@@ -18,10 +18,7 @@ protocol CorrectionVCDelegate: class {
 }
 
 class CorrectionVC: DocumentScannerViewController {
-    private enum CropButtonState {
-        case crop, undo
-    }
-
+    
     private var _editVC: EditImageViewController!
     private lazy var _croppedImageView: UIImageView = {
         let imageView = UIImageView()
@@ -31,8 +28,15 @@ class CorrectionVC: DocumentScannerViewController {
         return imageView
     }()
     
+    private lazy var imageCorrectionControls: ImageCorrectionControls = {
+        let controls = ImageCorrectionControls()
+        controls.onDoneTap = didTapDoneButton
+        controls.onEditTap = didTapEditButton
+        controls.onRescanTap = didTapRescanButton
+        return controls
+    }()
+    
     private var croppedImage: UIImage?
-    private var cropButtonState: CropButtonState = .crop
     
     var image: UIImage?
     var quad: Quadrilateral?
@@ -44,12 +48,8 @@ class CorrectionVC: DocumentScannerViewController {
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet private weak var backButton: UIButton!
-    @IBOutlet private weak var editButton: UIButton!
-    @IBOutlet private weak var doneButton: UIButton!
-    @IBOutlet private weak var retakeButton: UIButton!
-    @IBOutlet private weak var rotateButton: UIButton!
-    @IBOutlet private weak var cropButton: UIButton!
     @IBOutlet private weak var imageContainerView: UIView!
+    @IBOutlet private weak var footerView: UIView!
     
     weak var delegate: CorrectionVCDelegate?
     
@@ -65,9 +65,14 @@ class CorrectionVC: DocumentScannerViewController {
     
     private func _setupViews() {
         headerLabel.text = ""
-        editButton.isHidden = true
-        rotateButton.isHidden = true
+        _setupFooterView()
         _initiateEditImageVC()
+    }
+    
+    private func _setupFooterView() {
+        footerView.addSubview(imageCorrectionControls)
+        imageCorrectionControls.snp.makeConstraints { make in make.left.right.top.bottom.equalToSuperview() }
+        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
     private func _initiateEditImageVC() {
@@ -90,24 +95,11 @@ class CorrectionVC: DocumentScannerViewController {
         croppedImage = image
         imageContainerView.bringSubviewToFront(_croppedImageView)
         _editVC.view.isHidden = true
-        guard  let undoImage = UIImage(named: "undo-ellipse") else {
-            fatalError("ERROR: No image found with name undo-ellipse")
-        }
-        cropButton.setImage(undoImage, for: .normal)
-        cropButtonState = .undo
     }
     
     private func _presentEditVC() {
         _editVC.view.isHidden = false
         imageContainerView.bringSubviewToFront(_editVC.view)
-        guard  let crop = UIImage(named: "crop-ellipse") else {
-            fatalError("ERROR: No image found with name crop-ellipse")
-        }
-        cropButton.setImage(crop, for: .normal)
-        cropButtonState = .crop
-    }
-    
-    private func croppingImage() {
     }
     
     private func _saveDocument() {
@@ -122,47 +114,29 @@ class CorrectionVC: DocumentScannerViewController {
         _presentCroppedImage(croppedImage!)
     }
     
-    @IBAction func didTapEditButton(_ sender: UIButton) {
+    func didTapEditButton(_ sender: UIButton) {
         guard let imageToEdit = croppedImage ?? image else {
             fatalError("ERROR: No image found for editing")
         }
         delegate?.correctionVC(self, edit: imageToEdit)
     }
     
-    @IBAction func didTapDoneButton(_ sender: UIButton) {
-        _saveDocument()
+    func didTapDoneButton(_ sender: UIButton) {
+        _editVC.cropImage()
     }
     
-    @IBAction func didTapRescanButton(_ sender: UIButton) {
+    func didTapRescanButton(_ sender: FooterButton) {
         delegate?.correctionVC(self, didTapRetake: sender)
     }
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
     }
-    
-    @IBAction func didTapRotateButton(_ sender: Any) {
-        croppedImage = (croppedImage ?? image)?.rotateRight()
-        _croppedImageView.image = croppedImage
-    }
-    
-    @IBAction func cropImage(_ sender: UIButton) {
-        switch cropButtonState {
-        case .crop:
-            editButton.isHidden = false
-            rotateButton.isHidden = false
-            _editVC.cropImage()
-        case .undo:
-            editButton.isHidden = true
-            rotateButton.isHidden = true
-            _presentEditVC()
-        }
-    }
 }
 
 extension CorrectionVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
         croppedImage = image
-       _presentCroppedImage(croppedImage!)
+       _saveDocument()
     }
 }

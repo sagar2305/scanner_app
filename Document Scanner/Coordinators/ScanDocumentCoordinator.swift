@@ -67,7 +67,8 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
     }
     
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage) {
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: image)
+        let updatedOrientationImage = UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: .up)
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: updatedOrientationImage)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()

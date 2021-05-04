@@ -90,7 +90,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         
         noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         noDocumentsMessageLabel.numberOfLines = 0
-        noDocumentsMessageLabel.text = "You don't have any documents at present. Scan or Pick you document and digitise them."
+        noDocumentsMessageLabel.text = "You don't have any document at the moment. Scan your first document."
+        
+        headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         footerView.layer.cornerRadius = 16

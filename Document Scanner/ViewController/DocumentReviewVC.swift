@@ -63,11 +63,12 @@ class DocumentReviewVC: DocumentScannerViewController {
             fatalError("ERROR: document is not set")
         }
         navigationController?.navigationBar.isHidden = true
-        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
+        headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
+        headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         headerLabel.text = document.name
         documentImageView.hero.id = document.id.uuidString
         documentImageView.image = document.pages.first?.editedImage
-        renameButton.titleLabel?.configure(with: UIFont.font(.avenirBlack, style: .callout))
+        renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
     }
     
     private func _setupFooterView() {
