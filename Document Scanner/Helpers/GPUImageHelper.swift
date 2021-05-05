@@ -19,6 +19,20 @@ class GPUImageHelper {
         return image.filterWithOperation(filter)
     }
     
+    func convertToGrayScale(_ image: UIImage) -> UIImage? {
+        let filter = MonochromeFilter()
+        filter.intensity = 1.0
+        filter.color = Color(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+        return image.filterWithOperation(filter)
+    }
+    
+    func convertToOriginal(_ image: UIImage) -> UIImage? {
+        let filter = MonochromeFilter()
+        filter.intensity = 1.0
+        filter.color = Color(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        return image.filterWithOperation(filter)
+    }
+    
     func adjustBrightness(_ image: UIImage, intensity: Float) -> UIImage? {
         let filter = BrightnessAdjustment()
         filter.brightness = intensity

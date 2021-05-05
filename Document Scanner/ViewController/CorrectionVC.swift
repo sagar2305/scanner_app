@@ -89,19 +89,6 @@ class CorrectionVC: DocumentScannerViewController {
         _editVC.delegate = self
     }
     
-    private func _presentCroppedImage(_ image: UIImage) {
-        imageContainerView.addSubview(_croppedImageView)
-        _croppedImageView.image = image
-        croppedImage = image
-        imageContainerView.bringSubviewToFront(_croppedImageView)
-        _editVC.view.isHidden = true
-    }
-    
-    private func _presentEditVC() {
-        _editVC.view.isHidden = false
-        imageContainerView.bringSubviewToFront(_editVC.view)
-    }
-    
     private func _saveDocument() {
         guard  let image = image else {
             fatalError("ERROR: Image is not set")
@@ -109,9 +96,12 @@ class CorrectionVC: DocumentScannerViewController {
         delegate?.correctionVC(self, originalImage: image, finalImage: croppedImage ?? image)
     }
     
-    func update(image newImage: UIImage) {
-        croppedImage = newImage
-        _presentCroppedImage(croppedImage!)
+    func updateEdited(image newImage: UIImage, isRotated: Bool) {
+        image = newImage
+        shouldRotateImage = false
+        if isRotated { quad = nil }
+        imageContainerView.subviews.forEach { $0.removeFromSuperview() }
+        _initiateEditImageVC()
     }
     
     func didTapEditButton(_ sender: UIButton) {

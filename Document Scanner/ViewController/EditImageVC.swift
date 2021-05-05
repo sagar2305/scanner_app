@@ -11,7 +11,7 @@ import SnapKit
 
 protocol EditImageVCDelegate: class {
     func cancelImageEditing(_controller: EditImageVC)
-    func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC)
+    func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC, isRotated: Bool)
 }
 
 protocol EditImageVCDataSource: class {
@@ -76,6 +76,7 @@ class EditImageVC: DocumentScannerViewController {
     private var _editVC: EditImageViewController!
     private var imageView: UIImageView?
     private var currentEditingControlView: UIView?
+    private var isRotated = false
     private var setFooterControlsHidden = false {
         didSet {
             imageEditControls.isHidden = setFooterControlsHidden
@@ -88,7 +89,7 @@ class EditImageVC: DocumentScannerViewController {
     //set externally
     var imageToEdit: UIImage!
     weak var delegate: EditImageVCDelegate?
-    weak var dateSource: EditImageVCDataSource?
+    weak var dataSource: EditImageVCDataSource?
     
     //temporary images
     private var editedImagesBufferStack = [UIImage]()
@@ -128,8 +129,8 @@ class EditImageVC: DocumentScannerViewController {
     //initial setup
     private func _setupImageEditorView() {
         imageEditorContainerView.subviews.forEach { $0.removeFromSuperview() }
-        guard let dataSource = dateSource, let imageToEdit = imageToEdit else {
-            fatalError("ERROR: Datasource or imageToEdit is not set is not set is not set")
+        guard let dataSource = dataSource, let imageToEdit = imageToEdit else {
+            fatalError("ERROR: Datasource or imageToEditis not set")
         }
         
         imageEditControls.editOriginalImageOptionIsHidden = dataSource.isNewDocument
@@ -178,14 +179,11 @@ class EditImageVC: DocumentScannerViewController {
         var editedImage: UIImage?
         switch option {
         case .brightness:
-            //editedImage = FilterHelper.shared.adjustColor(.brightness, of: imageToFilter, intensity: intensity)
             editedImage = GPUImageHelper.shared.adjustBrightness(imageToFilter, intensity: intensity)
         case .contrast:
-            //editedImage = FilterHelper.shared.adjustColor(.contrast, of: imageToFilter, intensity: intensity)
             editedImage = GPUImageHelper.shared.adjustContrast(imageToFilter, intensity: intensity)
             
         case .saturation:
-            //editedImage = FilterHelper.shared.adjustColor(.saturation, of: imageToFilter, intensity: intensity)
             editedImage = GPUImageHelper.shared.adjustSaturation(imageToFilter, intensity: intensity)
         }
         guard let newImage = editedImage else { return }
@@ -196,7 +194,7 @@ class EditImageVC: DocumentScannerViewController {
     
     @IBAction private func didTapDone(_ sender: UIButton) {
         editedImagesBufferStack.append(imageView?.image ?? imageToEdit)
-        delegate?.finishedImageEditing(editedImagesBufferStack.last!, controller: self)
+        delegate?.finishedImageEditing(editedImagesBufferStack.last!, controller: self, isRotated: isRotated)
     }
     
     @IBAction private func didTapUndo(_ sender: UIButton) {
@@ -235,7 +233,11 @@ extension EditImageVC {
     }
     
     private func didTapTransformImage(_ sender: FooterButton) {
+        guard let dataSource = dataSource else {
+            fatalError("ERROR: Datasource is not set")
+        }
         if currentEditingControlView === transformImageControls { return }
+        transformImageControls.cropImageOptionIsHidden = dataSource.isNewDocument
         editControllerContainer.addSubview(transformImageControls)
         transformImageControls.frame = editControllerContainer.bounds
         transformImageControls.frame.origin.x = editControllerContainer.frame.maxX
@@ -263,7 +265,7 @@ extension EditImageVC {
     }
     
     private func didTapEditOriginalImage(_ sender: FooterButton) {
-        imageView?.image = dateSource?.originalImage
+        imageView?.image = dataSource?.originalImage
     }
 }
 
@@ -273,6 +275,7 @@ extension EditImageVC {
         guard let imageToRotate = imageView?.image else {
             fatalError("ERROR: no image available for cropping")
         }
+        isRotated = true
         imageView?.image = imageToRotate.rotateRight()
     }
     
@@ -323,32 +326,31 @@ extension EditImageVC {
 // MARK: - Image Color Option
 extension EditImageVC {
     private func didTapOriginalImage(_ sender: FooterButton) {
-        print("Original Image")
+        guard let imageToFilter =  imageToEdit else {
+            fatalError("ERROR: There is no image to edit")
+        }
+        imageView?.image = imageToFilter
+        editedImagesBufferStack.append(imageToFilter)
     }
     
     private func didTapGrayScaleImage(_ sender: FooterButton) {
-        let imageToFilter = editedImagesBufferStack.last
-        if imageToFilter == nil {
-            guard let imageToFilter =  imageToEdit else {
-                fatalError("ERROR: There is no image to edit")
-            }
-            if let grayScaledImage = GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
-                imageView?.image = grayScaledImage
-                editedImagesBufferStack.append(grayScaledImage)
-            }
+        guard let imageToFilter =  imageToEdit else {
+            fatalError("ERROR: There is no image to edit")
+        }
+        if let grayScaledImage = GPUImageHelper.shared.convertToGrayScale(imageToFilter) {
+            imageView?.image = grayScaledImage
+            editedImagesBufferStack.append(grayScaledImage)
         }
     }
     
     private func didTapBlackAndWhitImage(_ sender: FooterButton) {
-        let imageToFilter = editedImagesBufferStack.last
-        if imageToFilter == nil {
-            guard let imageToFilter = imageToEdit else {
-                fatalError("ERROR: There is no image to edit")
-            }
-            if let grayScaledImage =  GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
-                imageView?.image = grayScaledImage
-                editedImagesBufferStack.append(grayScaledImage)
-            }
+        guard let imageToFilter = imageToEdit else {
+            fatalError("ERROR: There is no image to edit")
+        }
+        
+        if let grayScaledImage =  GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
+            imageView?.image = grayScaledImage
+            editedImagesBufferStack.append(grayScaledImage)
         }
     }
 }

@@ -52,6 +52,10 @@ class TransformImageControls: UIView {
         return footerButton
     }()
     
+    var cropImageOptionIsHidden = false {
+        didSet { cropFooterButton.isHidden = cropImageOptionIsHidden }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         _setupView()

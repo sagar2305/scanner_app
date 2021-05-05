@@ -30,6 +30,7 @@ class ImageColorControls: UIView {
     private lazy var originalFooterButton: FooterButton = {
         let footerButton = FooterButton()
         footerButton.title = "Original"
+        footerButton.setImage(UIImage(named: "filter")!, for: .normal)
         footerButton.textColor = .text
         footerButton.addTarget(self, action: #selector(_originalButtonTapped(_:)), for: .touchUpInside)
         return footerButton
@@ -38,6 +39,7 @@ class ImageColorControls: UIView {
     private lazy var grayScaleFooterButton: FooterButton = {
         let footerButton = FooterButton()
         footerButton.title = "Gray Scale"
+        footerButton.setImage(UIImage(named: "gray_scale")!, for: .normal)
         footerButton.textColor = .text
         footerButton.addTarget(self, action: #selector(_grayScaleButtonTapped(_:)), for: .touchUpInside)
         return footerButton
@@ -46,6 +48,8 @@ class ImageColorControls: UIView {
     private lazy var blackAndWhiteFooterButton: FooterButton = {
         let footerButton = FooterButton()
         footerButton.title = "B&W"
+        footerButton.setImage(UIImage(named: "black_and_white")!, for: .normal)
+
         footerButton.textColor = .text
         footerButton.addTarget(self, action: #selector(_blackAndWhiteButtonTapped(_:)), for: .touchUpInside)
         return footerButton
@@ -70,9 +74,9 @@ class ImageColorControls: UIView {
         }
         
         stackView.spacing = self.bounds.width + 0.05
-        //stackView.addArrangedSubview(originalFooterButton)
+        stackView.addArrangedSubview(originalFooterButton)
         stackView.addArrangedSubview(grayScaleFooterButton)
-        //stackView.addArrangedSubview(blackAndWhiteFooterButton)
+        stackView.addArrangedSubview(blackAndWhiteFooterButton)
     }
     
     @objc private func _originalButtonTapped(_ sender: FooterButton) {

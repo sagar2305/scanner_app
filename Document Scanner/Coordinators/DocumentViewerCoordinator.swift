@@ -42,7 +42,9 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     //TODO: - Replace document with page as we update a page at a time
     func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
         pageBeingEdited = document.pages.first!
-        let editDocumentCoordinator = EditDocumentCoordinator(navigationController, edit: pageBeingEdited!.editedImage!)
+        let editDocumentCoordinator = EditDocumentCoordinator(navigationController,
+                                                              edit: pageBeingEdited!.editedImage!,
+                                                              originalImage: pageBeingEdited!.originalImage!)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
@@ -84,7 +86,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator, isRotated: Bool) {
         guard let  pageBeingEdited = pageBeingEdited else {
             fatalError("ERROR: no page is set for editing")
         }
