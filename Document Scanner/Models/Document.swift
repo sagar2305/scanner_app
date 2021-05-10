@@ -41,6 +41,13 @@ class Document: Codable {
         return dateFormatter.string(from: date)
     }
     
+    var details: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate + " - \(pages.count) Pages"
+    }
+    
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
