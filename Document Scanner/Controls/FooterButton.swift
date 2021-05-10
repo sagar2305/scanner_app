@@ -59,7 +59,7 @@ class FooterButton: UIButton {
     }
 
     @IBInspectable
-    var title: String = "" {
+    var title: String? {
         didSet {
             _titleLabel.text = title
         }

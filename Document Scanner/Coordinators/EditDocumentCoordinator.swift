@@ -11,7 +11,7 @@ import WeScan
 import NVActivityIndicatorView
 
 protocol EditDocumentCoordinatorDelegate: class {
-    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator)
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator, isRotated: Bool)
     func didCancelEditing(_ coordinator: EditDocumentCoordinator)
 }
 class EditDocumentCoordinator: Coordinator {
@@ -41,15 +41,15 @@ class EditDocumentCoordinator: Coordinator {
         editImageVC = EditImageVC()
         editImageVC!.imageToEdit = imageToEdit
         editImageVC!.delegate = self
-        editImageVC.dateSource = self
+        editImageVC.dataSource = self
         navigationController.pushViewController(editImageVC!, animated: true)
     }
 }
 
 
 extension EditDocumentCoordinator: EditImageVCDelegate {
-    func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC) {
-        delegate?.didFinishEditing(imageToEdit, editedImage: finalImage, self)
+    func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC, isRotated: Bool) {
+        delegate?.didFinishEditing(imageToEdit, editedImage: finalImage, self, isRotated: isRotated)
     }
     
     func cancelImageEditing(_controller: EditImageVC) {

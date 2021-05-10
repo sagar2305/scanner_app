@@ -56,7 +56,7 @@ class ScannerVC: UIViewController {
         scannerVC = CameraScannerViewController()
         scannerVC.view.frame = cameraPreview.bounds
         scannerVC.willMove(toParent: self)
-        scannerVC.isAutoScanEnabled = false
+        scannerVC.isAutoScanEnabled = true
         cameraPreview.addSubview(scannerVC.view)
         self.addChild(scannerVC)
         scannerVC.didMove(toParent: self)

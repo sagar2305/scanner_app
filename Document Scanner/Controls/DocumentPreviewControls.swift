@@ -80,7 +80,7 @@ class DocumentPreviewControls: UIView {
         }
         
         stackView.spacing = self.bounds.width + 0.05
-        stackView.addArrangedSubview(showAsPDFButton)
+        //stackView.addArrangedSubview(showAsPDFButton)
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(editButton)
         stackView.addArrangedSubview(deleteButton)
