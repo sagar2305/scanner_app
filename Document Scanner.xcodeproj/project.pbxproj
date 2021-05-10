@@ -19,6 +19,7 @@
 		020AEDC22620409E00998398 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDC12620409E00998398 /* IAPProduct.swift */; };
 		0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214005B262DEE5B008B0AEE /* TranformImageControls.swift */; };
 		02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02140060262DF1CB008B0AEE /* UIKitPreview.swift */; };
+		021BA67C26414552003DBD73 /* ImageCorrectionControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */; };
 		0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */; };
 		023EC567260A56F30041E6BF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023EC566260A56F30041E6BF /* Page.swift */; };
 		024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024AFE8B262FE98000E3730C /* ImageColorControls.swift */; };
@@ -138,6 +139,7 @@
 		020AEDC12620409E00998398 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
 		0214005B262DEE5B008B0AEE /* TranformImageControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranformImageControls.swift; sourceTree = "<group>"; };
 		02140060262DF1CB008B0AEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
+		021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCorrectionControls.swift; sourceTree = "<group>"; };
 		0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditingControls.swift; sourceTree = "<group>"; };
 		023EC566260A56F30041E6BF /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		024AFE8B262FE98000E3730C /* ImageColorControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageColorControls.swift; sourceTree = "<group>"; };
@@ -365,28 +367,28 @@
 		025BDAA125F0A022000834AE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				020AED80261F0A3A00998398 /* SubscriptionFlow */,
-				02F1921F260096DF00D8CB8A /* EditImageVC.swift */,
-				02F1921E260096DE00D8CB8A /* EditImageVC.xib */,
-				02F19222260096DF00D8CB8A /* HomeViewController.swift */,
-				02F19220260096DF00D8CB8A /* HomeViewController.xib */,
-				02F19221260096DF00D8CB8A /* ScannerVC.swift */,
-				02F19223260096DF00D8CB8A /* ScannerVC.xib */,
-				025DB1A62600FE86006943C0 /* SettingsVC.swift */,
-				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
-				025DB1BF26011214006943C0 /* WebViewVC.swift */,
-				025DB1C026011214006943C0 /* WebViewVC.xib */,
+				0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */,
+				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
 				02E77073260143F300C1887F /* DocumentReviewVC.swift */,
 				02E77074260143F300C1887F /* DocumentReviewVC.xib */,
 				02B6621D260467D1008CCF36 /* DocumentScannerNavigationController.swift */,
 				02B662232604691E008CCF36 /* DocumentScannerViewController.swift */,
-				02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */,
+				02F1921F260096DF00D8CB8A /* EditImageVC.swift */,
+				02F1921E260096DE00D8CB8A /* EditImageVC.xib */,
+				02F19222260096DF00D8CB8A /* HomeViewController.swift */,
+				02F19220260096DF00D8CB8A /* HomeViewController.xib */,
 				0271CA6F2625835300052565 /* IntroductionVC.swift */,
 				0271CA702625835300052565 /* IntroductionVC.xib */,
-				0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */,
-				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
+				02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */,
 				02620D32263678B800AEB15F /* OnboardingVC.swift */,
 				02620D33263678B800AEB15F /* OnboardingVC.xib */,
+				02F19221260096DF00D8CB8A /* ScannerVC.swift */,
+				02F19223260096DF00D8CB8A /* ScannerVC.xib */,
+				025DB1A62600FE86006943C0 /* SettingsVC.swift */,
+				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
+				020AED80261F0A3A00998398 /* SubscriptionFlow */,
+				025DB1BF26011214006943C0 /* WebViewVC.swift */,
+				025DB1C026011214006943C0 /* WebViewVC.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -431,6 +433,7 @@
 				02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */,
 				024AFE8B262FE98000E3730C /* ImageColorControls.swift */,
 				028FE77D263531D40049C587 /* CropFooterControls.swift */,
+				021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */,
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
+				021BA67C26414552003DBD73 /* ImageCorrectionControls.swift in Sources */,
 				02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */,
 				02596832263C16AD00B5EDAE /* DocumentPageView.swift in Sources */,
 				025DB1C126011214006943C0 /* WebViewVC.swift in Sources */,
@@ -851,7 +855,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -875,7 +879,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -19,8 +19,8 @@ struct Constants {
     }
     
     struct HeroIdentifiers {
+        static let headerIdentifier = "header_view"
         static let footerIdentifier = "footer_view"
-        static let imageView = "image_view"
     }
     
     struct  SettingDefaults {

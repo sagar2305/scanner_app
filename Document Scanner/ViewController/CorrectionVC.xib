@@ -14,13 +14,9 @@
             <connections>
                 <outlet property="addNewPageButton" destination="JCt-Nj-IAo" id="sey-fI-Ob7"/>
                 <outlet property="backButton" destination="Lg9-yT-tWI" id="2ZE-SB-yeC"/>
-                <outlet property="cropButton" destination="ug8-to-wCI" id="7VD-PJ-ZRP"/>
-                <outlet property="doneButton" destination="mL2-VZ-YnN" id="JxF-vZ-K2F"/>
-                <outlet property="editButton" destination="1QE-yX-7TM" id="tVq-dm-T8G"/>
+                <outlet property="footerView" destination="3MA-mX-4bG" id="S4Q-bx-C6d"/>
                 <outlet property="headerLabel" destination="YNb-Q2-b5T" id="Qhe-pA-2Mc"/>
                 <outlet property="imageContainerView" destination="9e3-jf-zOO" id="0co-95-39f"/>
-                <outlet property="retakeButton" destination="LgU-l9-rHw" id="4ye-RE-qJv"/>
-                <outlet property="rotateButton" destination="iz2-LB-AMa" id="OzS-do-Ykp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -73,75 +69,10 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-mX-4bG">
                     <rect key="frame" x="0.0" y="792" width="414" height="70"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dgE-iV-y5q">
-                            <rect key="frame" x="55.5" y="0.0" width="303" height="70"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1QE-yX-7TM" userLabel="Edit">
-                                    <rect key="frame" x="0.0" y="7" width="56" height="56"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="1QE-yX-7TM" secondAttribute="height" multiplier="1:1" id="vku-g1-EJr"/>
-                                    </constraints>
-                                    <state key="normal" image="edit-ellipse"/>
-                                    <connections>
-                                        <action selector="didTapEditButton:" destination="-1" eventType="touchUpInside" id="RdM-SV-FEg"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgU-l9-rHw" userLabel="Rescan">
-                                    <rect key="frame" x="60" y="7" width="56" height="56"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" image="retake-ellipse"/>
-                                    <connections>
-                                        <action selector="didTapRescanButton:" destination="-1" eventType="touchUpInside" id="ffz-Zh-eOT"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mL2-VZ-YnN" userLabel="Done">
-                                    <rect key="frame" x="120" y="3.5" width="63" height="63"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="mL2-VZ-YnN" secondAttribute="height" multiplier="1:1" id="EXg-KO-Fuh"/>
-                                    </constraints>
-                                    <state key="normal" image="done-ellipse"/>
-                                    <connections>
-                                        <action selector="didTapDoneButton:" destination="-1" eventType="touchUpInside" id="cfD-Fs-amJ"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ug8-to-wCI" userLabel="Crop">
-                                    <rect key="frame" x="187" y="7" width="56" height="56"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" image="crop-ellipse"/>
-                                    <connections>
-                                        <action selector="cropImage:" destination="-1" eventType="touchUpInside" id="336-OW-K4M"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iz2-LB-AMa" userLabel="Rotate">
-                                    <rect key="frame" x="247" y="7" width="56" height="56"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" image="rotate-ellipse"/>
-                                    <connections>
-                                        <action selector="didTapRotateButton:" destination="-1" eventType="touchUpInside" id="El5-57-cvj"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="ug8-to-wCI" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="IeY-tg-uSe"/>
-                                <constraint firstItem="ug8-to-wCI" firstAttribute="width" secondItem="ug8-to-wCI" secondAttribute="height" multiplier="1:1" id="Q3w-X3-5Mc"/>
-                                <constraint firstItem="LgU-l9-rHw" firstAttribute="width" secondItem="LgU-l9-rHw" secondAttribute="height" multiplier="1:1" id="VWO-Ea-1K6"/>
-                                <constraint firstItem="1QE-yX-7TM" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="YNU-OP-grn"/>
-                                <constraint firstItem="LgU-l9-rHw" firstAttribute="height" secondItem="dgE-iV-y5q" secondAttribute="height" multiplier="0.8" id="gDI-x7-zaE"/>
-                                <constraint firstItem="iz2-LB-AMa" firstAttribute="width" secondItem="iz2-LB-AMa" secondAttribute="height" multiplier="1:1" id="n9w-AV-0eQ"/>
-                            </constraints>
-                        </stackView>
-                    </subviews>
                     <viewLayoutGuide key="safeArea" id="Xfa-DP-tVy"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="dgE-iV-y5q" firstAttribute="top" secondItem="Xfa-DP-tVy" secondAttribute="top" id="1ch-Eq-8G7"/>
                         <constraint firstAttribute="height" constant="70" id="9TH-Gq-EuI"/>
-                        <constraint firstAttribute="bottom" secondItem="dgE-iV-y5q" secondAttribute="bottom" id="Ipq-xT-bxI"/>
-                        <constraint firstItem="dgE-iV-y5q" firstAttribute="centerX" secondItem="Xfa-DP-tVy" secondAttribute="centerX" id="wkh-Ce-Mf3"/>
-                        <constraint firstItem="iz2-LB-AMa" firstAttribute="height" secondItem="3MA-mX-4bG" secondAttribute="height" multiplier="0.8" id="xa1-Vg-MKr"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-jf-zOO">
@@ -168,11 +99,6 @@
     </objects>
     <resources>
         <image name="back-arrow" width="18" height="18"/>
-        <image name="crop-ellipse" width="280" height="280"/>
-        <image name="done-ellipse" width="63" height="63"/>
-        <image name="edit-ellipse" width="280" height="280"/>
-        <image name="retake-ellipse" width="280" height="280"/>
-        <image name="rotate-ellipse" width="280" height="280"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

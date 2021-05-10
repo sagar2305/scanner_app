@@ -112,8 +112,8 @@ extension PickDocumentCoordinator: CorrectionVCDataSource {
 }
 
 extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
-    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator) {
-        correctionVC.update(image: editedImage)
+    func didFinishEditing(_ image: UIImage, editedImage: UIImage, _ coordinator: EditDocumentCoordinator, isRotated: Bool) {
+        correctionVC.updateEdited(image: editedImage, isRotated: isRotated)
         navigationController.popViewController(animated: true)
     }
     

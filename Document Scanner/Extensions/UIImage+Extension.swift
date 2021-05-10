@@ -50,4 +50,13 @@ extension UIImage {
             UIGraphicsEndImageContext()
             return newImage
     }
+    
+    func removeRotation() -> UIImage {
+        if imageOrientation == .up { return  self }
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return normalizedImage
+    }
 }
