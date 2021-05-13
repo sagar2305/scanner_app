@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 /// used to construct HeroModifier from heroModifierString
@@ -59,14 +57,12 @@ extension HeroModifier: HeroStringConvertible {
       return .translate(x: parameters.getCGFloat(0) ?? 0,
                             y: parameters.getCGFloat(1) ?? 0,
                             z: parameters.getCGFloat(2) ?? 0)
-    #if canImport(UIKit)
     case "overlay":
       return .overlay(color: UIColor(red: parameters.getCGFloat(0) ?? 1,
                                          green: parameters.getCGFloat(1) ?? 1,
                                          blue: parameters.getCGFloat(2) ?? 1,
                                          alpha: 1),
                           opacity: parameters.getCGFloat(3) ?? 1)
-    #endif
     case "duration":
       if let duration = parameters.getDouble(0) {
         return .duration(duration)
@@ -126,5 +122,3 @@ extension HeroModifier: HeroStringConvertible {
     return nil
   }
 }
-
-#endif

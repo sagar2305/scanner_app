@@ -20,11 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Foundation
-
-#if canImport(CoreGraphics)
-import CoreGraphics
-#endif
+import UIKit
 
 internal extension Array {
   func get(_ index: Int) -> Element? {
@@ -36,14 +32,12 @@ internal extension Array {
 }
 
 internal extension Array where Element: ExprNode {
-	#if canImport(CoreGraphics)
   func getCGFloat(_ index: Int) -> CGFloat? {
     if let s = get(index) as? NumberNode {
       return CGFloat(s.value)
     }
     return nil
   }
-	#endif
   func getDouble(_ index: Int) -> Double? {
     if let s = get(index) as? NumberNode {
       return Double(s.value)

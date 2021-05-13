@@ -6,13 +6,14 @@
 //  Copyright © 2018 Luke Zhao. All rights reserved.
 //
 
-#if canImport(UIKit) && !(swift(>=4.2))
+#if !(swift(>=4.2))
 import Foundation
 import CoreMedia
 import CoreGraphics
+import UIKit
 
 extension CMTime {
-  static let zero = CMTime.zero
+  static let zero = kCMTimeZero
 }
 
 enum CAMediaTimingFillMode {
@@ -25,9 +26,6 @@ enum CAMediaTimingFunctionName {
   static let easeOut = kCAMediaTimingFunctionEaseOut
   static let easeInEaseOut = kCAMediaTimingFunctionEaseInEaseOut
 }
-
-#if canImport(UIKit)
-import UIKit
 
 extension UIControl {
   typealias State = UIControlState
@@ -42,12 +40,10 @@ extension UIViewController {
     return childViewControllers
   }
 }
-#endif
 
 extension RunLoop {
   enum Mode {
-    static let common = RunLoop.Mode.common
+    static let common = RunLoopMode.commonModes
   }
 }
-
 #endif

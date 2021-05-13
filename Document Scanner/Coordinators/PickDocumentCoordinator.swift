@@ -8,6 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 import WeScan
+import QBImagePickerController
 
 protocol PickerDocumentCoordinatorDelegate {
     func didFinishedPickingImage(_ coordinator: PickDocumentCoordinator)
@@ -35,10 +36,20 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func _pickDocument() {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.sourceType = .photoLibrary
-        imagePickerVC.delegate = self
-        navigationController.present(imagePickerVC, animated: true)
+//        let imagePickerVC = UIImagePickerController()
+//        imagePickerVC.sourceType = .photoLibrary
+//        imagePickerVC.delegate = self
+//        navigationController.present(imagePickerVC, animated: true)
+        
+        let qbImagePicker = QBImagePickerController()
+        qbImagePicker.allowsMultipleSelection = true
+        qbImagePicker.maximumNumberOfSelection = 8
+        qbImagePicker.showsNumberOfSelectedAssets = true
+        qbImagePicker.delegate = self
+        qbImagePicker.assetCollectionSubtypes = [PHAssetCollectionSubtype.albumCloudShared,
+                                                 PHAssetCollectionSubtype.albumMyPhotoStream,
+                                                 ]
+        navigationController.present(qbImagePicker, animated: true)
     }
     
     private func presentImageCorrectionViewController(for image: UIImage) {
@@ -46,7 +57,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self
-        correctionVC.image = currentDocumentImages
+        //    correctionVC.images = currentDocumentImages
         print(image.imageOrientation.rawValue)
         switch image.imageOrientation {
         case .up, .down: correctionVC.shouldRotateImage = false
@@ -81,9 +92,8 @@ extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
 }
 
 extension PickDocumentCoordinator: CorrectionVCDelegate {
-    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage,
-                      finalImage: UIImage) {
-        if let document = Document(originalImages: [originalImage], editedImages: [finalImage], quadrilaterals: []) {
+    func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage]) {
+        if let document = Document(originalImages: originalImages, editedImages: finalImages, quadrilaterals: []) {
             document.save()
             navigationController.popViewController(animated: true)
         }
@@ -119,5 +129,18 @@ extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)
+    }
+}
+
+extension PickDocumentCoordinator: QBImagePickerControllerDelegate {
+    func qb_imagePickerController(_ imagePickerController: QBImagePickerController!, didFinishPickingAssets assets: [Any]!) {
+        print(assets.count)
+        //TODO: - present correction
+        
+        
+    }
+    
+    func qb_imagePickerControllerDidCancel(_ imagePickerController: QBImagePickerController!) {
+        imagePickerController.dismiss(animated: true)
     }
 }

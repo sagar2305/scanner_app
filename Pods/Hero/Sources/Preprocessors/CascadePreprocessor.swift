@@ -22,8 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 public enum CascadeDirection {
@@ -74,11 +72,11 @@ public enum CascadeDirection {
   }
 
   public static var leadingToTrailing: CascadeDirection {
-    return !Locale.isDeviceLanguageRightToLeft ? .leftToRight : .rightToLeft
+    return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
   }
 
   public static var trailingToLeading: CascadeDirection {
-    return !Locale.isDeviceLanguageRightToLeft ? .rightToLeft : .leftToRight
+    return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? .rightToLeft : .leftToRight
   }
 
   private func topToBottomComperator(lhs: UIView, rhs: UIView) -> Bool {
@@ -138,5 +136,3 @@ class CascadePreprocessor: BasePreprocessor {
     }
   }
 }
-
-#endif

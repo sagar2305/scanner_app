@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 extension HeroTransition: UIViewControllerTransitioningDelegate {
@@ -80,5 +78,3 @@ extension HeroTransition: UIViewControllerInteractiveTransitioning {
     animateTransition(using: transitionContext)
   }
 }
-
-#endif

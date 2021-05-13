@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 class SnapshotWrapperView: UIView {
@@ -196,5 +194,3 @@ public extension UIView {
     set { hero.storedAlpha = newValue }
   }
 }
-
-#endif

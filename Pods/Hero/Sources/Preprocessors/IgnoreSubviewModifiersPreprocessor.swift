@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 class IgnoreSubviewModifiersPreprocessor: BasePreprocessor {
@@ -55,5 +53,3 @@ class IgnoreSubviewModifiersPreprocessor: BasePreprocessor {
     }
   }
 }
-
-#endif

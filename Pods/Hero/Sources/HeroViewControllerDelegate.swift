@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 @objc public protocol HeroViewControllerDelegate {
@@ -58,5 +56,3 @@ internal extension HeroTransition {
     }
   }
 }
-
-#endif

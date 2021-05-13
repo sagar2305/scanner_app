@@ -20,8 +20,11 @@ class DocumentPageView: UIView {
         return imageView
     }()
     
-    init(_ image: UIImage) {
-        self.image = image
+    init(_ page: Page) {
+        guard let editedImage = page.editedImage else {
+            fatalError("No edited image available for page")
+        }
+        self.image = editedImage
         super.init(frame: .zero)
         _setupView()
     }
@@ -42,13 +45,19 @@ class DocumentPageView: UIView {
     
 }
 
-
+// MARK: - dummy data
+extension DocumentPageView {
+    fileprivate static let page = Page(documentID: "xx"
+                                       , originalImage: UIImage(named: "share-document")!,
+                                       editedImage: UIImage(named: "share-document")!,
+                                       quadrilateral: [])!
+}
 
 @available(iOS 13, *)
 struct DocumentPageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UIKitPreview(view: DocumentPageView(UIImage(named: "share-document")!))
+            UIKitPreview(view: DocumentPageView(DocumentPageView.page))
                 .previewLayout(.fixed(width: 200, height:400))
         }
     }

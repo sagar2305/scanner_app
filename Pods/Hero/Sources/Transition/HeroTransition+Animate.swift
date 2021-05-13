@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-import UIKit
+import Foundation
 
 extension HeroTransition {
   open func animate() {
@@ -80,5 +79,3 @@ extension HeroTransition {
     fullScreenSnapshot?.removeFromSuperview()
   }
 }
-
-#endif

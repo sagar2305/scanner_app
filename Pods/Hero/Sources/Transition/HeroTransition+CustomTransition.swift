@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 // custom transition helper, used in hero_replaceViewController
@@ -40,5 +38,3 @@ public extension HeroTransition {
     start()
   }
 }
-
-#endif

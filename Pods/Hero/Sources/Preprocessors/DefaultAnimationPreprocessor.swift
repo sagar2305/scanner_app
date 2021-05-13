@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 public enum HeroDefaultAnimationType {
@@ -39,20 +37,12 @@ public enum HeroDefaultAnimationType {
       }
     }
 
-    public static var leadingToTrailing: CascadeDirection {
-      return !Locale.isDeviceLanguageRightToLeft ? .leftToRight : .rightToLeft
-    }
-
-    public static var trailingToLeading: CascadeDirection {
-      return !Locale.isDeviceLanguageRightToLeft ? .rightToLeft : .leftToRight
-    }
-
     public static var leading: Direction {
-      return !Locale.isDeviceLanguageRightToLeft ? .left : .right
+      return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? .left : .right
     }
 
     public static var trailing: Direction {
-      return !Locale.isDeviceLanguageRightToLeft ? .right : .left
+      return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? .right : .left
     }
   }
 
@@ -388,5 +378,3 @@ class DefaultAnimationPreprocessor: BasePreprocessor {
     }
   }
 }
-
-#endif
