@@ -1,0 +1,6 @@
+framework module TTInAppPurchases {
+  umbrella header "TTInAppPurchases-umbrella.h"
+
+  export *
+  module * { export * }
+}

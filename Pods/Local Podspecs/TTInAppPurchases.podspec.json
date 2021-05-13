@@ -1,0 +1,55 @@
+{
+  "name": "TTInAppPurchases",
+  "platforms": {
+    "ios": "12.0"
+  },
+  "summary": "InAppPurchase helper pod",
+  "requires_arc": true,
+  "version": "0.1.0",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Sagar Mutha": "sagar2305@gmail.com"
+  },
+  "homepage": "https://github.com/sagar2305/TTInAppPurchases",
+  "source": {
+    "git": "https://github.com/sagar2305/TTInAppPurchases.git",
+    "tag": "0.1.0"
+  },
+  "frameworks": "UIKit",
+  "dependencies": {
+    "PhoneNumberKit": [
+
+    ],
+    "LGButton": [
+
+    ],
+    "lottie-ios": [
+
+    ],
+    "Purchases": [
+
+    ],
+    "NVActivityIndicatorView": [
+      "~> 4.8.0"
+    ],
+    "Amplitude": [
+
+    ],
+    "SwiftDate": [
+
+    ],
+    "Mixpanel-swift": [
+
+    ],
+    "SwiftEntryKit": [
+
+    ]
+  },
+  "source_files": "TTInAppPurchases/**/*.{swift}",
+  "resources": "TTInAppPurchases/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}",
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}
