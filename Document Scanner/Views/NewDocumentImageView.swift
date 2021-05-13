@@ -10,13 +10,13 @@ import SwiftUI
 import SnapKit
 import WeScan
 
-class NewDocumentImageView: UIViewController {
+class NewDocumentImageViewController: UIViewController {
     
     private var image: UIImage
     private var quad: Quadrilateral?
     private var finalImage: UIImage?
-    
     private let editImageVC: EditImageViewController!
+    private var onCrop: ((UIImage) -> Void)?
     
     init(_ image: UIImage, shouldRotate: Bool, quad: Quadrilateral?) {
         self.image = image
@@ -45,14 +45,19 @@ class NewDocumentImageView: UIViewController {
         }
     }
     
-    func cropImage() {
+    var currentImage: UIImage {
+        return finalImage ?? image
+    }
+    
+    func cropImage(completionHandler: @escaping ((UIImage) -> Void)) {
+        self.onCrop = completionHandler
         editImageVC.cropImage()
     }
 }
 
-extension NewDocumentImageView: EditImageViewDelegate {
+extension NewDocumentImageViewController: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        finalImage = image
+        onCrop?(image)
     }
 }
 
@@ -60,7 +65,7 @@ extension NewDocumentImageView: EditImageViewDelegate {
 struct NewDocumentImageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UIKitPreview(view: NewDocumentImageView(UIImage(named: "share-document")!, shouldRotate: true, quad: nil).view)
+            UIKitPreview(view: NewDocumentImageViewController(UIImage(named: "share-document")!, shouldRotate: false, quad: nil).view)
                 .previewLayout(.fixed(width: 200, height:400))
         }
     }

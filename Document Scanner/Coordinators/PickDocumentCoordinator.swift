@@ -9,6 +9,9 @@ import UIKit
 import NVActivityIndicatorView
 import WeScan
 import QBImagePickerController
+import OpalImagePicker
+import ImagePicker
+import Tatsi
 
 protocol PickerDocumentCoordinatorDelegate {
     func didFinishedPickingImage(_ coordinator: PickDocumentCoordinator)
@@ -25,7 +28,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var navigationController: DocumentScannerNavigationController
     var correctionVC: CorrectionVC!
     private var isCorrectionVCPresented = false
-    private var currentDocumentImages = [UIImage]()
+    private var pageControlItems = [NewDocumentImageViewController]()
 
     func start() {
        _pickDocument()
@@ -36,59 +39,39 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func _pickDocument() {
-//        let imagePickerVC = UIImagePickerController()
-//        imagePickerVC.sourceType = .photoLibrary
-//        imagePickerVC.delegate = self
-//        navigationController.present(imagePickerVC, animated: true)
+//        let qbImagePicker = QBImagePickerController()
+//        qbImagePicker.allowsMultipleSelection = true
+//        qbImagePicker.maximumNumberOfSelection = 8
+//        qbImagePicker.showsNumberOfSelectedAssets = true
+//        qbImagePicker.delegate = self
+//        navigationController.present(qbImagePicker, animated: true)
         
-        let qbImagePicker = QBImagePickerController()
-        qbImagePicker.allowsMultipleSelection = true
-        qbImagePicker.maximumNumberOfSelection = 8
-        qbImagePicker.showsNumberOfSelectedAssets = true
-        qbImagePicker.delegate = self
-        qbImagePicker.assetCollectionSubtypes = [PHAssetCollectionSubtype.albumCloudShared,
-                                                 PHAssetCollectionSubtype.albumMyPhotoStream,
-                                                 ]
-        navigationController.present(qbImagePicker, animated: true)
-    }
+//        let imagePicker = OpalImagePickerController()
+//        imagePicker.imagePickerDelegate = self
+//        imagePicker.allowedMediaTypes = [.image]
+//        navigationController.present(imagePicker, animated: true)
+//        let imagePickerController = ImagePickerController()
+//        imagePickerController.delegate = self
+//        imagePickerController.showGalleryView()
+//        navigationController.present(imagePickerController, animated: true, completion: nil)
+        
+        let tatsiImagePicker = TatsiPickerViewController()
+        tatsiImagePicker.pickerDelegate = self
+        navigationController.present(tatsiImagePicker, animated: true)
+   }
     
-    private func presentImageCorrectionViewController(for image: UIImage) {
-        currentDocumentImages.append(image)
+    private func presentImageCorrectionViewController() {
+        guard pageControlItems.count > 0 else {
+            fatalError("No page control items are available")
+        }
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self
-        //    correctionVC.images = currentDocumentImages
-        print(image.imageOrientation.rawValue)
-        switch image.imageOrientation {
-        case .up, .down: correctionVC.shouldRotateImage = false
-        default: correctionVC.shouldRotateImage = true
-        }
+        correctionVC.pageControllerItems = pageControlItems
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
 
-}
-
-
-extension PickDocumentCoordinator: UIImagePickerControllerDelegate,
-                                   UINavigationControllerDelegate {
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        if !isCorrectionVCPresented {
-        delegate?.didCancelPickingImage(self)
-        }
-        rootViewController.dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard  let selectedImage = info[.originalImage] as? UIImage else {
-            fatalError("Failed to pick the image from photo library")
-        }
-        childCoordinators.removeAll { $0 is EditDocumentCoordinator }
-        presentImageCorrectionViewController(for: selectedImage)
-        picker.dismiss(animated: true)
-    }
-    
 }
 
 extension PickDocumentCoordinator: CorrectionVCDelegate {
@@ -134,13 +117,105 @@ extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
 
 extension PickDocumentCoordinator: QBImagePickerControllerDelegate {
     func qb_imagePickerController(_ imagePickerController: QBImagePickerController!, didFinishPickingAssets assets: [Any]!) {
-        print(assets.count)
-        //TODO: - present correction
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
+        requestOptions.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat
+        // this one is key
+        requestOptions.isSynchronous = true
         
-        
+        for asset in assets
+        {
+            if ((asset as AnyObject).mediaType == PHAssetMediaType.image)
+            {
+                
+                PHImageManager.default().requestImage(for: asset as! PHAsset,
+                                                      targetSize: PHImageManagerMaximumSize,
+                                                      contentMode: PHImageContentMode.default,
+                                                      options: requestOptions, resultHandler: { (pickedImage, info) in
+                                                        
+                                                        guard let pickedImage = pickedImage else {
+                                                            return
+                                                        }
+                                                        
+                                                        let shouldRotate = !(pickedImage.imageOrientation == .up || pickedImage.imageOrientation == .down)
+                                                        self.pageControlItems.append(NewDocumentImageViewController(pickedImage, shouldRotate: shouldRotate, quad: nil))
+                                                        
+                                                      })
+                
+            }
+        }
+        imagePickerController.dismiss(animated: true)
+        print(pageControlItems.count)
+        presentImageCorrectionViewController()
     }
     
     func qb_imagePickerControllerDidCancel(_ imagePickerController: QBImagePickerController!) {
         imagePickerController.dismiss(animated: true)
     }
+}
+
+extension PickDocumentCoordinator: OpalImagePickerControllerDelegate {
+    func imagePicker(_ picker: OpalImagePickerController, didFinishPickingAssets assets: [PHAsset]) {
+        print(assets.count)
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerDidCancel(_ picker: OpalImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+extension PickDocumentCoordinator: ImagePickerDelegate {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        print(images.count)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated:true)
+    }
+    
+    
+}
+
+extension PickDocumentCoordinator: TatsiPickerViewControllerDelegate {
+    func pickerViewController(_ pickerViewController: TatsiPickerViewController, didPickAssets assets: [PHAsset]) {
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
+        requestOptions.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat
+        // this one is key
+        requestOptions.isSynchronous = true
+        
+        for asset in assets
+        {
+            if ((asset as AnyObject).mediaType == PHAssetMediaType.image)
+            {
+                
+                PHImageManager.default().requestImage(for: asset,
+                                                      targetSize: PHImageManagerMaximumSize,
+                                                      contentMode: PHImageContentMode.default,
+                                                      options: requestOptions, resultHandler: { (pickedImage, info) in
+                                                        
+                                                        guard let pickedImage = pickedImage else {
+                                                            return
+                                                        }
+                                                        
+                                                        let shouldRotate = !(pickedImage.imageOrientation == .up || pickedImage.imageOrientation == .down)
+                                                        self.pageControlItems.append(NewDocumentImageViewController(pickedImage, shouldRotate: shouldRotate, quad: nil))
+                                                        
+                                                      })
+                
+            }
+        }
+        presentImageCorrectionViewController()
+        pickerViewController.dismiss(animated: true)
+    }
+    
+    func pickerViewControllerDidCancel(_ pickerViewController: TatsiPickerViewController) {
+        
+    }
+    
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -15,6 +17,7 @@
                 <outlet property="containerView" destination="9e3-jf-zOO" id="0co-95-39f"/>
                 <outlet property="footerView" destination="3MA-mX-4bG" id="S4Q-bx-C6d"/>
                 <outlet property="headerLabel" destination="YNb-Q2-b5T" id="Qhe-pA-2Mc"/>
+                <outlet property="pageControl" destination="sRy-QB-Sh1" id="gjg-F5-FiD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,8 +26,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aUg-D9-dJt">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aUg-D9-dJt" userLabel="Header View">
+                    <rect key="frame" x="0.0" y="44" width="414" height="52"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNb-Q2-b5T">
                             <rect key="frame" x="186.5" y="4" width="41.5" height="44"/>
@@ -44,7 +47,7 @@
                                 <action selector="didTapBackButton:" destination="-1" eventType="touchUpInside" id="Fu1-Ix-6wB"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCt-Nj-IAo">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCt-Nj-IAo">
                             <rect key="frame" x="366" y="4" width="32" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="5yC-7H-a9Y"/>
@@ -65,16 +68,21 @@
                         <constraint firstAttribute="trailing" secondItem="JCt-Nj-IAo" secondAttribute="trailing" constant="16" id="xxB-U5-DOL"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-mX-4bG">
-                    <rect key="frame" x="0.0" y="826" width="414" height="70"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MA-mX-4bG" userLabel="Footer View">
+                    <rect key="frame" x="0.0" y="792" width="414" height="70"/>
                     <viewLayoutGuide key="safeArea" id="Xfa-DP-tVy"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="70" id="9TH-Gq-EuI"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-jf-zOO">
-                    <rect key="frame" x="0.0" y="52" width="414" height="774"/>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="sRy-QB-Sh1">
+                    <rect key="frame" x="145.5" y="772" width="123" height="28"/>
+                    <color key="pageIndicatorTintColor" name="secondaryTextColor"/>
+                    <color key="currentPageIndicatorTintColor" name="primary"/>
+                </pageControl>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-jf-zOO" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="96" width="414" height="696"/>
                     <color key="backgroundColor" name="background"/>
                 </view>
             </subviews>
@@ -83,6 +91,7 @@
             <constraints>
                 <constraint firstItem="9e3-jf-zOO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1qQ-2y-q5w"/>
                 <constraint firstItem="3MA-mX-4bG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="3R6-2i-JQ3"/>
+                <constraint firstItem="sRy-QB-Sh1" firstAttribute="bottom" secondItem="9e3-jf-zOO" secondAttribute="bottom" constant="8" id="EjX-9t-vca"/>
                 <constraint firstItem="aUg-D9-dJt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="PQc-CT-SV0"/>
                 <constraint firstItem="3MA-mX-4bG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ScK-kn-8NL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3MA-mX-4bG" secondAttribute="bottom" id="WB6-0q-Mdf"/>
@@ -90,6 +99,7 @@
                 <constraint firstAttribute="trailing" secondItem="aUg-D9-dJt" secondAttribute="trailing" id="hcU-bg-lrD"/>
                 <constraint firstItem="9e3-jf-zOO" firstAttribute="top" secondItem="aUg-D9-dJt" secondAttribute="bottom" id="l47-6u-GdF"/>
                 <constraint firstItem="aUg-D9-dJt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="pdl-eF-pY1"/>
+                <constraint firstItem="sRy-QB-Sh1" firstAttribute="centerX" secondItem="9e3-jf-zOO" secondAttribute="centerX" id="sCW-xW-EMh"/>
                 <constraint firstItem="3MA-mX-4bG" firstAttribute="top" secondItem="9e3-jf-zOO" secondAttribute="bottom" id="vqs-5A-T3y"/>
             </constraints>
             <point key="canvasLocation" x="89.855072463768124" y="98.4375"/>
@@ -99,6 +109,12 @@
         <image name="back-arrow" width="18" height="18"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="primary">
+            <color red="0.27843137254901962" green="0.48627450980392156" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="secondaryTextColor">
+            <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

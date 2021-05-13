@@ -1,6 +1,7 @@
 PODS:
   - Amplitude (7.2.1)
   - Hero (1.5.0)
+  - ImagePicker (3.2.0)
   - LGButton (1.1.6)
   - lottie-ios (3.1.9)
   - Mixpanel-swift (2.8.1):
@@ -9,6 +10,7 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
+  - OpalImagePicker (3.0.0)
   - PDFGenerator (3.1.0)
   - PhoneNumberKit (3.3.1):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.1)
@@ -27,6 +29,7 @@ PODS:
   - SwiftEntryKit (1.2.6):
     - QuickLayout (= 3.0.0)
   - SwiftLint (0.42.0)
+  - Tatsi (1.2.1)
   - TTInAppPurchases (0.1.0):
     - Amplitude
     - LGButton
@@ -41,14 +44,17 @@ PODS:
 
 DEPENDENCIES:
   - Hero
+  - ImagePicker
   - LGButton
   - lottie-ios
+  - OpalImagePicker
   - PDFGenerator (~> 3.1)
   - PMAlertController
   - Purchases
   - QBImagePickerController
   - SnapKit (~> 5.0.0)
   - SwiftLint
+  - Tatsi
   - TTInAppPurchases (from `~/Documents/Develop/TTInAppPurchases`)
   - WeScan (>= 0.9)
 
@@ -56,10 +62,12 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Amplitude
     - Hero
+    - ImagePicker
     - LGButton
     - lottie-ios
     - Mixpanel-swift
     - NVActivityIndicatorView
+    - OpalImagePicker
     - PDFGenerator
     - PhoneNumberKit
     - PMAlertController
@@ -71,6 +79,7 @@ SPEC REPOS:
     - SwiftDate
     - SwiftEntryKit
     - SwiftLint
+    - Tatsi
     - WeScan
 
 EXTERNAL SOURCES:
@@ -80,10 +89,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplitude: 70316573d6174f0a467853b460f2f319af3aa0b3
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
+  ImagePicker: 1d950bbb2422548ed58791b4ec7f42fe42920511
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
+  OpalImagePicker: 38e772dd93a54431fc516b33e1f337c50f745834
   PDFGenerator: 17d6bc525db0a3fcd156fbf00f9d1b8d5cc75d1e
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PMAlertController: ab5fcf4d085b7878c9451466d701449c4bf6efb8
@@ -95,9 +106,10 @@ SPEC CHECKSUMS:
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   SwiftEntryKit: 96a2fa90b2631bbbfac50d18449e9ca3d0635f13
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  Tatsi: 12ac525e0e8477645d707d4f356f85cb60182f80
   TTInAppPurchases: a7359b2d60dbd93ff3f288625429478be02cfdbb
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 44f470d45df62513477300e4d90e315eafff41a9
+PODFILE CHECKSUM: 2996a17f48f3b065d00487aa9ba7695b5b5cf868
 
 COCOAPODS: 1.10.0

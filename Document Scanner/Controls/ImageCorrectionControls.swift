@@ -14,6 +14,9 @@ class ImageCorrectionControls: UIView {
     var onEditTap: ((FooterButton) -> Void)?
     var onRescanTap: ((FooterButton) -> Void)?
     var onDoneTap: ((UIButton) -> Void)?
+    var onPreviousPageTap: ((FooterButton) -> Void)?
+    var onNextPageTap: ((FooterButton) -> Void)?
+
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -51,6 +54,24 @@ class ImageCorrectionControls: UIView {
         return footerButton
     }()
     
+    private lazy var previousPageFooterButton: FooterButton = {
+        let footerButton = FooterButton()
+        footerButton.setTitle("Previous", for: .normal)
+        footerButton.setImage(UIImage(named: "rescan")!, for: .normal)
+        footerButton.addTarget(self, action: #selector(_previousPageButtonTapped(_:)), for: .touchUpInside)
+        footerButton.translatesAutoresizingMaskIntoConstraints = false
+        return footerButton
+    }()
+    
+    private lazy var nextPageFooterButton: FooterButton = {
+        let footerButton = FooterButton()
+        footerButton.setTitle("Next", for: .normal)
+        footerButton.setImage(UIImage(named: "rescan")!, for: .normal)
+        footerButton.addTarget(self, action: #selector(_nextPageButtonTapped(_:)), for: .touchUpInside)
+        footerButton.translatesAutoresizingMaskIntoConstraints = false
+        return footerButton
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         _setupView()
@@ -81,6 +102,14 @@ class ImageCorrectionControls: UIView {
             make.height.width.equalTo(32)
         }
         
+        previousPageFooterButton.snp.makeConstraints { make in
+            make.height.width.equalTo(32)
+        }
+        
+        nextPageFooterButton.snp.makeConstraints { make in
+            make.height.width.equalTo(32)
+        }
+        
         let container = UIView()
         container.addSubview(doneButton)
        
@@ -90,10 +119,12 @@ class ImageCorrectionControls: UIView {
             make.centerX.centerY.equalToSuperview()
         }
         
-        
+        stackView.addArrangedSubview(previousPageFooterButton)
         stackView.addArrangedSubview(editFooterButton)
         stackView.addArrangedSubview(container)
         stackView.addArrangedSubview(rescanFooterButton)
+        stackView.addArrangedSubview(nextPageFooterButton)
+        
         
         container.snp.makeConstraints {make in
             make.height.equalToSuperview()
@@ -111,6 +142,14 @@ class ImageCorrectionControls: UIView {
     
     @objc private func _doneButtonTapped(_ sender: UIButton) {
         onDoneTap?(sender)
+    }
+    
+    @objc private func _previousPageButtonTapped(_ sender: FooterButton) {
+        onPreviousPageTap?(sender)
+    }
+    
+    @objc private func _nextPageButtonTapped(_ sender: FooterButton) {
+        onNextPageTap?(sender)
     }
 }
 

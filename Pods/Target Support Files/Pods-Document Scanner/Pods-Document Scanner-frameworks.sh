@@ -177,9 +177,11 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Amplitude/Amplitude.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hero/Hero.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/LGButton/LGButton.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/OpalImagePicker/OpalImagePicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PDFGenerator/PDFGenerator.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework"
@@ -191,15 +193,18 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TTInAppPurchases/TTInAppPurchases.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tatsi/Tatsi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/WeScan/WeScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Amplitude/Amplitude.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hero/Hero.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/LGButton/LGButton.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/OpalImagePicker/OpalImagePicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PDFGenerator/PDFGenerator.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework"
@@ -211,6 +216,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TTInAppPurchases/TTInAppPurchases.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tatsi/Tatsi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/WeScan/WeScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi

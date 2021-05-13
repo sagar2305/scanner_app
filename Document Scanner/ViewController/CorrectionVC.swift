@@ -28,17 +28,22 @@ class CorrectionVC: DocumentScannerViewController {
         controls.onDoneTap = didTapDoneButton
         controls.onEditTap = didTapEditButton
         controls.onRescanTap = didTapRescanButton
+        controls.onPreviousPageTap = didTapPreviousPageButton(_:)
+        controls.onNextPageTap = didTapNextPageButton(_:)
         return controls
     }()
     
-    private lazy var _imagePageController: UIPageViewController = {
-        let pageController = UIPageViewController()
+    private lazy var imagePageController: UIPageViewController = {
+        let pageController = UIPageViewController(transitionStyle: .scroll,
+                                                  navigationOrientation: .horizontal)
         pageController.view.translatesAutoresizingMaskIntoConstraints = false
+        pageController.dataSource = self
+        
         return pageController
     }()
     
-    private var pageControllerItems: [UIViewController]?
-    var currentPageIndex: Int?
+    var pageControllerItems: [UIViewController]?
+    var currentPageIndex: Int = 0
     var quad: [Quadrilateral?]?
     /**this is passed to WeScan.EditImageViewController
      - set false if image is scanned from camera
@@ -51,6 +56,7 @@ class CorrectionVC: DocumentScannerViewController {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var addNewPageButton: UIButton!
+    @IBOutlet private weak var pageControl: UIPageControl!
     
     weak var delegate: CorrectionVCDelegate?
     weak var dataSource: CorrectionVCDataSource?
@@ -79,18 +85,37 @@ class CorrectionVC: DocumentScannerViewController {
     
     private func _setupPageController() {
         
-        if !children.contains(_imagePageController) {
-            _imagePageController.willMove(toParent: self)
-            addChild(_imagePageController)
-            containerView.addSubview(_imagePageController.view)
-            _imagePageController.didMove(toParent: self)
+        if !children.contains(imagePageController) {
+            imagePageController.willMove(toParent: self)
+            addChild(imagePageController)
+            containerView.addSubview(imagePageController.view)
+            imagePageController.view.snp.makeConstraints { make in
+                make.top.right.left.bottom.equalToSuperview()
+            }
+            imagePageController.didMove(toParent: self)
+            pageControl.numberOfPages = pageControllerItems?.count ?? 0
         }
         
         guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
             fatalError("No items for page controller have been set")
         }
 
-        _imagePageController.setViewControllers([pageControllerItems.last!], direction: .reverse, animated: true)
+        imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
+    }
+    
+    private func changePage(direction: UIPageViewController.NavigationDirection) {
+        guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
+            fatalError("No items for page controller have been set")
+        }
+        if direction == .forward && currentPageIndex < pageControllerItems.count-1 {
+            currentPageIndex += 1
+        } else if direction == .reverse && currentPageIndex > 0 {
+            currentPageIndex -= 1
+        }
+        
+        let nextVC = pageControllerItems[currentPageIndex]
+        imagePageController.setViewControllers([nextVC], direction: direction, animated: true)
+        pageControl.currentPage = currentPageIndex
     }
     
     private func _saveDocument() {
@@ -101,10 +126,13 @@ class CorrectionVC: DocumentScannerViewController {
     }
     
     func didTapEditButton(_ sender: UIButton) {
-//        guard let imageToEdit = croppedImage ?? image else {
-//            fatalError("ERROR: No image found for editing")
-//        }
-//        delegate?.correctionVC(self, edit: imageToEdit)
+        guard let pageControllerItems = pageControllerItems,
+              pageControllerItems.count > 0,
+              let imageVC =  pageControllerItems[currentPageIndex] as? NewDocumentImageViewController else {
+            fatalError("No items for page controller have been set")
+        }
+
+        delegate?.correctionVC(self, edit: imageVC.currentImage)
     }
     
     func didTapDoneButton(_ sender: UIButton) {
@@ -115,8 +143,54 @@ class CorrectionVC: DocumentScannerViewController {
         delegate?.correctionVC(self, didTapRetake: sender)
     }
     
+    func didTapPreviousPageButton(_ sender: FooterButton) {
+        changePage(direction: .reverse)
+    }
+    
+    func didTapNextPageButton(_ sender: FooterButton) {
+        changePage(direction: .forward)
+    }
+    
+    
+    
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
     }
 }
 
+
+extension CorrectionVC: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+            
+        if viewControllerIndex == 0 { return nil }
+        return pageControllerItems[viewControllerIndex - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+        
+        if viewControllerIndex == pageControllerItems.count - 1 { return nil }
+        
+        return pageControllerItems[viewControllerIndex + 1]
+    }
+}
+
+extension CorrectionVC: UIPageViewControllerDelegate {
+    override func transition(from fromViewController: UIViewController, to toViewController: UIViewController, duration: TimeInterval, options: UIView.AnimationOptions = [], animations: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
+       
+    }
+   
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let pageControllerItems = pageControllerItems else { fatalError("Items for page control are not set")}
+        let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
+        currentPageIndex = index ?? 0
+        pageControl.currentPage = currentPageIndex
+    }
+}
