@@ -84,13 +84,6 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         }
     }
     
-    func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage]) {
-        if let document = Document(originalImages: originalImages, editedImages: finalImages) {
-            document.save()
-            navigationController.popViewController(animated: true)
-        }
-    }
-    
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton) {
         delegate?.didCancelPickingImage(self)
     }

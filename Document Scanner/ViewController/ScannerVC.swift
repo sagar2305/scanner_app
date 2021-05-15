@@ -7,18 +7,19 @@
 
 import UIKit
 import WeScan
+import PMAlertController
 
 protocol ScannerVCDelegate: class {
     func cancelScanning(_ controller: ScannerVC)
-    func didScannedDocumentImage(_ image: UIImage, quad: Quadrilateral?, controller: ScannerVC)
+    func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController])
 }
 class ScannerVC: UIViewController {
     
     private var scannerVC: CameraScannerViewController!
-    private var images = [UIImage]() {
+    private var images = [NewDocumentImageViewController]() {
         didSet {
             if images.count > 0 {
-                //for multiple scan
+                scanImageButton.setTitle("\(images.count)", for: .normal)
             }
         }
     }
@@ -28,10 +29,10 @@ class ScannerVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet private weak var cameraPreview: UIView!
     
-    @IBOutlet private weak var scanImage: UIButton!
+    @IBOutlet private weak var scanImageButton: UIButton!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var flashButton: UIButton!
-    
+    @IBOutlet private weak var doneButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,10 @@ class ScannerVC: UIViewController {
     }
     
     private func _setupViews() {
+        doneButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
+        doneButton.setTitle("Done", for: .normal)
+        scanImageButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .headline))
+        scanImageButton.setTitle("", for: .normal)
     }
     
     private func _setupCameraPreview() {
@@ -57,21 +62,41 @@ class ScannerVC: UIViewController {
         scannerVC.view.frame = cameraPreview.bounds
         scannerVC.willMove(toParent: self)
         scannerVC.isAutoScanEnabled = true
+        cameraPreview.subviews.forEach { $0.removeFromSuperview()  }
         cameraPreview.addSubview(scannerVC.view)
         self.addChild(scannerVC)
         scannerVC.didMove(toParent: self)
         scannerVC.delegate = self
     }
     
-    @IBAction func flashButtonTapped(_ sender: UIButton) {
+    @IBAction private func didTapDone(_ sender: UIButton) {
+        if images.count > 0 {
+            delegate?.scannerVC(self, finishedScanning: images)
+        } else {
+            let alertVC = PMAlertController(title: "Scan at-least one document to continue ",
+                                            description: nil,
+                                            image: nil,
+                                            style: .alert)
+            alertVC.alertTitle.textColor = .primary
+            let okAction = PMAlertAction(title: "OK", style: .default) {
+            }
+            okAction.setTitleColor(.primary, for: .normal)
+            alertVC.addAction(okAction)
+            alertVC.gravityDismissAnimation = false
+            present(alertVC, animated: true, completion: nil)
+        }
+        
+    }
+    
+    @IBAction private func flashButtonTapped(_ sender: UIButton) {
         scannerVC.toggleFlash()
     }
     
-    @IBAction func captureButtonTapped(_ sender: UIButton) {
+    @IBAction private func captureButtonTapped(_ sender: UIButton) {
         scannerVC.capture()
     }
     
-    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+    @IBAction private func cancelButtonTapped(_ sender: UIButton) {
         delegate?.cancelScanning(self)
     }
     
@@ -83,6 +108,9 @@ extension ScannerVC : CameraScannerViewOutputDelegate {
     }
     
     func captureImageSuccess(image: UIImage, withQuad quad: Quadrilateral?) {
-        delegate?.didScannedDocumentImage(image,quad: quad, controller: self)
+        images.append(NewDocumentImageViewController(image,
+                                                     shouldRotate: true,
+                                                     quad: quad))
+        scannerVC.viewWillAppear(true)
     }
 }

@@ -14,7 +14,6 @@ protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
-    func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage])
     func correctionVC(_ viewController: CorrectionVC, didFinishCorrectingImages imageVCs: [NewDocumentImageViewController])
 }
 

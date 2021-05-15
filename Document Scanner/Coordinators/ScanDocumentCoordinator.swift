@@ -8,6 +8,7 @@
 import UIKit
 import WeScan
 import NVActivityIndicatorView
+import PMAlertController
 
 protocol ScanDocumentCoordinatorDelegate: class {
     func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator)
@@ -42,33 +43,44 @@ class ScanDocumentCoordinator: Coordinator {
 
 
 extension ScanDocumentCoordinator: ScannerVCDelegate {
-    func cancelScanning(_ controller: ScannerVC) {
-        navigationController.popViewController(animated: true)
-    }
-    
-    func didScannedDocumentImage(_ image: UIImage,quad: Quadrilateral?, controller: ScannerVC) {
-        currentDocumentImages.append(image)
-        currentDocumentImagesQuads.append(quad)
+    func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController]) {
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self
-        correctionVC.quad = currentDocumentImagesQuads
-        //correctionVC.images = currentDocumentImages
-        correctionVC.shouldRotateImage = true
+        correctionVC.pageControllerItems = images
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
+    }
+    
+    func cancelScanning(_ controller: ScannerVC) {
+        navigationController.popViewController(animated: true)
     }
 }
 
 extension ScanDocumentCoordinator: CorrectionVCDelegate {
     func correctionVC(_ viewController: CorrectionVC, didFinishCorrectingImages imageVCs: [NewDocumentImageViewController]) {
-        
-    }
+        NVActivityIndicatorView.start()
+        imageVCs.forEach { $0.cropImage() }
+        let originalImages = imageVCs.map { $0.originalImage }
+        let editedImages = imageVCs.map { $0.finalImage }
     
-    func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage]) {
-        if let document = Document(originalImages: originalImages, editedImages: finalImages) {
+        if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
+            NVActivityIndicatorView.stop()
             navigationController.popToRootViewController(animated: true)
+        } else {
+            let alertVC = PMAlertController(title: "Something went wrong",
+                                            description: "Unable to save generate your document, please try again",
+                                            image: nil,
+                                            style: .alert)
+            alertVC.alertTitle.textColor = .primary
+            let okAction = PMAlertAction(title: "OK", style: .default) {
+                self.navigationController.popViewController(animated: true)
+            }
+            okAction.setTitleColor(.primary, for: .normal)
+            alertVC.addAction(okAction)
+            alertVC.gravityDismissAnimation = false
+            viewController.present(alertVC, animated: true, completion: nil)
         }
     }
     
