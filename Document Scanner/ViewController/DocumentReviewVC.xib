@@ -13,11 +13,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DocumentReviewVC" customModule="Document_Scanner" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="vc7-lv-U3Z" id="1h3-tG-03K"/>
-                <outlet property="documentImageView" destination="MW2-p0-E8v" id="zPb-go-dLL"/>
+                <outlet property="containerView" destination="De3-yT-HaU" id="NBf-Kx-Wlf"/>
                 <outlet property="footerContainerView" destination="hyw-q2-wj5" id="DGO-mT-Hx9"/>
                 <outlet property="footerView" destination="eR6-3t-J2p" id="fzc-Ya-EHt"/>
                 <outlet property="headerLabel" destination="yr0-i2-kR9" id="Qq5-0m-Thc"/>
                 <outlet property="headerView" destination="VDf-t1-lj3" id="vfg-Id-N6o"/>
+                <outlet property="pageControl" destination="nw9-gc-9Xd" id="jT4-CD-V3O"/>
                 <outlet property="renameButton" destination="sGq-yd-ZS9" id="Aun-DG-xbH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,22 +28,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="De3-yT-HaU" userLabel="Image Container">
-                    <rect key="frame" x="0.0" y="96" width="414" height="722"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MW2-p0-E8v">
-                            <rect key="frame" x="8" y="8" width="398" height="706"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </imageView>
-                    </subviews>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
-                    <constraints>
-                        <constraint firstItem="MW2-p0-E8v" firstAttribute="leading" secondItem="De3-yT-HaU" secondAttribute="leading" constant="8" id="FtM-Uf-2Jl"/>
-                        <constraint firstAttribute="trailing" secondItem="MW2-p0-E8v" secondAttribute="trailing" constant="8" id="RxJ-4M-4Cu"/>
-                        <constraint firstItem="MW2-p0-E8v" firstAttribute="top" secondItem="De3-yT-HaU" secondAttribute="top" constant="8" id="mJK-hA-XCd"/>
-                        <constraint firstAttribute="bottom" secondItem="MW2-p0-E8v" secondAttribute="bottom" constant="8" id="r5C-5r-0gu"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDf-t1-lj3" userLabel="Header View">
                     <rect key="frame" x="0.0" y="44" width="414" height="52"/>
                     <subviews>
@@ -91,6 +76,10 @@
                         <constraint firstAttribute="bottom" secondItem="yr0-i2-kR9" secondAttribute="bottom" constant="4" id="zid-pU-TMp"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="De3-yT-HaU" userLabel="Image Container">
+                    <rect key="frame" x="0.0" y="96" width="414" height="722"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyw-q2-wj5" userLabel="Footer View">
                     <rect key="frame" x="0.0" y="818" width="414" height="78"/>
                     <subviews>
@@ -116,10 +105,16 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="nw9-gc-9Xd">
+                    <rect key="frame" x="145.5" y="782" width="123" height="28"/>
+                    <color key="pageIndicatorTintColor" name="secondaryTextColor"/>
+                    <color key="currentPageIndicatorTintColor" name="primary"/>
+                </pageControl>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
+                <constraint firstItem="nw9-gc-9Xd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6sW-V9-Pxq"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hyw-q2-wj5" secondAttribute="trailing" id="XFp-dX-KOL"/>
                 <constraint firstItem="De3-yT-HaU" firstAttribute="top" secondItem="VDf-t1-lj3" secondAttribute="bottom" id="ZnR-Sw-GYJ"/>
                 <constraint firstItem="VDf-t1-lj3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bJq-8d-d7U"/>
@@ -129,6 +124,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="De3-yT-HaU" secondAttribute="trailing" id="osd-ab-rx3"/>
                 <constraint firstItem="VDf-t1-lj3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qE3-Hd-ZNu"/>
                 <constraint firstItem="hyw-q2-wj5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="svu-Ev-jCo"/>
+                <constraint firstItem="hyw-q2-wj5" firstAttribute="top" secondItem="nw9-gc-9Xd" secondAttribute="bottom" constant="8" id="u1o-IM-vDt"/>
                 <constraint firstAttribute="bottom" secondItem="hyw-q2-wj5" secondAttribute="bottom" id="xGb-qQ-vup"/>
             </constraints>
             <point key="canvasLocation" x="13.043478260869566" y="128.57142857142856"/>
@@ -138,6 +134,12 @@
         <image name="back-arrow" width="18" height="18"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="primary">
+            <color red="0.27843137254901962" green="0.48627450980392156" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="secondaryTextColor">
+            <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="text">
             <color red="0.067000001668930054" green="0.067000001668930054" blue="0.067000001668930054" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

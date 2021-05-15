@@ -36,8 +36,19 @@ class DocumentReviewVC: DocumentScannerViewController {
         return controls
     }()
     
+    private lazy var imagePageController: UIPageViewController = {
+        let pageController = UIPageViewController(transitionStyle: .scroll,
+                                                  navigationOrientation: .horizontal)
+        pageController.view.translatesAutoresizingMaskIntoConstraints = false
+        pageController.dataSource = self
+        pageController.delegate = self
+        return pageController
+    }()
+    
     weak var delegate: DocumentReviewVCDelegate?
+    var pageControllerItems: [UIViewController]?
     var document: Document?
+    var currentPageIndex: Int = 0
     
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var backButton: UIButton!
@@ -46,7 +57,8 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var documentImageView: UIImageView!
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,19 +67,16 @@ class DocumentReviewVC: DocumentScannerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         _setupView()
+        _setupPageController()
         _setupFooterView()
     }
     
     private func _setupView() {
-        guard  let document = document else {
-            fatalError("ERROR: document is not set")
-        }
         navigationController?.navigationBar.isHidden = true
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
-        headerLabel.text = document.name
-        documentImageView.hero.id = document.id.uuidString
-        documentImageView.image = document.pages.first?.editedImage
+        headerLabel.text = document?.name
+        containerView.hero.id = document?.id.uuidString
         renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
     }
     
@@ -76,12 +85,33 @@ class DocumentReviewVC: DocumentScannerViewController {
         documentPreviewControls.snp.makeConstraints { make in
             make.left.top.right.bottom.equalToSuperview()
         }
-        
         footerContainerView?.hero.id = Constants.HeroIdentifiers.footerIdentifier
+    }
+    
+    private func _setupPageController() {
         
+        if !children.contains(imagePageController) {
+            imagePageController.willMove(toParent: self)
+            addChild(imagePageController)
+            containerView.addSubview(imagePageController.view)
+            imagePageController.view.snp.makeConstraints { make in
+                make.top.right.left.bottom.equalToSuperview()
+            }
+            imagePageController.didMove(toParent: self)
+            pageControl.numberOfPages = pageControllerItems?.count ?? 0
+        }
+        
+        guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
+            fatalError("No items for page controller have been set")
+        }
+
+        imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
     }
     
     private func _presentAlertForDocumentName() {
+        guard  let document = document else {
+            fatalError("Document is not set")
+        }
         let alertVC = PMAlertController(title: "Enter Name", description: nil, image: nil, style: .alert)
         alertVC.alertTitle.textColor = .primary
         
@@ -98,7 +128,7 @@ class DocumentReviewVC: DocumentScannerViewController {
                 generator.notificationOccurred(.error)
                 return
             }
-            self.delegate?.documentReviewVC(rename: self.document!, name: documentName)
+            self.delegate?.documentReviewVC(rename: document, name: documentName)
             self.headerLabel.text = documentName
         }
         doneAction.setTitleColor(.primary, for: .normal)
@@ -152,5 +182,41 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     func shareDocument( shareAs: ShareOptions) {
         delegate?.documentReviewVC(document!, shareAs: shareAs, controller: self)
+    }
+}
+
+extension DocumentReviewVC: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+            
+        if viewControllerIndex == 0 { return nil }
+        return pageControllerItems[viewControllerIndex - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+        
+        if viewControllerIndex == pageControllerItems.count - 1 { return nil }
+        
+        return pageControllerItems[viewControllerIndex + 1]
+    }
+}
+
+extension DocumentReviewVC: UIPageViewControllerDelegate {
+    override func transition(from fromViewController: UIViewController, to toViewController: UIViewController, duration: TimeInterval, options: UIView.AnimationOptions = [], animations: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
+       
+    }
+   
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let pageControllerItems = pageControllerItems else { fatalError("Items for page control are not set")}
+        let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
+        currentPageIndex = index ?? 0
+        pageControl.currentPage = currentPageIndex
     }
 }

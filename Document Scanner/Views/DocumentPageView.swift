@@ -8,9 +8,9 @@
 import UIKit
 import SwiftUI
 
-class DocumentPageView: UIView {
+class DocumentPageViewController: UIViewController {
     
-    private var image: UIImage
+    private var page: Page
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,23 +21,25 @@ class DocumentPageView: UIView {
     }()
     
     init(_ page: Page) {
-        guard let editedImage = page.editedImage else {
-            fatalError("No edited image available for page")
-        }
-        self.image = editedImage
-        super.init(frame: .zero)
+        self.page = page
+        super.init(nibName: nil, bundle: nil)
         _setupView()
     }
     
     required init?(coder: NSCoder) {
-        image = UIImage()
+        page = Page(documentID: "",
+                    originalImage: UIImage(),
+                    editedImage: UIImage())!
         super.init(coder: coder)
+        view.isUserInteractionEnabled = false
+        imageView.isUserInteractionEnabled = false
         _setupView()
     }
     
     private func _setupView() {
-        backgroundColor = .shadow
-        addSubview(imageView)
+        view.backgroundColor = .shadow
+        view.addSubview(imageView)
+        imageView.image = page.editedImage
         imageView.snp.makeConstraints { make in
             make.top.right.bottom.left.equalToSuperview()
         }
@@ -46,7 +48,7 @@ class DocumentPageView: UIView {
 }
 
 // MARK: - dummy data
-extension DocumentPageView {
+extension DocumentPageViewController {
     fileprivate static let page = Page(documentID: "xx"
                                        , originalImage: UIImage(named: "share-document")!,
                                        editedImage: UIImage(named: "share-document")!)!
@@ -56,7 +58,7 @@ extension DocumentPageView {
 struct DocumentPageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UIKitPreview(view: DocumentPageView(DocumentPageView.page))
+            UIKitPreview(view: DocumentPageViewController(DocumentPageViewController.page).view)
                 .previewLayout(.fixed(width: 200, height:400))
         }
     }

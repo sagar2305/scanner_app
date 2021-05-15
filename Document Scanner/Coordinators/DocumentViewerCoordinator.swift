@@ -14,7 +14,7 @@ class DocumentViewerCoordinator: Coordinator {
     }
     
     var childCoordinators: [Coordinator] = []
-    
+    var pageItems = [DocumentPageViewController]()
     let navigationController: DocumentScannerNavigationController
     var documentReviewVC: DocumentScannerViewController!
     var document: Document
@@ -23,12 +23,14 @@ class DocumentViewerCoordinator: Coordinator {
     init(_ navigationController: DocumentScannerNavigationController, document: Document) {
         self.navigationController = navigationController
         self.document = document
+        pageItems = document.pages.map { DocumentPageViewController($0) }
     }
     
     func start() {
         let documentReviewVC = DocumentReviewVC()
         documentReviewVC.document = document
         documentReviewVC.delegate = self
+        documentReviewVC.pageControllerItems = pageItems
         self.documentReviewVC = documentReviewVC
         navigationController.pushViewController(documentReviewVC, animated: true)
     }
