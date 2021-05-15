@@ -14,9 +14,8 @@ class NewDocumentImageViewController: UIViewController {
     
     private var image: UIImage
     private var quad: Quadrilateral?
-    private var finalImage: UIImage?
-    private let editImageVC: EditImageViewController!
-    private var onCrop: ((UIImage) -> Void)?
+    private var editedImage: UIImage?
+    private var editImageVC: EditImageViewController!
     
     init(_ image: UIImage, shouldRotate: Bool, quad: Quadrilateral?) {
         self.image = image
@@ -45,19 +44,38 @@ class NewDocumentImageViewController: UIViewController {
         }
     }
     
-    var currentImage: UIImage {
-        return finalImage ?? image
+    /// Images used for initiation
+    var originalImage: UIImage {
+        return image
     }
     
-    func cropImage(completionHandler: @escaping ((UIImage) -> Void)) {
-        self.onCrop = completionHandler
+    var quadrilateral: Quadrilateral? {
+        return quad
+    }
+    
+    /// Image being displayed to user (final image)
+    var finalImage: UIImage {
+        return editedImage ?? image
+    }
+    
+    func cropImage() {
         editImageVC.cropImage()
+    }
+    
+    func updatedImage(_ editedImage: UIImage, was rotated: Bool) {
+        if rotated { quad = nil }
+        self.editedImage = editedImage
+        editImageVC = EditImageViewController(image: editedImage,
+                                              quad: quad,
+                                              rotateImage: false, 
+                                              strokeColor: UIColor.primary.cgColor)
+        _setupView()
     }
 }
 
 extension NewDocumentImageViewController: EditImageViewDelegate {
     func cropped(image: UIImage) {
-        onCrop?(image)
+        editedImage = image
     }
 }
 

@@ -49,8 +49,7 @@ class DocumentPageView: UIView {
 extension DocumentPageView {
     fileprivate static let page = Page(documentID: "xx"
                                        , originalImage: UIImage(named: "share-document")!,
-                                       editedImage: UIImage(named: "share-document")!,
-                                       quadrilateral: [])!
+                                       editedImage: UIImage(named: "share-document")!)!
 }
 
 @available(iOS 13, *)

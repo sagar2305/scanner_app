@@ -15,6 +15,7 @@ protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, originalImages: [UIImage], finalImages: [UIImage])
+    func correctionVC(_ viewController: CorrectionVC, didFinishCorrectingImages imageVCs: [NewDocumentImageViewController])
 }
 
 protocol CorrectionVCDataSource: class {
@@ -118,11 +119,13 @@ class CorrectionVC: DocumentScannerViewController {
         pageControl.currentPage = currentPageIndex
     }
     
-    private func _saveDocument() {
-        //delegate?.correctionVC(self, originalImages: images, finalImages: croppedImages ?? images)
-    }
-    
     func updateEdited(image newImage: UIImage, isRotated: Bool) {
+        guard let pageControllerItems = pageControllerItems,
+              pageControllerItems.count > 0,
+              let imageVC =  pageControllerItems[currentPageIndex] as? NewDocumentImageViewController else {
+            fatalError("No items for page controller have been set")
+        }
+        imageVC.updatedImage(newImage, was: isRotated)
     }
     
     func didTapEditButton(_ sender: UIButton) {
@@ -131,12 +134,14 @@ class CorrectionVC: DocumentScannerViewController {
               let imageVC =  pageControllerItems[currentPageIndex] as? NewDocumentImageViewController else {
             fatalError("No items for page controller have been set")
         }
-
-        delegate?.correctionVC(self, edit: imageVC.currentImage)
+        delegate?.correctionVC(self, edit: imageVC.finalImage)
     }
     
     func didTapDoneButton(_ sender: UIButton) {
-        //TODO: - Get images from individual
+        guard let pageControllerItems = pageControllerItems as? [NewDocumentImageViewController] else {
+            fatalError("Cannot convert [pageControllerItems] to [NewDocumentImageViewController]")
+        }
+        delegate?.correctionVC(self, didFinishCorrectingImages: pageControllerItems)
     }
     
     func didTapRescanButton(_ sender: FooterButton) {
@@ -150,9 +155,7 @@ class CorrectionVC: DocumentScannerViewController {
     func didTapNextPageButton(_ sender: FooterButton) {
         changePage(direction: .forward)
     }
-    
-    
-    
+        
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
     }

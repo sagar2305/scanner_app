@@ -76,6 +76,7 @@
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
 		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
+		02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
 		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
 		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
@@ -197,6 +198,7 @@
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
 		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
+		02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
 		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */,
 				02B661E226039EC4008CCF36 /* UIKit+Extension.swift */,
 				020AEDB826201AC800998398 /* Notification+Extension.swift */,
+				02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
 				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
 				020AED96261F0BBF00998398 /* SubscriptionHelper.swift in Sources */,
+				02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */,
 				024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */,
 				02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,

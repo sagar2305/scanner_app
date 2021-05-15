@@ -8,36 +8,38 @@
 import UIKit
 
 extension UIImage {
-    private func rotate(withRotation radians: CGFloat) -> UIImage {
-        let cgImage = self.cgImage!
-        let LARGEST_SIZE = CGFloat(max(self.size.width, self.size.height))
-        let context = CGContext.init(data: nil, width:Int(LARGEST_SIZE), height:Int(LARGEST_SIZE), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: cgImage.colorSpace!, bitmapInfo: cgImage.bitmapInfo.rawValue)!
-        
-        var drawRect = CGRect.zero
-        drawRect.size = self.size
-        let drawOrigin = CGPoint(x: (LARGEST_SIZE - self.size.width) * 0.5,y: (LARGEST_SIZE - self.size.height) * 0.5)
-        drawRect.origin = drawOrigin
-        var transform = CGAffineTransform.identity
-        transform = transform.translatedBy(x: LARGEST_SIZE * 0.5, y: LARGEST_SIZE * 0.5)
-        transform = transform.rotated(by: CGFloat(radians))
-        transform = transform.translatedBy(x: LARGEST_SIZE * -0.5, y: LARGEST_SIZE * -0.5)
-        context.concatenate(transform)
-        context.draw(cgImage, in: drawRect)
-        var rotatedImage = context.makeImage()!
-        
-        drawRect = drawRect.applying(transform)
-        
-        rotatedImage = rotatedImage.cropping(to: drawRect)!
-        let resultImage = UIImage(cgImage: rotatedImage)
-        return resultImage
-    }
     
+    func rotateImage(withRotation radians: CGFloat) -> UIImage {
+        // calculate the size of the rotated view's containing box for our drawing space
+        let rotatedViewBox = UIView(frame: CGRect(origin: .zero, size: size))
+        rotatedViewBox.transform = CGAffineTransform(rotationAngle: radians)
+        let rotatedSize = rotatedViewBox.frame.size
+        
+        UIGraphicsBeginImageContext(rotatedSize)
+        if let bitmap = UIGraphicsGetCurrentContext() {
+            bitmap.translateBy(x: rotatedSize.width / 2.0, y: rotatedSize.height / 2.0)
+            bitmap.rotate(by: radians)
+            bitmap.scaleBy(x: 1.0, y: -1.0)
+            if let cgImage = self.cgImage {
+                bitmap.draw(cgImage, in: CGRect(x: -size.width / 2, y: -size.height / 2, width: size.width, height: size.height))
+            }
+            guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
+                debugPrint("Failed to rotate image. Returning the same as input..."); return self
+            }
+            UIGraphicsEndImageContext()
+            return newImage
+        } else {
+            debugPrint("Failed to create graphics context. Returning the same as input...")
+            return self
+        }
+    }
+
     func rotateRight() -> UIImage {
-        return self.rotate(withRotation: 1.5708)
+        return self.rotateImage(withRotation: 1.5708)
     }
     
     func rotateLeft() -> UIImage {
-        return self.rotate(withRotation: -1.5708)
+        return self.rotateImage(withRotation: -1.5708)
     }
     
     func mirror() -> UIImage? {
