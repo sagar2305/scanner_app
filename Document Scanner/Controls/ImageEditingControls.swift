@@ -89,7 +89,7 @@ class ImageEditorControls: UIView {
         stackView.addArrangedSubview(transformFooterButton)
         stackView.addArrangedSubview(adjustFooterButton)
         stackView.addArrangedSubview(colorFooterButton)
-        stackView.addArrangedSubview(editOriginalFooterButton)
+        //stackView.addArrangedSubview(editOriginalFooterButton)
         //stackView.addArrangedSubview(undoFooterButton)
     }
     
