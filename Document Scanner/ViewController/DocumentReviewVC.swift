@@ -11,7 +11,7 @@ import PMAlertController
 
 
 protocol DocumentReviewVCDelegate: class {
-    func documentReviewVC(edit document: Document, controller: DocumentReviewVC)
+    func documentReviewVC(edit page: Page, controller: DocumentReviewVC)
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC)
     func documentReviewVC(exit controller: DocumentReviewVC)
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
@@ -62,12 +62,12 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        _setupPageController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         _setupView()
-        _setupPageController()
         _setupFooterView()
     }
     
@@ -156,7 +156,12 @@ class DocumentReviewVC: DocumentScannerViewController {
     }
     
     private func didTapEdit(_ sender: FooterButton) {
-        delegate?.documentReviewVC(edit: document!, controller: self)
+        guard let pageItems = pageControllerItems as? [DocumentPageViewController] else {
+            fatalError("ERROR: Cannot typecast pageControllerItems to type [DocumentPageViewController]")
+        }
+        
+        delegate?.documentReviewVC(edit: pageItems[currentPageIndex].page,
+                                   controller: self)
     }
     
     private func didTapDelete(_ sender: FooterButton) {
@@ -197,7 +202,8 @@ extension DocumentReviewVC: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let pageControllerItems = pageControllerItems,
+
+         guard let pageControllerItems = pageControllerItems,
               let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
             return nil
         }

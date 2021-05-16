@@ -10,7 +10,7 @@ import SwiftUI
 
 class DocumentPageViewController: UIViewController {
     
-    private var page: Page
+    var page: Page
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,6 +34,11 @@ class DocumentPageViewController: UIViewController {
         view.isUserInteractionEnabled = false
         imageView.isUserInteractionEnabled = false
         _setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        imageView.image = page.editedImage
     }
     
     private func _setupView() {
