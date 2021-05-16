@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 extension HeroTransition: UITabBarControllerDelegate {
@@ -42,8 +40,8 @@ extension HeroTransition: UITabBarControllerDelegate {
   public func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     guard !isTransitioning else { return nil }
     self.state = .notified
-    let fromVCIndex = tabBarController.children.firstIndex(of: fromVC)!
-    let toVCIndex = tabBarController.children.firstIndex(of: toVC)!
+    let fromVCIndex = tabBarController.children.index(of: fromVC)!
+    let toVCIndex = tabBarController.children.index(of: toVC)!
     self.isPresenting = toVCIndex > fromVCIndex
     self.fromViewController = fromViewController ?? fromVC
     self.toViewController = toViewController ?? toVC
@@ -51,5 +49,3 @@ extension HeroTransition: UITabBarControllerDelegate {
     return self
   }
 }
-
-#endif

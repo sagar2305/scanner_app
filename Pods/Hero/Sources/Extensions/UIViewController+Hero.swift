@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 internal class HeroViewControllerConfig: NSObject {
@@ -170,16 +168,6 @@ extension UINavigationController {
     get { return hero.navigationAnimationTypeString }
     set { hero.navigationAnimationTypeString = newValue }
   }
-
-  /// This function call the standard setViewControllers() but it also add a completion callback.
-   func setViewControllers(viewControllers: [UIViewController], animated: Bool, completion: (() -> Void)?) {
-		setViewControllers(viewControllers, animated: animated)
-		guard animated, let coordinator = transitionCoordinator else {
-			DispatchQueue.main.async { completion?() }
-			return
-		}
-		coordinator.animate(alongsideTransition: nil) { _ in completion?() }
-	}
 }
 
 public extension HeroExtension where Base: UITabBarController {
@@ -323,7 +311,7 @@ public extension HeroExtension where Base: UIViewController {
       if navigationController.hero.isEnabled {
         hero.forceNotInteractive = true
       }
-      navigationController.setViewControllers(viewControllers: vcs, animated: true, completion: completion)
+      navigationController.setViewControllers(vcs, animated: true)
     } else if let container = base.view.superview {
       let parentVC = base.presentingViewController
       hero.transition(from: base, to: next, in: container) { [weak base] finished in
@@ -336,7 +324,7 @@ public extension HeroExtension where Base: UIViewController {
             parentVC.present(next, animated: false, completion: completion)
           }
         } else {
-          parentVC?.view.window?.rootViewController = next
+          UIApplication.shared.keyWindow?.rootViewController = next
         }
       }
     }
@@ -344,52 +332,50 @@ public extension HeroExtension where Base: UIViewController {
 }
 
 extension UIViewController {
-  @available(*, deprecated, renamed: "hero.dismissViewController()")
+  @available(*, renamed: "hero.dismissViewController")
   @IBAction public func ht_dismiss(_ sender: UIView) {
     hero.dismissViewController()
   }
 
-  @available(*, deprecated, renamed: "hero.replaceViewController(with:)")
+  @available(*, renamed: "hero.replaceViewController(with:)")
   public func heroReplaceViewController(with next: UIViewController) {
     hero.replaceViewController(with: next)
   }
 
   // TODO: can be moved to internal later (will still be accessible via IB)
-  @available(*, deprecated, renamed: "hero.dismissViewController()")
+  @available(*, renamed: "hero.dismissViewController")
   @IBAction public func hero_dismissViewController() {
     hero.dismissViewController()
   }
 
   // TODO: can be moved to internal later (will still be accessible via IB)
-  @available(*, deprecated, renamed: "hero.unwindToRootViewController()")
+  @available(*, renamed: "hero.unwindToRootViewController")
   @IBAction public func hero_unwindToRootViewController() {
     hero.unwindToRootViewController()
   }
 
-  @available(*, deprecated, renamed: "hero.unwindToViewController(_:)")
+  @available(*, renamed: "hero.unwindToViewController(_:)")
   public func hero_unwindToViewController(_ toViewController: UIViewController) {
     hero.unwindToViewController(toViewController)
   }
 
-  @available(*, deprecated, renamed: "hero.unwindToViewController(withSelector:)")
+  @available(*, renamed: "hero.unwindToViewController(withSelector:)")
   public func hero_unwindToViewController(withSelector: Selector) {
     hero.unwindToViewController(withSelector: withSelector)
   }
 
-  @available(*, deprecated, renamed: "hero_unwindToViewController(withClass:)")
+  @available(*, renamed: "hero_unwindToViewController(withClass:)")
   public func hero_unwindToViewController(withClass: AnyClass) {
     hero.unwindToViewController(withClass: withClass)
   }
 
-  @available(*, deprecated, renamed: "hero.unwindToViewController(withMatchBlock:)")
+  @available(*, renamed: "hero.unwindToViewController(withMatchBlock:)")
   public func hero_unwindToViewController(withMatchBlock: (UIViewController) -> Bool) {
     hero.unwindToViewController(withMatchBlock: withMatchBlock)
   }
 
-  @available(*, deprecated, renamed: "hero.replaceViewController(with:)")
+  @available(*, renamed: "hero.replaceViewController(with:)")
   public func hero_replaceViewController(with next: UIViewController) {
     hero.replaceViewController(with: next)
   }
 }
-
-#endif

@@ -16,18 +16,19 @@ class Document: Codable {
     private var date: Date
     var tag: String
     
-    init?(originalImages: [UIImage], editedImages: [UIImage], quadrilaterals: [[CGPoint]]) {
+    init?(originalImages: [UIImage], editedImages: [UIImage]) {
         date = Date()
         self.tag = ""
         self.name = ""
         guard originalImages.count == editedImages.count else {
-            fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count) \n Quadrilaterals: \(quadrilaterals.count)")
+            fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count)")
         }
         var pages = [Page]()
         for index in 0 ..< originalImages.count {
             let newPage = Page(documentID: id.uuidString,
-                               originalImage: originalImages[index],                                   editedImage: editedImages[index],
-                               quadrilateral: [])
+                               originalImage: originalImages[index],
+                               editedImage: editedImages[index]
+            )
             guard  let page = newPage else { return nil }
             pages.append(page)
         }

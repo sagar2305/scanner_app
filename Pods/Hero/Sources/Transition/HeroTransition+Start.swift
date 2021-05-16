@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 extension HeroTransition {
@@ -36,9 +34,7 @@ extension HeroTransition {
         toView.frame = fromView.frame
       }
       toView.setNeedsLayout()
-      if nil != toView.window {
-        toView.layoutIfNeeded()
-      }
+      toView.layoutIfNeeded()
     }
 
     if let fvc = fromViewController, let tvc = toViewController {
@@ -95,7 +91,6 @@ extension HeroTransition {
 
     // a view to hold all the animating views
     container = UIView(frame: transitionContainer?.bounds ?? .zero)
-    container.isUserInteractionEnabled = false
     if !toOverFullScreen && !fromOverFullScreen {
       container.backgroundColor = containerColor
     }
@@ -167,5 +162,3 @@ extension HeroTransition {
     #endif
   }
 }
-
-#endif

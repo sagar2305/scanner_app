@@ -13,8 +13,9 @@
             <connections>
                 <outlet property="cameraPreview" destination="CEP-yl-14l" id="dor-yN-Ijm"/>
                 <outlet property="cancelButton" destination="5qz-vo-JPi" id="ddf-7g-YvV"/>
+                <outlet property="doneButton" destination="G61-nf-xRq" id="LBs-5J-xyF"/>
                 <outlet property="flashButton" destination="hhm-h0-HtI" id="FhX-qD-voz"/>
-                <outlet property="scanImage" destination="B46-PP-2rh" id="C3c-ci-RAc"/>
+                <outlet property="scanImageButton" destination="B46-PP-2rh" id="C3c-ci-RAc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,6 +28,25 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G61-nf-xRq">
+                    <rect key="frame" x="342" y="781" width="56" height="40"/>
+                    <color key="backgroundColor" name="background"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Chr-3F-dCF"/>
+                        <constraint firstAttribute="width" constant="56" id="q5Z-o6-E8H"/>
+                    </constraints>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" name="text"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTapDone:" destination="-1" eventType="touchUpInside" id="eel-DC-ffD"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhm-h0-HtI">
                     <rect key="frame" x="354" y="60" width="44" height="44"/>
                     <constraints>
@@ -55,7 +75,9 @@
                         <constraint firstAttribute="height" constant="90" id="1ft-9F-F69"/>
                         <constraint firstAttribute="width" constant="90" id="eDU-HY-5A4"/>
                     </constraints>
-                    <state key="normal" image="capture"/>
+                    <state key="normal" title="4" backgroundImage="capture">
+                        <color key="titleColor" name="text"/>
+                    </state>
                     <connections>
                         <action selector="captureButtonTapped:" destination="-1" eventType="touchUpInside" id="l4X-Om-Lao"/>
                     </connections>
@@ -65,6 +87,7 @@
             <color key="backgroundColor" name="background"/>
             <constraints>
                 <constraint firstItem="CEP-yl-14l" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3Ec-JI-na7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="G61-nf-xRq" secondAttribute="trailing" constant="16" id="5ES-dW-sea"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hhm-h0-HtI" secondAttribute="trailing" constant="16" id="L1B-XT-Xq6"/>
                 <constraint firstAttribute="bottom" secondItem="CEP-yl-14l" secondAttribute="bottom" id="Mdr-PY-kWw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="B46-PP-2rh" secondAttribute="bottom" constant="16" id="Xeh-Oy-lcr"/>
@@ -75,6 +98,7 @@
                 <constraint firstItem="CEP-yl-14l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kCM-vJ-szr"/>
                 <constraint firstItem="hhm-h0-HtI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="p99-iU-MUG"/>
                 <constraint firstItem="5qz-vo-JPi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="sFO-i4-kFo"/>
+                <constraint firstItem="G61-nf-xRq" firstAttribute="centerY" secondItem="B46-PP-2rh" secondAttribute="centerY" id="vqA-mm-Wzl"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="133.92857142857142"/>
         </view>
@@ -85,6 +109,9 @@
         <image name="flash-ellipse" width="37" height="37"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="text">
+            <color red="0.067000001668930054" green="0.067000001668930054" blue="0.067000001668930054" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

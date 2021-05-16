@@ -14,7 +14,7 @@ class DocumentViewerCoordinator: Coordinator {
     }
     
     var childCoordinators: [Coordinator] = []
-    
+    var pageItems = [DocumentPageViewController]()
     let navigationController: DocumentScannerNavigationController
     var documentReviewVC: DocumentScannerViewController!
     var document: Document
@@ -23,12 +23,14 @@ class DocumentViewerCoordinator: Coordinator {
     init(_ navigationController: DocumentScannerNavigationController, document: Document) {
         self.navigationController = navigationController
         self.document = document
+        pageItems = document.pages.map { DocumentPageViewController($0) }
     }
     
     func start() {
         let documentReviewVC = DocumentReviewVC()
         documentReviewVC.document = document
         documentReviewVC.delegate = self
+        documentReviewVC.pageControllerItems = pageItems
         self.documentReviewVC = documentReviewVC
         navigationController.pushViewController(documentReviewVC, animated: true)
     }
@@ -39,9 +41,8 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         document.rename(new: name)
     }
     
-    //TODO: - Replace document with page as we update a page at a time
-    func documentReviewVC(edit document: Document, controller: DocumentReviewVC) {
-        pageBeingEdited = document.pages.first!
+    func documentReviewVC(edit page: Page, controller: DocumentReviewVC) {
+        pageBeingEdited = page
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController,
                                                               edit: pageBeingEdited!.editedImage!,
                                                               originalImage: pageBeingEdited!.originalImage!)

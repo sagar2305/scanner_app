@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
-
 import UIKit
 
 public protocol HeroPreprocessor: class {
@@ -48,5 +46,3 @@ public protocol HeroProgressUpdateObserver: class {
 public enum HeroViewOrderingStrategy {
   case auto, sourceViewOnTop, destinationViewOnTop
 }
-
-#endif

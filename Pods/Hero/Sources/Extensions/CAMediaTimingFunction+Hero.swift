@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(QuartzCore)
+import UIKit
 import QuartzCore
 
 public extension CAMediaTimingFunction {
@@ -62,5 +62,3 @@ public extension CAMediaTimingFunction {
     }
   }
 }
-
-#endif

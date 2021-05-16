@@ -8,50 +8,58 @@
 import UIKit
 import WeScan
 import PMAlertController
-import QCropper
+import SnapKit
 
 protocol CorrectionVCDelegate: class {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
-    func correctionVC(_ viewController: CorrectionVC, originalImage: UIImage, finalImage: UIImage)
+    func correctionVC(_ viewController: CorrectionVC, didFinishCorrectingImages imageVCs: [NewDocumentImageViewController])
+}
+
+protocol CorrectionVCDataSource: class {
+    func correctionVC(_ viewController: CorrectionVC, titleFor nextPage: UIButton) -> String
 }
 
 class CorrectionVC: DocumentScannerViewController {
-    
-    private var _editVC: EditImageViewController!
-    private lazy var _croppedImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .clear
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = imageContainerView.bounds
-        return imageView
-    }()
     
     private lazy var imageCorrectionControls: ImageCorrectionControls = {
         let controls = ImageCorrectionControls()
         controls.onDoneTap = didTapDoneButton
         controls.onEditTap = didTapEditButton
         controls.onRescanTap = didTapRescanButton
+        controls.onPreviousPageTap = didTapPreviousPageButton(_:)
+        controls.onNextPageTap = didTapNextPageButton(_:)
         return controls
     }()
     
-    private var croppedImage: UIImage?
+    private lazy var imagePageController: UIPageViewController = {
+        let pageController = UIPageViewController(transitionStyle: .scroll,
+                                                  navigationOrientation: .horizontal)
+        pageController.view.translatesAutoresizingMaskIntoConstraints = false
+        pageController.dataSource = self
+        
+        return pageController
+    }()
     
-    var image: UIImage?
-    var quad: Quadrilateral?
+    var pageControllerItems: [UIViewController]?
+    var currentPageIndex: Int = 0
+    var quad: [Quadrilateral?]?
     /**this is passed to WeScan.EditImageViewController
      - set false if image is scanned from camera
-     -  set true if image is picked from documents
+     -  set true if image is picked from documents and there orientation is  left or right
      */
     var shouldRotateImage: Bool?
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet private weak var backButton: UIButton!
-    @IBOutlet private weak var imageContainerView: UIView!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var addNewPageButton: UIButton!
+    @IBOutlet private weak var pageControl: UIPageControl!
     
     weak var delegate: CorrectionVCDelegate?
+    weak var dataSource: CorrectionVCDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +74,7 @@ class CorrectionVC: DocumentScannerViewController {
     private func _setupViews() {
         headerLabel.text = ""
         _setupFooterView()
-        _initiateEditImageVC()
+        _setupPageController()
     }
     
     private func _setupFooterView() {
@@ -75,58 +83,116 @@ class CorrectionVC: DocumentScannerViewController {
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
     }
     
-    private func _initiateEditImageVC() {
-        guard  let image = image,let shouldRotate = shouldRotateImage else {
-            fatalError("ERROR: Image or shouldRotateImage option is not set")
+    private func _setupPageController() {
+        
+        if !children.contains(imagePageController) {
+            imagePageController.willMove(toParent: self)
+            addChild(imagePageController)
+            containerView.addSubview(imagePageController.view)
+            imagePageController.view.snp.makeConstraints { make in
+                make.top.right.left.bottom.equalToSuperview()
+            }
+            imagePageController.didMove(toParent: self)
+            pageControl.numberOfPages = pageControllerItems?.count ?? 0
         }
-        _editVC = WeScan.EditImageViewController(image: image, quad: quad, rotateImage: shouldRotate, strokeColor: UIColor.primary.cgColor)
-        _editVC?.view.backgroundColor = .backgroundColor
-        _editVC.view.frame = imageContainerView.bounds
-        _editVC.willMove(toParent: self)
-        imageContainerView.addSubview(_editVC.view)
-        self.addChild(_editVC)
-        _editVC.didMove(toParent: self)
-        _editVC.delegate = self
+        
+        guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
+            fatalError("No items for page controller have been set")
+        }
+
+        imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
     }
     
-    private func _saveDocument() {
-        guard  let image = image else {
-            fatalError("ERROR: Image is not set")
+    private func changePage(direction: UIPageViewController.NavigationDirection) {
+        guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
+            fatalError("No items for page controller have been set")
         }
-        delegate?.correctionVC(self, originalImage: image, finalImage: croppedImage ?? image)
+        if direction == .forward && currentPageIndex < pageControllerItems.count-1 {
+            currentPageIndex += 1
+        } else if direction == .reverse && currentPageIndex > 0 {
+            currentPageIndex -= 1
+        }
+        
+        let nextVC = pageControllerItems[currentPageIndex]
+        imagePageController.setViewControllers([nextVC], direction: direction, animated: true)
+        pageControl.currentPage = currentPageIndex
     }
     
     func updateEdited(image newImage: UIImage, isRotated: Bool) {
-        image = newImage
-        shouldRotateImage = false
-        if isRotated { quad = nil }
-        imageContainerView.subviews.forEach { $0.removeFromSuperview() }
-        _initiateEditImageVC()
+        guard let pageControllerItems = pageControllerItems,
+              pageControllerItems.count > 0,
+              let imageVC =  pageControllerItems[currentPageIndex] as? NewDocumentImageViewController else {
+            fatalError("No items for page controller have been set")
+        }
+        imageVC.updatedImage(newImage, was: isRotated)
     }
     
     func didTapEditButton(_ sender: UIButton) {
-        guard let imageToEdit = croppedImage ?? image else {
-            fatalError("ERROR: No image found for editing")
+        guard let pageControllerItems = pageControllerItems,
+              pageControllerItems.count > 0,
+              let imageVC =  pageControllerItems[currentPageIndex] as? NewDocumentImageViewController else {
+            fatalError("No items for page controller have been set")
         }
-        delegate?.correctionVC(self, edit: imageToEdit)
+        delegate?.correctionVC(self, edit: imageVC.finalImage)
     }
     
     func didTapDoneButton(_ sender: UIButton) {
-        _editVC.cropImage()
+        guard let pageControllerItems = pageControllerItems as? [NewDocumentImageViewController] else {
+            fatalError("Cannot convert [pageControllerItems] to [NewDocumentImageViewController]")
+        }
+        delegate?.correctionVC(self, didFinishCorrectingImages: pageControllerItems)
     }
     
     func didTapRescanButton(_ sender: FooterButton) {
         delegate?.correctionVC(self, didTapRetake: sender)
     }
     
+    func didTapPreviousPageButton(_ sender: FooterButton) {
+        changePage(direction: .reverse)
+    }
+    
+    func didTapNextPageButton(_ sender: FooterButton) {
+        changePage(direction: .forward)
+    }
+        
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
     }
 }
 
-extension CorrectionVC: EditImageViewDelegate {
-    func cropped(image: UIImage) {
-        croppedImage = image
-       _saveDocument()
+
+extension CorrectionVC: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+            
+        if viewControllerIndex == 0 { return nil }
+        return pageControllerItems[viewControllerIndex - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let pageControllerItems = pageControllerItems,
+              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
+            return nil
+        }
+        
+        if viewControllerIndex == pageControllerItems.count - 1 { return nil }
+        
+        return pageControllerItems[viewControllerIndex + 1]
+    }
+}
+
+extension CorrectionVC: UIPageViewControllerDelegate {
+    override func transition(from fromViewController: UIViewController, to toViewController: UIViewController, duration: TimeInterval, options: UIView.AnimationOptions = [], animations: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
+       
+    }
+   
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let pageControllerItems = pageControllerItems else { fatalError("Items for page control are not set")}
+        let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
+        currentPageIndex = index ?? 0
+        pageControl.currentPage = currentPageIndex
     }
 }

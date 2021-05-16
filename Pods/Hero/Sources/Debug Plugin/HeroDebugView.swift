@@ -20,10 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit) && os(iOS)
-
 import UIKit
 
+#if os(iOS)
 protocol HeroDebugViewDelegate: class {
   func onProcessSliderChanged(progress: Float)
   func onPerspectiveChanged(translation: CGPoint, rotation: CGFloat, scale: CGFloat)
