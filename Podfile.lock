@@ -1,7 +1,6 @@
 PODS:
   - Amplitude (7.2.1)
   - Hero (1.5.0)
-  - ImagePicker (3.2.0)
   - LGButton (1.1.6)
   - lottie-ios (3.1.9)
   - Mixpanel-swift (2.8.1):
@@ -10,7 +9,6 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
-  - OpalImagePicker (3.0.0)
   - PDFGenerator (3.1.0)
   - PhoneNumberKit (3.3.1):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.1)
@@ -22,7 +20,6 @@ PODS:
   - Purchases (3.9.2):
     - PurchasesCoreSwift (= 3.9.2)
   - PurchasesCoreSwift (3.9.2)
-  - QBImagePickerController (3.4.0)
   - QuickLayout (3.0.0)
   - SnapKit (5.0.1)
   - SwiftDate (6.3.1)
@@ -44,14 +41,11 @@ PODS:
 
 DEPENDENCIES:
   - Hero
-  - ImagePicker
   - LGButton
   - lottie-ios
-  - OpalImagePicker
   - PDFGenerator (~> 3.1)
   - PMAlertController
   - Purchases
-  - QBImagePickerController
   - SnapKit (~> 5.0.0)
   - SwiftLint
   - Tatsi
@@ -62,18 +56,15 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Amplitude
     - Hero
-    - ImagePicker
     - LGButton
     - lottie-ios
     - Mixpanel-swift
     - NVActivityIndicatorView
-    - OpalImagePicker
     - PDFGenerator
     - PhoneNumberKit
     - PMAlertController
     - Purchases
     - PurchasesCoreSwift
-    - QBImagePickerController
     - QuickLayout
     - SnapKit
     - SwiftDate
@@ -89,18 +80,15 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplitude: 70316573d6174f0a467853b460f2f319af3aa0b3
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
-  ImagePicker: 1d950bbb2422548ed58791b4ec7f42fe42920511
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
-  OpalImagePicker: 38e772dd93a54431fc516b33e1f337c50f745834
   PDFGenerator: 17d6bc525db0a3fcd156fbf00f9d1b8d5cc75d1e
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PMAlertController: ab5fcf4d085b7878c9451466d701449c4bf6efb8
   Purchases: d8a798c9c7552fe66b550bf314a143e94ffa70c8
   PurchasesCoreSwift: ea4eabae180416e580ac60366f41aa1fefec0693
-  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
@@ -110,6 +98,6 @@ SPEC CHECKSUMS:
   TTInAppPurchases: a7359b2d60dbd93ff3f288625429478be02cfdbb
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 2996a17f48f3b065d00487aa9ba7695b5b5cf868
+PODFILE CHECKSUM: b1683140f132cfc7cfc84d254f9003ecacf9ce48
 
 COCOAPODS: 1.10.0

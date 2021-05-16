@@ -14,9 +14,6 @@ target 'Document Scanner' do
   pod 'lottie-ios'
   pod 'PMAlertController'
   pod 'SnapKit', '~> 5.0.0'
-  pod 'QBImagePickerController'
-  pod 'ImagePicker'
-  pod 'OpalImagePicker'
   pod 'Tatsi'
   pod 'TTInAppPurchases', :path => '~/Documents/Develop/TTInAppPurchases'
 end
