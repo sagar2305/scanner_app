@@ -70,7 +70,7 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
-            navigationController.popViewController(animated: true)
+            navigationController.popToRootViewController(animated: true)
         } else {
             let alertVC = PMAlertController(title: "Something went wrong",
                                             description: "Unable to save generate your document, please try again",
@@ -123,6 +123,7 @@ extension PickDocumentCoordinator: EditDocumentCoordinatorDelegate {
 extension PickDocumentCoordinator: TatsiPickerViewControllerDelegate {
     func pickerViewController(_ pickerViewController: TatsiPickerViewController, didPickAssets assets: [PHAsset]) {
         NVActivityIndicatorView.start()
+        pageControlItems = []
         let requestOptions = PHImageRequestOptions()
         requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
         requestOptions.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat

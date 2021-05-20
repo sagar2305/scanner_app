@@ -99,7 +99,11 @@ class CorrectionVC: DocumentScannerViewController {
         guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
             fatalError("No items for page controller have been set")
         }
-
+        
+        imageCorrectionControls.setNextButtonHidden = pageControllerItems.count == 1
+        imageCorrectionControls.setPreviousButtonHidden = pageControllerItems.count == 1
+        pageControl.isHidden = pageControllerItems.count == 1
+        
         imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
     }
     
