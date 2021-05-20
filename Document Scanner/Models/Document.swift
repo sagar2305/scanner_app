@@ -72,25 +72,6 @@ class Document: Codable {
         self.name = name
         update()
     }
-    
-    func convertToPDF() -> String?{
-        do {
-            var pdfPages: [PDFPage] = []
-            for page in pages {
-                guard let image = page.editedImage else {
-                    fatalError("ERROR: No edited image was found in document")
-                }
-                pdfPages.append(.image(image))
-            }
-            
-            let temporaryPath = NSTemporaryDirectory().appending("\(name).pfd")
-            try PDFGenerator.generate(pdfPages, to: temporaryPath)
-            return temporaryPath
-        } catch let error {
-            print("PDF generation failed: \(error)")
-        }
-        return nil
-    }
 }
 
 extension Document: Hashable {
