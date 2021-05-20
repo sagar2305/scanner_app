@@ -10,6 +10,7 @@ target 'Document Scanner' do
   pod 'LGButton'
   pod 'Hero'
   pod 'PDFGenerator', '~> 3.1'
+  pod 'TPPDF'
   pod 'Purchases'
   pod 'lottie-ios'
   pod 'PMAlertController'

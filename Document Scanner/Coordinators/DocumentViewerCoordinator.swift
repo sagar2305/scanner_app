@@ -58,10 +58,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         switch shareAs {
        
         case .pdf:
-            guard  let pdfPath = document.convertToPDF() else {
-                fatalError("ERROR: failed to generate PDF for document")
-            }
-            let pdfData = NSData(contentsOfFile: pdfPath)
+            let pdfData = PDFGeneratorHelper.generatePDF(for: document)
             documentToShare = [pdfData as Any]
         case .jpg:
             guard let imageToShare = document.pages.first?.editedImage else {

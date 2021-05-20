@@ -21,6 +21,7 @@
 		02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02140060262DF1CB008B0AEE /* UIKitPreview.swift */; };
 		02142576264BB39C00E2D8D7 /* NewDocumentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02142575264BB39C00E2D8D7 /* NewDocumentImageView.swift */; };
 		021BA67C26414552003DBD73 /* ImageCorrectionControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */; };
+		0233631B26538CA30004D1B8 /* PDFGeneratorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */; };
 		0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */; };
 		023EC567260A56F30041E6BF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023EC566260A56F30041E6BF /* Page.swift */; };
 		024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024AFE8B262FE98000E3730C /* ImageColorControls.swift */; };
@@ -143,6 +144,7 @@
 		02140060262DF1CB008B0AEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
 		02142575264BB39C00E2D8D7 /* NewDocumentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentImageView.swift; sourceTree = "<group>"; };
 		021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCorrectionControls.swift; sourceTree = "<group>"; };
+		0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFGeneratorHelper.swift; path = "Document Scanner/Debug/PDFGeneratorHelper.swift"; sourceTree = SOURCE_ROOT; };
 		0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditingControls.swift; sourceTree = "<group>"; };
 		023EC566260A56F30041E6BF /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		024AFE8B262FE98000E3730C /* ImageColorControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageColorControls.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
 				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
 				020AED95261F0BBF00998398 /* SubscriptionHelper.swift */,
+				0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
 				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
+				0233631B26538CA30004D1B8 /* PDFGeneratorHelper.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
 				02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */,
 				02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */,

@@ -38,8 +38,11 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     }
     
     private func _pickDocument() {
-        let tatsiImagePicker = TatsiPickerViewController()
+        var config = TatsiConfig.default
+        config.singleViewMode = true
+        let tatsiImagePicker = TatsiPickerViewController(config: config)
         tatsiImagePicker.pickerDelegate = self
+        tatsiImagePicker.navigationItem.backButtonTitle = ""
         navigationController.present(tatsiImagePicker, animated: true)
    }
     
@@ -153,7 +156,7 @@ extension PickDocumentCoordinator: TatsiPickerViewControllerDelegate {
     }
     
     func pickerViewControllerDidCancel(_ pickerViewController: TatsiPickerViewController) {
-        
+        pickerViewController.dismiss(animated: true)
     }
     
 }
