@@ -24,6 +24,8 @@
 	<string>App would like to access camera to scan your document</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App would like to acces photo library to pick documents</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Avenir Black.ttf</string>
@@ -74,7 +76,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
-	<true/>
 </dict>
 </plist>
