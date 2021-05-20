@@ -71,6 +71,11 @@ class DocumentReviewVC: DocumentScannerViewController {
         _setupFooterView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        footerContainerView?.hero.id = nil
+    }
+    
     private func _setupView() {
         navigationController?.navigationBar.isHidden = true
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
