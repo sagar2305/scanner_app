@@ -104,7 +104,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         guard let pageControllerItems = pageControllerItems, pageControllerItems.count > 0 else {
             fatalError("No items for page controller have been set")
         }
-
+        pageControl.isHidden = pageControllerItems.count == 1
         imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
     }
     

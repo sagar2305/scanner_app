@@ -82,6 +82,18 @@ class ImageCorrectionControls: UIView {
         _setupView()
     }
     
+    var setPreviousButtonHidden = false {
+        didSet {
+            previousPageFooterButton.alpha = setPreviousButtonHidden ? 0.0 : 1.0
+        }
+    }
+    
+    var setNextButtonHidden = false {
+        didSet {
+            nextPageFooterButton.alpha = setNextButtonHidden ? 0.0 : 1.0
+        }
+    }
+    
     private func _setupView() {
         
         addSubview(stackView)
