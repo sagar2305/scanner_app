@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -24,11 +24,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zk9-aA-Aky">
-                    <rect key="frame" x="0.0" y="44" width="414" height="730"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="722"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYf-sH-x48">
-                    <rect key="frame" x="16" y="802" width="382" height="52"/>
+                    <rect key="frame" x="16" y="794" width="382" height="52"/>
                     <color key="backgroundColor" name="primary"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="qZD-HL-ChX"/>
@@ -41,7 +41,7 @@
                     </connections>
                 </button>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="p8h-1m-DVs">
-                    <rect key="frame" x="145.5" y="778" width="123" height="16"/>
+                    <rect key="frame" x="146.5" y="770" width="121.5" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="3zb-Zz-FYy"/>
                     </constraints>
@@ -56,7 +56,7 @@
                 <constraint firstItem="HYf-sH-x48" firstAttribute="top" secondItem="p8h-1m-DVs" secondAttribute="bottom" constant="8" id="KMg-Eh-ZbN"/>
                 <constraint firstItem="zk9-aA-Aky" firstAttribute="leading" secondItem="4TJ-D9-CoI" secondAttribute="leading" id="Ln3-MY-VFS"/>
                 <constraint firstItem="p8h-1m-DVs" firstAttribute="top" secondItem="zk9-aA-Aky" secondAttribute="bottom" constant="4" id="X3g-Vm-sZt"/>
-                <constraint firstItem="4TJ-D9-CoI" firstAttribute="bottom" secondItem="HYf-sH-x48" secondAttribute="bottom" constant="8" id="aNW-8i-KAk"/>
+                <constraint firstItem="4TJ-D9-CoI" firstAttribute="bottom" secondItem="HYf-sH-x48" secondAttribute="bottom" constant="16" id="aNW-8i-KAk"/>
                 <constraint firstItem="HYf-sH-x48" firstAttribute="leading" secondItem="4TJ-D9-CoI" secondAttribute="leading" constant="16" id="hzV-9V-pBR"/>
                 <constraint firstItem="p8h-1m-DVs" firstAttribute="centerX" secondItem="HYf-sH-x48" secondAttribute="centerX" id="pCi-ke-1kq"/>
                 <constraint firstItem="4TJ-D9-CoI" firstAttribute="trailing" secondItem="zk9-aA-Aky" secondAttribute="trailing" id="r3X-gL-zuO"/>
