@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboarded)
+        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
         window = UIWindow(windowScene: scene)
         if isUserOnboarded {
             rootCoordinator = ApplicationCoordinator(window!)
