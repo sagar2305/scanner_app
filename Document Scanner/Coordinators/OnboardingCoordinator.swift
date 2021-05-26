@@ -35,9 +35,9 @@ extension OnboardingCoordinator: OnboardingVCDelegate {
         UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: rootVC,
                                                            offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
-                                                           presented: true,
+                                                           presented: false,
                                                            giftOffer: false,
-                                                           hideCloseButton: true,
+                                                           hideCloseButton: false,
                                                            showSpecialOffer: true)
         childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()

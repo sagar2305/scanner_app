@@ -79,10 +79,11 @@ extension SettingsCoordinator: SettingsVCDelegate {
     
     private func startSubscriptionCoordinator() {
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
-                                                           offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
-                                                          giftOffer: false,
-                                                          hideCloseButton: false,
-                                                          showSpecialOffer: true)
+                                                           offeringIdentifier: Constants.Offering.onlyAnnual,
+                                                           presented: true,
+                                                           giftOffer: false,
+                                                           hideCloseButton: false,
+                                                           showSpecialOffer: true)
         childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()
     }

@@ -75,7 +75,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
 
     func _getDocuments() {
-        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
+        let documents: [Document] = DocumentHelper.shared.documents
         self.allDocuments = documents
         self.filteredDocuments = documents
         noDocumentsMessageLabel.isHidden = allDocuments.count > 0

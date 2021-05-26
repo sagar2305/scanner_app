@@ -78,6 +78,7 @@
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
 		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
 		02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */; };
+		02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD8D8C265EAA420053520A /* DocumentHelper.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
 		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
 		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
@@ -201,6 +202,7 @@
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
 		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
 		02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
+		02CD8D8C265EAA420053520A /* DocumentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHelper.swift; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
 		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
 				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
 				0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */,
+				02CD8D8C265EAA420053520A /* DocumentHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -704,6 +707,7 @@
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
 				0271CA712625835300052565 /* IntroductionVC.swift in Sources */,
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
+				02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */,
 				0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,
 				02142576264BB39C00E2D8D7 /* NewDocumentImageView.swift in Sources */,

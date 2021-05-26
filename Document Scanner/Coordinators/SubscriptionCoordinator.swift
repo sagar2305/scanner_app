@@ -23,6 +23,7 @@ class SubscribeCoordinator: Coordinator {
     private var _productsFetched = false
     private var window: UIWindow?
     private var _offeringIdentifier: String?
+    /// This is presented over some navigation or view controller as modal presentation, false represents that user is presented with subscription screen as part of user flow.
     private var _presented: Bool
     private let _showSpecialOffer: Bool
 
@@ -39,13 +40,18 @@ class SubscribeCoordinator: Coordinator {
     }
 
     
-    init(navigationController: UINavigationController, offeringIdentifier: String? = nil, presented: Bool = true, giftOffer: Bool = false, hideCloseButton: Bool = false, showSpecialOffer: Bool = false) {
+    init(navigationController: DocumentScannerNavigationController, offeringIdentifier: String? = nil, presented: Bool = true, giftOffer: Bool = false, hideCloseButton: Bool = false, showSpecialOffer: Bool = false) {
         _offeringIdentifier = offeringIdentifier
         _presented = presented
         _showSpecialOffer = showSpecialOffer
 
         // after onboarding we need to show discounted rate and it will always be presented
-        subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+        if presented {
+            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+        } else {
+            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+        }
+        
         _lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.timeWhenUserSawSpecialOfferScreenKey)
         
         subscriptionVC.giftOffer = giftOffer
@@ -89,7 +95,13 @@ class SubscribeCoordinator: Coordinator {
     }
 
     private func _dismiss() {
-        navigationController.dismiss(animated: true)
+        if _presented {
+            navigationController.dismiss(animated: true)
+        } else {
+            let applicationCoordinator = ApplicationCoordinator(UIWindow.key!)
+            childCoordinators.append(applicationCoordinator)
+            applicationCoordinator.start()
+        }
     }
 
     var rootViewController: UIViewController {
@@ -122,7 +134,11 @@ class SubscribeCoordinator: Coordinator {
 
 
     private func _purchaseProduct(_ product: IAPProduct) {
+        print("*********Product requested *********")
+        dump(product)
+        NVActivityIndicatorView.start()
         SubscriptionHelper.shared.purchasePackage(product) { [weak self] (success, error) in
+            NVActivityIndicatorView.stop()
             guard error == nil else {
                 switch error! {
                 case .purchasedFailed:
@@ -159,11 +175,19 @@ class SubscribeCoordinator: Coordinator {
     }
 
     private func _presentPurchaseFailedAlert(product: IAPProduct) {
-        //TODO: - Present purchase failed alert
+        AlertMessageHelper.shared.presentPurchaseFailedAlert {
+            self._purchaseProduct(product)
+        } onCancel: {
+            self._dismiss()
+        }
     }
 
     private func _presentRestorationFailedAlert() {
-        //TODO: - Present restoration failed alert
+        AlertMessageHelper.shared.presentRestorationFailedAlert {
+            self._restorePurchases()
+        } onCancel: {
+            self._dismiss()
+        }
     }
 
     static func attributedFeatureText(_ feature: String) -> String {
@@ -184,7 +208,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
     }
 
     func headerMessage(for index: Int) -> String {
-        return "Try Document Scanner free for 7 days".localized
+        return "Try Free and Continue".localized
     }
 
     func subscriptionTitle(for index: Int) -> String {
@@ -354,7 +378,7 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
     }
 
     func didTapCancelButton(_ controller: SpecialOfferViewController) {
-        navigationController.popToRootViewController(animated: true)
+        _dismiss()
     }
 
     func purchaseOffer(_ controller: SpecialOfferViewController) {
@@ -372,7 +396,7 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
 
     func didTapBackButton(_ controller: SpecialOfferViewController) {
         timer?.invalidate()
-        navigationController.popViewController(animated: true)
+        _dismiss()
     }
 
     func showPrivacyPolicy(_ controller: SpecialOfferViewController) {
@@ -389,7 +413,6 @@ extension SubscribeCoordinator: SpecialOfferUIProviderDelegate {
     // Sandesh : Selecting products based on identifiers rather then assuming indexes
     func originalPrice() -> String {
         guard let annualReducedProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }) else {
-            print(availableProducts?.last)
             return ""
         }
 
