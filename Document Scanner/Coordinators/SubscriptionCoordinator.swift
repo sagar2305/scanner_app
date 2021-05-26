@@ -308,9 +308,9 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
             specialOfferVC = SpecialOfferViewController(fromPod: true)
             specialOfferVC!.delegate = self
             specialOfferVC?.specialOfferUIProviderDelegate = self
-            navigationController.pushViewController(specialOfferVC!, animated: true)
+            controller.navigationController?.pushViewController(specialOfferVC!, animated: true)
         }
-
+        
         // - Do Not delete below commented code
             if lastTimeUserShownSubscriptionScreen == nil {
                 lastTimeUserShownSubscriptionScreen = Date()
@@ -384,12 +384,13 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
     func purchaseOffer(_ controller: SpecialOfferViewController) {
         // assuming this is the last which you shouldn't
         // refactor later
-        guard let annualReducedProduct = availableProducts?.last else {
+        //Sandesh determining offer product based on identifier
+        guard let annualReducedProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }) else {
             return
         }
         _purchaseProduct(annualReducedProduct)
     }
-
+    
     func restorePurchases(_ controller: SpecialOfferViewController) {
         _restorePurchases()
     }
