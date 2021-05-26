@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TTInAppPurchases
 
 class ApplicationCoordinator: Coordinator {
     
@@ -38,21 +39,40 @@ class ApplicationCoordinator: Coordinator {
         //navigationController.isNavigationBarHidden = true
         homeViewController.delegate = self
     }
+    
+    private func startSubscriptionCoordinator() {
+        let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
+                                                           offeringIdentifier: Constants.Offering.onlyAnnual,
+                                                           presented: true,
+                                                           giftOffer: false,
+                                                           hideCloseButton: false,
+                                                           showSpecialOffer: true)
+        childCoordinators.append(subscriptionCoordinator)
+        subscriptionCoordinator.start()
+    }
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
     func scanNewDocument(_ controller: HomeVC) {
-        let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
-        scanDocumentCoordinator.delegate = self
-        childCoordinators.append(scanDocumentCoordinator)
-        scanDocumentCoordinator.start()
+        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.documents.count < 3 {
+            let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
+            scanDocumentCoordinator.delegate = self
+            childCoordinators.append(scanDocumentCoordinator)
+            scanDocumentCoordinator.start()
+        } else {
+            startSubscriptionCoordinator()
+        }
     }
     
     func pickNewDocument(_ controller: HomeVC) {
-        let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
-        pickDocumentCoordinator.delegate = self
-        childCoordinators.append(pickDocumentCoordinator)
-        pickDocumentCoordinator.start()
+        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.documents.count < 3 {
+            let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
+            pickDocumentCoordinator.delegate = self
+            childCoordinators.append(pickDocumentCoordinator)
+            pickDocumentCoordinator.start()
+        } else {
+            startSubscriptionCoordinator()
+        }
     }
     
     func showSettings(_ controller: HomeVC) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Purchases
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,14 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customisation after application launch.
         
-        //TODO: - Add configuration for Purchases
         window = UIWindow(frame: UIScreen.main.bounds)
-        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboarded)
+        let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
         if isUserOnboarded {
             rootCoordinator = ApplicationCoordinator(window!)
         } else {
             rootCoordinator = OnboardingCoordinator(window!)
         }
+        
+        for family: String in UIFont.familyNames
+        {
+            print(family)
+            for names: String in UIFont.fontNames(forFamilyName: family)
+            {
+                print("== \(names)")
+            }
+        }
+        
+        Purchases.configure(withAPIKey: Constants.APIKeys.revenueCat)
         rootCoordinator?.start()
         return true
     }

@@ -33,6 +33,14 @@
 		<string>Avenir Light.ttf</string>
 		<string>Avenir Medium.ttf</string>
 		<string>Avenir Regular.ttf</string>
+		<string>SofiaProBlack.ttf</string>
+		<string>SofiaProBold.ttf</string>
+		<string>SofiaProExtraLight.ttf</string>
+		<string>SofiaProLight.ttf</string>
+		<string>SofiaProMedium.ttf</string>
+		<string>SofiaProRegular.ttf</string>
+		<string>SofiaProSemiBold.ttf</string>
+		<string>SofiaProUltraLight.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

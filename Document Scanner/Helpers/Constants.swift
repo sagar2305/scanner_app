@@ -10,7 +10,8 @@ import Foundation
 struct Constants {
     struct DocumentScannerDefaults {
         static let documentsListKey = "DocumentsListKey"
-        static let userIsOnboarded = "UserIsOnboarded"
+        static let userIsOnboardedKey = "UserIsOnboardedKey"
+        static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
     }
     
     struct WebLinks {
@@ -28,12 +29,17 @@ struct Constants {
     }
     
     struct Offering {
-        static let onlyAnnualDiscountedNoTrialOnboarding = "onlyannualdiscounted_notrial_onboarding"
-        static let onlyAnnualDiscountedNoTrialHomeScreen = "onlyannualdiscounted_notrial_homescreen"
-        static let onlyAnnualDiscountedNoTrialRecordingScreen = "onlyannualdiscounted_notrial_recordingscreen"
-        static let weeklyAndAnnualReduced = "weeklyandannualreduced"
-        static let annualReducedSpecialOffer = "annualreduced"
-        static let lifetime = "lifetime"
+        static let `default` = "Default"
+        static let onlyAnnual = "Only_annual"
+        static let weekAndAnnual = "Weekandannual"
+        static let weekAndAnnualReduced = "Weeklyandannualreduced"
+        static let onlyAnnualDiscountedNoTrailOnboarding = "onlyannualdiscounted_notrial_onboarding"
+        static let onlyAnnualDiscountedNoTrailHomeScreen = "onlyannualdiscounted_notrial_homescreen"
+        static let onlyAnnualNoDiscountNoTrail = "Onlyannualnodiscountnotrial"
+        static let annualFullPriceAndSpecialOffer = "Annualfullpriceandspecialoffer"
+        static let annualAndLifeTime = "annualnlifetime"
+        static let annualReduced = "annualnlifetime"
+        static let lifetime = "Lifetime"
     }
     
     enum Fonts: String {
@@ -42,6 +48,10 @@ struct Constants {
         case avenirLight = "Avenir Light"
         case avenirMedium = "Avenir Medium"
         case avenirRegular = "Avenir Regular"
+    }
+    
+    struct APIKeys {
+        static let revenueCat = "uvRhgMynQdAhTwBHRsYuaUabcVPkuxLO"
     }
     
 }

@@ -8,15 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		020AED7D261F04AC00998398 /* SubscriptionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED7C261F04AC00998398 /* SubscriptionCoordinator.swift */; };
-		020AED8D261F0A3B00998398 /* AnnualNoTrialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */; };
-		020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */; };
-		020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */; };
-		020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020AED88261F0A3A00998398 /* SpecialOfferViewController.xib */; };
-		020AED96261F0BBF00998398 /* SubscriptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AED95261F0BBF00998398 /* SubscriptionHelper.swift */; };
 		020AEDB926201AC800998398 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDB826201AC800998398 /* Notification+Extension.swift */; };
-		020AEDBF26202A2C00998398 /* SubscriptionViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */; };
-		020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDBE26202A2C00998398 /* SubscriptionViewControllerDelegate.swift */; };
-		020AEDC22620409E00998398 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020AEDC12620409E00998398 /* IAPProduct.swift */; };
 		0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0214005B262DEE5B008B0AEE /* TranformImageControls.swift */; };
 		02140061262DF1CB008B0AEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02140060262DF1CB008B0AEE /* UIKitPreview.swift */; };
 		02142576264BB39C00E2D8D7 /* NewDocumentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02142575264BB39C00E2D8D7 /* NewDocumentImageView.swift */; };
@@ -67,6 +59,14 @@
 		02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */; };
 		0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */; };
 		0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */; };
+		029E33A0265CFC2500D92A00 /* SofiaProExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E3396265CFC2400D92A00 /* SofiaProExtraLight.ttf */; };
+		029E33A1265CFC2500D92A00 /* SofiaProLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E3399265CFC2400D92A00 /* SofiaProLight.ttf */; };
+		029E33A2265CFC2500D92A00 /* SofiaProUltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339A265CFC2400D92A00 /* SofiaProUltraLight.ttf */; };
+		029E33A3265CFC2500D92A00 /* SofiaProBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339B265CFC2400D92A00 /* SofiaProBlack.ttf */; };
+		029E33A4265CFC2500D92A00 /* SofiaProBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339C265CFC2400D92A00 /* SofiaProBold.ttf */; };
+		029E33A5265CFC2500D92A00 /* SofiaProMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339D265CFC2500D92A00 /* SofiaProMedium.ttf */; };
+		029E33A6265CFC2500D92A00 /* SofiaProSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339E265CFC2500D92A00 /* SofiaProSemiBold.ttf */; };
+		029E33A7265CFC2500D92A00 /* SofiaProRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339F265CFC2500D92A00 /* SofiaProRegular.ttf */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
@@ -78,6 +78,7 @@
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
 		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
 		02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */; };
+		02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD8D8C265EAA420053520A /* DocumentHelper.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
 		02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E77073260143F300C1887F /* DocumentReviewVC.swift */; };
 		02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E77074260143F300C1887F /* DocumentReviewVC.xib */; };
@@ -131,15 +132,7 @@
 
 /* Begin PBXFileReference section */
 		020AED7C261F04AC00998398 /* SubscriptionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCoordinator.swift; sourceTree = "<group>"; };
-		020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnualNoTrialViewController.swift; sourceTree = "<group>"; };
-		020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnualNoTrialViewController.xib; sourceTree = "<group>"; };
-		020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialOfferViewController.swift; sourceTree = "<group>"; };
-		020AED88261F0A3A00998398 /* SpecialOfferViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpecialOfferViewController.xib; sourceTree = "<group>"; };
-		020AED95261F0BBF00998398 /* SubscriptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionHelper.swift; sourceTree = "<group>"; };
 		020AEDB826201AC800998398 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
-		020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewControllerProtocol.swift; sourceTree = "<group>"; };
-		020AEDBE26202A2C00998398 /* SubscriptionViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewControllerDelegate.swift; sourceTree = "<group>"; };
-		020AEDC12620409E00998398 /* IAPProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProduct.swift; sourceTree = "<group>"; };
 		0214005B262DEE5B008B0AEE /* TranformImageControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranformImageControls.swift; sourceTree = "<group>"; };
 		02140060262DF1CB008B0AEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
 		02142575264BB39C00E2D8D7 /* NewDocumentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentImageView.swift; sourceTree = "<group>"; };
@@ -190,6 +183,14 @@
 		02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAdjustControls.swift; sourceTree = "<group>"; };
 		0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionVC.swift; sourceTree = "<group>"; };
 		0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CorrectionVC.xib; sourceTree = "<group>"; };
+		029E3396265CFC2400D92A00 /* SofiaProExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProExtraLight.ttf; sourceTree = "<group>"; };
+		029E3399265CFC2400D92A00 /* SofiaProLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProLight.ttf; sourceTree = "<group>"; };
+		029E339A265CFC2400D92A00 /* SofiaProUltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProUltraLight.ttf; sourceTree = "<group>"; };
+		029E339B265CFC2400D92A00 /* SofiaProBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProBlack.ttf; sourceTree = "<group>"; };
+		029E339C265CFC2400D92A00 /* SofiaProBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProBold.ttf; sourceTree = "<group>"; };
+		029E339D265CFC2500D92A00 /* SofiaProMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProMedium.ttf; sourceTree = "<group>"; };
+		029E339E265CFC2500D92A00 /* SofiaProSemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProSemiBold.ttf; sourceTree = "<group>"; };
+		029E339F265CFC2500D92A00 /* SofiaProRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProRegular.ttf; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
@@ -201,6 +202,7 @@
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
 		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
 		02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
+		02CD8D8C265EAA420053520A /* DocumentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHelper.swift; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02E77073260143F300C1887F /* DocumentReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVC.swift; sourceTree = "<group>"; };
 		02E77074260143F300C1887F /* DocumentReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentReviewVC.xib; sourceTree = "<group>"; };
@@ -237,22 +239,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		020AED80261F0A3A00998398 /* SubscriptionFlow */ = {
-			isa = PBXGroup;
-			children = (
-				020AED83261F0A3A00998398 /* AnnualNoTrialViewController.swift */,
-				020AED84261F0A3A00998398 /* AnnualNoTrialViewController.xib */,
-				020AED87261F0A3A00998398 /* SpecialOfferViewController.swift */,
-				020AED88261F0A3A00998398 /* SpecialOfferViewController.xib */,
-			);
-			path = SubscriptionFlow;
-			sourceTree = "<group>";
-		};
 		020AEDBC262029F400998398 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				020AEDBE26202A2C00998398 /* SubscriptionViewControllerDelegate.swift */,
-				020AEDBD26202A2B00998398 /* SubscriptionViewControllerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -272,7 +261,6 @@
 				025DB1B7260106ED006943C0 /* Setting.swift */,
 				025DB1C726011E8A006943C0 /* Filter.swift */,
 				023EC566260A56F30041E6BF /* Page.swift */,
-				020AEDC12620409E00998398 /* IAPProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -393,7 +381,6 @@
 				02F19223260096DF00D8CB8A /* ScannerVC.xib */,
 				025DB1A62600FE86006943C0 /* SettingsVC.swift */,
 				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
-				020AED80261F0A3A00998398 /* SubscriptionFlow */,
 				025DB1BF26011214006943C0 /* WebViewVC.swift */,
 				025DB1C026011214006943C0 /* WebViewVC.xib */,
 			);
@@ -421,6 +408,14 @@
 		0271CA75262583B100052565 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				029E339B265CFC2400D92A00 /* SofiaProBlack.ttf */,
+				029E339C265CFC2400D92A00 /* SofiaProBold.ttf */,
+				029E3396265CFC2400D92A00 /* SofiaProExtraLight.ttf */,
+				029E3399265CFC2400D92A00 /* SofiaProLight.ttf */,
+				029E339D265CFC2500D92A00 /* SofiaProMedium.ttf */,
+				029E339F265CFC2500D92A00 /* SofiaProRegular.ttf */,
+				029E339E265CFC2500D92A00 /* SofiaProSemiBold.ttf */,
+				029E339A265CFC2400D92A00 /* SofiaProUltraLight.ttf */,
 				0271CA76262583B100052565 /* Avenir Black.ttf */,
 				0271CA77262583B100052565 /* Avenir Book.ttf */,
 				0271CA78262583B100052565 /* Avenir Light.ttf */,
@@ -454,8 +449,8 @@
 				02F19216260096C100D8CB8A /* GPUImageHelper.swift */,
 				02F19217260096C100D8CB8A /* IconsHelper.swift */,
 				025DB1B52601045D006943C0 /* SettingsHelper.swift */,
-				020AED95261F0BBF00998398 /* SubscriptionHelper.swift */,
 				0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */,
+				02CD8D8C265EAA420053520A /* DocumentHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -579,18 +574,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				029E33A3265CFC2500D92A00 /* SofiaProBlack.ttf in Resources */,
 				02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */,
+				029E33A0265CFC2500D92A00 /* SofiaProExtraLight.ttf in Resources */,
+				029E33A5265CFC2500D92A00 /* SofiaProMedium.ttf in Resources */,
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
 				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
 				0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */,
+				029E33A7265CFC2500D92A00 /* SofiaProRegular.ttf in Resources */,
+				029E33A4265CFC2500D92A00 /* SofiaProBold.ttf in Resources */,
+				029E33A1265CFC2500D92A00 /* SofiaProLight.ttf in Resources */,
 				0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */,
 				02F19226260096DF00D8CB8A /* HomeViewController.xib in Resources */,
-				020AED92261F0A3B00998398 /* SpecialOfferViewController.xib in Resources */,
 				0271CA7D262583B200052565 /* Avenir Light.ttf in Resources */,
 				02F19160260083AE00D8CB8A /* FilterSelectionCollectionViewCell.xib in Resources */,
-				020AED8E261F0A3B00998398 /* AnnualNoTrialViewController.xib in Resources */,
 				0271CA7B262583B200052565 /* Avenir Black.ttf in Resources */,
 				02BA3CC326220D7B00FA9194 /* scanner.json in Resources */,
 				025BDA8D25F09AA1000834AE /* Main.storyboard in Resources */,
@@ -598,8 +597,10 @@
 				0271CA722625835300052565 /* IntroductionVC.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
+				029E33A6265CFC2500D92A00 /* SofiaProSemiBold.ttf in Resources */,
 				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
+				029E33A2265CFC2500D92A00 /* SofiaProUltraLight.ttf in Resources */,
 				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
 				0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */,
 			);
@@ -657,7 +658,6 @@
 				02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */,
 				02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */,
 				02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */,
-				020AED91261F0A3B00998398 /* SpecialOfferViewController.swift in Sources */,
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
 				021BA67C26414552003DBD73 /* ImageCorrectionControls.swift in Sources */,
@@ -669,7 +669,6 @@
 				023EC567260A56F30041E6BF /* Page.swift in Sources */,
 				02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */,
 				02616243260DBF100095B727 /* FooterButton.swift in Sources */,
-				020AEDC026202A2C00998398 /* SubscriptionViewControllerDelegate.swift in Sources */,
 				02E77075260143F300C1887F /* DocumentReviewVC.swift in Sources */,
 				0233631B26538CA30004D1B8 /* PDFGeneratorHelper.swift in Sources */,
 				02F1921A260096C100D8CB8A /* GPUImageHelper.swift in Sources */,
@@ -677,7 +676,6 @@
 				02F191552600783400D8CB8A /* UIView+Extension.swift in Sources */,
 				025DB1B8260106ED006943C0 /* Setting.swift in Sources */,
 				024F077925FFB97A0091C73C /* Foundation+Extension.swift in Sources */,
-				020AED8D261F0A3B00998398 /* AnnualNoTrialViewController.swift in Sources */,
 				0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */,
 				020AEDB926201AC800998398 /* Notification+Extension.swift in Sources */,
 				02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */,
@@ -689,13 +687,11 @@
 				02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */,
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
 				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
-				020AED96261F0BBF00998398 /* SubscriptionHelper.swift in Sources */,
 				02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */,
 				024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */,
 				02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,
 				020AED7D261F04AC00998398 /* SubscriptionCoordinator.swift in Sources */,
-				020AEDBF26202A2C00998398 /* SubscriptionViewControllerProtocol.swift in Sources */,
 				0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */,
 				02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */,
 				02F19227260096DF00D8CB8A /* ScannerVC.swift in Sources */,
@@ -711,8 +707,8 @@
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
 				0271CA712625835300052565 /* IntroductionVC.swift in Sources */,
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
+				02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */,
 				0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */,
-				020AEDC22620409E00998398 /* IAPProduct.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,
 				02142576264BB39C00E2D8D7 /* NewDocumentImageView.swift in Sources */,
 				02F1921C260096C100D8CB8A /* Constants.swift in Sources */,

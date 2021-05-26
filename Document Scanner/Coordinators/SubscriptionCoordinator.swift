@@ -7,6 +7,8 @@
 
 import UIKit
 import NVActivityIndicatorView
+import TTInAppPurchases
+import Lottie
 
 class SubscribeCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
@@ -15,50 +17,66 @@ class SubscribeCoordinator: Coordinator {
     var specialOfferVC: SpecialOfferViewControllerProtocol?
     var navigationController: UINavigationController
     var timer: Timer?
-    
-    var currentEvent: SubscriptionHelper.EventForSubscription = .call
-    
+
+
     var availableProducts: [IAPProduct]?
     private var _productsFetched = false
     private var window: UIWindow?
     private var _offeringIdentifier: String?
+    /// This is presented over some navigation or view controller as modal presentation, false represents that user is presented with subscription screen as part of user flow.
     private var _presented: Bool
     private let _showSpecialOffer: Bool
-    
+
     private var _lastTimeUserShownSubscriptionScreen: Date?
     private var lastTimeUserShownSubscriptionScreen: Date? {
         get {
             return _lastTimeUserShownSubscriptionScreen
         }
-        
+
         set {
             _lastTimeUserShownSubscriptionScreen = newValue
-            //UserDefaults.standard.save(newValue, forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
+            UserDefaults.standard.save(newValue, forKey: Constants.DocumentScannerDefaults.timeWhenUserSawSpecialOfferScreenKey)
         }
     }
+
     
-    init(navigationController: UINavigationController, offeringIdentifier: String? = nil, presented: Bool = true, giftOffer: Bool = false, hideCloseButton: Bool = false, showSpecialOffer: Bool = false) {
+    init(navigationController: DocumentScannerNavigationController, offeringIdentifier: String? = nil, presented: Bool = true, giftOffer: Bool = false, hideCloseButton: Bool = false, showSpecialOffer: Bool = false) {
         _offeringIdentifier = offeringIdentifier
         _presented = presented
         _showSpecialOffer = showSpecialOffer
-        
+
         // after onboarding we need to show discounted rate and it will always be presented
-        subscriptionVC = AnnualNoTrialViewController()
-        //_lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.CallRecorderDefaults.timeWhenFirstSubscriptionScreenShownKey)
+        if presented {
+            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+        } else {
+            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+        }
+        
+        _lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.timeWhenUserSawSpecialOfferScreenKey)
         
         subscriptionVC.giftOffer = giftOffer
         subscriptionVC.hideCloseButton = hideCloseButton
         self.navigationController = navigationController
     }
     
+    
+
     func start() {
         self._fetchAvailableProducts()
         subscriptionVC.delegate = self
         subscriptionVC.uiProviderDelegate = self
-        subscriptionVC.specialOfferUIProviderDelegate = self
-        navigationController.pushViewController(subscriptionVC, animated: true)
+        
+        if _presented {
+            let navigationController = DocumentScannerNavigationController(rootViewController: subscriptionVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .coverVertical
+            navigationController.setNavigationBarHidden(true, animated: true)
+            self.navigationController.present(navigationController, animated: true)
+        } else {
+            navigationController.pushViewController(subscriptionVC, animated: true)
+        }
     }
-    
+
     private func _fetchAvailableProducts() {
         SubscriptionHelper.shared.fetchAvailableProducts(for: _offeringIdentifier) { (allProducts, error) in
             print("**********Fetched allProducts")
@@ -67,20 +85,29 @@ class SubscribeCoordinator: Coordinator {
                 self.availableProducts = allProducts
                 NotificationCenter.default.post(name: .iapProductsFetchedNotification,
                                                 object: nil)
+                print("*****************Products")
+                dump(allProducts)
             } else {
                 //TODO: - Present product not available alert
+               
             }
         }
     }
-    
+
     private func _dismiss() {
-        navigationController.dismiss(animated: true)
+        if _presented {
+            navigationController.dismiss(animated: true)
+        } else {
+            let applicationCoordinator = ApplicationCoordinator(UIWindow.key!)
+            childCoordinators.append(applicationCoordinator)
+            applicationCoordinator.start()
+        }
     }
-    
+
     var rootViewController: UIViewController {
         return subscriptionVC
     }
-    
+
     private func showTermsOfLaw() {
         let callRecordLawsVC = WebViewVC()
         callRecordLawsVC.configureUI(title: "Terms of law".localized)
@@ -88,7 +115,7 @@ class SubscribeCoordinator: Coordinator {
         navigationController.pushViewController(callRecordLawsVC, animated: true)
         navigationController.setNavigationBarHidden(false, animated: true)
     }
-    
+
     private func showPrivacyPolicy() {
         let callRecordLawsVC = WebViewVC()
         callRecordLawsVC.configureUI(title: "Privacy policy".localized)
@@ -96,18 +123,22 @@ class SubscribeCoordinator: Coordinator {
         navigationController.pushViewController(callRecordLawsVC, animated: true)
         navigationController.setNavigationBarHidden(false, animated: true)
     }
-    
+
     private func _updateSpecialOfferTimeLabel(_ timeRemainingForOffer: Double) {
         let hour = Int(timeRemainingForOffer) / 3600
         let minutes = Int(timeRemainingForOffer) / 60 % 60
         let seconds = Int(timeRemainingForOffer) % 60
         self.specialOfferVC?.updateTimer(String(format: "%02d", hour) + ":" + String(format: "%02d", minutes) + ":" + String(format: "%02d", seconds))
     }
-    
-  
-    
+
+
+
     private func _purchaseProduct(_ product: IAPProduct) {
+        print("*********Product requested *********")
+        dump(product)
+        NVActivityIndicatorView.start()
         SubscriptionHelper.shared.purchasePackage(product) { [weak self] (success, error) in
+            NVActivityIndicatorView.stop()
             guard error == nil else {
                 switch error! {
                 case .purchasedFailed:
@@ -120,7 +151,7 @@ class SubscribeCoordinator: Coordinator {
                 }
                 return
             }
-            
+
             if success {
                 if let self = self {
                     self._dismiss()
@@ -130,7 +161,7 @@ class SubscribeCoordinator: Coordinator {
             }
         }
     }
-    
+
     private func _restorePurchases() {
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
             guard error == nil else {
@@ -142,84 +173,116 @@ class SubscribeCoordinator: Coordinator {
             }
         }
     }
-    
+
     private func _presentPurchaseFailedAlert(product: IAPProduct) {
-        //TODO: - Present purchase failed alert
+        AlertMessageHelper.shared.presentPurchaseFailedAlert {
+            self._purchaseProduct(product)
+        } onCancel: {
+            self._dismiss()
+        }
     }
-    
+
     private func _presentRestorationFailedAlert() {
-        //TODO: - Present restoration failed alert
+        AlertMessageHelper.shared.presentRestorationFailedAlert {
+            self._restorePurchases()
+        } onCancel: {
+            self._dismiss()
+        }
     }
-    
+
     static func attributedFeatureText(_ feature: String) -> String {
         return "✓  " + feature
     }
-    
+
 }
 
 // MARK: - UpgradeUIProviderDelegate
 extension SubscribeCoordinator: UpgradeUIProviderDelegate {
-    
+   
+    func animatingAnimationView() -> (view: AnimationView, shouldOffset: Bool) {
+        return (AnimationView(name: "scanner"), false)
+    }
     
     func productsFetched() -> Bool {
         return _productsFetched
     }
-    
+
     func headerMessage(for index: Int) -> String {
-        return "Try Document Scanner free for 7 days".localized
+        return "Try Free and Continue".localized
     }
-    
+
     func subscriptionTitle(for index: Int) -> String {
         guard let availableProducts = availableProducts,
               availableProducts.count > index else {
             return ""
         }
-        
+
         return availableProducts[index].displayName
     }
-    
+
     func introductoryPrice(for index: Int, withDurationSuffix: Bool) -> String {
         guard let availableProducts = availableProducts,
               availableProducts.count > index else {
             return ""
         }
-        
+
         if withDurationSuffix {
             return availableProducts[index].introductoryPriceWithDurationSuffix
         } else {
             return availableProducts[index].introductoryPrice
         }
     }
-    
+
     func subscriptionPrice(for index: Int, withDurationSuffix: Bool) -> String {
         guard let availableProducts = availableProducts,
               availableProducts.count > index else {
             return ""
         }
-        
+
         if withDurationSuffix {
             return availableProducts[index].priceWithDurationSuffix
         } else {
             return availableProducts[index].price
         }
     }
-    
+
     func continueButtonTitle(for index: Int) -> String {
         guard let availableProducts = availableProducts,
               availableProducts.count > index else {
             return ""
         }
-        
+
         return "Try Free and Continue".localized
     }
-    
+
     func offersFreeTrial(for index: Int) -> Bool {
         guard let availableProducts = availableProducts,
               availableProducts.count > index else {
             return false
         }
-        
+
         return availableProducts[index].offersFreeTrial
+    }
+    
+    func monthlyBreakdownOfPrice(withIntroDiscount withDiscount: Bool, withDurationSuffix: Bool) -> String {
+        guard let availableProduct = availableProducts?.first else {
+            return ""
+        }
+
+        if withDiscount {
+            if let introductoryPrice = availableProduct.product.introductoryPrice?.price {
+                if let price = introductoryPrice.dividing(by: 12).toCurrency(locale: availableProduct.product.introductoryPrice?.priceLocale) {
+                    return withDurationSuffix ? price + "/" + "month".localized : price
+                }
+            }
+        } else {
+            let regularPrice = availableProduct.product.price
+            if let price = regularPrice.dividing(by: 12).toCurrency(locale: availableProduct.product.priceLocale) {
+                return withDurationSuffix ? price + "/" + "month".localized : price
+            }
+        }
+
+        return ""
     }
 }
 
@@ -228,25 +291,26 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
     func viewWillAppear(_ controller: SubscriptionViewControllerProtocol) {
         controller.navigationController?.setNavigationBarHidden(true, animated: true)
         if !_productsFetched {
-          //TODO: - Add activity Indicator
+            NVActivityIndicatorView.start()
         }
     }
-    
+
     func viewDidAppear(_ controller: SubscriptionViewControllerProtocol) {
         if !_productsFetched {
-            //TODO: - Add activity Indicator
+            NVActivityIndicatorView.start()
         }
-    }
-    
-    func exit(_ controller: SubscriptionViewControllerProtocol) {
         
+    }
+
+    func exit(_ controller: SubscriptionViewControllerProtocol) {
+
         func showSpecialOffer() {
-            specialOfferVC = SpecialOfferViewController()
+            specialOfferVC = SpecialOfferViewController(fromPod: true)
             specialOfferVC!.delegate = self
-            specialOfferVC?.uiProviderDelegate = self
+            specialOfferVC?.specialOfferUIProviderDelegate = self
             navigationController.pushViewController(specialOfferVC!, animated: true)
         }
-        
+
         // - Do Not delete below commented code
             if lastTimeUserShownSubscriptionScreen == nil {
                 lastTimeUserShownSubscriptionScreen = Date()
@@ -260,14 +324,14 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
                 }
             }
     }
-    
+
     func selectPlan(at index: Int, controller: SubscriptionViewControllerProtocol) {
         guard let availableProducts = availableProducts, availableProducts.count > index else {
             return
         }
         _purchaseProduct(availableProducts[index])
     }
-    
+
     func restorePurchases(_ controller: SubscriptionViewControllerProtocol) {
         _restorePurchases()
     }
@@ -275,7 +339,7 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
     func showPrivacyPolicy(_ controller: SubscriptionViewControllerProtocol) {
         showPrivacyPolicy()
     }
-    
+
     func showTermsOfLaw(_ controller: SubscriptionViewControllerProtocol) {
         showTermsOfLaw()
     }
@@ -283,16 +347,16 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
 
 // MARK: - SpecialOfferViewControllerDelegate
 extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
-    
+
     func viewDidLoad(_ controller: SpecialOfferViewController) {
         guard let lastTime = lastTimeUserShownSubscriptionScreen  else {
             navigationController.dismiss(animated: true)
             return
         }
-        
+
         var timeRemainingForOffer = 300 - Date().timeIntervalSince(lastTime)
         _updateSpecialOfferTimeLabel(timeRemainingForOffer)
-        
+
         if timeRemainingForOffer > 0 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
                 timeRemainingForOffer -= 1
@@ -308,15 +372,15 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
             navigationController.dismiss(animated: true)
         }
     }
-    
+
     func viewWillAppear(_ controller: SpecialOfferViewController) {
         navigationController.setNavigationBarHidden(true, animated: true)
     }
-    
+
     func didTapCancelButton(_ controller: SpecialOfferViewController) {
         _dismiss()
     }
-    
+
     func purchaseOffer(_ controller: SpecialOfferViewController) {
         // assuming this is the last which you shouldn't
         // refactor later
@@ -325,59 +389,60 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
         }
         _purchaseProduct(annualReducedProduct)
     }
-    
+
     func restorePurchases(_ controller: SpecialOfferViewController) {
         _restorePurchases()
     }
-    
+
     func didTapBackButton(_ controller: SpecialOfferViewController) {
         timer?.invalidate()
-        navigationController.popViewController(animated: true)
+        _dismiss()
     }
-    
+
     func showPrivacyPolicy(_ controller: SpecialOfferViewController) {
         showPrivacyPolicy()
     }
-    
+
     func showTermsOfLaw(_ controller: SpecialOfferViewController) {
         showTermsOfLaw()
     }
 }
-
+// MARK: - SpecialOfferUIProviderDelegate
 extension SubscribeCoordinator: SpecialOfferUIProviderDelegate {
     // Sagar assuming first product is always the one with special offer; refactor later
+    // Sandesh : Selecting products based on identifiers rather then assuming indexes
     func originalPrice() -> String {
-        guard let annualReducedProduct = availableProducts?.first else {
+        guard let annualReducedProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }) else {
             return ""
         }
-        
+
         return annualReducedProduct.price
     }
-    
+
     func discountedPrice() -> String {
-        guard let annualReducedProduct = availableProducts?.first else {
+        guard let annualReducedProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }) else {
             return ""
         }
-        
+
         return annualReducedProduct.introductoryPrice
     }
-    
+
     func percentDiscount() -> String {
-        guard let annualReducedProduct = availableProducts?.first,
+        guard let annualReducedProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }),
               let introductoryPrice = annualReducedProduct.product.introductoryPrice?.price else {
             return ""
         }
-        
+
         let originalPrice = annualReducedProduct.product.price
         let discount = originalPrice.subtracting(introductoryPrice).dividing(by: originalPrice).multiplying(by: 100)
         return "\(lround(discount.doubleValue))"
     }
-    
+
     func monthlyComputedDiscountPrice(withIntroDiscount: Bool, withDurationSuffix: Bool) -> String {
-        guard let availableProduct = availableProducts?.first else {
+        guard let availableProduct = availableProducts?.first(where: { $0.identifier == "AnnualSpecialOffer" }) else {
             return ""
         }
-        
+
         if withIntroDiscount {
             if let introductoryPrice = availableProduct.product.introductoryPrice?.price {
                 if let price = introductoryPrice.dividing(by: 12).toCurrency(locale: availableProduct.product.introductoryPrice?.priceLocale) {
@@ -390,7 +455,23 @@ extension SubscribeCoordinator: SpecialOfferUIProviderDelegate {
                 return withDurationSuffix ? price + "/" + "month".localized : price
             }
         }
-        
+
         return ""
+    }
+    
+    func featureOne() -> String {
+        "Unlimited scans"
+    }
+    
+    func featureTwo() -> String {
+        "High quality scans"
+    }
+    
+    func featureThree() -> String {
+        "Organize your scans easily"
+    }
+    
+    func featureFour() -> String {
+        "Share without limits"
     }
 }

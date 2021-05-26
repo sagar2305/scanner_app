@@ -7,6 +7,7 @@
 
 import UIKit
 import MessageUI
+import TTInAppPurchases
 
 class SettingsCoordinator: NSObject, Coordinator {
     
@@ -72,8 +73,19 @@ extension SettingsCoordinator: SettingsVCDelegate {
         case .featureRequest:
             _presentEmail(suffix: "Feature Request")
         case .subscription:
-            SubscriptionHelper.shared.startSubscribeCoordinator(navigationController: navigationController, parentCoordinator: self)
+            startSubscriptionCoordinator()
         }
+    }
+    
+    private func startSubscriptionCoordinator() {
+        let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
+                                                           offeringIdentifier: Constants.Offering.onlyAnnual,
+                                                           presented: true,
+                                                           giftOffer: false,
+                                                           hideCloseButton: false,
+                                                           showSpecialOffer: true)
+        childCoordinators.append(subscriptionCoordinator)
+        subscriptionCoordinator.start()
     }
     
     func settingsViewController(exit controller: SettingsVC) {
