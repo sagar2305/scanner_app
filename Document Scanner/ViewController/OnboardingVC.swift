@@ -51,7 +51,7 @@ class OnboardingVC: DocumentScannerViewController {
     private func _generateItemsForPageControls() {
         let pageControlItem1 = UIViewController()
         pageControlItem1.view = OnboardingView(header: "EASY TO SCAN",
-                                               description: "Quickly scan or select and generate digital copy of your document",
+                                               description: "Quickly scan and digitize your important documents",
                                                image: UIImage(named: "store-document")!)
         pageControllerItems.append(pageControlItem1)
         

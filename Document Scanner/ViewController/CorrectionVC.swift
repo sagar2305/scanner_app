@@ -36,9 +36,7 @@ class CorrectionVC: DocumentScannerViewController {
     private lazy var imagePageController: UIPageViewController = {
         let pageController = UIPageViewController(transitionStyle: .scroll,
                                                   navigationOrientation: .horizontal)
-        pageController.view.translatesAutoresizingMaskIntoConstraints = false
-        pageController.dataSource = self
-        
+        pageController.view.translatesAutoresizingMaskIntoConstraints = false        
         return pageController
     }()
     
@@ -105,6 +103,7 @@ class CorrectionVC: DocumentScannerViewController {
         pageControl.isHidden = pageControllerItems.count == 1
         
         imagePageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true)
+        imageCorrectionControls.setPreviousButtonHidden = true
     }
     
     private func changePage(direction: UIPageViewController.NavigationDirection) {
@@ -117,6 +116,8 @@ class CorrectionVC: DocumentScannerViewController {
             currentPageIndex -= 1
         }
         
+        imageCorrectionControls.setNextButtonHidden = currentPageIndex == pageControllerItems.count - 1
+        imageCorrectionControls.setPreviousButtonHidden = currentPageIndex == 0
         let nextVC = pageControllerItems[currentPageIndex]
         imagePageController.setViewControllers([nextVC], direction: direction, animated: true)
         pageControl.currentPage = currentPageIndex
@@ -161,30 +162,6 @@ class CorrectionVC: DocumentScannerViewController {
         
     @IBAction func didTapBackButton(_ sender: UIButton) {
         delegate?.correctionVC(self, didTapBack: sender)
-    }
-}
-
-
-extension CorrectionVC: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let pageControllerItems = pageControllerItems,
-              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
-            return nil
-        }
-            
-        if viewControllerIndex == 0 { return nil }
-        return pageControllerItems[viewControllerIndex - 1]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let pageControllerItems = pageControllerItems,
-              let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
-            return nil
-        }
-        
-        if viewControllerIndex == pageControllerItems.count - 1 { return nil }
-        
-        return pageControllerItems[viewControllerIndex + 1]
     }
 }
 
