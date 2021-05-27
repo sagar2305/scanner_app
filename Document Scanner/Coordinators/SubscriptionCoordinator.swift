@@ -113,7 +113,7 @@ class SubscribeCoordinator: Coordinator {
         callRecordLawsVC.configureUI(title: "Terms of law".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.termsOfLaw
         navigationController.pushViewController(callRecordLawsVC, animated: true)
-        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(true, animated: true)
     }
 
     private func showPrivacyPolicy() {
@@ -121,7 +121,7 @@ class SubscribeCoordinator: Coordinator {
         callRecordLawsVC.configureUI(title: "Privacy policy".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.privacyPolicy
         navigationController.pushViewController(callRecordLawsVC, animated: true)
-        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(true, animated: true)
     }
 
     private func _updateSpecialOfferTimeLabel(_ timeRemainingForOffer: Double) {
