@@ -110,6 +110,7 @@ class SubscribeCoordinator: Coordinator {
 
     private func showTermsOfLaw() {
         let callRecordLawsVC = WebViewVC()
+        callRecordLawsVC.delegate = self
         callRecordLawsVC.configureUI(title: "Terms of law".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.termsOfLaw
         navigationController.pushViewController(callRecordLawsVC, animated: true)
@@ -118,6 +119,7 @@ class SubscribeCoordinator: Coordinator {
 
     private func showPrivacyPolicy() {
         let callRecordLawsVC = WebViewVC()
+        callRecordLawsVC.delegate = self
         callRecordLawsVC.configureUI(title: "Privacy policy".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.privacyPolicy
         navigationController.pushViewController(callRecordLawsVC, animated: true)
@@ -474,5 +476,11 @@ extension SubscribeCoordinator: SpecialOfferUIProviderDelegate {
     
     func featureFour() -> String {
         "Share without limits"
+    }
+}
+
+extension SubscribeCoordinator: WebViewVCsDelegate {
+    func webViewVC(exit controller: WebViewVC) {
+        navigationController.popViewController(animated: true)
     }
 }
