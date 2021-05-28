@@ -15,8 +15,8 @@ struct Constants {
     }
     
     struct WebLinks {
-        static let termsOfLaw = "https://eztape.app/terms-and-conditions.html"
-        static let privacyPolicy = "https://eztape.app/privacy-policy.html"
+        static let termsOfLaw = "https://www.guessinggames.co/terms-and-conditions.html"
+        static let privacyPolicy = "https://www.guessinggames.co/privacy-policy.html"
     }
     
     struct HeroIdentifiers {
