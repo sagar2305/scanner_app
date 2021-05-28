@@ -32,7 +32,7 @@ class OnboardingCoordinator: Coordinator {
 
 extension OnboardingCoordinator: OnboardingVCDelegate {
     func onboardingVC(_ continue: DocumentScannerViewController) {
-        UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
+       // UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: rootVC,
                                                            offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
                                                            presented: false,

@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Document Scanner
+
+  Created by Sandesh on 28/05/21.
+  
+*/
+
+//Onboarding flow
+"Easy to scan" =  "Easy to scan";
+"Quickly scan and digitize your important documents" = "Quickly scan and digitize your important documents";
+"Organise files easily" = "OrganiZe files easily";
+"Have all your digital document in one place" = "Have all your digital document in one place";
+"Share it" = "Share it";
+"Quickly share the files in the format that you prefer" = "Quickly share the files in the format that you prefer";
+"Next" = "Next";
+"Continue" = "Continue";
