@@ -29,7 +29,7 @@ class ImageCorrectionControls: UIView {
     
     private lazy var editFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.setTitle("Edit", for: .normal)
+        footerButton.setTitle("Edit".localized, for: .normal)
         footerButton.setImage(UIImage(named: "edit")!, for: .normal)
         footerButton.addTarget(self, action: #selector(_editButtonTapped(_:)), for: .touchUpInside)
         footerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ class ImageCorrectionControls: UIView {
     
     private lazy var rescanFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.setTitle("Rescan", for: .normal)
+        footerButton.setTitle("Rescan".localized, for: .normal)
         footerButton.setImage(UIImage(named: "rescan")!, for: .normal)
         footerButton.addTarget(self, action: #selector(_rescanButtonTapped(_:)), for: .touchUpInside)
         footerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ class ImageCorrectionControls: UIView {
     
     private lazy var previousPageFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.setTitle("Previous", for: .normal)
+        footerButton.setTitle("Previous".localized, for: .normal)
         footerButton.setImage(UIImage(named: "previous")!, for: .normal)
         footerButton.addTarget(self, action: #selector(_previousPageButtonTapped(_:)), for: .touchUpInside)
         footerButton.translatesAutoresizingMaskIntoConstraints = false

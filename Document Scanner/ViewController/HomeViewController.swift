@@ -14,7 +14,7 @@ protocol HomeVC: DocumentScannerViewController {
     var filteredDocuments: [Document] { get }
 }
 
-protocol HomeViewControllerDelegate: class {
+protocol HomeViewControllerDelegate: AnyObject {
     func scanNewDocument(_ controller: HomeVC)
     func pickNewDocument(_ controller: HomeVC)
     func showSettings(_ controller: HomeVC)
@@ -88,9 +88,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         scanDocumentFooterButton.textColor = .primaryText
         settingsFooterButton.textColor = .primaryText
         
+        pickDocumentFooterButton.setTitle("Pick Document".localized, for: .normal)
+        scanDocumentFooterButton.setTitle("Scan Document", for: .normal)
+        settingsFooterButton.setTitle("Settings".localized, for: .normal)
+        
         noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         noDocumentsMessageLabel.numberOfLines = 0
-        noDocumentsMessageLabel.text = "You don't have any document at the moment. Scan your first document."
+        noDocumentsMessageLabel.text = "No document available message".localized
         
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         

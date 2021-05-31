@@ -29,7 +29,7 @@ class ImageColorControls: UIView {
     
     private lazy var originalFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Original"
+        footerButton.title = "Original".localized
         footerButton.setImage(UIImage(named: "filter")!, for: .normal)
         footerButton.textColor = .text
         footerButton.addTarget(self, action: #selector(_originalButtonTapped(_:)), for: .touchUpInside)
@@ -38,7 +38,7 @@ class ImageColorControls: UIView {
     
     private lazy var grayScaleFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Gray Scale"
+        footerButton.title = "Gray Scale".localized
         footerButton.setImage(UIImage(named: "gray_scale")!, for: .normal)
         footerButton.textColor = .text
         footerButton.addTarget(self, action: #selector(_grayScaleButtonTapped(_:)), for: .touchUpInside)
@@ -47,7 +47,7 @@ class ImageColorControls: UIView {
     
     private lazy var blackAndWhiteFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "B&W"
+        footerButton.title = "B&W".localized
         footerButton.setImage(UIImage(named: "black_and_white")!, for: .normal)
 
         footerButton.textColor = .text

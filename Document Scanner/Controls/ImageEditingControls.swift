@@ -28,7 +28,7 @@ class ImageEditorControls: UIView {
     
     private lazy var transformFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Transform"
+        footerButton.title = "Transform".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "transform")!
         footerButton.addTarget(self, action: #selector(_transformButtonTapped(_:)), for: .touchUpInside)
@@ -37,7 +37,7 @@ class ImageEditorControls: UIView {
     
     private lazy var adjustFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Adjust"
+        footerButton.title = "Adjust".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "adjust")!
         footerButton.addTarget(self, action: #selector(_adjustButtonTapped(_:)), for: .touchUpInside)
@@ -46,7 +46,7 @@ class ImageEditorControls: UIView {
     
     private lazy var colorFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Color"
+        footerButton.title = "Color".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "filter")!
         footerButton.addTarget(self, action: #selector(_colorButtonTapped(_:)), for: .touchUpInside)
@@ -55,7 +55,7 @@ class ImageEditorControls: UIView {
     
     private lazy var editOriginalFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Original"
+        footerButton.title = "Original".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "edit")!
         footerButton.addTarget(self, action: #selector(_originalButtonTapped(_:)), for: .touchUpInside)

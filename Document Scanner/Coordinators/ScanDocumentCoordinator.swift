@@ -69,12 +69,12 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             NVActivityIndicatorView.stop()
             navigationController.popToRootViewController(animated: true)
         } else {
-            let alertVC = PMAlertController(title: "Something went wrong",
-                                            description: "Unable to save generate your document, please try again",
+            let alertVC = PMAlertController(title: "Something went wrong".localized,
+                                            description: "Unable to save generate your document, please try again".localized,
                                             image: nil,
                                             style: .alert)
             alertVC.alertTitle.textColor = .primary
-            let okAction = PMAlertAction(title: "OK", style: .default) {
+            let okAction = PMAlertAction(title: "OK".localized, style: .default) {
                 self.navigationController.popViewController(animated: true)
             }
             okAction.setTitleColor(.primary, for: .normal)

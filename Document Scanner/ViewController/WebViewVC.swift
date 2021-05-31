@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-protocol WebViewVCsDelegate: class {
+protocol WebViewVCsDelegate: AnyObject {
     func webViewVC(exit controller: WebViewVC)
 }
 

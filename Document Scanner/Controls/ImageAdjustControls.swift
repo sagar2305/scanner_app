@@ -18,7 +18,7 @@ class ImageAdjustControls: UIView {
     private lazy var brightnessLabel: UILabel = {
         let label = UILabel()
         label.configure(with: UIFont.font(.avenirRegular, style: .footnote))
-        label.text = "Brightness"
+        label.text = "Brightness".localized
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,7 +26,7 @@ class ImageAdjustControls: UIView {
     private lazy var contrastLabel: UILabel = {
         let label = UILabel()
         label.configure(with: UIFont.font(.avenirRegular, style: .footnote))
-        label.text = "Contrast"
+        label.text = "Contrast".localized
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,7 +34,7 @@ class ImageAdjustControls: UIView {
     private lazy var saturationLabel: UILabel = {
         let label = UILabel()
         label.configure(with: UIFont.font(.avenirRegular, style: .footnote))
-        label.text = "Saturation"
+        label.text = "Saturation".localized
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

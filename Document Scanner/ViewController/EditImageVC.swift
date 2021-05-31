@@ -116,14 +116,13 @@ class EditImageVC: DocumentScannerViewController {
         _setupViews()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     private func _setupViews() {
         _setupImageEditorView()
         footerView.addSubview(imageEditControls)
         imageEditControls.snp.makeConstraints { make in make.left.right.top.bottom.equalToSuperview() }
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        undoButton.setTitle("Undo".localized.uppercased(), for: .normal)
+        doneButton.setTitle("Done".localized.uppercased(), for: .normal)
     }
     
     //initial setup

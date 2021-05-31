@@ -55,7 +55,7 @@ class ScannerVC: UIViewController {
     
     private func _setupViews() {
         doneButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle("Done".localized, for: .normal)
         scanImageButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .headline))
         scanImageButton.setTitle("", for: .normal)
     }
@@ -76,12 +76,12 @@ class ScannerVC: UIViewController {
         if images.count > 0 {
             delegate?.scannerVC(self, finishedScanning: images)
         } else {
-            let alertVC = PMAlertController(title: "Scan at-least one document to continue ",
+            let alertVC = PMAlertController(title: "Scan at-least one document to continue.".localized,
                                             description: nil,
                                             image: nil,
                                             style: .alert)
             alertVC.alertTitle.textColor = .primary
-            let okAction = PMAlertAction(title: "OK", style: .default) {
+            let okAction = PMAlertAction(title: "OK".localized, style: .default) {
             }
             okAction.setTitleColor(.primary, for: .normal)
             alertVC.addAction(okAction)

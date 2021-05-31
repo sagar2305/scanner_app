@@ -27,7 +27,7 @@ class TransformImageControls: UIView {
     
     private lazy var rotateFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Rotate"
+        footerButton.title = "Rotate".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "rotate")!
         footerButton.addTarget(self, action: #selector(_rotationButtonTapped(_:)), for: .touchUpInside)
@@ -36,7 +36,7 @@ class TransformImageControls: UIView {
     
     private lazy var cropFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Crop"
+        footerButton.title = "Crop".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "crop")!
         footerButton.addTarget(self, action: #selector(_cropButtonTapped(_:)), for: .touchUpInside)
@@ -45,7 +45,7 @@ class TransformImageControls: UIView {
     
     private lazy var mirrorFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Mirror"
+        footerButton.title = "Mirror".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "mirror")!
         footerButton.addTarget(self, action: #selector(_mirrorButtonTapped(_:)), for: .touchUpInside)

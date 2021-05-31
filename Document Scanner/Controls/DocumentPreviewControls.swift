@@ -27,7 +27,7 @@ class DocumentPreviewControls: UIView {
     
     private lazy var showAsPDFButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "PDF"
+        footerButton.title = "PDF".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "pdf")!
         footerButton.addTarget(self, action: #selector(_showAsPDFButtonTapped(_:)), for: .touchUpInside)
@@ -36,7 +36,7 @@ class DocumentPreviewControls: UIView {
     
     private lazy var shareButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "Share"
+        footerButton.title = "Share".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "share")!
         footerButton.addTarget(self, action: #selector(_shareButtonTapped(_:)), for: .touchUpInside)
@@ -45,7 +45,7 @@ class DocumentPreviewControls: UIView {
     
     private lazy var editButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "Edit"
+        footerButton.title = "Edit".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "edit")!
         footerButton.addTarget(self, action: #selector(_editButtonTapped(_:)), for: .touchUpInside)
@@ -54,7 +54,7 @@ class DocumentPreviewControls: UIView {
     
     private lazy var deleteButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "Delete"
+        footerButton.title = "Delete".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "delete")!
         footerButton.addTarget(self, action: #selector(_deleteButtonTapped(_:)), for: .touchUpInside)

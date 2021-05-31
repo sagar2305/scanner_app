@@ -55,10 +55,10 @@ class SettingsCoordinator: NSObject, Coordinator {
             navigationController.present(mail, animated: true)
         } else {
             // show failure alert
-            let message = "Please configure your device mailbox to send mail"
-            let alert = UIAlertController(title: "Mail Not Configured",
+            let message = "Please configure your device mailbox to send mail".localized
+            let alert = UIAlertController(title: "Mail Not Configured".localized,
                                           message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
             }))
         }
     }
@@ -77,17 +77,17 @@ extension SettingsCoordinator: SettingsVCDelegate {
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting) {
         switch setting.id {
         case .termsOfLaw:
-            _presentWebView(for: Constants.WebLinks.termsOfLaw, title: "Terms Of Law")
+            _presentWebView(for: Constants.WebLinks.termsOfLaw, title: "Terms Of Law".localized)
         case .privacyPolicy:
-            _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy")
+            _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy".localized)
         case .featureRequest:
-            _presentEmail(suffix: "Feature Request")
+            _presentEmail(suffix: "Feature Request".localized)
         case .subscription:
             startSubscriptionCoordinator()
         case .inviteFriends:
             _inviteFriends()
         case .reportError:
-            _presentEmail(suffix: "Report a Bug")
+            _presentEmail(suffix: "Report a Bug".localized)
         case .restorePurchases:
             _restorePurchases()
         }

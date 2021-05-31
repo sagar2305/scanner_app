@@ -80,6 +80,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         navigationController?.navigationBar.isHidden = true
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
+        renameButton.setTitle("Rename".localized, for: .normal)
         headerLabel.text = document?.name
         containerView.hero.id = document?.id.uuidString
         renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
@@ -117,15 +118,15 @@ class DocumentReviewVC: DocumentScannerViewController {
         guard  let document = document else {
             fatalError("Document is not set")
         }
-        let alertVC = PMAlertController(title: "Enter Name", description: nil, image: nil, style: .alert)
+        let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
         alertVC.alertTitle.textColor = .primary
         
         alertVC.addTextField { (textField) in
-                    textField?.placeholder = "Document Name"
+            textField?.placeholder = "Document Name".localized
                 }
         
         alertVC.alertActionStackView.axis = .horizontal
-        let doneAction = PMAlertAction(title: "Done", style: .default) {
+        let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
             let textField = alertVC.textFields[0]
             guard let documentName = textField.text,
                   !documentName.isEmpty else {
@@ -139,7 +140,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         doneAction.setTitleColor(.primary, for: .normal)
         alertVC.addAction(doneAction)
         
-        let cancelAction = PMAlertAction(title: "Cancel", style: .cancel) {  }
+        let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
         alertVC.addAction(cancelAction)
         alertVC.gravityDismissAnimation = false
 
@@ -174,18 +175,18 @@ class DocumentReviewVC: DocumentScannerViewController {
             fatalError("ERROR: No document is set")
         }
         
-        let deleteConfirmationAlert = PMAlertController(title: "Delete Document", description: "Are you sure you want to delete the document?", image: nil, style: .alert)
+        let deleteConfirmationAlert = PMAlertController(title: "Delete Document".localized, description: "Are you sure you want to delete the document?".localized, image: nil, style: .alert)
         deleteConfirmationAlert.alertTitle.textColor = .red
         
         
         deleteConfirmationAlert.alertActionStackView.axis = .horizontal
-        let yesAction = PMAlertAction(title: "Yes", style: .default) {
+        let yesAction = PMAlertAction(title: "Yes".localized, style: .default) {
             self.delegate?.documentReviewVC(delete: document, controller: self)
         }
         yesAction.setTitleColor(.red, for: .normal)
         deleteConfirmationAlert.addAction(yesAction)
         
-        let cancelAction = PMAlertAction(title: "No", style: .cancel) {  }
+        let cancelAction = PMAlertAction(title: "No".localized, style: .cancel) {  }
         deleteConfirmationAlert.addAction(cancelAction)
         deleteConfirmationAlert.gravityDismissAnimation = false
         
@@ -193,15 +194,15 @@ class DocumentReviewVC: DocumentScannerViewController {
     }
     
     private func didTapShare(_ sender: FooterButton) {
-        let actionSheetController = UIAlertController(title: "Share document as", message: nil, preferredStyle: .actionSheet)
-        actionSheetController.addAction(UIAlertAction(title: "PDF", style: .default, handler: { _ in
+        let actionSheetController = UIAlertController(title: "Share document as".localized, message: nil, preferredStyle: .actionSheet)
+        actionSheetController.addAction(UIAlertAction(title: "PDF".localized, style: .default, handler: { _ in
             self.shareDocument(shareAs: .pdf)
         }))
-        actionSheetController.addAction(UIAlertAction(title: "Picture", style: .default, handler: { _ in
+        actionSheetController.addAction(UIAlertAction(title: "JPG".localized, style: .default, handler: { _ in
             self.shareDocument(shareAs: .jpg)
         }))
         
-        actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+        actionSheetController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { _ in }))
         
         present(actionSheetController, animated: true)
     }

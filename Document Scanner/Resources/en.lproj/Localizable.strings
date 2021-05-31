@@ -15,3 +15,90 @@
 "Quickly share the files in the format that you prefer" = "Quickly share the files in the format that you prefer";
 "Next" = "Next";
 "Continue" = "Continue";
+
+//Home Screen
+"No document available message" = "You don't have any document at the moment. Scan your first document.";
+"My Documents" = "My Documents";
+"Pick Document" = "Pick Document";
+"Scan Document" = "Scan Document";
+"Settings" = "Settings";
+
+//ImageCorrectionControls / CorrectionVC
+"Edit" = "Edit";
+"Rescan" = "Rescan";
+"Previous" = "Previous";
+"Next" = "Next";
+"Something went wrong" = "Something went wrong";
+"Unable to save generate your document, please try again" = "Unable to save generate your document, please try again";
+
+//DocumentPreviewControls / DocumentReviewVC
+"PDF" = "PDF";
+"Share" = "Share";
+"Edit" = "Edit";
+"Delete" = "Delete";
+"Enter Name" = "Enter Name";
+"Document Name" = "Document Name";
+"Done" = "Done";
+"Cancel" = "Cancel";
+"Rename" = "Rename";
+"Delete Document" = "Delete Document";
+"Are you sure you want to delete the document?" = "Are you sure you want to delete the document?";
+"Yes" = "Yes";
+"No" = "No";
+"Share document as" = "Share document as";
+"PDF" = "PDF";
+"JPG" = "JPG";
+
+
+//ImageEditorControls
+"Transform" = "Transform";
+"Adjust" = "Adjust";
+"Color" = "Color";
+"Original" = "Original";
+
+//TransformImageControls
+"Rotate" = "Rotate";
+"Crop" = "Crop";
+"Mirror" = "Mirror";
+
+//ImageAdjustControls
+"Brightness" = "Brightness";
+"Contrast" = "Contrast";
+"Saturation" = "Saturation";
+
+//ImageColorControls
+"Original" = "Original";
+"Gray Scale" = "Gray Scale";
+"B&W" = "B&W";
+
+//EditImageVC
+"Undo" = "Undo";
+
+//ScannerVC
+"Scan at-least one document to continue." = "Scan at-least one document to continue.";
+"OK" = "OK";
+
+//SettingsVC
+"Settings" = "Settings";
+"Invite Friend" = "Invite Friend";
+"Upgrade" = "Upgrade";
+"Restore Purchase" = "Restore Purchase";
+"Request feature" = "Request feature";
+"Report a Bug" = "Report a Bug";
+"Privacy Policy" = "Privacy Policy";
+"Terms of Law" = "Terms of Law";
+
+//SettingsCoordinator
+"Please configure your device mailbox to send mail" = "Please configure your device mailbox to send mail";
+"Mail Not Configured" = "Mail Not Configured";
+"Feature Request" = "Feature Request";
+//todo Update this message
+"InviteMessage" = "Invite your friends";
+
+//SubscribeCoordinator
+"month" = "month";
+"Unlimited scans" =  "Unlimited scans";
+"High quality scans" = "High quality scans";
+"Organize your scans easily" = "Organize your scans easily";
+"Share without limits" = "Share without limits";
+"Unlock Unlimited Access" = "Unlock Unlimited Access";
