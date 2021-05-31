@@ -9,7 +9,7 @@ import UIKit
 import WeScan
 import PMAlertController
 
-protocol ScannerVCDelegate: class {
+protocol ScannerVCDelegate: AnyObject {
     func cancelScanning(_ controller: ScannerVC)
     func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController])
 }
@@ -20,6 +20,8 @@ class ScannerVC: UIViewController {
         didSet {
             if images.count > 0 {
                 scanImageButton.setTitle("\(images.count)", for: .normal)
+            } else {
+                scanImageButton.setTitle("", for: .normal)
             }
         }
     }
@@ -42,6 +44,7 @@ class ScannerVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        images = []
         navigationController?.navigationBar.isHidden = true
     }
     

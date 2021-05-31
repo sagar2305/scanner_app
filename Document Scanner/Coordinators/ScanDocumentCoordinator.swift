@@ -97,6 +97,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
     }
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
+        
         navigationController.popViewController(animated: true)
     }    
 }
