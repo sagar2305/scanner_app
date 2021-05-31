@@ -141,6 +141,8 @@ extension SettingsCoordinator: SettingsVCDelegate {
             }
             if success {
                 print("SUCESS *****************")
+            } else {
+                self?.startSubscriptionCoordinator()
             }
         }
     }
