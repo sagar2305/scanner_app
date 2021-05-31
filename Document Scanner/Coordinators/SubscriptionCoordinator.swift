@@ -201,8 +201,10 @@ class SubscribeCoordinator: Coordinator {
 // MARK: - UpgradeUIProviderDelegate
 extension SubscribeCoordinator: UpgradeUIProviderDelegate {
    
-    func animatingAnimationView() -> (view: AnimationView, shouldOffset: Bool) {
-        return (AnimationView(name: "scanner"), false)
+    func animatingAnimationView() -> (view: AnimationView, offsetBy: CGFloat?) {
+        
+        
+        return (AnimationView(name: "scanner"), nil)
     }
     
     func productsFetched() -> Bool {
