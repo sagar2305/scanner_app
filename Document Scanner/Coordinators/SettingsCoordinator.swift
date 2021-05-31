@@ -8,6 +8,7 @@
 import UIKit
 import MessageUI
 import TTInAppPurchases
+import NVActivityIndicatorView
 
 class SettingsCoordinator: NSObject, Coordinator {
     
@@ -64,6 +65,15 @@ class SettingsCoordinator: NSObject, Coordinator {
 }
 
 extension SettingsCoordinator: SettingsVCDelegate {
+    func viewDidLoad(_ controller: DocumentScannerViewController) {
+        var settings = [[Setting]]()
+        settings.append(SettingsHelper.shared.getSettings(for: .documentScanner))
+        settings.append(SettingsHelper.shared.getSettings(for: .manage))
+        settings.append(SettingsHelper.shared.getSettings(for: .support))
+        settings.append(SettingsHelper.shared.getSettings(for: .miscellaneous))
+        settingsVC.settings = settings
+    }
+    
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting) {
         switch setting.id {
         case .termsOfLaw:
@@ -74,10 +84,22 @@ extension SettingsCoordinator: SettingsVCDelegate {
             _presentEmail(suffix: "Feature Request")
         case .subscription:
             startSubscriptionCoordinator()
+        case .inviteFriends:
+            _inviteFriends()
+        case .reportError:
+            _presentEmail(suffix: "Report a Bug")
+        case .restorePurchases:
+            _restorePurchases()
         }
     }
     
     private func startSubscriptionCoordinator() {
+        
+        if SubscriptionHelper.shared.isProUser {
+            AlertMessageHelper.shared.presentAlreadyProAlert { }
+            return
+        }
+        
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
                                                            offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
                                                            presented: true,
@@ -90,6 +112,42 @@ extension SettingsCoordinator: SettingsVCDelegate {
     
     func settingsViewController(exit controller: SettingsVC) {
         rootViewController.dismiss(animated: true)
+    }
+    
+    private func _inviteFriends() {
+        if let appURL = URL(string: Constants.SettingDefaults.appUrl) {
+            let objectsToShare = ["InviteMessage".localized, appURL] as [Any]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            if #available(iOS 13.0, *) {
+                UINavigationBar.appearance().barTintColor = .blue
+            }
+            
+            //Excluded Activities
+            activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop,
+                                UIActivity.ActivityType.addToReadingList]
+            navigationController.present(activityVC, animated: true, completion: nil)
+        }
+    }
+    
+    private func _restorePurchases() {
+        NVActivityIndicatorView.start()
+        AnalyticsHelper.shared.logEvent(.restoredPurchase)
+        SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
+            NVActivityIndicatorView.stop()
+            guard error == nil else {
+                self?._presentRestorationFailedAlert()
+                return
+            }
+            if success {
+                print("SUCESS *****************")
+            }
+        }
+    }
+    
+    private func _presentRestorationFailedAlert() {
+        AlertMessageHelper.shared.presentRestorationFailedAlert(onRetry: self._restorePurchases,
+            onCancel: {})
     }
 }
 

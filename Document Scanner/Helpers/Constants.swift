@@ -26,6 +26,8 @@ struct Constants {
     
     struct  SettingDefaults {
         static let feedbackEmail = "support@eztape.app"
+        //TODO: - Update the url with actual document scanner URL
+        static let appUrl = "http://itunes.apple.com/app/id1551911173"
     }
     
     struct Offering {
