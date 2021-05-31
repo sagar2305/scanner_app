@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -32,7 +32,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="52"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yr0-i2-kR9">
-                            <rect key="frame" x="56" y="4" width="41.5" height="44"/>
+                            <rect key="frame" x="186.5" y="4" width="41.5" height="44"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -64,15 +64,16 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="yr0-i2-kR9" firstAttribute="centerX" secondItem="VDf-t1-lj3" secondAttribute="centerX" id="AvE-2w-aY6"/>
                         <constraint firstItem="vc7-lv-U3Z" firstAttribute="top" secondItem="VDf-t1-lj3" secondAttribute="top" constant="4" id="CQr-Bj-C62"/>
                         <constraint firstItem="sGq-yd-ZS9" firstAttribute="centerY" secondItem="VDf-t1-lj3" secondAttribute="centerY" id="Dcg-KC-bl1"/>
                         <constraint firstAttribute="height" constant="52" id="Ipy-8Y-fhe"/>
                         <constraint firstAttribute="bottom" secondItem="vc7-lv-U3Z" secondAttribute="bottom" constant="4" id="N99-ZY-YPu"/>
                         <constraint firstAttribute="trailing" secondItem="sGq-yd-ZS9" secondAttribute="trailing" constant="16" id="dn8-AY-0cE"/>
                         <constraint firstItem="yr0-i2-kR9" firstAttribute="top" secondItem="VDf-t1-lj3" secondAttribute="top" constant="4" id="fQZ-SY-zju"/>
-                        <constraint firstItem="sGq-yd-ZS9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yr0-i2-kR9" secondAttribute="trailing" constant="8" id="gEh-rR-QWs"/>
+                        <constraint firstItem="sGq-yd-ZS9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yr0-i2-kR9" secondAttribute="trailing" constant="4" id="gEh-rR-QWs"/>
                         <constraint firstItem="vc7-lv-U3Z" firstAttribute="leading" secondItem="VDf-t1-lj3" secondAttribute="leading" constant="4" id="lxq-VS-ELP"/>
-                        <constraint firstItem="yr0-i2-kR9" firstAttribute="leading" secondItem="vc7-lv-U3Z" secondAttribute="trailing" constant="8" id="qhZ-Mu-33y"/>
+                        <constraint firstItem="yr0-i2-kR9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vc7-lv-U3Z" secondAttribute="trailing" constant="4" id="qhZ-Mu-33y"/>
                         <constraint firstAttribute="bottom" secondItem="yr0-i2-kR9" secondAttribute="bottom" constant="4" id="zid-pU-TMp"/>
                     </constraints>
                 </view>
@@ -106,7 +107,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="nw9-gc-9Xd">
-                    <rect key="frame" x="145.5" y="782" width="123" height="28"/>
+                    <rect key="frame" x="146.5" y="782" width="121.5" height="28"/>
                     <color key="pageIndicatorTintColor" name="secondaryTextColor"/>
                     <color key="currentPageIndicatorTintColor" name="primary"/>
                 </pageControl>
