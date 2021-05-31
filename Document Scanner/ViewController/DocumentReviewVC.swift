@@ -173,7 +173,23 @@ class DocumentReviewVC: DocumentScannerViewController {
         guard let document = document else {
             fatalError("ERROR: No document is set")
         }
-        delegate?.documentReviewVC(delete: document, controller: self)
+        
+        let deleteConfirmationAlert = PMAlertController(title: "Delete Document", description: "Are you sure you want to delete the document?", image: nil, style: .alert)
+        deleteConfirmationAlert.alertTitle.textColor = .red
+        
+        
+        deleteConfirmationAlert.alertActionStackView.axis = .horizontal
+        let yesAction = PMAlertAction(title: "Yes", style: .default) {
+            self.delegate?.documentReviewVC(delete: document, controller: self)
+        }
+        yesAction.setTitleColor(.red, for: .normal)
+        deleteConfirmationAlert.addAction(yesAction)
+        
+        let cancelAction = PMAlertAction(title: "No", style: .cancel) {  }
+        deleteConfirmationAlert.addAction(cancelAction)
+        deleteConfirmationAlert.gravityDismissAnimation = false
+        
+        self.present(deleteConfirmationAlert, animated: true, completion: nil)
     }
     
     private func didTapShare(_ sender: FooterButton) {
