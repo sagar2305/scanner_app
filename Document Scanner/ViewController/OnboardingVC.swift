@@ -118,6 +118,7 @@ extension OnboardingVC: UIPageViewControllerDataSource {
             
         if viewControllerIndex == 0 { return nil }
         currentPageIndex = viewControllerIndex - 1
+        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
         return pageControllerItems[currentPageIndex]
     }
     
@@ -128,6 +129,7 @@ extension OnboardingVC: UIPageViewControllerDataSource {
         
         if viewControllerIndex == pageControllerItems.count - 1 { return nil }
         currentPageIndex = viewControllerIndex + 1
+        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
         return pageControllerItems[currentPageIndex]
     }
 }
