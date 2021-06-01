@@ -253,7 +253,6 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
               availableProducts.count > index else {
             return ""
         }
-        //TODO: - Update this message
         return "Unlock Unlimited Access".localized
     }
 
