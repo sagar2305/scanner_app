@@ -72,6 +72,10 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
+            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
+                .documentID: document.id.uuid,
+                .numberOfDocumentPages: document.pages.count
+            ])
             navigationController.popToRootViewController(animated: true)
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [

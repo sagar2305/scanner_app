@@ -106,18 +106,18 @@ struct Constants {
         case viewedTermsAndLaws = "Viewed Terms And Laws" //done
         
         //image editing
-        case userEditingImage = "Started Editing Image"
-        case cancelledEditingImage = "Cancelled Editing Image"
-        case finishedEditingImage = "Finished Editing Image"
-        case rotatedImage = "Rotated Image"
-        case croppedImage = "Cropped Image"
-        case mirroredImage = "Mirrored Image"
-        case adjustedBrightness = "Adjusted Brightness"
-        case adjustedContrast = "Adjusted Contrast"
-        case adjustedSaturation = "Adjusted Saturation"
-        case setOriginalImage = "Set Original Image Color"
-        case setBlackAndWhiteImage = "Set BlackAndWhite Image Color"
-        case setGrayScaleImage = "Set GrayScale Image Color"
+        case userEditingImage = "Started Editing Image" //done
+        case cancelledEditingImage = "Cancelled Editing Image" //done
+        case finishedEditingImage = "Finished Editing Image" //done
+        case rotatedImage = "Rotated Image" //done
+        case croppedImage = "Cropped Image" //done
+        case mirroredImage = "Mirrored Image" //done
+        case adjustedBrightness = "Adjusted Brightness" //done
+        case adjustedContrast = "Adjusted Contrast" //done
+        case adjustedSaturation = "Adjusted Saturation" //done
+        case setOriginalImage = "Set Original Image Color" //done
+        case setBlackAndWhiteImage = "Set BlackAndWhite Image Color" //done
+        case setGrayScaleImage = "Set GrayScale Image Color" //done
         
     }
 

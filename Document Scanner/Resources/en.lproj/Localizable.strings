@@ -17,7 +17,7 @@
 "Continue" = "Continue";
 
 //Home Screen
-"No document available message" = "You don't have any document at the moment. Scan your first document.";
+"No document available message" = "Please scan your first document";
 "My Documents" = "My Documents";
 "Pick Document" = "Pick Document";
 "Scan Document" = "Scan Document";

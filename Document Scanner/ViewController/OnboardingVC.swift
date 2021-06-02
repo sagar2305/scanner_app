@@ -90,11 +90,11 @@ class OnboardingVC: DocumentScannerViewController {
        
         if direction == .forward && currentPageIndex < pageControllerItems.count-1 {
             currentPageIndex += 1
+            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
         } else if direction == .reverse && currentPageIndex > 0 {
             currentPageIndex -= 1
         }
         
-        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
         let nextVC = pageControllerItems[currentPageIndex]
         pageController.setViewControllers([nextVC], direction: direction, animated: true)
         pageControl.currentPage = currentPageIndex
