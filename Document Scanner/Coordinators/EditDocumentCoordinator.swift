@@ -48,12 +48,19 @@ class EditDocumentCoordinator: Coordinator {
 
 
 extension EditDocumentCoordinator: EditImageVCDelegate {
+    func viewDidAppear(_ controller: DocumentScannerViewController) {
+        AnalyticsHelper.shared.logEvent(.userEditingImage)
+    }
+    
+    
     func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC, isRotated: Bool) {
         delegate?.didFinishEditing(imageToEdit, editedImage: finalImage, self, isRotated: isRotated)
+        AnalyticsHelper.shared.logEvent(.finishedEditingImage)
     }
     
     func cancelImageEditing(_controller: EditImageVC) {
         delegate?.didCancelEditing(self)
+        AnalyticsHelper.shared.logEvent(.cancelledEditingImage)
     }
 
 }

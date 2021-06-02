@@ -10,13 +10,13 @@ import SnapKit
 import PMAlertController
 
 
-protocol DocumentReviewVCDelegate: class {
+protocol DocumentReviewVCDelegate: AnyObject {
+    func documentReviewVC(viewDidAppear controller: DocumentScannerViewController)
     func documentReviewVC(edit page: Page, controller: DocumentReviewVC)
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC)
     func documentReviewVC(exit controller: DocumentReviewVC)
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
-    func documentReviewVC(rename document: Document, name: String
-    )
+    func documentReviewVC(rename document: Document, name: String)
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -73,6 +73,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        delegate?.documentReviewVC(viewDidAppear: self)
         footerContainerView?.hero.id = nil
     }
     

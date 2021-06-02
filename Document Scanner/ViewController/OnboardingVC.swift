@@ -100,6 +100,15 @@ class OnboardingVC: DocumentScannerViewController {
         pageControl.currentPage = currentPageIndex
     }
     
+    private func _logEventForPage(index: Int) {
+        switch index {
+        case 0: AnalyticsHelper.shared.logEvent(.onboardingScreen1)
+        case 1: AnalyticsHelper.shared.logEvent(.onboardingScreen2)
+        case 2: AnalyticsHelper.shared.logEvent(.onboardingScreen3)
+        default: break
+        }
+    }
+    
     @IBAction func didTapContinue(_ sender: UIButton) {
         if haveUserReadLastPage {
             delegate?.onboardingVC(self)

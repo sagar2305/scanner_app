@@ -12,6 +12,11 @@ import NVActivityIndicatorView
 
 class SettingsCoordinator: NSObject, Coordinator {
     
+    private enum MailRequestTopic {
+        case reportingBug
+        case requestingFeature
+    }
+    
     var rootViewController: UIViewController {
         return navigationController
     }
@@ -20,6 +25,8 @@ class SettingsCoordinator: NSObject, Coordinator {
     var navigationController: DocumentScannerNavigationController!
     var settingsVC: SettingsVC!
     var webVC: WebViewVC!
+    
+    private var mailRequestTopic: MailRequestTopic?
     
     
     func start() {
@@ -74,19 +81,27 @@ extension SettingsCoordinator: SettingsVCDelegate {
         settingsVC.settings = settings
     }
     
+    func viewDidAppear(controller: DocumentScannerViewController) {
+        AnalyticsHelper.shared.logEvent(.visitedSettings)
+    }
+    
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting) {
         switch setting.id {
         case .termsOfLaw:
+            AnalyticsHelper.shared.logEvent(.viewedTermsAndLaws)
             _presentWebView(for: Constants.WebLinks.termsOfLaw, title: "Terms Of Law".localized)
         case .privacyPolicy:
+            AnalyticsHelper.shared.logEvent(.viewedPrivacyPolicy)
             _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy".localized)
         case .featureRequest:
+            mailRequestTopic = .requestingFeature
             _presentEmail(suffix: "Feature Request".localized)
         case .subscription:
             startSubscriptionCoordinator()
         case .inviteFriends:
             _inviteFriends()
         case .reportError:
+            mailRequestTopic = .reportingBug
             _presentEmail(suffix: "Report a Bug".localized)
         case .restorePurchases:
             _restorePurchases()
@@ -126,21 +141,29 @@ extension SettingsCoordinator: SettingsVCDelegate {
             //Excluded Activities
             activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop,
                                 UIActivity.ActivityType.addToReadingList]
+            activityVC.completionWithItemsHandler = { activity, completed, item, error in
+                if error != nil || !completed {
+                    AnalyticsHelper.shared.logEvent(.sendingInviteFailed)
+                }
+                AnalyticsHelper.shared.logEvent(.invitedFriend)
+            }
             navigationController.present(activityVC, animated: true, completion: nil)
         }
     }
     
     private func _restorePurchases() {
         NVActivityIndicatorView.start()
-        AnalyticsHelper.shared.logEvent(.restoredPurchase)
+        TTInAppPurchases.AnalyticsHelper.shared.logEvent( .restoredPurchase)
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
             NVActivityIndicatorView.stop()
             guard error == nil else {
                 self?._presentRestorationFailedAlert()
+                TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
                 return
             }
             if success {
                 print("SUCESS *****************")
+                TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
             } else {
                 self?.startSubscriptionCoordinator()
             }
@@ -186,6 +209,20 @@ extension SettingsCoordinator: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult, error: Error?) {
+        // 2-> success, 3 -> failure
+        if mailRequestTopic != nil {
+            if result.rawValue == 2 {
+                switch mailRequestTopic! {
+                case .reportingBug: AnalyticsHelper.shared.logEvent(.reportedABug)
+                case .requestingFeature: AnalyticsHelper.shared.logEvent(.raisedFeatureRequest)
+                }
+            } else if result.rawValue == 3 {
+                switch mailRequestTopic! {
+                case .reportingBug: AnalyticsHelper.shared.logEvent(.reportingBugFailed)
+                case .requestingFeature: AnalyticsHelper.shared.logEvent(.featureRequestFailed)
+                }
+            }
+        }
         controller.dismiss(animated: true, completion: nil)
     }
 }

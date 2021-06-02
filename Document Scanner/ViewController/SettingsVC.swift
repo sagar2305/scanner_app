@@ -10,6 +10,7 @@ import UIKit
 
 protocol SettingsVCDelegate: AnyObject {
     func viewDidLoad(_ controller: DocumentScannerViewController)
+    func viewDidAppear(controller: DocumentScannerViewController)
     func settingsViewController(_ controller: SettingsVC, didSelect setting: Setting)
     func settingsViewController(exit controller: SettingsVC)
 }
@@ -27,6 +28,11 @@ class SettingsVC: DocumentScannerViewController {
         delegate?.viewDidLoad(self)
         _setupViews()
         _setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.viewDidAppear(controller: self)
     }
     
     private func _setupViews() {

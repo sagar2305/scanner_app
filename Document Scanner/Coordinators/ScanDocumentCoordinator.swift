@@ -44,8 +44,13 @@ class ScanDocumentCoordinator: Coordinator {
 
 extension ScanDocumentCoordinator: ScannerVCDelegate {
     func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController]) {
+        
+        AnalyticsHelper.shared.logEvent(.userScannedDocument , properties: [
+            .numberOfDocumentPages: images.count
+        ])
+        
         correctionVC = CorrectionVC()
-        correctionVC.delegate = self
+        correctionVC.delegate =  self
         correctionVC.dataSource = self
         correctionVC.pageControllerItems = images
         navigationController.pushViewController(correctionVC, animated: true)
@@ -69,6 +74,9 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             NVActivityIndicatorView.stop()
             navigationController.popToRootViewController(animated: true)
         } else {
+            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                .numberOfDocumentPages: originalImages.count
+            ])
             let alertVC = PMAlertController(title: "Something went wrong".localized,
                                             description: "Unable to save generate your document, please try again".localized,
                                             image: nil,

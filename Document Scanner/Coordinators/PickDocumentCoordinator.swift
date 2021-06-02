@@ -50,6 +50,9 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         guard pageControlItems.count > 0 else {
             fatalError("No page control items are available")
         }
+        AnalyticsHelper.shared.logEvent(.userPickedDocument, properties: [
+            .numberOfDocumentPages: pageControlItems.count
+        ])
         correctionVC = CorrectionVC()
         correctionVC.delegate = self
         correctionVC.dataSource = self

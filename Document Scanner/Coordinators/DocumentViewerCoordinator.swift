@@ -37,8 +37,18 @@ class DocumentViewerCoordinator: Coordinator {
 }
 
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
+    func documentReviewVC(viewDidAppear controller: DocumentScannerViewController) {
+        AnalyticsHelper.shared.logEvent(.userOpenedDocument, properties: [
+                                            .documentID: document.id.uuidString,
+                                            .numberOfDocumentPages: document.pages.count
+         ])
+    }
+    
     func documentReviewVC(rename document: Document, name: String) {
         document.rename(new: name)
+        AnalyticsHelper.shared.logEvent(.renamedDocument, properties: [
+                                            .documentID: document.id.uuidString,
+         ])
     }
     
     func documentReviewVC(edit page: Page, controller: DocumentReviewVC) {
@@ -68,7 +78,16 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         }
         let activityVC = UIActivityViewController(activityItems: documentToShare, applicationActivities: nil)
         activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList, .airDrop]
-        activityVC.completionWithItemsHandler = { activity, completed, item, error in }
+        activityVC.completionWithItemsHandler = { activity, completed, item, error in
+            if error != nil || !completed {
+                AnalyticsHelper.shared.logEvent(.documentSharingFailed, properties: [
+                    .documentID: share.id.uuidString
+                ])
+            }
+            AnalyticsHelper.shared.logEvent(.userSharedDocument, properties: [
+                .documentID: share.id.uuidString
+            ])
+        }
         navigationController.present(activityVC, animated: true)
     }
     
@@ -78,6 +97,9 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
         document.delete()
+        AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
+                                            .documentID: document.id.uuidString,
+         ])
         navigationController.popViewController(animated: true)
     }
     
