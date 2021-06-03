@@ -9,7 +9,7 @@ import UIKit
 import WeScan
 import PMAlertController
 
-protocol ScannerVCDelegate: class {
+protocol ScannerVCDelegate: AnyObject {
     func cancelScanning(_ controller: ScannerVC)
     func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController])
 }
@@ -20,6 +20,8 @@ class ScannerVC: UIViewController {
         didSet {
             if images.count > 0 {
                 scanImageButton.setTitle("\(images.count)", for: .normal)
+            } else {
+                scanImageButton.setTitle("", for: .normal)
             }
         }
     }
@@ -42,6 +44,7 @@ class ScannerVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        images = []
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -52,7 +55,7 @@ class ScannerVC: UIViewController {
     
     private func _setupViews() {
         doneButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle("Done".localized, for: .normal)
         scanImageButton.titleLabel?.configure(with: UIFont.font(.avenirBook, style: .headline))
         scanImageButton.setTitle("", for: .normal)
     }
@@ -73,12 +76,12 @@ class ScannerVC: UIViewController {
         if images.count > 0 {
             delegate?.scannerVC(self, finishedScanning: images)
         } else {
-            let alertVC = PMAlertController(title: "Scan at-least one document to continue ",
+            let alertVC = PMAlertController(title: "Scan at-least one document to continue.".localized,
                                             description: nil,
                                             image: nil,
                                             style: .alert)
             alertVC.alertTitle.textColor = .primary
-            let okAction = PMAlertAction(title: "OK", style: .default) {
+            let okAction = PMAlertAction(title: "OK".localized, style: .default) {
             }
             okAction.setTitleColor(.primary, for: .normal)
             alertVC.addAction(okAction)

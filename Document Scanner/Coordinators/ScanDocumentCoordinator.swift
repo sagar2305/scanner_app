@@ -44,8 +44,13 @@ class ScanDocumentCoordinator: Coordinator {
 
 extension ScanDocumentCoordinator: ScannerVCDelegate {
     func scannerVC(_ controller: ScannerVC, finishedScanning images: [NewDocumentImageViewController]) {
+        
+        AnalyticsHelper.shared.logEvent(.userScannedDocument , properties: [
+            .numberOfDocumentPages: images.count
+        ])
+        
         correctionVC = CorrectionVC()
-        correctionVC.delegate = self
+        correctionVC.delegate =  self
         correctionVC.dataSource = self
         correctionVC.pageControllerItems = images
         navigationController.pushViewController(correctionVC, animated: true)
@@ -67,14 +72,21 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
+            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
+                .documentID: document.id.uuid,
+                .numberOfDocumentPages: document.pages.count
+            ])
             navigationController.popToRootViewController(animated: true)
         } else {
-            let alertVC = PMAlertController(title: "Something went wrong",
-                                            description: "Unable to save generate your document, please try again",
+            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                .numberOfDocumentPages: originalImages.count
+            ])
+            let alertVC = PMAlertController(title: "Something went wrong".localized,
+                                            description: "Unable to save generate your document, please try again".localized,
                                             image: nil,
                                             style: .alert)
             alertVC.alertTitle.textColor = .primary
-            let okAction = PMAlertAction(title: "OK", style: .default) {
+            let okAction = PMAlertAction(title: "OK".localized, style: .default) {
                 self.navigationController.popViewController(animated: true)
             }
             okAction.setTitleColor(.primary, for: .normal)
@@ -97,6 +109,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
     }
     
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton) {
+        
         navigationController.popViewController(animated: true)
     }    
 }

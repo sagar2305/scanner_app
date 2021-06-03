@@ -9,12 +9,13 @@ import UIKit
 import WeScan
 import SnapKit
 
-protocol EditImageVCDelegate: class {
+protocol EditImageVCDelegate: AnyObject {
+    func viewDidAppear(_ controller: DocumentScannerViewController)
     func cancelImageEditing(_controller: EditImageVC)
     func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC, isRotated: Bool)
 }
 
-protocol EditImageVCDataSource: class {
+protocol EditImageVCDataSource: AnyObject {
     var originalImage: UIImage? { get }
     var isNewDocument: Bool { get }
 }
@@ -116,14 +117,13 @@ class EditImageVC: DocumentScannerViewController {
         _setupViews()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     private func _setupViews() {
         _setupImageEditorView()
         footerView.addSubview(imageEditControls)
         imageEditControls.snp.makeConstraints { make in make.left.right.top.bottom.equalToSuperview() }
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
+        undoButton.setTitle("Undo".localized.uppercased(), for: .normal)
+        doneButton.setTitle("Done".localized.uppercased(), for: .normal)
     }
     
     //initial setup
@@ -277,6 +277,7 @@ extension EditImageVC {
         }
         isRotated = true
         imageView?.image = imageToRotate.rotateRight()
+        AnalyticsHelper.shared.logEvent(.rotatedImage)
     }
     
     private func didTapCropImageOption(_ sender: FooterButton) {
@@ -299,6 +300,7 @@ extension EditImageVC {
         if let mirroredImage = imageToMirror.mirror() {
             imageView?.image = mirroredImage
             editedImagesBufferStack.append(mirroredImage)
+            AnalyticsHelper.shared.logEvent(.croppedImage)
         }
     }
     
@@ -330,6 +332,7 @@ extension EditImageVC {
             fatalError("ERROR: There is no image to edit")
         }
         imageView?.image = imageToFilter
+        AnalyticsHelper.shared.logEvent(.setOriginalImage)
         editedImagesBufferStack.append(imageToFilter)
     }
     
@@ -339,6 +342,7 @@ extension EditImageVC {
         }
         if let grayScaledImage = GPUImageHelper.shared.convertToGrayScale(imageToFilter) {
             imageView?.image = grayScaledImage
+            AnalyticsHelper.shared.logEvent(.setGrayScaleImage)
             editedImagesBufferStack.append(grayScaledImage)
         }
     }
@@ -350,6 +354,7 @@ extension EditImageVC {
         
         if let grayScaledImage =  GPUImageHelper.shared.convertToBlackAndWhite(imageToFilter) {
             imageView?.image = grayScaledImage
+            AnalyticsHelper.shared.logEvent(.setBlackAndWhiteImage)
             editedImagesBufferStack.append(grayScaledImage)
         }
     }
@@ -359,20 +364,26 @@ extension EditImageVC {
 extension EditImageVC {
     private func didChangeBrightness(_ value: Float, sender: UISlider) {
         _adjustImage(.brightness, intensity: value)
+        AnalyticsHelper.shared.logEvent(.adjustedBrightness)
     }
     
     private func didChangeContrast(_ value: Float, sender: UISlider) {
         _adjustImage(.contrast, intensity: value)
+        AnalyticsHelper.shared.logEvent(.adjustedContrast)
+
     }
     
     private func didChangeSaturation(_ value: Float, sender: UISlider) {
         _adjustImage(.saturation, intensity: value)
+        AnalyticsHelper.shared.logEvent(.adjustedSaturation)
+
     }
 }
 
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
         editedImagesBufferStack.append(image)
+        AnalyticsHelper.shared.logEvent(.croppedImage)
         _presentImageViewInImageEditorView(for: image)
     }
 }

@@ -7,6 +7,9 @@
 
 import UIKit
 import Purchases
+import SwiftDate
+import Mixpanel
+import Amplitude
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,9 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
+        
+        #if DEBUG
+        //b72ebd5fde57d78856963cab243a4afcMixpanel.initialize(token: Constants.APIKeys.mixPanelDevelopmentKey)
+        Amplitude.instance().initializeApiKey(Constants.APIKeys.amplitudeDevelopmentKey)
+        #else
+        //Mixpanel.initialize(token: Constants.APIKeys.mixPanelProductionKey)
+        Amplitude.instance().initializeApiKey(Constants.APIKeys.amplitudeProductionKey)
+        #endif
+        
         if isUserOnboarded {
             rootCoordinator = ApplicationCoordinator(window!)
         } else {
+            AnalyticsHelper.shared.saveUserProperty(.appInstallationDate, value: Date().toFormat("yyyy-MM-dd HH:mm"))
             rootCoordinator = OnboardingCoordinator(window!)
         }
         

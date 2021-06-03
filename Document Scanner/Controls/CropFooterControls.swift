@@ -26,7 +26,7 @@ class CropFooterControls: UIView {
     private lazy var cancelFooterButton: UIButton = {
         let footerButton = UIButton()
         footerButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        footerButton.setTitle("Cancel", for: .normal)
+        footerButton.setTitle("Cancel".localized, for: .normal)
         footerButton.setTitleColor(.text, for: .normal)
         footerButton.addTarget(self, action: #selector(_cancelButtonTapped(_:)), for: .touchUpInside)
         footerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ class CropFooterControls: UIView {
     private lazy var cropFooterButton: UIButton = {
         let footerButton = UIButton()
         footerButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        footerButton.setTitle("Crop", for: .normal)
+        footerButton.setTitle("Crop".localized, for: .normal)
         footerButton.setTitleColor(.text, for: .normal)
         footerButton.addTarget(self, action: #selector(_cropButtonTapped(_:)), for: .touchUpInside)
         footerButton.translatesAutoresizingMaskIntoConstraints = false

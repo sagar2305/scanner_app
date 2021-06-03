@@ -8,14 +8,19 @@
 import UIKit
 import SnapKit
 
-protocol OnboardingVCDelegate: class {
+protocol OnboardingVCDelegate: AnyObject {
     func onboardingVC(_ continue: DocumentScannerViewController)
 }
 
 class OnboardingVC: DocumentScannerViewController {
 
     private var pageControllerItems: [UIViewController] = []
-    
+    private var currentPageIndex = 0
+    private var haveUserReadLastPage = false {
+        didSet {
+            if haveUserReadLastPage { continueButton.setTitle("Continue".localized, for: .normal) }
+        }
+    }
     private lazy var pageController: UIPageViewController = {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         controller.dataSource = self
@@ -45,28 +50,29 @@ class OnboardingVC: DocumentScannerViewController {
     private func _setupView() {
         continueButton.layer.cornerRadius = 8
         continueButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        continueButton.setTitle("Continue", for: .normal)
+        continueButton.setTitle("Next".localized, for: .normal)
     }
     
     private func _generateItemsForPageControls() {
         let pageControlItem1 = UIViewController()
-        pageControlItem1.view = OnboardingView(header: "EASY TO SCAN",
+        pageControlItem1.view = OnboardingView(header: "Easy to scan".localized.uppercased(),
                                                description: "Quickly scan and digitize your important documents",
                                                image: UIImage(named: "store-document")!)
         pageControllerItems.append(pageControlItem1)
         
         let pageControlItem2 = UIViewController()
-        pageControlItem2.view = OnboardingView(header: "ORGANISE FILES EASILY",
-                                               description: "Have all your digital document in one place",
+        pageControlItem2.view = OnboardingView(header: "Organise files easily".localized.uppercased(),
+                                               description: "Have all your digital document in one place".localized,
                                                image: UIImage(named: "organize-document")!)
         pageControllerItems.append(pageControlItem2)
         
         let pageControlItem3 = UIViewController()
-        pageControlItem3.view = OnboardingView(header: "SHARE IT",
-                                               description: "Quickly share the files in the format that you prefer",
+        pageControlItem3.view = OnboardingView(header: "Share it".localized.uppercased(),
+                                               description: "Quickly share the files in the format that you prefer".localized,
                                                image: UIImage(named: "share-document")!)
         pageControllerItems.append(pageControlItem3)
         pageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true, completion: nil)
+        currentPageIndex = 0
     }
 
     private func _setupPageController() {
@@ -80,8 +86,35 @@ class OnboardingVC: DocumentScannerViewController {
         pageController.didMove(toParent: self)
     }
     
+    private func changePage(direction: UIPageViewController.NavigationDirection) {
+       
+        if direction == .forward && currentPageIndex < pageControllerItems.count-1 {
+            currentPageIndex += 1
+            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        } else if direction == .reverse && currentPageIndex > 0 {
+            currentPageIndex -= 1
+        }
+        
+        let nextVC = pageControllerItems[currentPageIndex]
+        pageController.setViewControllers([nextVC], direction: direction, animated: true)
+        pageControl.currentPage = currentPageIndex
+    }
+    
+    private func _logEventForPage(index: Int) {
+        switch index {
+        case 0: AnalyticsHelper.shared.logEvent(.onboardingScreen1)
+        case 1: AnalyticsHelper.shared.logEvent(.onboardingScreen2)
+        case 2: AnalyticsHelper.shared.logEvent(.onboardingScreen3)
+        default: break
+        }
+    }
+    
     @IBAction func didTapContinue(_ sender: UIButton) {
-        delegate?.onboardingVC(self)
+        if haveUserReadLastPage {
+            delegate?.onboardingVC(self)
+        } else {
+            changePage(direction: .forward)
+        }
     }
     
 }
@@ -93,7 +126,9 @@ extension OnboardingVC: UIPageViewControllerDataSource {
         }
             
         if viewControllerIndex == 0 { return nil }
-        return pageControllerItems[viewControllerIndex - 1]
+        currentPageIndex = viewControllerIndex - 1
+        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        return pageControllerItems[currentPageIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -102,8 +137,9 @@ extension OnboardingVC: UIPageViewControllerDataSource {
         }
         
         if viewControllerIndex == pageControllerItems.count - 1 { return nil }
-        
-        return pageControllerItems[viewControllerIndex + 1]
+        currentPageIndex = viewControllerIndex + 1
+        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        return pageControllerItems[currentPageIndex]
     }
 }
 

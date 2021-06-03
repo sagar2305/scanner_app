@@ -201,8 +201,8 @@ class SubscribeCoordinator: Coordinator {
 // MARK: - UpgradeUIProviderDelegate
 extension SubscribeCoordinator: UpgradeUIProviderDelegate {
    
-    func animatingAnimationView() -> (view: AnimationView, shouldOffset: Bool) {
-        return (AnimationView(name: "scanner"), false)
+    func animatingAnimationView() -> (view: AnimationView, offsetBy: CGFloat?) {
+        return (AnimationView(name: "scanner"), 0)
     }
     
     func productsFetched() -> Bool {
@@ -210,7 +210,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
     }
 
     func headerMessage(for index: Int) -> String {
-        return "Try Free and Continue".localized
+        return "Unlock Unlimited Access".localized
     }
 
     func subscriptionTitle(for index: Int) -> String {
@@ -253,8 +253,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
               availableProducts.count > index else {
             return ""
         }
-
-        return "Try Free and Continue".localized
+        return "Unlock Unlimited Access".localized
     }
 
     func offersFreeTrial(for index: Int) -> Bool {
@@ -463,19 +462,19 @@ extension SubscribeCoordinator: SpecialOfferUIProviderDelegate {
     }
     
     func featureOne() -> String {
-        "Unlimited scans"
+        "Unlimited scans".localized
     }
     
     func featureTwo() -> String {
-        "High quality scans"
+        "High quality scans".localized
     }
     
     func featureThree() -> String {
-        "Organize your scans easily"
+        "Organize your scans easily".localized
     }
     
     func featureFour() -> String {
-        "Share without limits"
+        "Share without limits".localized
     }
 }
 

@@ -10,14 +10,14 @@ import WeScan
 import PMAlertController
 import SnapKit
 
-protocol CorrectionVCDelegate: class {
+protocol CorrectionVCDelegate: AnyObject {
     func correctionVC(_ viewController: CorrectionVC, didTapBack button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, edit image: UIImage)
     func correctionVC(_ viewController: CorrectionVC, didTapRetake button: UIButton)
     func correctionVC(_ viewController: CorrectionVC, didFinishCorrectingImages imageVCs: [NewDocumentImageViewController])
 }
 
-protocol CorrectionVCDataSource: class {
+protocol CorrectionVCDataSource: AnyObject {
     func correctionVC(_ viewController: CorrectionVC, titleFor nextPage: UIButton) -> String
 }
 
