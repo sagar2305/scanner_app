@@ -73,8 +73,16 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
+            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
+                .documentID: document.id.uuid,
+                .numberOfDocumentPages: document.pages.count
+            ])
+            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
             navigationController.popToRootViewController(animated: true)
         } else {
+            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                .numberOfDocumentPages: originalImages.count
+            ])
             let alertVC = PMAlertController(title: "Something went wrong".localized,
                                             description: "Unable to save generate your document, please try again".localized,
                                             image: nil,

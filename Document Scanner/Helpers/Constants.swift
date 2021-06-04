@@ -127,6 +127,7 @@ struct Constants {
             return self.rawValue
         }
         
+        case numberOfDocuments = "Number of Documents"
         case numberOfDocumentPages = "Number of Pages"
         case documentID = "Document ID"
         case pageID = "Page ID"

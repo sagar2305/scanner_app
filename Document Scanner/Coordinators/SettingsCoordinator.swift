@@ -163,9 +163,16 @@ extension SettingsCoordinator: SettingsVCDelegate {
             }
             if success {
                 print("SUCESS *****************")
-                TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
+                }
+                
             } else {
-                self?.startSubscriptionCoordinator()
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
+                }
+                
+                TTInAppPurchases.AlertMessageHelper.shared.presentRestorationFailedAlert(onRetry: {self?._restorePurchases()}, onCancel: {})
             }
         }
     }

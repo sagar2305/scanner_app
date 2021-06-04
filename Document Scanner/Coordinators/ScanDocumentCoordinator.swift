@@ -76,6 +76,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
                 .documentID: document.id.uuid,
                 .numberOfDocumentPages: document.pages.count
             ])
+            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
             navigationController.popToRootViewController(animated: true)
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
