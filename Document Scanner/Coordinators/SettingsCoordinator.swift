@@ -155,7 +155,6 @@ extension SettingsCoordinator: SettingsVCDelegate {
         NVActivityIndicatorView.start()
         TTInAppPurchases.AnalyticsHelper.shared.logEvent( .restoredPurchase)
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
-            NVActivityIndicatorView.stop()
             guard error == nil else {
                 self?._presentRestorationFailedAlert()
                 TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
@@ -174,6 +173,7 @@ extension SettingsCoordinator: SettingsVCDelegate {
                 
                 TTInAppPurchases.AlertMessageHelper.shared.presentRestorationFailedAlert(onRetry: {self?._restorePurchases()}, onCancel: {})
             }
+            NVActivityIndicatorView.stop()
         }
     }
     

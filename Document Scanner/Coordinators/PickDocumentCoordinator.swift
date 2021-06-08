@@ -40,6 +40,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     private func _pickDocument() {
         var config = TatsiConfig.default
         config.singleViewMode = true
+        config.supportedMediaTypes = [.image]
         let tatsiImagePicker = TatsiPickerViewController(config: config)
         tatsiImagePicker.pickerDelegate = self
         tatsiImagePicker.navigationItem.backButtonTitle = ""
@@ -60,6 +61,12 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
+    
+    private func view(_ document: Document) {
+        let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+        childCoordinators.append(documentViewerCoordinator)
+        documentViewerCoordinator.start()
+    }
 
 }
 
@@ -78,7 +85,7 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
                 .numberOfDocumentPages: document.pages.count
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
-            navigationController.popToRootViewController(animated: true)
+            view(document)
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
                 .numberOfDocumentPages: originalImages.count

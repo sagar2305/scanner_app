@@ -53,6 +53,10 @@ class ApplicationCoordinator: Coordinator {
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
+    func viewDidAppear(_controller: HomeVC) {
+        ReviewHelper.shared.requestAppRating()
+    }
+    
     func scanNewDocument(_ controller: HomeVC) {
         if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.documents.count < 3 {
             let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)

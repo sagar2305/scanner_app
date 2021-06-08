@@ -75,6 +75,7 @@
 		02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */; };
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
+		02BF4D4C266F8C530009F3D4 /* ReviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */; };
 		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
 		02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */; };
 		02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD8D8C265EAA420053520A /* DocumentHelper.swift */; };
@@ -199,6 +200,7 @@
 		02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageHelper.swift; sourceTree = "<group>"; };
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
+		02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHelper.swift; sourceTree = "<group>"; };
 		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
 		02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
 		02CD8D8C265EAA420053520A /* DocumentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHelper.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */,
 				02CD8D8C265EAA420053520A /* DocumentHelper.swift */,
 				02A5FBDC2666305E00F67D99 /* AnalyticsHelper.swift */,
+				02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */,
 				02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,
+				02BF4D4C266F8C530009F3D4 /* ReviewHelper.swift in Sources */,
 				020AED7D261F04AC00998398 /* SubscriptionCoordinator.swift in Sources */,
 				0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */,
 				02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */,
@@ -880,7 +884,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -904,7 +908,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

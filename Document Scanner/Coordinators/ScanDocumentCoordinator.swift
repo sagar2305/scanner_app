@@ -60,6 +60,12 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func cancelScanning(_ controller: ScannerVC) {
         navigationController.popViewController(animated: true)
     }
+    
+    private func view(_ document: Document) {
+        let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+        childCoordinators.append(documentViewerCoordinator)
+        documentViewerCoordinator.start()
+    }
 }
 
 extension ScanDocumentCoordinator: CorrectionVCDelegate {
@@ -77,7 +83,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
                 .numberOfDocumentPages: document.pages.count
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
-            navigationController.popToRootViewController(animated: true)
+            view(document)
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
                 .numberOfDocumentPages: originalImages.count

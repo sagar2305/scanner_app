@@ -13,6 +13,9 @@ struct Constants {
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
+        static let hasUserScannedUsingCamera = "HasUserScannedUsingCameraKey"
+        static let hasUserPickedImageFromLibrary = "HasUserPickedImageFromLibrary"
+        static let lastReviewRequestDate = "LastReviewRequestDate"
     }
     
     struct WebLinks {
@@ -104,6 +107,7 @@ struct Constants {
         case reportingBugFailed = "Reporting Bug Failed" //done
         case viewedPrivacyPolicy = "Viewed Privacy Policies" //done
         case viewedTermsAndLaws = "Viewed Terms And Laws" //done
+        case reviewPromptRequested = "Review Requested" //done
         
         //image editing
         case userEditingImage = "Started Editing Image" //done
