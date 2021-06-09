@@ -86,6 +86,11 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
             view(document)
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibrary)
+            if !haveUserPickedDocument {
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibrary)
+                ReviewHelper.shared.requestAppRating()
+            }
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
                 .numberOfDocumentPages: originalImages.count

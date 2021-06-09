@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol DocumentViewerCoordinatorDelegate: AnyObject {
+    func exit(_ coordinator: DocumentViewerCoordinator)
+}
+
 class DocumentViewerCoordinator: Coordinator {
     
     var rootViewController: UIViewController {

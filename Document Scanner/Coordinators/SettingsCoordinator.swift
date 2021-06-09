@@ -145,6 +145,7 @@ extension SettingsCoordinator: SettingsVCDelegate {
                 if error != nil || !completed {
                     AnalyticsHelper.shared.logEvent(.sendingInviteFailed)
                 }
+                ReviewHelper.shared.requestAppRating()
                 AnalyticsHelper.shared.logEvent(.invitedFriend)
             }
             navigationController.present(activityVC, animated: true, completion: nil)
@@ -165,7 +166,7 @@ extension SettingsCoordinator: SettingsVCDelegate {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
                 }
-                
+                ReviewHelper.shared.requestAppRating()
             } else {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
@@ -223,6 +224,7 @@ extension SettingsCoordinator: MFMailComposeViewControllerDelegate {
                 case .reportingBug: AnalyticsHelper.shared.logEvent(.reportedABug)
                 case .requestingFeature: AnalyticsHelper.shared.logEvent(.raisedFeatureRequest)
                 }
+                ReviewHelper.shared.requestAppRating()
             } else if result.rawValue == 3 {
                 switch mailRequestTopic! {
                 case .reportingBug: AnalyticsHelper.shared.logEvent(.reportingBugFailed)

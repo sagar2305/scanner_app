@@ -13,8 +13,8 @@ struct Constants {
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
-        static let hasUserScannedUsingCamera = "HasUserScannedUsingCameraKey"
-        static let hasUserPickedImageFromLibrary = "HasUserPickedImageFromLibrary"
+        static let hasUserScannedUsingLibrary = "HasUserScannedUsingCameraKey"
+        static let documentScannedUsingCamera = "HasUserPickedImageFromLibrary"
         static let lastReviewRequestDate = "LastReviewRequestDate"
     }
     

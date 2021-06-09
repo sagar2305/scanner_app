@@ -84,6 +84,11 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
             view(document)
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+            if !haveUserPickedDocument {
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+                ReviewHelper.shared.requestAppRating()
+            }
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
                 .numberOfDocumentPages: originalImages.count

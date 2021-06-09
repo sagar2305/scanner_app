@@ -30,7 +30,7 @@ class ReviewHelper {
             return
         }
         requestDate = Date()
-        AnalyticsHelper.shared.logEvent(.reviewPromptRequestedu)
+        AnalyticsHelper.shared.logEvent(.reviewPromptRequested)
         SKStoreReviewController.requestReview()
     }
 }
