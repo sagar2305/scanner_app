@@ -29,7 +29,8 @@ struct Constants {
     }
     
     struct  SettingDefaults {
-        static let feedbackEmail = "support@indianrails.in"
+        static let featureRequestEmail = "support+dscfeaturerequest@eztape.app"
+        static let reportBugEmail = "support+dscbugreport@eztape.app"
         static let appUrl = "http://itunes.apple.com/app/id1551911173"
     }
     

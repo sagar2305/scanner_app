@@ -97,6 +97,11 @@ class EditImageVC: DocumentScannerViewController {
     private var temporaryImageForColorAdjustment: UIImage?
     //last slide values for filters defaults 0
     
+    var setEditControlsHidden: Bool = true {
+        didSet {
+            editControllerContainerBottomConstraint.constant = setEditControlsHidden ? -52 : 4
+        }
+    }
     // MARK:- IBoutlets
     
     
@@ -106,6 +111,7 @@ class EditImageVC: DocumentScannerViewController {
     @IBOutlet private weak var editControllerContainer: UIView!
     @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
+    @IBOutlet private weak var editControllerContainerBottomConstraint: NSLayoutConstraint!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +130,7 @@ class EditImageVC: DocumentScannerViewController {
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         undoButton.setTitle("Undo".localized.uppercased(), for: .normal)
         doneButton.setTitle("Done".localized.uppercased(), for: .normal)
+        setEditControlsHidden = true
     }
     
     //initial setup
@@ -236,6 +243,7 @@ extension EditImageVC {
         guard let dataSource = dataSource else {
             fatalError("ERROR: Datasource is not set")
         }
+        setEditControlsHidden = false
         if currentEditingControlView === transformImageControls { return }
         editControllerContainer.addSubview(transformImageControls)
         transformImageControls.frame = editControllerContainer.bounds
@@ -245,6 +253,7 @@ extension EditImageVC {
     
     private func didTapAdjustImage(_ sender: FooterButton) {
         if currentEditingControlView === imageAdjustControls { return }
+        setEditControlsHidden = true
         temporaryImageForColorAdjustment = imageView?.image
         view.insertSubview(imageAdjustControls, belowSubview: footerContainerView)
         let imageAdjustControlsFrame = CGRect(x: 0,
@@ -257,10 +266,25 @@ extension EditImageVC {
     
     private func didTapColorImage(_ sender: FooterButton) {
         if currentEditingControlView === imageColorControls { return }
+        setEditControlsHidden = false
         editControllerContainer.addSubview(imageColorControls)
         imageColorControls.frame = editControllerContainer.bounds
         imageColorControls.frame.origin.x = editControllerContainer.frame.maxX
         presentImageEditing(control: imageColorControls)
+    }
+    
+    private func didTapCropImageOption(_ sender: FooterButton) {
+        guard let imageToCrop = imageView?.image else {
+            fatalError("ERROR: no image available for cropping")
+        }
+        setEditControlsHidden = true
+       _presentWeScanImageControllerInImageEditorView(for: imageToCrop)
+        footerView.addSubview(cropFooterControls)
+        cropFooterControls.frame = footerView.bounds
+        setFooterControlsHidden = true
+        editControllerContainer.isHidden = true
+        undoButton.isHidden = true
+        doneButton.isHidden = true
     }
     
     private func didTapEditOriginalImage(_ sender: FooterButton) {
@@ -279,19 +303,6 @@ extension EditImageVC {
         AnalyticsHelper.shared.logEvent(.rotatedImage)
     }
     
-    private func didTapCropImageOption(_ sender: FooterButton) {
-        guard let imageToCrop = imageView?.image else {
-            fatalError("ERROR: no image available for cropping")
-        }
-       _presentWeScanImageControllerInImageEditorView(for: imageToCrop)
-        footerView.addSubview(cropFooterControls)
-        cropFooterControls.frame = footerView.bounds
-        setFooterControlsHidden = true
-        editControllerContainer.isHidden = true
-        undoButton.isHidden = true
-        doneButton.isHidden = true
-    }
-    
     private func didTapMirrorImage(_ sender: FooterButton) {
         guard let imageToMirror = imageView?.image else {
             fatalError("ERROR: no image available for cropping")
@@ -305,6 +316,9 @@ extension EditImageVC {
     
     private func didTapCrop(_ sender: UIButton) {
         _editVC.cropImage()
+        
+        cropFooterControls.removeFromSuperview()
+        setFooterControlsHidden = false
         editControllerContainer.isHidden = false
         undoButton.isHidden = false
         doneButton.isHidden = false
@@ -382,7 +396,7 @@ extension EditImageVC {
 extension EditImageVC: EditImageViewDelegate {
     func cropped(image: UIImage) {
         editedImagesBufferStack.append(image)
-        AnalyticsHelper.shared.logEvent(.croppedImage)
         _presentImageViewInImageEditorView(for: image)
+        AnalyticsHelper.shared.logEvent(.croppedImage)
     }
 }

@@ -50,11 +50,11 @@ class SettingsCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(webVC, animated: true)
     }
     
-    private func _presentEmail(suffix: String) {
+    private func _presentEmail(suffix: String, email: String) {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients([Constants.SettingDefaults.feedbackEmail])
+            mail.setToRecipients([email])
             let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
             mail.setSubject("\(appName ?? "Guess the Movie") " + "\(suffix)")
             mail.setMessageBody(messageBody(), isHTML: true)
@@ -95,14 +95,14 @@ extension SettingsCoordinator: SettingsVCDelegate {
             _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy".localized)
         case .featureRequest:
             mailRequestTopic = .requestingFeature
-            _presentEmail(suffix: "Feature Request".localized)
+            _presentEmail(suffix: "Feature Request".localized, email: Constants.SettingDefaults.featureRequestEmail)
         case .subscription:
             startSubscriptionCoordinator()
         case .inviteFriends:
             _inviteFriends()
         case .reportError:
             mailRequestTopic = .reportingBug
-            _presentEmail(suffix: "Report a Bug".localized)
+            _presentEmail(suffix: "Report a Bug".localized, email: Constants.SettingDefaults.reportBugEmail)
         case .restorePurchases:
             _restorePurchases()
         }

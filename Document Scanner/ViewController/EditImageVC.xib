@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="doneButton" destination="dqz-Cd-XPg" id="3vI-3F-dW4"/>
                 <outlet property="editControllerContainer" destination="jA4-sS-e0E" id="erw-rf-4m5"/>
+                <outlet property="editControllerContainerBottomConstraint" destination="dE1-o2-0Ml" id="3xV-cT-ecY"/>
                 <outlet property="footerContainerView" destination="QLe-Fr-nQh" id="cqK-sV-RJQ"/>
                 <outlet property="footerView" destination="bdC-BH-0eq" id="KN7-Mh-5dZ"/>
                 <outlet property="imageEditorContainerView" destination="JCo-HO-DcO" id="cbO-A5-tMV"/>
@@ -26,6 +27,13 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jA4-sS-e0E">
+                    <rect key="frame" x="0.0" y="766" width="414" height="48"/>
+                    <color key="backgroundColor" red="0.94850224513633585" green="0.95979393853081596" blue="0.95979393853081596" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="RDC-B5-VM9"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
                     <rect key="frame" x="0.0" y="96" width="414" height="670"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -48,13 +56,6 @@
                         <constraint firstItem="546-Pr-Fmq" firstAttribute="bottom" secondItem="bdC-BH-0eq" secondAttribute="bottom" id="REO-qT-f5O"/>
                         <constraint firstItem="bdC-BH-0eq" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="oQK-rx-Vx6"/>
                         <constraint firstItem="546-Pr-Fmq" firstAttribute="trailing" secondItem="bdC-BH-0eq" secondAttribute="trailing" id="p9R-Yf-5Vi"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jA4-sS-e0E">
-                    <rect key="frame" x="0.0" y="766" width="414" height="48"/>
-                    <color key="backgroundColor" name="background"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="RDC-B5-VM9"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRP-SL-M28">
