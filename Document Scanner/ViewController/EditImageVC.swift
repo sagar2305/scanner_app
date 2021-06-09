@@ -34,6 +34,7 @@ class EditImageVC: DocumentScannerViewController {
         imageEditControls.onAdjustTap = didTapAdjustImage
         imageEditControls.onColorTap = didTapColorImage
         imageEditControls.onOriginalTap = didTapOriginalImage
+        imageEditControls.onCropTap = didTapCropImageOption
         imageEditControls.translatesAutoresizingMaskIntoConstraints = false
         return imageEditControls
     }()
@@ -42,7 +43,6 @@ class EditImageVC: DocumentScannerViewController {
     private lazy var transformImageControls: TransformImageControls = {
         let imageTransformView = TransformImageControls()
         imageTransformView.onRotationTap = didTapRotateImage
-        imageTransformView.onCropTap = didTapCropImageOption
         imageTransformView.onMirrorTap = didTapMirrorImage
         return imageTransformView
     }()
@@ -132,8 +132,8 @@ class EditImageVC: DocumentScannerViewController {
         guard let dataSource = dataSource, let imageToEdit = imageToEdit else {
             fatalError("ERROR: Datasource or imageToEditis not set")
         }
-        
         imageEditControls.editOriginalImageOptionIsHidden = dataSource.isNewDocument
+        imageEditControls.cropImageOptionIsHidden = dataSource.isNewDocument
         _presentImageViewInImageEditorView(for: imageToEdit)
     }
     
@@ -154,7 +154,7 @@ class EditImageVC: DocumentScannerViewController {
             imageView = UIImageView()
         }
         imageView!.image = image
-        imageView!.backgroundColor = .backgroundColor
+        imageView!.backgroundColor = .shadow
         imageView!.frame = imageEditorContainerView.bounds
         imageEditorContainerView.addSubview(imageView!)
         imageView!.translatesAutoresizingMaskIntoConstraints = false
@@ -198,7 +198,7 @@ class EditImageVC: DocumentScannerViewController {
     }
     
     @IBAction private func didTapUndo(_ sender: UIButton) {
-        editedImagesBufferStack.popLast()
+        _ = editedImagesBufferStack.popLast()
         imageView?.image = editedImagesBufferStack.last ?? imageToEdit
     }
     
@@ -237,7 +237,6 @@ extension EditImageVC {
             fatalError("ERROR: Datasource is not set")
         }
         if currentEditingControlView === transformImageControls { return }
-        transformImageControls.cropImageOptionIsHidden = dataSource.isNewDocument
         editControllerContainer.addSubview(transformImageControls)
         transformImageControls.frame = editControllerContainer.bounds
         transformImageControls.frame.origin.x = editControllerContainer.frame.maxX

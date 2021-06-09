@@ -13,7 +13,6 @@ import SnapKit
 class TransformImageControls: UIView {
     
     var onRotationTap: ((FooterButton) -> Void)?
-    var onCropTap: ((FooterButton) -> Void)?
     var onMirrorTap: ((FooterButton) -> Void)?
 
     private lazy var stackView: UIStackView = {
@@ -34,15 +33,6 @@ class TransformImageControls: UIView {
         return footerButton
     }()
     
-    private lazy var cropFooterButton: FooterButton = {
-        let footerButton = FooterButton()
-        footerButton.title = "Crop".localized
-        footerButton.textColor = .text
-        footerButton.icon = UIImage(named: "crop")!
-        footerButton.addTarget(self, action: #selector(_cropButtonTapped(_:)), for: .touchUpInside)
-        return footerButton
-    }()
-    
     private lazy var mirrorFooterButton: FooterButton = {
         let footerButton = FooterButton()
         footerButton.title = "Mirror".localized
@@ -51,10 +41,6 @@ class TransformImageControls: UIView {
         footerButton.addTarget(self, action: #selector(_mirrorButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
-    
-    var cropImageOptionIsHidden = false {
-        didSet { cropFooterButton.isHidden = cropImageOptionIsHidden }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,7 +62,6 @@ class TransformImageControls: UIView {
         
         stackView.spacing = self.bounds.width + 0.05
         stackView.addArrangedSubview(rotateFooterButton)
-        stackView.addArrangedSubview(cropFooterButton)
         stackView.addArrangedSubview(mirrorFooterButton)
     }
     
@@ -84,9 +69,7 @@ class TransformImageControls: UIView {
         onRotationTap?(sender)
     }
     
-    @objc private func _cropButtonTapped(_ sender: FooterButton) {
-        onCropTap?(sender)
-    }
+    
     
     @objc private func _mirrorButtonTapped(_ sender: FooterButton) {
         onMirrorTap?(sender)

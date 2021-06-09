@@ -104,7 +104,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
                                             .documentID: document.id.uuidString,
          ])
-        navigationController.popViewController(animated: true)
+        navigationController.popToRootViewController(animated: true)
     }
     
 }
