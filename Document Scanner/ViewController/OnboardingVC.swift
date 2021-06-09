@@ -99,6 +99,9 @@ class OnboardingVC: DocumentScannerViewController {
         _logEventForPage(index: currentPageIndex)
         pageController.setViewControllers([nextVC], direction: direction, animated: true)
         pageControl.currentPage = currentPageIndex
+        if !haveUserReadLastPage {
+            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        }
     }
     
     private func _logEventForPage(index: Int) {
