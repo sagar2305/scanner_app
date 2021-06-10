@@ -145,8 +145,16 @@ class SubscribeCoordinator: Coordinator {
                 switch error! {
                 case .purchasedFailed:
                     self?._presentPurchaseFailedAlert(product: product)
+                    DispatchQueue.global().async {
+                        TTInAppPurchases.AnalyticsHelper.shared.logEvent(.purchaseFailure, properties: [
+                                                                            .productId: product.identifier,
+                                                                            .errorDescription: error?.localizedDescription ?? ""])
+                    }
                 case .userCancelledPurchase:
-                    //Do nothing
+                    DispatchQueue.global().async {
+                        TTInAppPurchases.AnalyticsHelper.shared.logEvent(.userCancelledPurchase, properties: [
+                                                                            .productId: product.identifier])
+                    }
                     break
                 case .noProductsAvailable:
                     break
@@ -156,21 +164,37 @@ class SubscribeCoordinator: Coordinator {
 
             if success {
                 if let self = self {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.purchaseComplete)
                     self._dismiss()
                 }
             } else {
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.purchaseFailure, properties: [
+                                                                        .productId: product.identifier,
+                                                                        .errorDescription: "nil",
+                                                                        .result: success])
+                }
                 self?._presentPurchaseFailedAlert(product: product)
             }
         }
     }
 
     private func _restorePurchases() {
+        DispatchQueue.global().async {
+            TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
+        }
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
             guard error == nil else {
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
+                }
                 self?._presentRestorationFailedAlert()
                 return
             }
             if success {
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
+                }
                 self?._dismiss()
             }
         }
@@ -300,11 +324,15 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
         if !_productsFetched {
             NVActivityIndicatorView.start()
         }
+        TTInAppPurchases.AnalyticsHelper.shared.logEvent(.presentedSubscriptionScreen)
         
     }
 
     func exit(_ controller: SubscriptionViewControllerProtocol) {
 
+        DispatchQueue.global().async {
+            TTInAppPurchases.AnalyticsHelper.shared.logEvent(.cancelledSubscriptionScreen)
+        }
         func showSpecialOffer() {
             specialOfferVC = SpecialOfferViewController(fromPod: true)
             specialOfferVC!.delegate = self
@@ -376,9 +404,15 @@ extension SubscribeCoordinator: SpecialOfferViewControllerDelegate {
 
     func viewWillAppear(_ controller: SpecialOfferViewController) {
         navigationController.setNavigationBarHidden(true, animated: true)
+        DispatchQueue.global().async {
+            TTInAppPurchases.AnalyticsHelper.shared.logEvent(.specialOfferScreenDidShow)
+        }
     }
 
     func didTapCancelButton(_ controller: SpecialOfferViewController) {
+        DispatchQueue.global().async {
+            TTInAppPurchases.AnalyticsHelper.shared.logEvent(.specialOfferCancelled)
+        }
         _dismiss()
     }
 

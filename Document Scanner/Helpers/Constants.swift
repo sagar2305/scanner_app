@@ -13,6 +13,9 @@ struct Constants {
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
+        static let hasUserScannedUsingLibrary = "HasUserScannedUsingCameraKey"
+        static let documentScannedUsingCamera = "HasUserPickedImageFromLibrary"
+        static let lastReviewRequestDate = "LastReviewRequestDate"
     }
     
     struct WebLinks {
@@ -26,7 +29,8 @@ struct Constants {
     }
     
     struct  SettingDefaults {
-        static let feedbackEmail = "support@indianrails.in"
+        static let featureRequestEmail = "support+dscfeaturerequest@eztape.app"
+        static let reportBugEmail = "support+dscbugreport@eztape.app"
         static let appUrl = "http://itunes.apple.com/app/id1551911173"
     }
     
@@ -104,6 +108,7 @@ struct Constants {
         case reportingBugFailed = "Reporting Bug Failed" //done
         case viewedPrivacyPolicy = "Viewed Privacy Policies" //done
         case viewedTermsAndLaws = "Viewed Terms And Laws" //done
+        case reviewPromptRequested = "Review Requested" //done
         
         //image editing
         case userEditingImage = "Started Editing Image" //done
@@ -127,6 +132,7 @@ struct Constants {
             return self.rawValue
         }
         
+        case numberOfDocuments = "Number of Documents"
         case numberOfDocumentPages = "Number of Pages"
         case documentID = "Document ID"
         case pageID = "Page ID"

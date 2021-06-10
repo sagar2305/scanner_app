@@ -73,6 +73,7 @@ class OnboardingVC: DocumentScannerViewController {
         pageControllerItems.append(pageControlItem3)
         pageController.setViewControllers([pageControllerItems.first!], direction: .forward, animated: true, completion: nil)
         currentPageIndex = 0
+        _logEventForPage(index: currentPageIndex)
     }
 
     private func _setupPageController() {
@@ -90,14 +91,17 @@ class OnboardingVC: DocumentScannerViewController {
        
         if direction == .forward && currentPageIndex < pageControllerItems.count-1 {
             currentPageIndex += 1
-            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
         } else if direction == .reverse && currentPageIndex > 0 {
             currentPageIndex -= 1
         }
         
         let nextVC = pageControllerItems[currentPageIndex]
+        _logEventForPage(index: currentPageIndex)
         pageController.setViewControllers([nextVC], direction: direction, animated: true)
         pageControl.currentPage = currentPageIndex
+        if !haveUserReadLastPage {
+            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        }
     }
     
     private func _logEventForPage(index: Int) {
@@ -127,9 +131,10 @@ extension OnboardingVC: UIPageViewControllerDataSource {
             
         if viewControllerIndex == 0 { return nil }
         currentPageIndex = viewControllerIndex - 1
-        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        _logEventForPage(index: currentPageIndex)
         return pageControllerItems[currentPageIndex]
     }
+    
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pageControllerItems.firstIndex(of: viewController) else {
@@ -138,7 +143,7 @@ extension OnboardingVC: UIPageViewControllerDataSource {
         
         if viewControllerIndex == pageControllerItems.count - 1 { return nil }
         currentPageIndex = viewControllerIndex + 1
-        haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
+        _logEventForPage(index: currentPageIndex)
         return pageControllerItems[currentPageIndex]
     }
 }
@@ -149,7 +154,11 @@ extension OnboardingVC: UIPageViewControllerDelegate {
     }
    
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        
         let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
+        if !haveUserReadLastPage {
+            haveUserReadLastPage = (index ?? 0) == pageControllerItems.count - 1 ? true : false
+        }
         pageControl.currentPage = index ?? 0
     }
 }

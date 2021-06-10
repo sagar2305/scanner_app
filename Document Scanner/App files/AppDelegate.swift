@@ -10,6 +10,7 @@ import Purchases
 import SwiftDate
 import Mixpanel
 import Amplitude
+import TTInAppPurchases
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -48,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         Purchases.configure(withAPIKey: Constants.APIKeys.revenueCat)
+        _ = TTInAppPurchases.SubscriptionHelper.shared // updating whether user is pro or not on app launch
         rootCoordinator?.start()
         return true
     }

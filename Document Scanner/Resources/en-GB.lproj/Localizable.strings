@@ -53,6 +53,8 @@
 "Adjust" = "Adjust";
 "Color" = "Color";
 "Original" = "Original";
+"Enhance" = "Enhance";
+"Filter" = "Filter";
 
 //TransformImageControls
 "Rotate" = "Rotate";

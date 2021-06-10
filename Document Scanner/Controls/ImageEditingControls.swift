@@ -16,6 +16,8 @@ class ImageEditorControls: UIView {
     var onColorTap: ((FooterButton) -> Void)?
     var onOriginalTap: ((FooterButton) -> Void)?
     var onUndoTap: ((FooterButton) -> Void)?
+    var onCropTap: ((FooterButton) -> Void)?
+
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -24,6 +26,15 @@ class ImageEditorControls: UIView {
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    private lazy var cropFooterButton: FooterButton = {
+        let footerButton = FooterButton()
+        footerButton.title = "Crop".localized
+        footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "crop")!
+        footerButton.addTarget(self, action: #selector(_cropButtonTapped(_:)), for: .touchUpInside)
+        return footerButton
     }()
     
     private lazy var transformFooterButton: FooterButton = {
@@ -37,7 +48,7 @@ class ImageEditorControls: UIView {
     
     private lazy var adjustFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Adjust".localized
+        footerButton.title = "Enhance".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "adjust")!
         footerButton.addTarget(self, action: #selector(_adjustButtonTapped(_:)), for: .touchUpInside)
@@ -46,7 +57,7 @@ class ImageEditorControls: UIView {
     
     private lazy var colorFooterButton: FooterButton = {
         let footerButton = FooterButton()
-        footerButton.title = "Color".localized
+        footerButton.title = "Filter".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "filter")!
         footerButton.addTarget(self, action: #selector(_colorButtonTapped(_:)), for: .touchUpInside)
@@ -86,22 +97,52 @@ class ImageEditorControls: UIView {
         }
         
         stackView.spacing = self.bounds.width + 0.05
+        stackView.addArrangedSubview(cropFooterButton)
         stackView.addArrangedSubview(transformFooterButton)
         stackView.addArrangedSubview(adjustFooterButton)
         stackView.addArrangedSubview(colorFooterButton)
         //stackView.addArrangedSubview(editOriginalFooterButton)
         //stackView.addArrangedSubview(undoFooterButton)
+        
+    }
+    
+    func setButtonState(_ button: FooterButton) {
+        [cropFooterButton,
+         transformFooterButton,
+         adjustFooterButton,
+         colorFooterButton].forEach { fButton in
+            print("****************** \(button === fButton)")
+            let x = (button === fButton)
+            button.setSelected = x
+        }
+    }
+    
+    var cropImageOptionIsHidden = false {
+        didSet { cropFooterButton.isHidden = cropImageOptionIsHidden }
     }
     
     @objc private func _transformButtonTapped(_ sender: FooterButton) {
+        //setButtonState(sender)
+        cropFooterButton.setSelected = false
+        transformFooterButton.setSelected = true
+        adjustFooterButton.setSelected = false
+        colorFooterButton.setSelected = false
         onTransformTap?(sender)
     }
     
     @objc private func _adjustButtonTapped(_ sender: FooterButton) {
+        cropFooterButton.setSelected = false
+        transformFooterButton.setSelected = false
+        adjustFooterButton.setSelected = true
+        colorFooterButton.setSelected = false
         onAdjustTap?(sender)
     }
     
     @objc private func _colorButtonTapped(_ sender: FooterButton) {
+        cropFooterButton.setSelected = false
+        transformFooterButton.setSelected = false
+        adjustFooterButton.setSelected = false
+        colorFooterButton.setSelected = true
         onColorTap?(sender)
     }
     
@@ -111,6 +152,14 @@ class ImageEditorControls: UIView {
     
     @objc private func _undoButtonTapped(_ sender: FooterButton) {
         onUndoTap?(sender)
+    }
+    
+    @objc private func _cropButtonTapped(_ sender: FooterButton) {
+        cropFooterButton.setSelected = false
+        transformFooterButton.setSelected = false
+        adjustFooterButton.setSelected = false
+        colorFooterButton.setSelected = false
+        onCropTap?(sender)
     }
 }
 

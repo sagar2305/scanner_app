@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol DocumentViewerCoordinatorDelegate: AnyObject {
+    func exit(_ coordinator: DocumentViewerCoordinator)
+}
+
 class DocumentViewerCoordinator: Coordinator {
     
     var rootViewController: UIViewController {
@@ -92,7 +96,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     }
     
     func documentReviewVC(exit controller: DocumentReviewVC) {
-        navigationController.popViewController(animated: true)
+        navigationController.popToRootViewController(animated: true)
     }
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
@@ -100,7 +104,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
                                             .documentID: document.id.uuidString,
          ])
-        navigationController.popViewController(animated: true)
+        navigationController.popToRootViewController(animated: true)
     }
     
 }

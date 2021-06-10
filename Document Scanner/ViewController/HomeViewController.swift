@@ -15,6 +15,7 @@ protocol HomeVC: DocumentScannerViewController {
 }
 
 protocol HomeViewControllerDelegate: AnyObject {
+    func viewDidAppear(_controller: HomeVC)
     func scanNewDocument(_ controller: HomeVC)
     func pickNewDocument(_ controller: HomeVC)
     func showSettings(_ controller: HomeVC)
@@ -72,6 +73,11 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         showOrHideQuickAccessMenu()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        delegate?.viewDidAppear(_controller: self)
     }
 
     func _getDocuments() {

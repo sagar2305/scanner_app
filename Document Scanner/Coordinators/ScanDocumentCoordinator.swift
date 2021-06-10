@@ -60,6 +60,12 @@ extension ScanDocumentCoordinator: ScannerVCDelegate {
     func cancelScanning(_ controller: ScannerVC) {
         navigationController.popViewController(animated: true)
     }
+    
+    private func view(_ document: Document) {
+        let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+        childCoordinators.append(documentViewerCoordinator)
+        documentViewerCoordinator.start()
+    }
 }
 
 extension ScanDocumentCoordinator: CorrectionVCDelegate {
@@ -76,7 +82,13 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
                 .documentID: document.id.uuid,
                 .numberOfDocumentPages: document.pages.count
             ])
-            navigationController.popToRootViewController(animated: true)
+            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
+            view(document)
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+            if !haveUserPickedDocument {
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+                ReviewHelper.shared.requestAppRating()
+            }
         } else {
             AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
                 .numberOfDocumentPages: originalImages.count

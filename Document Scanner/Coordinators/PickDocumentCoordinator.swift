@@ -40,6 +40,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     private func _pickDocument() {
         var config = TatsiConfig.default
         config.singleViewMode = true
+        config.supportedMediaTypes = [.image]
         let tatsiImagePicker = TatsiPickerViewController(config: config)
         tatsiImagePicker.pickerDelegate = self
         tatsiImagePicker.navigationItem.backButtonTitle = ""
@@ -60,6 +61,12 @@ class PickDocumentCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(correctionVC, animated: true)
         isCorrectionVCPresented = true
     }
+    
+    private func view(_ document: Document) {
+        let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+        childCoordinators.append(documentViewerCoordinator)
+        documentViewerCoordinator.start()
+    }
 
 }
 
@@ -73,8 +80,21 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
-            navigationController.popToRootViewController(animated: true)
+            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
+                .documentID: document.id.uuid,
+                .numberOfDocumentPages: document.pages.count
+            ])
+            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
+            view(document)
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibrary)
+            if !haveUserPickedDocument {
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibrary)
+                ReviewHelper.shared.requestAppRating()
+            }
         } else {
+            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                .numberOfDocumentPages: originalImages.count
+            ])
             let alertVC = PMAlertController(title: "Something went wrong".localized,
                                             description: "Unable to save generate your document, please try again".localized,
                                             image: nil,

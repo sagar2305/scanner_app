@@ -50,11 +50,11 @@ class SettingsCoordinator: NSObject, Coordinator {
         navigationController.pushViewController(webVC, animated: true)
     }
     
-    private func _presentEmail(suffix: String) {
+    private func _presentEmail(suffix: String, email: String) {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients([Constants.SettingDefaults.feedbackEmail])
+            mail.setToRecipients([email])
             let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
             mail.setSubject("\(appName ?? "Guess the Movie") " + "\(suffix)")
             mail.setMessageBody(messageBody(), isHTML: true)
@@ -95,14 +95,14 @@ extension SettingsCoordinator: SettingsVCDelegate {
             _presentWebView(for: Constants.WebLinks.privacyPolicy, title: "Privacy Policy".localized)
         case .featureRequest:
             mailRequestTopic = .requestingFeature
-            _presentEmail(suffix: "Feature Request".localized)
+            _presentEmail(suffix: "Feature Request".localized, email: Constants.SettingDefaults.featureRequestEmail)
         case .subscription:
             startSubscriptionCoordinator()
         case .inviteFriends:
             _inviteFriends()
         case .reportError:
             mailRequestTopic = .reportingBug
-            _presentEmail(suffix: "Report a Bug".localized)
+            _presentEmail(suffix: "Report a Bug".localized, email: Constants.SettingDefaults.reportBugEmail)
         case .restorePurchases:
             _restorePurchases()
         }
@@ -145,6 +145,7 @@ extension SettingsCoordinator: SettingsVCDelegate {
                 if error != nil || !completed {
                     AnalyticsHelper.shared.logEvent(.sendingInviteFailed)
                 }
+                ReviewHelper.shared.requestAppRating()
                 AnalyticsHelper.shared.logEvent(.invitedFriend)
             }
             navigationController.present(activityVC, animated: true, completion: nil)
@@ -155,7 +156,6 @@ extension SettingsCoordinator: SettingsVCDelegate {
         NVActivityIndicatorView.start()
         TTInAppPurchases.AnalyticsHelper.shared.logEvent( .restoredPurchase)
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
-            NVActivityIndicatorView.stop()
             guard error == nil else {
                 self?._presentRestorationFailedAlert()
                 TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
@@ -163,10 +163,18 @@ extension SettingsCoordinator: SettingsVCDelegate {
             }
             if success {
                 print("SUCESS *****************")
-                TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
+                }
+                ReviewHelper.shared.requestAppRating()
             } else {
-                self?.startSubscriptionCoordinator()
+                DispatchQueue.global().async {
+                    TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
+                }
+                
+                TTInAppPurchases.AlertMessageHelper.shared.presentRestorationFailedAlert(onRetry: {self?._restorePurchases()}, onCancel: {})
             }
+            NVActivityIndicatorView.stop()
         }
     }
     
@@ -216,6 +224,7 @@ extension SettingsCoordinator: MFMailComposeViewControllerDelegate {
                 case .reportingBug: AnalyticsHelper.shared.logEvent(.reportedABug)
                 case .requestingFeature: AnalyticsHelper.shared.logEvent(.raisedFeatureRequest)
                 }
+                ReviewHelper.shared.requestAppRating()
             } else if result.rawValue == 3 {
                 switch mailRequestTopic! {
                 case .reportingBug: AnalyticsHelper.shared.logEvent(.reportingBugFailed)

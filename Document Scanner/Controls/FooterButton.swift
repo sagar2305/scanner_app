@@ -113,7 +113,6 @@ class FooterButton: UIButton {
             make.right.equalToSuperview()
             make.top.equalTo(iconContainerView.snp.bottom)
         }
-        
         iconContainerView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -135,6 +134,22 @@ class FooterButton: UIButton {
 
     override func setTitle(_ title: String?, for state: UIControl.State) {
         self._titleLabel.text = title ?? ""
+    }
+    
+    var setSelected: Bool = false {
+        didSet {
+            if setSelected {
+                let template = icon?.withRenderingMode(.alwaysTemplate)
+                iconImageView.image = template
+                iconImageView.tintColor = .primary
+                _titleLabel.textColor = .primary
+            } else {
+                let template = icon?.withRenderingMode(.alwaysOriginal)
+                iconImageView.image = template
+                iconImageView.tintColor = .text
+                _titleLabel.textColor = .text
+            }
+        }
     }
 }
 
