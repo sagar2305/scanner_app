@@ -11,7 +11,7 @@ import SnapKit
 
 class DocumentPreviewControls: UIView {
     
-    var onPDFTap: ((FooterButton) -> Void)?
+    var onMarkupTap: ((FooterButton) -> Void)?
     var onShareTap: ((FooterButton) -> Void)?
     var onEditTap: ((FooterButton) -> Void)?
     var onDeleteTap: ((FooterButton) ->Void)?
@@ -25,12 +25,12 @@ class DocumentPreviewControls: UIView {
         return stackView
     }()
     
-    private lazy var showAsPDFButton: FooterButton =  {
+    private lazy var markupButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "PDF".localized
+        footerButton.title = "Markup".localized
         footerButton.textColor = .text
         footerButton.icon = UIImage(named: "pdf")!
-        footerButton.addTarget(self, action: #selector(_showAsPDFButtonTapped(_:)), for: .touchUpInside)
+        footerButton.addTarget(self, action: #selector(_markupButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
     
@@ -80,14 +80,16 @@ class DocumentPreviewControls: UIView {
         }
         
         stackView.spacing = self.bounds.width + 0.05
-        //stackView.addArrangedSubview(showAsPDFButton)
+        if #available(iOS 13, *) {
+            stackView.addArrangedSubview(markupButton)
+        }
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(editButton)
         stackView.addArrangedSubview(deleteButton)
     }
     
-    @objc private func _showAsPDFButtonTapped(_ sender: FooterButton) {
-        onPDFTap?(sender)
+    @objc private func _markupButtonTapped(_ sender: FooterButton) {
+        onMarkupTap?(sender)
     }
     
     @objc private func _shareButtonTapped(_ sender: FooterButton) {

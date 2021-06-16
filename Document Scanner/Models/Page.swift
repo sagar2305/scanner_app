@@ -7,8 +7,9 @@
 
 import Foundation
 import WeScan
+import QuickLook
 
-class Page: Codable {
+class Page: NSObject, Codable {
     
     var id = UUID()
     var originalImageName: String
@@ -20,6 +21,7 @@ class Page: Codable {
         editedImage: UIImage) {
         self.originalImageName = documentID.appending("_\(id.uuid)_original")
         self.editedImageName = documentID.appending("_\(id.uuid)_edited")
+        super.init()
         guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
     }
     
@@ -30,7 +32,6 @@ class Page: Codable {
     func saveEditedImage(_ image: UIImage) -> Bool {
         if FileHelper.shared.saveImage(image: image, withName: editedImageName) {
             previewData = image.jpegData(compressionQuality: 0.7)
-            editedImage = image
             return true
         }
         return false
@@ -40,11 +41,17 @@ class Page: Codable {
         FileHelper.shared.getImage(originalImageName)
     }()
     
-    lazy var editedImage: UIImage? = {
+    var editedImage: UIImage? {
         FileHelper.shared.getImage(editedImageName)
-    }()
+    }
     
     var thumbNailImage: UIImage? {
         return UIImage(data: previewData ?? Data())
+    }
+}
+
+extension Page: QLPreviewItem {
+    var previewItemURL: URL? {
+        return FileHelper.shared.getLocalURL(for: editedImageName)
     }
 }

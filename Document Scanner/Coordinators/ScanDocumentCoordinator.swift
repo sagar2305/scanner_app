@@ -9,13 +9,14 @@ import UIKit
 import WeScan
 import NVActivityIndicatorView
 import PMAlertController
+import VisionKit
 
-protocol ScanDocumentCoordinatorDelegate: class {
+protocol ScanDocumentCoordinatorDelegate: AnyObject {
     func didFinishScanningDocument(_ coordinator: ScanDocumentCoordinator)
     func didCancelScanningDocument(_ coordinator: ScanDocumentCoordinator)
 }
 
-class ScanDocumentCoordinator: Coordinator {
+class ScanDocumentCoordinator: NSObject, Coordinator {
     
     var rootViewController: UIViewController {
         return navigationController
@@ -35,9 +36,16 @@ class ScanDocumentCoordinator: Coordinator {
     }
     
     func start() {
-        let scanDocumentVC = ScannerVC()
-        scanDocumentVC.delegate = self
-        navigationController.pushViewController(scanDocumentVC, animated: true)
+        if #available(iOS 13, *) {
+            guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) else { return }
+            let scannerViewController = VNDocumentCameraViewController()
+            scannerViewController.delegate = self
+            navigationController.present(scannerViewController, animated: true)
+        } else {
+            let scanDocumentVC = ScannerVC()
+            scanDocumentVC.delegate = self
+            navigationController.pushViewController(scanDocumentVC, animated: true)
+        }
     }
 }
 
@@ -74,7 +82,11 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
         imageVCs.forEach { $0.cropImage() }
         let originalImages = imageVCs.map { $0.originalImage }
         let editedImages = imageVCs.map { $0.finalImage }
+        _saveDocument(originalImages: originalImages, editedImages: editedImages, controller: viewController)
+        
+    }
     
+    private func _saveDocument(originalImages: [UIImage], editedImages: [UIImage], controller: UIViewController) {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
             NVActivityIndicatorView.stop()
@@ -104,7 +116,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             okAction.setTitleColor(.primary, for: .normal)
             alertVC.addAction(okAction)
             alertVC.gravityDismissAnimation = false
-            viewController.present(alertVC, animated: true, completion: nil)
+            controller.present(alertVC, animated: true, completion: nil)
         }
     }
     
@@ -140,5 +152,28 @@ extension ScanDocumentCoordinator: EditDocumentCoordinatorDelegate {
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)
+    }
+}
+
+@available(iOS 13, *)
+extension ScanDocumentCoordinator: VNDocumentCameraViewControllerDelegate {
+    internal func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        var images = [UIImage]()
+        
+        for index in 0..<scan.pageCount {
+            let image = scan.imageOfPage(at: index)
+            images.append(image)
+        }
+        
+        self._saveDocument(originalImages: images, editedImages: images, controller: controller)
+        controller.dismiss(animated: true)
+    }
+    
+    internal func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
+        controller.dismiss(animated: true)
+    }
+    
+    internal func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+      controller.dismiss(animated: true)
     }
 }
