@@ -27,9 +27,9 @@ class DocumentPreviewControls: UIView {
     
     private lazy var markupButton: FooterButton =  {
         let footerButton = FooterButton()
-        footerButton.title = "Markup".localized
+        footerButton.title = "Signature".localized
         footerButton.textColor = .text
-        footerButton.icon = UIImage(named: "pdf")!
+        footerButton.icon = UIImage(named: "signature")!
         footerButton.addTarget(self, action: #selector(_markupButtonTapped(_:)), for: .touchUpInside)
         return footerButton
     }()
