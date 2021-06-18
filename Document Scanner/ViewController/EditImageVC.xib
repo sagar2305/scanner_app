@@ -34,6 +34,10 @@
                         <constraint firstAttribute="height" constant="48" id="RDC-B5-VM9"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
+                    <rect key="frame" x="0.0" y="96" width="414" height="670"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLe-Fr-nQh" userLabel="footerView">
                     <rect key="frame" x="0.0" y="818" width="414" height="78"/>
                     <subviews>
@@ -53,10 +57,6 @@
                         <constraint firstItem="bdC-BH-0eq" firstAttribute="top" secondItem="546-Pr-Fmq" secondAttribute="top" id="oQK-rx-Vx6"/>
                         <constraint firstItem="546-Pr-Fmq" firstAttribute="trailing" secondItem="bdC-BH-0eq" secondAttribute="trailing" id="p9R-Yf-5Vi"/>
                     </constraints>
-                </view>
-                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-HO-DcO" userLabel="imageEditorView">
-                    <rect key="frame" x="0.0" y="96" width="414" height="670"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRP-SL-M28">
                     <rect key="frame" x="0.0" y="44" width="414" height="52"/>
