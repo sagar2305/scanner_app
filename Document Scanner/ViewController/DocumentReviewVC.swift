@@ -84,6 +84,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         renameButton.setTitle("Rename".localized, for: .normal)
+        renameButton.isHidden = true
         headerLabel.text = document?.name
         containerView.hero.id = document?.id.uuidString
         renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))

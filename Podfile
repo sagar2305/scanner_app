@@ -16,5 +16,6 @@ target 'Document Scanner' do
   pod 'PMAlertController'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Tatsi'
+  pod 'SwipeCellKit'
   pod 'TTInAppPurchases', :path => '~/Documents/Develop/TTInAppPurchases'
 end

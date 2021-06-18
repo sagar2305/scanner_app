@@ -82,10 +82,9 @@ class DocumentPreviewControls: UIView {
         stackView.spacing = self.bounds.width + 0.05
         if #available(iOS 13, *) {
             stackView.addArrangedSubview(markupButton)
-        }
+        } 
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(editButton)
-        stackView.addArrangedSubview(deleteButton)
     }
     
     @objc private func _markupButtonTapped(_ sender: FooterButton) {

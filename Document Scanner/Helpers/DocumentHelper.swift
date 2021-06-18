@@ -16,4 +16,8 @@ struct DocumentHelper {
     var documents: [Document] {
         return UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
     }
+    
+    func deleteDocument(with id: String) {
+        
+    }
 }

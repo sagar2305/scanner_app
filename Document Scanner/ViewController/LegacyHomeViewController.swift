@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import PMAlertController
+import SwipeCellKit
 
 class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     
@@ -167,6 +169,38 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         return layout
     }
     
+    private func _rename(_ document: Document) {
+
+            let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
+            alertVC.alertTitle.textColor = .primary
+            
+            alertVC.addTextField { (textField) in
+                textField?.placeholder = "Document Name".localized
+                    }
+            
+            alertVC.alertActionStackView.axis = .horizontal
+            let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
+                let textField = alertVC.textFields[0]
+                guard let documentName = textField.text,
+                      !documentName.isEmpty else {
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.error)
+                    return
+                }
+                document.rename(new: documentName)
+                self.documentsCollectionView.reloadData()
+            }
+            doneAction.setTitleColor(.primary, for: .normal)
+            alertVC.addAction(doneAction)
+            
+            let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
+            alertVC.addAction(cancelAction)
+            alertVC.gravityDismissAnimation = false
+
+            
+            self.present(alertVC, animated: true, completion: nil)
+    }
+    
     @IBAction func didTapSearchButton(_ sender: UIButton) {
         presentSearchBar.toggle()
     }
@@ -216,6 +250,7 @@ extension LegacyHomeViewController: UICollectionViewDataSource {
             fatalError("ERROR: Unable to dequeue collection view cell with identifier \(DocumentCollectionViewCell.identifier)")
         }
         documentCell.document = filteredDocuments[indexPath.row]
+        documentCell.delegate = self
         return documentCell
     }
 }
@@ -256,3 +291,35 @@ extension LegacyHomeViewController: UISearchBarDelegate {
     }
 }
 
+extension LegacyHomeViewController: SwipeCollectionViewCellDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        editActionsForItemAt indexPath: IndexPath,
+                        for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let document = filteredDocuments[indexPath.row]
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+            // handle action by updating model with deletion
+            
+            document.delete()
+            self.allDocuments.removeAll { $0.id == document.id }
+            self.filteredDocuments.removeAll { $0.id == document.id }
+            self.documentsCollectionView.reloadData()
+        }
+
+        let renameAction = SwipeAction(style: .default, title: "Rename") { _, indexPath in
+            self._rename(document)
+        }
+        
+        // customize the action appearance
+        renameAction.backgroundColor = .primary
+        let renameImage = UIImage(named: "rename")?.withRenderingMode(.alwaysTemplate)
+        let deleteImage = UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate)
+        
+        renameAction.image = renameImage
+        deleteAction.image = deleteImage
+    
+
+        return [renameAction, deleteAction]
+    }
+}

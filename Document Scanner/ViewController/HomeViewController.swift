@@ -7,6 +7,8 @@
 
 import UIKit
 import Hero
+import SwipeCellKit
+import PMAlertController
 
 protocol HomeVC: DocumentScannerViewController {
     var delegate: HomeViewControllerDelegate? { get set }
@@ -32,7 +34,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
-    private lazy var dateSource = _getDocumentCollectionViewDataSource()
+    private lazy var dataSource = _getDocumentCollectionViewDataSource()
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document]  = [Document]()
     
@@ -204,6 +206,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                 fatalError("ERROR: Unable to find and dequeue cell with identifier \(DocumentCollectionViewCell.identifier)")
             }
             collectionViewCell.document = document
+            collectionViewCell.delegate = self
             return collectionViewCell
         }
         return dataSource
@@ -213,7 +216,41 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         var snapShot = SnapShot()
         snapShot.appendSections([0])
         snapShot.appendItems(filteredDocuments)
-        dateSource.apply(snapShot, animatingDifferences: animatingDifferences)
+        dataSource.apply(snapShot, animatingDifferences: animatingDifferences)
+    }
+    
+    private func _rename(_ document: Document) {
+
+            let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
+            alertVC.alertTitle.textColor = .primary
+            
+            alertVC.addTextField { (textField) in
+                textField?.placeholder = "Document Name".localized
+                    }
+            
+            alertVC.alertActionStackView.axis = .horizontal
+            let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
+                let textField = alertVC.textFields[0]
+                guard let documentName = textField.text,
+                      !documentName.isEmpty else {
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.error)
+                    return
+                }
+                document.rename(new: documentName)
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems([document])
+                self.dataSource.apply(snapshot,animatingDifferences: true)
+            }
+            doneAction.setTitleColor(.primary, for: .normal)
+            alertVC.addAction(doneAction)
+            
+            let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
+            alertVC.addAction(cancelAction)
+            alertVC.gravityDismissAnimation = false
+
+            
+            self.present(alertVC, animated: true, completion: nil)
     }
     
     @IBAction func didTapSearchButton(_ sender: UIButton) {
@@ -269,6 +306,49 @@ extension HomeViewController: UISearchBarDelegate {
             filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText.lowercased()) }
             _applySnapshot()
         }
+    }
+}
+
+@available(iOS 13, *)
+extension HomeViewController: SwipeCollectionViewCellDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        editActionsForItemAt indexPath: IndexPath,
+                        for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+            // handle action by updating model with deletion
+            guard let document = self.dataSource.itemIdentifier(for: indexPath) else {
+                return
+            }
+            
+            document.delete()
+            self.allDocuments.removeAll { $0.id == document.id }
+            self.filteredDocuments.removeAll { $0.id == document.id }
+            self._applySnapshot()
+        }
+
+        let renameAction = SwipeAction(style: .default, title: "Rename") { _, indexPath in
+            guard let document = self.dataSource.itemIdentifier(for: indexPath) else {
+                return
+            }
+            
+            self._rename(document)
+        }
+        
+        // customize the action appearance
+        renameAction.backgroundColor = .primary
+        let renameImage = UIImage(named: "rename")?.withRenderingMode(.alwaysTemplate)
+        renameImage?.withTintColor(.white)
+        
+        let deleteImage = UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate)
+        deleteImage?.withTintColor(.white)
+        
+        renameAction.image = renameImage
+        deleteAction.image = deleteImage
+    
+
+        return [renameAction, deleteAction]
     }
 }
 
