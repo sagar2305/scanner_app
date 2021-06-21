@@ -68,10 +68,12 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     
     func documentReviewVC(markup page: Page, controller: DocumentReviewVC) {
         pageBeingEdited = page
-        let quickLookPreviewController = QLPreviewController()
-        quickLookPreviewController.dataSource = self
-        quickLookPreviewController.delegate = self
-        controller.present(quickLookPreviewController, animated: true)
+        if #available(iOS 13, *) {
+            let markupVC = MarkupVC()
+            markupVC.dataSource = self
+            markupVC.delegate = self
+            controller.present(markupVC, animated: true)
+        }
     }
     
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC) {
@@ -115,12 +117,15 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         navigationController.popToRootViewController(animated: true)
     }
     
+    
     func documentReviewVC(controller: DocumentReviewVC, markup document: Document, startIndex: Int) {
-        let quickLookPreviewController = QLPreviewController()
-        quickLookPreviewController.dataSource = self
-        quickLookPreviewController.delegate = self
-        quickLookPreviewController.currentPreviewItemIndex = startIndex
-        controller.present(quickLookPreviewController, animated: true)
+        if #available(iOS 13, *) {
+            let markupVC = MarkupVC()
+            markupVC.dataSource = self
+            markupVC.delegate = self
+            markupVC.currentPreviewItemIndex = startIndex
+            controller.present(markupVC, animated: true)
+        }
     }
 }
 
@@ -159,14 +164,5 @@ extension DocumentViewerCoordinator: QLPreviewControllerDelegate {
         .updateContents
     }
     
-    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {
-        guard  let page = previewItem as? Page else {
-            print("NOT PAGE")
-            return
-        }
-        
-//        let pageControllerItem = pageItems.first { $0.page.id == page.id }
-//        documentReviewVC.pageControllerItems = pageItems
-        
-    }
+    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {    }
 }
