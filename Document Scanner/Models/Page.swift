@@ -10,10 +10,14 @@ import WeScan
 
 class Page: Codable {
     
-    var id = UUID()
+    private var id = UUID()
     var originalImageName: String
     var editedImageName: String
     var previewData: Data?
+    
+    var pageId: String {
+        id.uuidString
+    }
     
     init?(documentID: String,
          originalImage: UIImage,

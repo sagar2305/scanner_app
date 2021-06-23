@@ -43,7 +43,7 @@ class DocumentViewerCoordinator: Coordinator {
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(viewDidAppear controller: DocumentScannerViewController) {
         AnalyticsHelper.shared.logEvent(.userOpenedDocument, properties: [
-                                            .documentID: document.id.uuidString,
+                                            .documentID: document.documentID,
                                             .numberOfDocumentPages: document.pages.count
          ])
     }
@@ -51,7 +51,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(rename document: Document, name: String) {
         document.rename(new: name)
         AnalyticsHelper.shared.logEvent(.renamedDocument, properties: [
-                                            .documentID: document.id.uuidString,
+                                            .documentID: document.documentID,
          ])
     }
     
@@ -85,11 +85,11 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         activityVC.completionWithItemsHandler = { activity, completed, item, error in
             if error != nil || !completed {
                 AnalyticsHelper.shared.logEvent(.documentSharingFailed, properties: [
-                    .documentID: share.id.uuidString
+                    .documentID: share.documentID
                 ])
             }
             AnalyticsHelper.shared.logEvent(.userSharedDocument, properties: [
-                .documentID: share.id.uuidString
+                .documentID: share.documentID
             ])
         }
         navigationController.present(activityVC, animated: true)
@@ -102,7 +102,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
         document.delete()
         AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
-                                            .documentID: document.id.uuidString,
+                                            .documentID: document.documentID,
          ])
         navigationController.popToRootViewController(animated: true)
     }

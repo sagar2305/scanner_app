@@ -13,9 +13,16 @@ struct Constants {
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
-        static let hasUserScannedUsingLibrary = "HasUserScannedUsingCameraKey"
-        static let documentScannedUsingCamera = "HasUserPickedImageFromLibrary"
-        static let lastReviewRequestDate = "LastReviewRequestDate"
+        static let hasUserScannedUsingLibraryKey = "HasUserScannedUsingCameraKey"
+        static let documentScannedUsingCameraKey = "HasUserPickedImageFromLibrary"
+        static let lastReviewRequestDateKey = "LastReviewRequestDateKey"
+        static let idsOfDocumentUploadedToiCLoudKey = "IdsOfDocumentUploadedToiCLoudKey"
+        static let idsOfPagesUploadedToiCloudKey = "IdsOfPagesUploadedToiCloudKey"
+        static let idsOfDocumentsMarkedForiCloudUploadKey = "IdsOfDocumentsMarkedForiCloudUploadKey"
+        static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
+        static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
+        static let idsOfPagesMarkedForDeletionFromiCloud = "idsOfPagesMarkedForDeletionFromiCloud"
+    
     }
     
     struct WebLinks {
@@ -151,5 +158,31 @@ struct Constants {
         //recording API
         case dateQueryItem = "Query Date"
         
+    }
+}
+
+
+struct CloudKitConstants {
+    static let containerID = "iCloud.com.triviatribe.scanner"
+    
+    struct Records {
+        static let page = "Page"
+        static let document = "Document"
+    }
+    
+    struct PageRecordFields {
+        static let id = "id"
+        static let originalImage = "originalImage"
+        static let originalImageName = "originalImageName"
+        static let editedImage = "editedImage"
+        static let editedImageName = "editedImageName"
+    }
+    
+    struct DocumentRecordFields {
+        static let id = "id"
+        static let date = "date"
+        static let name = "name"
+        static let pages = "pages"
+        static let tag = "tag"
     }
 }

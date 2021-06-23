@@ -7,17 +7,17 @@
 
 import UIKit
 import PDFGenerator
+import CloudKit
 
 class Document: Codable {
     
-    var id = UUID()
+    private let id = UUID()
     var pages: [Page]
     var name: String
-    private var date: Date
+    private let date: Date = Date()
     var tag: String
     
     init?(originalImages: [UIImage], editedImages: [UIImage]) {
-        date = Date()
         self.tag = ""
         self.name = ""
         guard originalImages.count == editedImages.count else {
@@ -34,6 +34,18 @@ class Document: Codable {
         }
         self.pages = pages
         self.name = creationDate
+    }
+    
+    init?(record: CKRecord) {
+        print(record)
+//        guard let id = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return nil }
+//        guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return nil }
+//        guard let name = record[CloudKitConstants.DocumentRecordFields.tag] as? String else { return nil }
+
+    }
+    
+    var documentID : String {
+        return id.uuidString
     }
     
     var creationDate: String {
@@ -84,5 +96,25 @@ extension Document: Hashable {
     }
 }
 
+
+extension Document {
+    func cloudKitRecord() -> CKRecord {
+        let cloudRecord = CKRecord(recordType: CloudKitConstants.Records.document)
+     
+        cloudRecord.setValue(documentID as NSString, forKey: CloudKitConstants.DocumentRecordFields.id)
+        cloudRecord.setValue(name as NSString, forKey: CloudKitConstants.DocumentRecordFields.name)
+        cloudRecord.setValue(date as NSDate, forKey: CloudKitConstants.DocumentRecordFields.date)
+        cloudRecord.setValue(tag as NSString, forKey: CloudKitConstants.DocumentRecordFields.tag)
+        
+        var pageIds: [NSString] = []
+        for page in pages {
+            pageIds.append(page.pageId as NSString)
+        }
+        
+        cloudRecord.setValue(pageIds, forKey: CloudKitConstants.DocumentRecordFields.pages)
+        
+        return cloudRecord
+    }
+}
 
 

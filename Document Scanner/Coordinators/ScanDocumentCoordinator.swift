@@ -79,14 +79,14 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             document.save()
             NVActivityIndicatorView.stop()
             AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
-                .documentID: document.id.uuid,
+                .documentID: document.documentID,
                 .numberOfDocumentPages: document.pages.count
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
             view(document)
-            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.documentScannedUsingCameraKey)
             if !haveUserPickedDocument {
-                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.documentScannedUsingCamera)
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.documentScannedUsingCameraKey)
                 ReviewHelper.shared.requestAppRating()
             }
         } else {
