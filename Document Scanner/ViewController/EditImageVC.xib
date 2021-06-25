@@ -82,16 +82,16 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p52-YF-Eei">
                             <rect key="frame" x="286" y="0.0" width="120" height="52"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-GD-UPQ">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-GD-UPQ">
                                     <rect key="frame" x="0.0" y="0.0" width="56" height="52"/>
-                                    <state key="normal" title="Undo"/>
+                                    <state key="normal" image="undo"/>
                                     <connections>
                                         <action selector="didTapUndo:" destination="-1" eventType="touchUpInside" id="LrZ-ji-SDV"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqz-Cd-XPg">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqz-Cd-XPg">
                                     <rect key="frame" x="64" y="0.0" width="56" height="52"/>
-                                    <state key="normal" title="Done"/>
+                                    <state key="normal" image="done"/>
                                     <connections>
                                         <action selector="didTapDone:" destination="-1" eventType="touchUpInside" id="7r5-CE-tP9"/>
                                     </connections>
@@ -140,6 +140,8 @@
     </objects>
     <resources>
         <image name="back-arrow" width="18" height="18"/>
+        <image name="done" width="24" height="24"/>
+        <image name="undo" width="24" height="24"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

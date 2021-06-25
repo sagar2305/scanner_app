@@ -8,7 +8,7 @@
 import UIKit
 import PDFGenerator
 
-class Document: Codable {
+class Document: Codable, Identifiable {
     
     var id = UUID()
     var pages: [Page]

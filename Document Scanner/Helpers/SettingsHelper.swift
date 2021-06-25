@@ -13,7 +13,7 @@ struct SettingsHelper {
     private init() { }
     
     private let allSettings: [Setting] = [
-        Setting(id: .inviteFriends, name: "Invite Friend".localized, type: .documentScanner),
+        Setting(id: .inviteFriends, name: "Invite Friends".localized, type: .documentScanner),
         Setting(id: .subscription, name: "Upgrade".localized, type: .manage),
         Setting(id: .restorePurchases, name: "Restore Purchase".localized, type: .manage),
         Setting(id: .featureRequest, name: "Request feature".localized, type: .support),

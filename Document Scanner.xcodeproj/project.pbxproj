@@ -66,6 +66,7 @@
 		029E33A6265CFC2500D92A00 /* SofiaProSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339E265CFC2500D92A00 /* SofiaProSemiBold.ttf */; };
 		029E33A7265CFC2500D92A00 /* SofiaProRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 029E339F265CFC2500D92A00 /* SofiaProRegular.ttf */; };
 		02A5FBDD2666305E00F67D99 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A5FBDC2666305E00F67D99 /* AnalyticsHelper.swift */; };
+		02A6C3FA2680A0FE00210F67 /* MarkupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A6C3F92680A0FE00210F67 /* MarkupVC.swift */; };
 		02B2C90D25F1F959008B72EF /* ScanDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */; };
 		02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */; };
 		02B661DD26036BCA008CCF36 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */; };
@@ -191,6 +192,7 @@
 		029E339E265CFC2500D92A00 /* SofiaProSemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProSemiBold.ttf; sourceTree = "<group>"; };
 		029E339F265CFC2500D92A00 /* SofiaProRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SofiaProRegular.ttf; sourceTree = "<group>"; };
 		02A5FBDC2666305E00F67D99 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
+		02A6C3F92680A0FE00210F67 /* MarkupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupVC.swift; sourceTree = "<group>"; };
 		02B2C90C25F1F959008B72EF /* ScanDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocumentCoordinator.swift; sourceTree = "<group>"; };
 		02B58777260C42F900CBAB82 /* DocumentViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewerCoordinator.swift; sourceTree = "<group>"; };
 		02B661DC26036BCA008CCF36 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
 				025DB1BF26011214006943C0 /* WebViewVC.swift */,
 				025DB1C026011214006943C0 /* WebViewVC.xib */,
+				02A6C3F92680A0FE00210F67 /* MarkupVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 			files = (
 				02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */,
 				02620D3B2636C8EE00AEB15F /* OnboardingCoordinator.swift in Sources */,
+				02A6C3FA2680A0FE00210F67 /* MarkupVC.swift in Sources */,
 				02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */,
 				024F07CE25FFC5DD0091C73C /* DocumentCollectionViewCell.swift in Sources */,
 				025DB1B42601012B006943C0 /* SettingsCoordinator.swift in Sources */,
@@ -884,7 +888,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -908,7 +912,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
