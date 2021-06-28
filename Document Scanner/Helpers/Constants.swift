@@ -21,7 +21,7 @@ struct Constants {
         static let idsOfDocumentsMarkedForiCloudUploadKey = "IdsOfDocumentsMarkedForiCloudUploadKey"
         static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
         static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
-        static let idsOfPagesMarkedForDeletionFromiCloud = "idsOfPagesMarkedForDeletionFromiCloud"
+        static let idsOfPagesMarkedForDeletionFromiCloudKey = "idsOfPagesMarkedForDeletionFromiCloudKey"
     
     }
     
@@ -176,6 +176,7 @@ struct CloudKitConstants {
         static let originalImageName = "originalImageName"
         static let editedImage = "editedImage"
         static let editedImageName = "editedImageName"
+        static let document = "document"
     }
     
     struct DocumentRecordFields {

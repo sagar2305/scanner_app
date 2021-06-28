@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import WeScan
+import UIKit
+import CloudKit
 
 class Page: Codable {
     
@@ -50,5 +51,28 @@ class Page: Codable {
     
     var thumbNailImage: UIImage? {
         return UIImage(data: previewData ?? Data())
+    }
+}
+
+
+extension Page {
+    func cloudKitRecord(parent documentRecord: CKRecord) -> CKRecord? {
+        let cloudRecord = CKRecord(recordType: CloudKitConstants.Records.page)
+        guard let originalImageURL = FileHelper.shared.fileURL(for: originalImageName),
+              let editedImageURL = FileHelper.shared.fileURL(for: editedImageName) else {
+            return nil
+        }
+        let originalImageAsset = CKAsset(fileURL: originalImageURL)
+        let editedImageAsset = CKAsset(fileURL: editedImageURL)
+        
+        cloudRecord.setValue(pageId as NSString, forKey: CloudKitConstants.PageRecordFields.id)
+        cloudRecord.setValue(originalImageName as NSString, forKey: CloudKitConstants.PageRecordFields.originalImageName)
+        cloudRecord.setValue(editedImageName as NSString, forKey: CloudKitConstants.PageRecordFields.editedImageName)
+        cloudRecord.setValue(originalImageAsset, forKey: CloudKitConstants.PageRecordFields.originalImage)
+        cloudRecord.setValue(editedImageAsset, forKey: CloudKitConstants.PageRecordFields.editedImage)
+        
+        let parent = CKRecord.Reference(record: documentRecord, action: .deleteSelf)
+        cloudRecord.setValue(parent, forKey: CloudKitConstants.PageRecordFields.document)
+        return cloudRecord
     }
 }

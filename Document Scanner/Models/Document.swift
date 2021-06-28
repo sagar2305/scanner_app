@@ -11,10 +11,10 @@ import CloudKit
 
 class Document: Codable {
     
-    private let id = UUID()
+    private var id = UUID()
     var pages: [Page]
     var name: String
-    private let date: Date = Date()
+    private var date: Date = Date()
     var tag: String
     
     init?(originalImages: [UIImage], editedImages: [UIImage]) {
@@ -36,13 +36,13 @@ class Document: Codable {
         self.name = creationDate
     }
     
-    init?(record: CKRecord) {
-        print(record)
+//    init?(record: CKRecord) {
+//        print(record)
 //        guard let id = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return nil }
 //        guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return nil }
 //        guard let name = record[CloudKitConstants.DocumentRecordFields.tag] as? String else { return nil }
-
-    }
+//
+//    }
     
     var documentID : String {
         return id.uuidString
@@ -96,24 +96,19 @@ extension Document: Hashable {
     }
 }
 
-
+// MARK: - CloudKit Operations
 extension Document {
     func cloudKitRecord() -> CKRecord {
         let cloudRecord = CKRecord(recordType: CloudKitConstants.Records.document)
-     
         cloudRecord.setValue(documentID as NSString, forKey: CloudKitConstants.DocumentRecordFields.id)
         cloudRecord.setValue(name as NSString, forKey: CloudKitConstants.DocumentRecordFields.name)
         cloudRecord.setValue(date as NSDate, forKey: CloudKitConstants.DocumentRecordFields.date)
         cloudRecord.setValue(tag as NSString, forKey: CloudKitConstants.DocumentRecordFields.tag)
-        
-        var pageIds: [NSString] = []
-        for page in pages {
-            pageIds.append(page.pageId as NSString)
-        }
-        
-        cloudRecord.setValue(pageIds, forKey: CloudKitConstants.DocumentRecordFields.pages)
-        
         return cloudRecord
+    }
+    
+    func saveToCloudKit() {
+        CloudKitHelper.shared.save(document: self)
     }
 }
 
