@@ -70,7 +70,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         })
         
         #warning("below is test code remove it")
-        allDocuments.first?.saveToCloudKit()
+        //allDocuments.first?.saveToCloudKit()
+        CloudKitHelper.shared.fetchDocumentsFromiCloudIfAny()
     }
     
     override func viewDidLayoutSubviews() {

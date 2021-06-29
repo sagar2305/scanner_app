@@ -63,13 +63,27 @@ class CloudKitHelper {
     }
     
     ///Caching document id of document that are uploaded to iCloud, to avoid re upload
-    func markDocumentAsUploadedToiCloud(with id: String) {
+    private func _markDocumentAsUploadedToiCloud(document: Document) {
         var documentIdSet = idsOfDocumentUploadedToiCloud
-        documentIdSet.insert(id)
+        documentIdSet.insert(document.id)
         UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentUploadedToiCLoudKey)
     }
+    
+    ///Ids of document marked for iCloud upload
+    var idsOfDocumentMarkedForiCloudUpload: Set<String> {
+        let userDefaultKey = Constants.DocumentScannerDefaults.idsOfDocumentsMarkedForiCloudUploadKey
+        guard let documentIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
+        return Set(documentIDs)
+    }
 
-    //Getting id's of pages already uploaded to iCloud
+    ///Mark document for uploading to iCloud
+    private func _markDocumentForiCloudUpload(_ document: Document) {
+        var documentIdSet = idsOfDocumentMarkedForiCloudUpload
+        documentIdSet.insert(document.id)
+        UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentsMarkedForiCloudUploadKey)
+    }
+    
+    ///Getting id's of pages already uploaded to iCloud
     var idsOfPagesUploadedToiCould: Set<String> {
         let userDefaultKey = Constants.DocumentScannerDefaults.idsOfPagesUploadedToiCloudKey
         guard let pageIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
@@ -90,7 +104,7 @@ class CloudKitHelper {
         return Set(documentIds)
     }
     
-    var idsOfPagesMarkedFromDeletionFromiCloud: Set<String> {
+    var idsOfPagesMarkedForDeletionFromiCloud: Set<String> {
         let userDefaultKey = Constants.DocumentScannerDefaults.idsOfPagesMarkedForDeletionFromiCloudKey
         guard let pageIds = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
         return Set(pageIds)
@@ -119,7 +133,7 @@ class CloudKitHelper {
             
             for page in document.pages {
                 guard let pageRecord =  page.cloudKitRecord(parent: documentCKRecord) else {
-                    //TODO: - Save document id to cache to re-upload later
+                    _markDocumentForiCloudUpload(document)
                     print("Failed converting pages to record")
                     return
                 }
@@ -140,50 +154,76 @@ class CloudKitHelper {
             query.isAtomic = true
             query.modifyRecordsCompletionBlock = { records, recordIds, error in
                 guard error == nil else {
-                    //something failes
-                    //TODO: - Save document id to cache to re-upload later
+                    _markDocumentForiCloudUpload(document)
+                    print(error!)
                     print("Failed whiles saving")
                     return
                 }
                 
                 print("Succesful")
                 //Document is saved properly
-                //TODO: - Cached document as saved to cloudkit
+                _markDocumentAsUploadedToiCloud(document: document)
             }
-            
             ckPrivateDB.add(query)
         }
     }
     
-//    ///Checks iCloud for new documents and fetches them
-//    func fetchDocumentsFromiCloudIfAny() {
-//        DispatchQueue.global().async {
-//            let predicate = NSPredicate(format: "NOT (\(CloudKitConstants.DocumentRecordFields.id) IN %@)", self.idsOfDocumentUploadedToiCloud)
-//            let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
-//            dump(self.idsOfDocumentUploadedToiCloud)
-//            print(predicate)
-//            self.ckPrivateDB.perform(query, inZoneWith: nil) { records, error in
-//                guard error == nil else {
-//                    print("Unable to fetch records, error: \(error!.localizedDescription)")
-//                    return
-//                }
-//
-//                guard let records = records else { return }
-//                var document: [Document] = []
-//                for record in records {
-//                    if let call = Document(record) {
-//                        calls.append(call)
-//                        self.markCallAsStoredToiCloud(call.callId)
-//                        AnalyticsHelper.shared.logEvent(.iCloudCallFetched, properties: [
-//                                                            .recordId: record.recordID.recordName
-//                        ])
-//                    }
-//                }
-//                self._saveFetchedCallsLocally(calls)
-//            }
-//        }
-//    }
-//
+    ///Checks iCloud for new document if any
+    func fetchDocumentsFromiCloudIfAny() {
+        DispatchQueue.global().async {
+            let predicate = NSPredicate(format: "NOT (\(CloudKitConstants.DocumentRecordFields.id) IN %@)", self.idsOfDocumentUploadedToiCloud)
+            let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
+            dump(self.idsOfDocumentUploadedToiCloud)
+            print(predicate)
+            self.ckPrivateDB.perform(query, inZoneWith: nil) { documentRecords, error in
+                guard error == nil else {
+                    print("Unable to fetch records, error: \(error!.localizedDescription)")
+                    return
+                }
+                
+                //get documents records
+                guard let documentRecords = documentRecords else { return }
+                for documentRecord in documentRecords {
+                    //fetching pages of documents
+                    print(documentRecord)
+                    let documentRecordID = documentRecord.recordID
+                    let referenceRecordToMatch = CKRecord.Reference(recordID: documentRecordID, action: .deleteSelf)
+                    print(referenceRecordToMatch)
+                    let predicate = NSPredicate(format: "document == %@", referenceRecordToMatch)
+                    print("Predicate")
+                    print(predicate)
+                    let query = CKQuery(recordType: "Page", predicate: predicate)
+                    
+                    var documentPages: [Page] = []
+                    self.executeQuery(query) { [self] pages, error in
+                        guard error == nil,
+                              let pages = pages else {
+                            // there is some error
+                            return
+                        }
+                        for page in pages {
+                            guard let pageObject = Page(record: page) else {
+                                return
+                            }
+                            documentPages.append(pageObject)
+                        }
+                        
+                        //creating documentObjec and saving it on sucess
+                        guard let document = Document(record: documentRecord, pages: documentPages) else {
+                            return
+                        }
+                        
+                        document.save()
+                        _markDocumentAsUploadedToiCloud(document: document)
+                        print("Document feting succesded")
+                        //TODO: - Punblish notifiaction on sucess so home screen gets updated
+                    }
+                }
+            }
+        }
+    }
+
+    
 //    func fetchLastServerRecordingFetchedDate() {
 //        DispatchQueue.global().async {
 //            let predicate = NSPredicate(value: true)
@@ -218,11 +258,11 @@ class CloudKitHelper {
 //        }
 //    }
 //
-//    func executeQuery(_ query: CKQuery, _ completion: @escaping ([CKRecord]?, Error?) -> Void) {
-//        ckPrivateDB.perform(query, inZoneWith: nil) { records, error in
-//            completion(records, error)
-//        }
-//    }
+    func executeQuery(_ query: CKQuery, _ completion: @escaping ([CKRecord]?, Error?) -> Void) {
+        ckPrivateDB.perform(query, inZoneWith: nil) { records, error in
+            completion(records, error)
+        }
+    }
 //
 //    func deleteCallFromiCloudIfMarked() {
 //        for callId in callIDsOfCallsMarkedForDeletionFromiCloud {

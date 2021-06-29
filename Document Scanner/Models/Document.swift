@@ -11,7 +11,7 @@ import CloudKit
 
 class Document: Codable {
     
-    private var id = UUID()
+    var id: String
     var pages: [Page]
     var name: String
     private var date: Date = Date()
@@ -20,12 +20,13 @@ class Document: Codable {
     init?(originalImages: [UIImage], editedImages: [UIImage]) {
         self.tag = ""
         self.name = ""
+        id = UUID().uuidString
         guard originalImages.count == editedImages.count else {
             fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count)")
         }
         var pages = [Page]()
         for index in 0 ..< originalImages.count {
-            let newPage = Page(documentID: id.uuidString,
+            let newPage = Page(documentID: id,
                                originalImage: originalImages[index],
                                editedImage: editedImages[index]
             )
@@ -36,16 +37,19 @@ class Document: Codable {
         self.name = creationDate
     }
     
-//    init?(record: CKRecord) {
-//        print(record)
-//        guard let id = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return nil }
-//        guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return nil }
-//        guard let name = record[CloudKitConstants.DocumentRecordFields.tag] as? String else { return nil }
-//
-//    }
-    
-    var documentID : String {
-        return id.uuidString
+    init?(record: CKRecord, pages: [Page]) {
+        print(record)
+        guard let id = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return nil }
+        guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return nil }
+        guard let tag = record[CloudKitConstants.DocumentRecordFields.tag] as? String else { return nil }
+        guard let date = record[CloudKitConstants.DocumentRecordFields.date] as? Date else  { return nil }
+        
+        self.id = id
+        self.pages = pages
+        self.name = name
+        self.tag = tag
+        self.date = date
+        
     }
     
     var creationDate: String {
@@ -100,7 +104,7 @@ extension Document: Hashable {
 extension Document {
     func cloudKitRecord() -> CKRecord {
         let cloudRecord = CKRecord(recordType: CloudKitConstants.Records.document)
-        cloudRecord.setValue(documentID as NSString, forKey: CloudKitConstants.DocumentRecordFields.id)
+        cloudRecord.setValue(id as NSString, forKey: CloudKitConstants.DocumentRecordFields.id)
         cloudRecord.setValue(name as NSString, forKey: CloudKitConstants.DocumentRecordFields.name)
         cloudRecord.setValue(date as NSDate, forKey: CloudKitConstants.DocumentRecordFields.date)
         cloudRecord.setValue(tag as NSString, forKey: CloudKitConstants.DocumentRecordFields.tag)

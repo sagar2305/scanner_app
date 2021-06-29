@@ -79,7 +79,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
             document.save()
             NVActivityIndicatorView.stop()
             AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
-                .documentID: document.documentID,
+                .documentID: document.id,
                 .numberOfDocumentPages: document.pages.count
             ])
             AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")

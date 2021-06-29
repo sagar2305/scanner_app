@@ -11,20 +11,39 @@ import CloudKit
 
 class Page: Codable {
     
-    private var id = UUID()
+    var id: String
     var originalImageName: String
     var editedImageName: String
     var previewData: Data?
-    
-    var pageId: String {
-        id.uuidString
-    }
+
     
     init?(documentID: String,
-         originalImage: UIImage,
-        editedImage: UIImage) {
-        self.originalImageName = documentID.appending("_\(id.uuid)_original")
-        self.editedImageName = documentID.appending("_\(id.uuid)_edited")
+          originalImage: UIImage,
+          editedImage: UIImage) {
+        id = UUID().uuidString
+        self.originalImageName = documentID.appending("_\(id)_original")
+        self.editedImageName = documentID.appending("_\(id)_edited")
+        guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
+    }
+    
+    init?(record: CKRecord) {
+        guard let id = record[CloudKitConstants.PageRecordFields.id] as? String else { return nil }
+        guard let originalImageName = record[CloudKitConstants.PageRecordFields.originalImageName] as? String else { return nil }
+        guard let editedImageName = record[CloudKitConstants.PageRecordFields.editedImageName] as? String else { return nil }
+        
+        guard let originalImageAsset = record[CloudKitConstants.PageRecordFields.originalImage] as? CKAsset else { return nil }
+        guard let editedImageAsset = record[CloudKitConstants.PageRecordFields.editedImage] as? CKAsset else { return nil }
+        
+        guard let originalImageURL = originalImageAsset.fileURL,
+              let originalImage = UIImage(contentsOfFile: originalImageURL.path),
+              let editedImageURL = editedImageAsset.fileURL,
+              let editedImage = UIImage(contentsOfFile: editedImageURL.path) else {
+            return nil
+        }
+        
+        self.id = id
+        self.originalImageName = originalImageName
+        self.editedImageName = editedImageName
         guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
     }
     
@@ -65,7 +84,7 @@ extension Page {
         let originalImageAsset = CKAsset(fileURL: originalImageURL)
         let editedImageAsset = CKAsset(fileURL: editedImageURL)
         
-        cloudRecord.setValue(pageId as NSString, forKey: CloudKitConstants.PageRecordFields.id)
+        cloudRecord.setValue(id as NSString, forKey: CloudKitConstants.PageRecordFields.id)
         cloudRecord.setValue(originalImageName as NSString, forKey: CloudKitConstants.PageRecordFields.originalImageName)
         cloudRecord.setValue(editedImageName as NSString, forKey: CloudKitConstants.PageRecordFields.editedImageName)
         cloudRecord.setValue(originalImageAsset, forKey: CloudKitConstants.PageRecordFields.originalImage)

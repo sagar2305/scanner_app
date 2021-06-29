@@ -16,7 +16,7 @@ class DocumentCollectionViewCell: UICollectionViewCell {
             if document != nil {
                 documentNameLabel.text = document!.name
                 previewImageView.image = document!.pages.first?.thumbNailImage
-                previewImageView.hero.id = document!.documentID
+                previewImageView.hero.id = document!.id
                 documentDetailLabel.text = document!.details
             }
         }
