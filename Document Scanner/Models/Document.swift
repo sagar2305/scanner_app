@@ -78,12 +78,6 @@ class Document: Codable {
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
-    func delete() {
-        var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
-        documents.removeAll { $0.id == id }
-        UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
-    }
-    
     func rename(new name: String) {
         self.name = name
         update()

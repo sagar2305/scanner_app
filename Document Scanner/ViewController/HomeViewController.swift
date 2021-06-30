@@ -68,10 +68,6 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         quickAccessButton.onTap = ({ [self] button in
             presentQuickAccess.toggle()
         })
-        
-        #warning("below is test code remove it")
-        //allDocuments.first?.saveToCloudKit()
-        CloudKitHelper.shared.fetchDocumentsFromiCloudIfAny()
     }
     
     override func viewDidLayoutSubviews() {

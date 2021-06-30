@@ -100,7 +100,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     }
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
-        document.delete()
+        DocumentHelper.shared.delete(document: document)
         AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
                                             .documentID: document.id,
          ])

@@ -22,7 +22,11 @@ struct Constants {
         static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
         static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
         static let idsOfPagesMarkedForDeletionFromiCloudKey = "idsOfPagesMarkedForDeletionFromiCloudKey"
-    
+        
+        //iCloud-Subscription Keys
+        static let iCloudDocumentRecordSubscriptionKey = "iCloudDocumentRecordSubscriptionKey"
+        static let iCloudPageRecordSubscriptionKey = "iCloudPageRecordSubscriptionKey"
+
     }
     
     struct WebLinks {

@@ -11,6 +11,7 @@ import SwiftDate
 import Mixpanel
 import Amplitude
 import TTInAppPurchases
+import CloudKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("== \(names)")
             }
         }
-        
+        UIApplication.shared.registerForRemoteNotifications()
         Purchases.configure(withAPIKey: Constants.APIKeys.revenueCat)
         _ = TTInAppPurchases.SubscriptionHelper.shared // updating whether user is pro or not on app launch
         rootCoordinator?.start()
@@ -70,6 +71,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    
+    
 
+}
+
+// MARK: - Remote notifications
+extension AppDelegate {
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Registered for remote notification")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if let ckNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
+            // this is ck notification
+            CloudKitHelper.shared.handleCloudKit(notification: ckNotification)
+        }
+    }
 }
 
