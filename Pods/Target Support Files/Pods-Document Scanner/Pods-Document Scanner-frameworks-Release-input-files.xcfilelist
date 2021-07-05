@@ -13,6 +13,7 @@ ${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework
 ${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework
+${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework
 ${BUILT_PRODUCTS_DIR}/TPPDF/TPPDF.framework
 ${BUILT_PRODUCTS_DIR}/TTInAppPurchases/TTInAppPurchases.framework
 ${BUILT_PRODUCTS_DIR}/Tatsi/Tatsi.framework

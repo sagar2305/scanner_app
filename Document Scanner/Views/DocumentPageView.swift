@@ -38,7 +38,7 @@ class DocumentPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        imageView.image = page.editedImage
+        imageView.image = editedImage
     }
     
     private func _setupView() {
@@ -48,6 +48,10 @@ class DocumentPageViewController: UIViewController {
         imageView.snp.makeConstraints { make in
             make.top.right.bottom.left.equalToSuperview()
         }
+    }
+    
+    private var editedImage: UIImage? {
+        page.editedImage
     }
     
 }

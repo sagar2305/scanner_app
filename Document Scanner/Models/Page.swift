@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CloudKit
 
-class Page: Codable {
+class Page: NSObject, Codable {
     
     var id: String
     var originalImageName: String
@@ -54,7 +54,6 @@ class Page: Codable {
     func saveEditedImage(_ image: UIImage) -> Bool {
         if FileHelper.shared.saveImage(image: image, withName: editedImageName) {
             previewData = image.jpegData(compressionQuality: 0.7)
-            editedImage = image
             return true
         }
         return false
@@ -64,9 +63,9 @@ class Page: Codable {
         FileHelper.shared.getImage(originalImageName)
     }()
     
-    lazy var editedImage: UIImage? = {
+    var editedImage: UIImage? {
         FileHelper.shared.getImage(editedImageName)
-    }()
+    }
     
     var thumbNailImage: UIImage? {
         return UIImage(data: previewData ?? Data())
@@ -93,5 +92,10 @@ extension Page {
         let parent = CKRecord.Reference(record: documentRecord, action: .deleteSelf)
         cloudRecord.setValue(parent, forKey: CloudKitConstants.PageRecordFields.document)
         return cloudRecord
-    }
+
 }
+
+    extension Page: QLPreviewItem {
+        var previewItemURL: URL? {
+            return FileHelper.shared.getLocalURL(for: editedImageName)
+        }

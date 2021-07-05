@@ -26,6 +26,7 @@ PODS:
   - SwiftEntryKit (1.2.6):
     - QuickLayout (= 3.0.0)
   - SwiftLint (0.42.0)
+  - SwipeCellKit (2.7.1)
   - Tatsi (1.2.1)
   - TPPDF (2.3.2)
   - TTInAppPurchases (0.1.0):
@@ -49,6 +50,7 @@ DEPENDENCIES:
   - Purchases
   - SnapKit (~> 5.0.0)
   - SwiftLint
+  - SwipeCellKit
   - Tatsi
   - TPPDF
   - TTInAppPurchases (from `~/Documents/Develop/TTInAppPurchases`)
@@ -72,6 +74,7 @@ SPEC REPOS:
     - SwiftDate
     - SwiftEntryKit
     - SwiftLint
+    - SwipeCellKit
     - Tatsi
     - TPPDF
     - WeScan
@@ -97,11 +100,12 @@ SPEC CHECKSUMS:
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   SwiftEntryKit: 96a2fa90b2631bbbfac50d18449e9ca3d0635f13
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Tatsi: 12ac525e0e8477645d707d4f356f85cb60182f80
   TPPDF: 000c670ca79d0b00c62dcc32b168c6f691dc92a5
   TTInAppPurchases: a7359b2d60dbd93ff3f288625429478be02cfdbb
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: cb4be72d82a6bc4a2ee1a37304f9d1fcabdc7f71
+PODFILE CHECKSUM: 7b2ef92f581ba1006ae4180a701af4e1fdc49854
 
 COCOAPODS: 1.10.0

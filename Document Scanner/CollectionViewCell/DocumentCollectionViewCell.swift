@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class DocumentCollectionViewCell: UICollectionViewCell {
+class DocumentCollectionViewCell: SwipeCollectionViewCell {
 
     static let identifier = "DocumentCollectionViewCell"
     

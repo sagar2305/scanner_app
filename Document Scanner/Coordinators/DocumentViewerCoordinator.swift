@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import QuickLook
 
 protocol DocumentViewerCoordinatorDelegate: AnyObject {
     func exit(_ coordinator: DocumentViewerCoordinator)
 }
 
-class DocumentViewerCoordinator: Coordinator {
+class DocumentViewerCoordinator: NSObject, Coordinator {
     
     var rootViewController: UIViewController {
         return navigationController
@@ -20,7 +21,7 @@ class DocumentViewerCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var pageItems = [DocumentPageViewController]()
     let navigationController: DocumentScannerNavigationController
-    var documentReviewVC: DocumentScannerViewController!
+    var documentReviewVC: DocumentReviewVC!
     var document: Document
     var pageBeingEdited: Page?
     
@@ -65,6 +66,15 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         editDocumentCoordinator.start()
     }
     
+    func documentReviewVC(markup page: Page, controller: DocumentReviewVC) {
+        pageBeingEdited = page
+        if #available(iOS 13, *) {
+            let markupVC = MarkupVC()
+            markupVC.dataSource = self
+            markupVC.delegate = self
+            controller.present(markupVC, animated: true)
+        }
+    }
     
     func documentReviewVC(_ share: Document, shareAs: DocumentReviewVC.ShareOptions, controller: DocumentReviewVC) {
         var documentToShare: [Any]
@@ -107,6 +117,16 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         navigationController.popToRootViewController(animated: true)
     }
     
+    
+    func documentReviewVC(controller: DocumentReviewVC, markup document: Document, startIndex: Int) {
+        if #available(iOS 13, *) {
+            let markupVC = MarkupVC()
+            markupVC.dataSource = self
+            markupVC.delegate = self
+            markupVC.currentPreviewItemIndex = startIndex
+            controller.present(markupVC, animated: true)
+        }
+    }
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
@@ -124,4 +144,25 @@ extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)
     }
+}
+
+extension DocumentViewerCoordinator: QLPreviewControllerDataSource {
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        1
+    }
+    
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        guard let pageBeingEdited = pageBeingEdited else { fatalError("Page not set")}
+        return pageBeingEdited
+    }
+}
+
+extension DocumentViewerCoordinator: QLPreviewControllerDelegate {
+    
+    @available(iOS 13.0, *)
+    func previewController(_ controller: QLPreviewController, editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
+        .updateContents
+    }
+    
+    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {    }
 }

@@ -9,7 +9,7 @@ import UIKit
 import PDFGenerator
 import CloudKit
 
-class Document: Codable {
+class Document: Codable, Identifiable {
     
     var id: String
     var pages: [Page]

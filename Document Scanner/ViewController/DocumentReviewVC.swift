@@ -17,6 +17,8 @@ protocol DocumentReviewVCDelegate: AnyObject {
     func documentReviewVC(exit controller: DocumentReviewVC)
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC)
     func documentReviewVC(rename document: Document, name: String)
+    func documentReviewVC(markup page: Page, controller: DocumentReviewVC)
+    func documentReviewVC(controller: DocumentReviewVC, markup document: Document, startIndex: Int)
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -29,7 +31,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     private lazy var documentPreviewControls: DocumentPreviewControls = {
         let controls = DocumentPreviewControls()
         controls.onEditTap = didTapEdit
-        controls.onPDFTap = didTapPreviewAsPDF
+        controls.onMarkupTap = didTapMarkup
         controls.onShareTap = didTapShare
         controls.onDeleteTap = didTapDelete
         controls.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +84,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         renameButton.setTitle("Rename".localized, for: .normal)
+        renameButton.isHidden = true
         headerLabel.text = document?.name
         containerView.hero.id = document?.id
         renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
@@ -158,8 +161,11 @@ class DocumentReviewVC: DocumentScannerViewController {
         _presentAlertForDocumentName()
     }
     
-    private func didTapPreviewAsPDF(_ sender: FooterButton) {
-        
+    private func didTapMarkup(_ sender: FooterButton) {
+        guard let pageItems = pageControllerItems as? [DocumentPageViewController] else {
+            fatalError("ERROR: Cannot typecast pageControllerItems to type [DocumentPageViewController]")
+        }
+        delegate?.documentReviewVC(markup: pageItems[currentPageIndex].page, controller: self)
     }
     
     private func didTapEdit(_ sender: FooterButton) {
@@ -167,8 +173,7 @@ class DocumentReviewVC: DocumentScannerViewController {
             fatalError("ERROR: Cannot typecast pageControllerItems to type [DocumentPageViewController]")
         }
         
-        delegate?.documentReviewVC(edit: pageItems[currentPageIndex].page,
-                                   controller: self)
+        delegate?.documentReviewVC(edit: pageItems[currentPageIndex].page, controller: self)
     }
     
     private func didTapDelete(_ sender: FooterButton) {
