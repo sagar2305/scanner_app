@@ -134,12 +134,12 @@ extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
         guard let  pageBeingEdited = pageBeingEdited else {
             fatalError("ERROR: no page is set for editing")
         }
-        if pageBeingEdited.saveEditedImage(editedImage) {
-            document.update()
+        if DocumentHelper.shared.updateEditedImage(editedImage, for: pageBeingEdited, of: document) {
             navigationController.popViewController(animated: true)
+        } else {
+            //TODO: - Show image changes edit failed error
         }
     }
-    
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)

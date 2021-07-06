@@ -28,24 +28,28 @@ class Document: Codable, Identifiable {
         for index in 0 ..< originalImages.count {
             let newPage = Page(documentID: id,
                                originalImage: originalImages[index],
-                               editedImage: editedImages[index]
-            )
+                               editedImage: editedImages[index])
             guard  let page = newPage else { return nil }
+            page.pageNumber = index
+            print("**************** page info")
+            dump(page)
             pages.append(page)
         }
         self.pages = pages
         self.name = creationDate
     }
     
-    init?(record: CKRecord, pages: [Page]) {
+    init?(record: CKRecord,pages: [Page]) {
         print(record)
         guard let id = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return nil }
         guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return nil }
         guard let tag = record[CloudKitConstants.DocumentRecordFields.tag] as? String else { return nil }
         guard let date = record[CloudKitConstants.DocumentRecordFields.date] as? Date else  { return nil }
         
+        var sortedPages = pages
+        sortedPages.sort { $0.pageNumber > $1.pageNumber }
         self.id = id
-        self.pages = pages
+        self.pages = sortedPages
         self.name = name
         self.tag = tag
         self.date = date
@@ -68,6 +72,7 @@ class Document: Codable, Identifiable {
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
+        _saveToCloudKit()
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
@@ -81,6 +86,11 @@ class Document: Codable, Identifiable {
     func rename(new name: String) {
         self.name = name
         update()
+    }
+    
+    //for test
+    func printIDS() {
+        print(id)
     }
 }
 
@@ -105,7 +115,7 @@ extension Document {
         return cloudRecord
     }
     
-    func saveToCloudKit() {
+    private func _saveToCloudKit() {
         CloudKitHelper.shared.save(document: self)
     }
 }

@@ -181,6 +181,7 @@ struct CloudKitConstants {
         static let editedImage = "editedImage"
         static let editedImageName = "editedImageName"
         static let document = "document"
+        static let pageNumber = "pageNumber"
     }
     
     struct DocumentRecordFields {

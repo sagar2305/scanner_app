@@ -30,8 +30,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
-    private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
+    private var presentQuickAccess: Bool = true { didSet { _showOrHideQuickAccessMenu() } }
+    private var presentSearchBar: Bool = false { didSet { _showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
     private lazy var dataSource = _getDocumentCollectionViewDataSource()
@@ -66,7 +66,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         _getDocuments()
-        
+        _addObservers()
         quickAccessButton.onTap = ({ [self] button in
             presentQuickAccess.toggle()
         })
@@ -74,20 +74,27 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        showOrHideQuickAccessMenu()
+        _showOrHideQuickAccessMenu()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delegate?.viewDidAppear(_controller: self)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        _removeObservers()
+    }
 
-    func _getDocuments() {
-        let documents: [Document] = DocumentHelper.shared.documents
-        self.allDocuments = documents
-        self.filteredDocuments = documents
-        noDocumentsMessageLabel.isHidden = allDocuments.count > 0
-        _applySnapshot(animatingDifferences: true)
+    @objc func _getDocuments() {
+        DispatchQueue.main.async { [self] in
+            let documents: [Document] = DocumentHelper.shared.documents
+            self.allDocuments = documents
+            self.filteredDocuments = documents
+            noDocumentsMessageLabel.isHidden = allDocuments.count > 0
+            _applySnapshot(animatingDifferences: true)
+        }
     }
     
     private func _setupViews() {
@@ -114,7 +121,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         definesPresentationContext = true
     }
     
-    private func showOrHideQuickAccessMenu() {
+    private func _showOrHideQuickAccessMenu() {
         let footerViewHeight = footerView.getMyFrame(in: self.view).height
         let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
         print(footerViewHeight)
@@ -135,7 +142,20 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         })
     }
     
-    private func showOrHideSearchBar() {
+    private func _addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(_getDocuments),
+                                               name: .documentFetchedFromiCloudNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(_getDocuments),
+                                               name: .documentDeletedLocally, object: nil)
+    }
+    
+    private func _removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+        
+    private func _showOrHideSearchBar() {
         if presentSearchBar {
             searchBar = UISearchBar(frame: searchButton.frame)
             searchBar.searchBarStyle = .minimal
@@ -322,7 +342,7 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
                 return
             }
             
-            document.delete()
+            DocumentHelper.shared.delete(document: document)
             self.allDocuments.removeAll { $0.id == document.id }
             self.filteredDocuments.removeAll { $0.id == document.id }
             self._applySnapshot()
