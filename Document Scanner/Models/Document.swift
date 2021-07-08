@@ -47,7 +47,7 @@ class Document: Codable, Identifiable {
         guard let date = record[CloudKitConstants.DocumentRecordFields.date] as? Date else  { return nil }
         
         var sortedPages = pages
-        sortedPages.sort { $0.pageNumber > $1.pageNumber }
+        sortedPages.sort { $0.pageNumber < $1.pageNumber }
         self.id = id
         self.pages = sortedPages
         self.name = name
@@ -116,7 +116,7 @@ extension Document {
     }
     
     private func _saveToCloudKit() {
-        CloudKitHelper.shared.save(document: self)
+        CloudKitHelper.shared.saveToCloud(document: self)
     }
 }
 

@@ -46,7 +46,7 @@ class CloudKitHelper {
                 return
             }
             guard let document = DocumentHelper.shared.getDocument(with: documentID) else { return }
-            self.save(document: document)
+            self.saveToCloud(document: document)
         }
     }
     
@@ -210,9 +210,10 @@ class CloudKitHelper {
         }
     }
     
-    func save(document: Document) {
+    func saveToCloud(document: Document) {
         DispatchQueue.global(qos: .utility).async { [self] in
             if CloudKitHelper.shared.idsOfDocumentUploadedToiCloud.contains(document.id) { return }
+            _markDocumentForiCloudUpload(document)
             let documentCKRecord = document.cloudKitRecord()
             var pageCKRecords: [CKRecord] = []
             
@@ -258,50 +259,91 @@ class CloudKitHelper {
     }
     
     func addOrUpdatePage(_ page: Page, of document: Document) {
-       //check if page already exists true: update page else check record for document exists if true add page(same as modify) else add both page and document(rare case)
+       //check if page already exists on iCloud true: update page else
+        // check if parent document is marked for iCloud update then upload document again else
+        // assume document was deleted from iCloud**************
         DispatchQueue.global().async { [self] in
-            //checking whether document exists on iCLoud or not
-            let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", document.id)
-            let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
+            //checking whether page exists on iCLoud or not
+            let predicate = NSPredicate(format: "\(CloudKitConstants.PageRecordFields.id) == %@", page.id)
+            let query = CKQuery(recordType: CloudKitConstants.Records.page, predicate: predicate)
             executeQuery(query) { records, error in
                 guard error == nil else {
-                    //Mark page for uploading to cloud later
+                    print("ERROR: While getting page record")
                     _markPageForiCloudUpload(page: page)
                     return
                 }
                 
-                guard let documentRecords = records, documentRecords.count >= 1 else {
-                    //document does not exists so upload entire document to iCloud
-                    save(document: document)
+                guard let pageRecord = records?.first else {
+                    //record no matching record found on iCloud
+                    //check if parent document is present in marked list of document for iCloud upload
+                     if self.idsOfDocumentMarkedForiCloudUpload.contains(document.id) {
+                         saveToCloud(document: document)
+                     } else {
+                         //check if parent doc is available on iCloud if true then create new page record and save it
+                         //add page to document
+                        let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", page.id)
+                        let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
+                        executeQuery(query) { records, error in
+                            guard error == nil else {
+                                print("ERROR: While getting page record")
+                                _markPageForiCloudUpload(page: page)
+                                return
+                            }
+                        }
+                     }
                     return
                 }
                 
-                if documentRecords.count > 1 {
-                    //TODO: - multiple documents scenario keep latest record delete rest (should nit occur)
+                guard let editedImageURL = FileHelper.shared.fileURL(for: page.editedImageName) else {
+                    return
                 }
-                
+                let editedImageAsset = CKAsset(fileURL: editedImageURL)
+                pageRecord.setValue(editedImageAsset, forKey: CloudKitConstants.PageRecordFields.editedImage)
                 //Document exists so upload page record to iCloud will get update or created if missing
                 guard let pageRecord = page.cloudKitRecord(parent: document.cloudKitRecord()) else { return }
-                _saveOrUpdatePageRecord(pageRecord, page: page)
                
+                saveRecord(pageRecord) { record, error in
+                    guard error == nil else  {
+                        _markPageForiCloudUpload(page: page)
+                        return
+                    }
+                    print("Successfully uploaded edited image")
+                    //TODO: - Save record success
+                }
             }
         }
         
     }
     
-    private func _saveOrUpdatePageRecord(_ ckRecord: CKRecord, page: Page) {
-        let operation = CKModifyRecordsOperation()
-        operation.savePolicy = .changedKeys
-        operation.recordsToSave = [ckRecord]
-        operation.modifyRecordsCompletionBlock = { [self] records, recordIds, error in
-            guard error == nil, //no error
-                  let pageRecords = records, // records are not nil
-                  pageRecords.count > 0 else { // there is valid record in array
-                _markPageForiCloudUpload(page: page)
+    //Adds a page to existing document on iCloud
+    private func add(page: Page, document record: CKRecord) {
+        guard var documentPageReferences = record[CloudKitConstants.DocumentRecordFields.pages] as? [CKRecord.Reference],
+              let pageRecord = page.cloudKitRecord(parent: record) else {
+            _markPageForiCloudUpload(page: page)
+            return
+        }
+        documentPageReferences.append(CKRecord.Reference(record: record, action: .none))
+        record.setValue(documentPageReferences as NSArray, forKeyPath: CloudKitConstants.DocumentRecordFields.pages)
+        let recordsToSave = [record, pageRecord]
+        
+        let query = CKModifyRecordsOperation()
+        query.recordsToSave = recordsToSave
+        query.savePolicy = .changedKeys
+        query.isAtomic = true
+        query.modifyRecordsCompletionBlock = { records, recordIds, error in
+            guard error == nil else {
+                self._markPageForiCloudUpload(page: page)
+                print(error!)
+                print("Failed whiles saving" )
                 return
             }
-            _markPageAsUploadedToiCloud(with: [page.id])
+            
+            print("Succesful")
+            //Document is saved properly
+            self._markPageAsUploadedToiCloud(with: [page.id])
+
         }
+        ckPrivateDB.add(query)
     }
     
     

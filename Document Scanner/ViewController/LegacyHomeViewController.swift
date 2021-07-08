@@ -95,8 +95,6 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     private func _showOrHideQuickAccessMenu() {
         let footerViewHeight = footerView.getMyFrame(in: self.view).height
         let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
-        print(footerViewHeight)
-        print(footerHeaderHeight)
         
         if presentQuickAccess {
             footerViewBottomConstraint.constant = -44

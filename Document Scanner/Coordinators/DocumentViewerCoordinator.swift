@@ -164,5 +164,8 @@ extension DocumentViewerCoordinator: QLPreviewControllerDelegate {
         .updateContents
     }
     
-    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {    }
+    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {
+        guard let pageBeingEdited = pageBeingEdited else { fatalError("Page not set")}
+        CloudKitHelper.shared.addOrUpdatePage(pageBeingEdited, of: document)
+    }
 }
