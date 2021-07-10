@@ -17,6 +17,52 @@ struct DocumentHelper {
         return UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
     }
     
+    func generateDocument(originalImages: [UIImage], editedImages: [UIImage]) -> Document? {
+        if let document = Document(originalImages: originalImages, editedImages: editedImages) {
+            document.save()
+            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
+                .documentID: document.id,
+                .numberOfDocumentPages: document.pages.count
+            ])
+            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
+            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.documentScannedUsingCameraKey)
+            if !haveUserPickedDocument {
+                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.documentScannedUsingCameraKey)
+                ReviewHelper.shared.requestAppRating()
+            }
+            return document
+        } else {
+            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                .numberOfDocumentPages: originalImages.count
+            ])
+            return nil
+        }
+    }
+    
+    func addPages(to document: Document,originalImages: [UIImage], editedImages: [UIImage]) -> Bool{
+        let lastPageNumber = document.pages.count + 1
+        guard originalImages.count == editedImages.count else {
+            fatalError("ERROR: Document images counts are inconsistent \n Original Images: \(originalImages.count) \n Edited Images \(editedImages.count)")
+        }
+        var pages = [Page]()
+        for index in 0 ..< originalImages.count {
+            let newPage = Page(documentID: document.id,
+                               originalImage: originalImages[index],
+                               editedImage: editedImages[index])
+            guard  let page = newPage else { return false }
+            page.pageNumber = lastPageNumber + index
+            print("**************** page info")
+            dump(page)
+            pages.append(page)
+        }
+        document.pages += pages
+        document.update()
+        DispatchQueue.global().async {
+            pages.forEach { page in CloudKitHelper.shared.addOrUpdatePage(page, of: document)}
+        }
+        return true
+    }
+    
     func deleteDocumentWithID(_ id: String, isNotifiedFromiCloud: Bool) {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.forEach( { $0.printIDS() })

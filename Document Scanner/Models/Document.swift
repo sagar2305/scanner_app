@@ -30,7 +30,7 @@ class Document: Codable, Identifiable {
                                originalImage: originalImages[index],
                                editedImage: editedImages[index])
             guard  let page = newPage else { return nil }
-            page.pageNumber = index
+            page.pageNumber = index + 1
             print("**************** page info")
             dump(page)
             pages.append(page)

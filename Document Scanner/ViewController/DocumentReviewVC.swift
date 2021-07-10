@@ -19,6 +19,7 @@ protocol DocumentReviewVCDelegate: AnyObject {
     func documentReviewVC(rename document: Document, name: String)
     func documentReviewVC(markup page: Page, controller: DocumentReviewVC)
     func documentReviewVC(controller: DocumentReviewVC, markup document: Document, startIndex: Int)
+    func documentReviewVC(controller: DocumentReviewVC, addPages to: Document, from: PageScanOption)
 }
 
 class DocumentReviewVC: DocumentScannerViewController {
@@ -55,7 +56,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var headerLabel: UILabel!
-    @IBOutlet private weak var renameButton: UIButton!
+    @IBOutlet private weak var addPageButton: UIButton!
     
     @IBOutlet private weak var footerContainerView: UIView!
     @IBOutlet private weak var footerView: UIView!
@@ -83,11 +84,9 @@ class DocumentReviewVC: DocumentScannerViewController {
         navigationController?.navigationBar.isHidden = true
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         headerLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
-        renameButton.setTitle("Rename".localized, for: .normal)
-        renameButton.isHidden = true
         headerLabel.text = document?.name
         containerView.hero.id = document?.id
-        renameButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
+        addPageButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .title2))
     }
     
     private func _setupFooterView() {
@@ -122,34 +121,16 @@ class DocumentReviewVC: DocumentScannerViewController {
         guard  let document = document else {
             fatalError("Document is not set")
         }
-        let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
-        alertVC.alertTitle.textColor = .primary
+        let actionSheetController = UIAlertController(title: "Add Pages".localized, message: nil, preferredStyle: .actionSheet)
+        actionSheetController.addAction(UIAlertAction(title: "Scan from camera".localized, style: .default, handler: { _ in
+            self.delegate?.documentReviewVC(controller: self, addPages: document, from: .Camera)
+        }))
+        actionSheetController.addAction(UIAlertAction(title: "Pick from Library".localized, style: .default, handler: { _ in
+            self.delegate?.documentReviewVC(controller: self, addPages: document, from: .Library)
+        }))
         
-        alertVC.addTextField { (textField) in
-            textField?.placeholder = "Document Name".localized
-                }
-        
-        alertVC.alertActionStackView.axis = .horizontal
-        let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
-            let textField = alertVC.textFields[0]
-            guard let documentName = textField.text,
-                  !documentName.isEmpty else {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error)
-                return
-            }
-            self.delegate?.documentReviewVC(rename: document, name: documentName)
-            self.headerLabel.text = documentName
-        }
-        doneAction.setTitleColor(.primary, for: .normal)
-        alertVC.addAction(doneAction)
-        
-        let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
-        alertVC.addAction(cancelAction)
-        alertVC.gravityDismissAnimation = false
-
-        
-        self.present(alertVC, animated: true, completion: nil)
+        actionSheetController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { _ in }))
+        present(actionSheetController, animated: true)
     }
     
     
@@ -157,7 +138,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         delegate?.documentReviewVC(exit: self)
     }
     
-    @IBAction func didTapRenameButton(_ sender: UIButton) {
+    @IBAction func didTapAppPageButton(_ sender: UIButton) {
         _presentAlertForDocumentName()
     }
     

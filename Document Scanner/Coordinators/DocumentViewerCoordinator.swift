@@ -12,6 +12,11 @@ protocol DocumentViewerCoordinatorDelegate: AnyObject {
     func exit(_ coordinator: DocumentViewerCoordinator)
 }
 
+enum PageScanOption {
+    case Library
+    case Camera
+}
+
 class DocumentViewerCoordinator: NSObject, Coordinator {
     
     var rootViewController: UIViewController {
@@ -127,6 +132,21 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
             controller.present(markupVC, animated: true)
         }
     }
+    
+    func documentReviewVC(controller: DocumentReviewVC, addPages to: Document, from: PageScanOption) {
+        switch from {
+            
+        case .Library:
+            let documentPickerCoordinator = PickDocumentCoordinator(navigationController, existing: document)
+            childCoordinators.append(documentPickerCoordinator)
+            documentPickerCoordinator.start()
+        case .Camera:
+            let documentScanCoordinator = ScanDocumentCoordinator(navigationController, existing: document)
+            childCoordinators.append(documentScanCoordinator)
+            documentScanCoordinator.start()
+        }
+    }
+
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
