@@ -68,6 +68,7 @@ class CloudKitHelper {
         }
     }
     
+    // MARK: - Subscriptions
     private func addSubscriptions() {
         let predicate = NSPredicate(value: true)
         let documentSubscriptionQuery = CKQuerySubscription(recordType: CloudKitConstants.Records.document, predicate: predicate,
@@ -101,6 +102,27 @@ class CloudKitHelper {
                 UserDefaults.standard.set(true, forKey: Constants.DocumentScannerDefaults.iCloudPageRecordSubscriptionKey)
                 //TODO: - Add analytics
             }
+        }
+    }
+    
+    // MARK: - Server Change token
+    
+    private var serverChangeToken: CKServerChangeToken? {
+        set(newValue) {
+            guard let token = newValue else { return }
+            guard let tokenData = try? NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: false) else {
+                fatalError("ERROR: Unable to archive server change token")
+                
+            }
+            UserDefaults.standard.setValue(tokenData, forKey: Constants.DocumentScannerDefaults.iCloudDBChangeTokenKey)
+        }
+        
+        get {
+            guard let data = UserDefaults.standard.data(forKey: Constants.DocumentScannerDefaults.iCloudDBChangeTokenKey) else {
+                return nil
+            }
+            let token = try? NSKeyedUnarchiver.unarchivedObject(ofClass: CKServerChangeToken.self, from: data)
+            return token
         }
     }
     
@@ -286,15 +308,20 @@ class CloudKitHelper {
                      } else {
                          //check if parent doc is available on iCloud if true then create new page record and save it
                          //add page to document
-                        let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", page.id)
+                        let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", document.id)
                         let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
                         executeQuery(query) { records, error in
                             guard error == nil else {
-                                print("ERROR: While getting page record")
+                                print("ERROR: While getting document record")
                                 _markPageForiCloudUpload(page: page)
                                 return
                             }
-                            //TODO: - add page to document
+                            
+                            guard let record = records?.first else {
+                                print("Document not available at cloud")
+                                return
+                            }
+                            add(page: page, document: record)
                         }
                      }
                     return
@@ -353,9 +380,7 @@ class CloudKitHelper {
     
     //TODO: - also save page ids locally
     ///Checks iCloud for new document if any
-    private func _fetchDocumentsFromiCloudIfAny() {
-        
-        print("====>Fetching document from cloud if any")
+    private func _fetchDocumentsFromiCloudIfAny(with id: String? = nil) {
         DispatchQueue.global().async {
             let predicate = NSPredicate(format: "NOT (\(CloudKitConstants.DocumentRecordFields.id) IN %@)", self.idsOfDocumentUploadedToiCloud)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
@@ -472,6 +497,7 @@ class CloudKitHelper {
         }
     }
 
+    // MARK: - Hanadling cloud notification
     func handleCloudKit(notification: CKNotification) {
         if notification.notificationType == .query {
             guard let queryNotification = notification as? CKQueryNotification else { return }
@@ -494,5 +520,28 @@ class CloudKitHelper {
             }
             NotificationCenter.default.post(name: .callsGotUpdatedInBackground, object: nil, userInfo: nil)
         }
+    }
+    
+    private func _fetchDataBaseChangesIfAny() {
+        let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
+        configuration.previousServerChangeToken = serverChangeToken
+        let zoneChangeOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [.default], configurationsByRecordZoneID: [.default: configuration])
+        
+        zoneChangeOperation.recordChangedBlock = { record in
+            if record.recordType == CloudKitConstants.Records.document {
+                //TODO: - check if document name key way changes
+                //If pages reference was changes then fetch perticular document from cloud and resave
+            } else if record.recordType == CloudKitConstants.Records.page {
+                //TODO: - if edited image field was change then get local page with id and updated edited image
+            }
+        }
+        
+        zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
+            
+        }
+        
+        zoneChangeOperation.qualityOfService = .userInitiated
+        ckPrivateDB.add(zoneChangeOperation)
+        
     }
 }

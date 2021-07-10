@@ -26,6 +26,7 @@ class PickDocumentCoordinator: NSObject, Coordinator {
     var delegate: PickerDocumentCoordinatorDelegate?
     var navigationController: DocumentScannerNavigationController
     var correctionVC: CorrectionVC!
+    var existingDocument: Document?
     private var isCorrectionVCPresented = false
     private var pageControlItems = [NewDocumentImageViewController]()
 
@@ -33,8 +34,9 @@ class PickDocumentCoordinator: NSObject, Coordinator {
        _pickDocument()
     }
     
-    init(_ rootViewController: DocumentScannerNavigationController) {
+    init(_ rootViewController: DocumentScannerNavigationController, existing document: Document? = nil) {
         navigationController = rootViewController
+        existingDocument = document
     }
     
     private func _pickDocument() {
@@ -77,36 +79,27 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
         let originalImages = imageVCs.map { $0.originalImage }
         let editedImages = imageVCs.map { $0.finalImage }
     
-        if let document = Document(originalImages: originalImages, editedImages: editedImages) {
-            document.save()
-            NVActivityIndicatorView.stop()
-            AnalyticsHelper.shared.logEvent(.savedDocument, properties: [
-                .documentID: document.id,
-                .numberOfDocumentPages: document.pages.count
-            ])
-            AnalyticsHelper.shared.saveUserProperty(.numberOfDocuments, value: "\(DocumentHelper.shared.documents.count)")
+        if let document = existingDocument {
+            DocumentHelper.shared.addPages(to: document, originalImages: originalImages, editedImages: editedImages)
             view(document)
-            let haveUserPickedDocument = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibraryKey)
-            if !haveUserPickedDocument {
-                UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.hasUserScannedUsingLibraryKey)
-                ReviewHelper.shared.requestAppRating()
-            }
+            NVActivityIndicatorView.stop()
         } else {
-            AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
-                .numberOfDocumentPages: originalImages.count
-            ])
-            let alertVC = PMAlertController(title: "Something went wrong".localized,
-                                            description: "Unable to save generate your document, please try again".localized,
-                                            image: nil,
-                                            style: .alert)
-            alertVC.alertTitle.textColor = .primary
-            let okAction = PMAlertAction(title: "OK".localized, style: .default) {
-                self.navigationController.popViewController(animated: true)
+            if let document = DocumentHelper.shared.generateDocument(originalImages: originalImages, editedImages: editedImages) {
+                view(document)
+            } else {
+                let alertVC = PMAlertController(title: "Something went wrong".localized,
+                                                description: "Unable to save generate your document, please try again".localized,
+                                                image: nil,
+                                                style: .alert)
+                alertVC.alertTitle.textColor = .primary
+                let okAction = PMAlertAction(title: "OK".localized, style: .default) {
+                    self.navigationController.popViewController(animated: true)
+                }
+                okAction.setTitleColor(.primary, for: .normal)
+                alertVC.addAction(okAction)
+                alertVC.gravityDismissAnimation = false
+                viewController.present(alertVC, animated: true, completion: nil)
             }
-            okAction.setTitleColor(.primary, for: .normal)
-            alertVC.addAction(okAction)
-            alertVC.gravityDismissAnimation = false
-            viewController.present(alertVC, animated: true, completion: nil)
         }
     }
     
