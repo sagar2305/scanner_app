@@ -18,13 +18,16 @@ class CloudKitHelper {
     var ckPrivateDB: CKDatabase
     
     private init() {
+        
         ckContainer = CKContainer(identifier: CloudKitConstants.containerID)
         ckPrivateDB = ckContainer.privateCloudDatabase
+        //_deleteLocalCaches() //Use only for testing purpose
         addSubscriptions()
         runBackgroundUpdates()
     }
     
     func runBackgroundUpdates() {
+        print("=======> Starting background task")
         _fetchDocumentsFromiCloudIfAny()
         _scaniCloudForDeletedDocumentsAndDeleteLocally()
         _deleteCallFromiCloudIfMarked()
@@ -40,9 +43,11 @@ class CloudKitHelper {
     }
     
     private func _uploadPendingDocumentToiCloudIfAny() {
+        print("======> Uploading pending document")
+        print("********** already uploaded => \(idsOfDocumentUploadedToiCloud)")
         for documentID in idsOfDocumentMarkedForiCloudUpload {
             if idsOfDocumentUploadedToiCloud.contains(documentID) {
-                print("********** already uploaded => \(documentID)")
+               
                 return
             }
             guard let document = DocumentHelper.shared.getDocument(with: documentID) else { return }
@@ -152,7 +157,7 @@ class CloudKitHelper {
             pagesMarkedForUpload.remove($0)
         }
         UserDefaults.standard.setValue(Array(pagesMarkedForUpload), forKey: Constants.DocumentScannerDefaults.idsOfPagesMarkedForiCloudUploadKey)
-        UserDefaults.standard.setValue(Array(pageIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentUploadedToiCLoudKey)
+        UserDefaults.standard.setValue(Array(pageIdSet), forKey: Constants.DocumentScannerDefaults.idsOfPagesUploadedToiCloudKey)
     }
     
     var idsOfPagesMarkedForiCloudUpload: Set<String> {
@@ -190,7 +195,7 @@ class CloudKitHelper {
     }
     
     ///this function is for testing purpose only
-    func deleteLocalCaches() {
+    private func _deleteLocalCaches() {
         UserDefaults.standard.setValue([], forKey: Constants.DocumentScannerDefaults.idsOfDocumentUploadedToiCLoudKey)
         UserDefaults.standard.setValue([], forKey: Constants.DocumentScannerDefaults.idsOfPagesUploadedToiCloudKey)
         UserDefaults.standard.setValue([], forKey: Constants.DocumentScannerDefaults.idsOfDocumentsMarkedForDeletionFromiCloudKey)
@@ -289,6 +294,7 @@ class CloudKitHelper {
                                 _markPageForiCloudUpload(page: page)
                                 return
                             }
+                            //TODO: - add page to document
                         }
                      }
                     return
@@ -299,8 +305,6 @@ class CloudKitHelper {
                 }
                 let editedImageAsset = CKAsset(fileURL: editedImageURL)
                 pageRecord.setValue(editedImageAsset, forKey: CloudKitConstants.PageRecordFields.editedImage)
-                //Document exists so upload page record to iCloud will get update or created if missing
-                guard let pageRecord = page.cloudKitRecord(parent: document.cloudKitRecord()) else { return }
                
                 saveRecord(pageRecord) { record, error in
                     guard error == nil else  {
@@ -350,6 +354,8 @@ class CloudKitHelper {
     //TODO: - also save page ids locally
     ///Checks iCloud for new document if any
     private func _fetchDocumentsFromiCloudIfAny() {
+        
+        print("====>Fetching document from cloud if any")
         DispatchQueue.global().async {
             let predicate = NSPredicate(format: "NOT (\(CloudKitConstants.DocumentRecordFields.id) IN %@)", self.idsOfDocumentUploadedToiCloud)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
