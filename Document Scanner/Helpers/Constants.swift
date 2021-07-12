@@ -21,6 +21,7 @@ struct Constants {
         static let idsOfDocumentsMarkedForiCloudUploadKey = "IdsOfDocumentsMarkedForiCloudUploadKey"
         static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
         static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
+        static let idsOfDocumentMarkedForRenamingKey = "IdsOfDocumentMarkedForRenamingKey"
         static let idsOfPagesMarkedForDeletionFromiCloudKey = "idsOfPagesMarkedForDeletionFromiCloudKey"
         
         //iCloud-Subscription Keys & ChangeToken

@@ -96,6 +96,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
         } else {
             if let document = DocumentHelper.shared.generateDocument(originalImages: originalImages, editedImages: editedImages) {
                 view(document)
+                NVActivityIndicatorView.stop()
             } else {
                 let alertVC = PMAlertController(title: "Something went wrong".localized,
                                                 description: "Unable to save generate your document, please try again".localized,
@@ -109,6 +110,7 @@ extension ScanDocumentCoordinator: CorrectionVCDelegate {
                 alertVC.addAction(okAction)
                 alertVC.gravityDismissAnimation = false
                 controller.present(alertVC, animated: true, completion: nil)
+                NVActivityIndicatorView.stop()
             }
         }
     }

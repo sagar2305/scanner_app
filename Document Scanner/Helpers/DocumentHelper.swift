@@ -55,12 +55,16 @@ struct DocumentHelper {
             dump(page)
             pages.append(page)
         }
+        addPages(pages, to: document)
+        return true
+    }
+    
+    func addPages(_ pages: [Page], to document: Document, fromCloud: Bool = false ) {
         document.pages += pages
         document.update()
-        DispatchQueue.global().async {
+        if !fromCloud {
             pages.forEach { page in CloudKitHelper.shared.addOrUpdatePage(page, of: document)}
         }
-        return true
     }
     
     func deleteDocumentWithID(_ id: String, isNotifiedFromiCloud: Bool) {
@@ -80,11 +84,11 @@ struct DocumentHelper {
         deleteDocumentWithID(document.id, isNotifiedFromiCloud: false)
     }
     
-    func updateEditedImage(_ image: UIImage, for page: Page, of document: Document) -> Bool {
+    func updateEditedImage(_ image: UIImage, for page: Page, of document: Document, fromCloud: Bool = false) -> Bool {
         let result = page.saveEditedImage(image)
         if result {
             document.update()
-            CloudKitHelper.shared.addOrUpdatePage(page, of: document)
+            if !fromCloud { CloudKitHelper.shared.addOrUpdatePage(page, of: document)}
         }
         return result
     }

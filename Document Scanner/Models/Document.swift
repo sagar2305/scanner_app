@@ -83,9 +83,12 @@ class Document: Codable, Identifiable {
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
     }
     
-    func rename(new name: String) {
+    func rename(new name: String, updatedFromCloud: Bool = false) {
         self.name = name
         update()
+        if !updatedFromCloud {
+            CloudKitHelper.shared.rename(document: self)
+        }
     }
     
     //for test

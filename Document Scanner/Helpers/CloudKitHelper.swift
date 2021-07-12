@@ -5,7 +5,7 @@
 //  Created by Sandesh on 23/06/21.
 //
 
-import Foundation
+import UIKit
 import CloudKit
 
 class CloudKitHelper {
@@ -23,35 +23,43 @@ class CloudKitHelper {
         ckPrivateDB = ckContainer.privateCloudDatabase
         //_deleteLocalCaches() //Use only for testing purpose
         addSubscriptions()
-        runBackgroundUpdates()
+ 
+        if idsOfPagesMarkedForiCloudUpload.isEmpty &&
+            idsOfDocumentMarkedForiCloudUpload.isEmpty &&
+            idsOfDocumentMarkedForDeletionFromiCloud.isEmpty &&
+            idsOfDocumentMarkedForRenaming.isEmpty {
+            _updateWithiCloud()
+        } else {
+            _runBackgroundUpdates()
+        }
     }
     
-    func runBackgroundUpdates() {
+    private func _runBackgroundUpdates() {
         print("=======> Starting background task")
-        _fetchDocumentsFromiCloudIfAny()
-        _scaniCloudForDeletedDocumentsAndDeleteLocally()
-        _deleteCallFromiCloudIfMarked()
+        _deleteDocumentFromiCloudIfMarked()
         _uploadPendingDocumentToiCloudIfAny()
         _uploadPendingPagesToiCloudIfAny()
     }
     
-    // MARK: - Background task
-    private func _deleteCallFromiCloudIfMarked() {
+    // MARK: - Background tasks
+    private func _deleteDocumentFromiCloudIfMarked() {
         for documentID in idsOfDocumentMarkedForDeletionFromiCloud {
             deletedDocumentFromiCloud(with: documentID)
         }
     }
-    
+
     private func _uploadPendingDocumentToiCloudIfAny() {
-        print("======> Uploading pending document")
-        print("********** already uploaded => \(idsOfDocumentUploadedToiCloud)")
         for documentID in idsOfDocumentMarkedForiCloudUpload {
-            if idsOfDocumentUploadedToiCloud.contains(documentID) {
-               
-                return
-            }
+            if idsOfDocumentUploadedToiCloud.contains(documentID) { return }
             guard let document = DocumentHelper.shared.getDocument(with: documentID) else { return }
             self.saveToCloud(document: document)
+        }
+    }
+    
+    private func _renamePendingDocumentsIfAny() {
+        for documentID in idsOfDocumentMarkedForRenaming {
+            guard let document = DocumentHelper.shared.getDocument(with: documentID) else { return }
+            self.rename(document: document)
         }
     }
     
@@ -72,9 +80,9 @@ class CloudKitHelper {
     private func addSubscriptions() {
         let predicate = NSPredicate(value: true)
         let documentSubscriptionQuery = CKQuerySubscription(recordType: CloudKitConstants.Records.document, predicate: predicate,
-                                                        options: [.firesOnRecordCreation, .firesOnRecordDeletion, .firesOnRecordUpdate])
+                                                            options: [.firesOnRecordCreation, .firesOnRecordDeletion, .firesOnRecordUpdate])
         let pageSubscriptionQuery = CKQuerySubscription(recordType: CloudKitConstants.Records.page, predicate: predicate,
-                                                       options: [.firesOnRecordCreation, .firesOnRecordUpdate])
+                                                        options: [.firesOnRecordCreation, .firesOnRecordUpdate])
         
         let documentNotificationInfo = CKSubscription.NotificationInfo()
         documentNotificationInfo.shouldSendContentAvailable = true
@@ -112,7 +120,6 @@ class CloudKitHelper {
             guard let token = newValue else { return }
             guard let tokenData = try? NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: false) else {
                 fatalError("ERROR: Unable to archive server change token")
-                
             }
             UserDefaults.standard.setValue(tokenData, forKey: Constants.DocumentScannerDefaults.iCloudDBChangeTokenKey)
         }
@@ -137,7 +144,6 @@ class CloudKitHelper {
     ///Saves document id of document that are uploaded to iCloud, to avoid re upload
     private func _markDocumentAsUploadedToiCloud(document: Document) {
         var documentIdSet = idsOfDocumentUploadedToiCloud
-        print("Document uploaded to iCLous: => \(document.printIDS())")
         documentIdSet.insert(document.id)
         UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentUploadedToiCLoudKey)
         
@@ -153,7 +159,19 @@ class CloudKitHelper {
         guard let documentIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
         return Set(documentIDs)
     }
+    private func _markDocumentForRenamingOniCloud(document: Document) {
+        var documentIdSet = idsOfDocumentMarkedForRenaming
+        documentIdSet.insert(document.id)
+        UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey)
 
+    }
+    
+    var idsOfDocumentMarkedForRenaming: Set<String> {
+        let userDefaultKey = Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey
+        guard let documentIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
+        return Set(documentIDs)
+    }
+    
     ///Saving document ids for  iCloud upload
     private func _markDocumentForiCloudUpload(_ document: Document) {
         var documentIdSet = idsOfDocumentMarkedForiCloudUpload
@@ -226,8 +244,8 @@ class CloudKitHelper {
     
     //saves single record to iCloud
     func saveRecord(_ record: CKRecord, _ completion: @escaping CompletionHandler) {
-            ckPrivateDB.save(record) { record, error in
-                completion(record, error)
+        ckPrivateDB.save(record) { record, error in
+            completion(record, error)
         }
     }
     
@@ -237,6 +255,7 @@ class CloudKitHelper {
         }
     }
     
+    // MARK: - Save document to cloud
     func saveToCloud(document: Document) {
         DispatchQueue.global(qos: .utility).async { [self] in
             if CloudKitHelper.shared.idsOfDocumentUploadedToiCloud.contains(document.id) { return }
@@ -285,8 +304,40 @@ class CloudKitHelper {
         }
     }
     
+    // MARK: - Renaming document
+    func rename(document: Document) {
+        DispatchQueue.global(qos: .utility).async { [self] in
+            let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", document.id)
+            let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
+            executeQuery(query) { records, error in
+                guard error == nil else {
+                    print("ERROR: While getting document record")
+                    _markDocumentForRenamingOniCloud(document: document)
+                    return
+                }
+                
+                guard let documentRecord = records?.first else {
+                    //document not available on iCloud
+                    return
+                }
+                
+                documentRecord.setValue(document.name as NSString, forKey: CloudKitConstants.DocumentRecordFields.name)
+                saveRecord(documentRecord) { record, error in
+                    guard error == nil else  {
+                        _markDocumentForRenamingOniCloud(document: document)
+                        return
+                    }
+                    var idsOfDocumentMarkedForRenaming = idsOfDocumentMarkedForRenaming
+                    idsOfDocumentMarkedForRenaming.remove(document.id)
+                    UserDefaults.standard.setValue(Array(idsOfDocumentMarkedForRenaming), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Adding new page or updating edited image
     func addOrUpdatePage(_ page: Page, of document: Document) {
-       //check if page already exists on iCloud true: update page else
+        //check if page already exists on iCloud true: update page else
         // check if parent document is marked for iCloud update then upload document again else
         // assume document was deleted from iCloud**************
         DispatchQueue.global().async { [self] in
@@ -303,11 +354,11 @@ class CloudKitHelper {
                 guard let pageRecord = records?.first else {
                     //record no matching record found on iCloud
                     //check if parent document is present in marked list of document for iCloud upload
-                     if self.idsOfDocumentMarkedForiCloudUpload.contains(document.id) {
-                         saveToCloud(document: document)
-                     } else {
-                         //check if parent doc is available on iCloud if true then create new page record and save it
-                         //add page to document
+                    if self.idsOfDocumentMarkedForiCloudUpload.contains(document.id) {
+                        saveToCloud(document: document)
+                    } else {
+                        //check if parent doc is available on iCloud if true then create new page record and save it
+                        //add page to document
                         let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", document.id)
                         let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
                         executeQuery(query) { records, error in
@@ -323,7 +374,7 @@ class CloudKitHelper {
                             }
                             add(page: page, document: record)
                         }
-                     }
+                    }
                     return
                 }
                 
@@ -332,7 +383,7 @@ class CloudKitHelper {
                 }
                 let editedImageAsset = CKAsset(fileURL: editedImageURL)
                 pageRecord.setValue(editedImageAsset, forKey: CloudKitConstants.PageRecordFields.editedImage)
-               
+                
                 saveRecord(pageRecord) { record, error in
                     guard error == nil else  {
                         _markPageForiCloudUpload(page: page)
@@ -372,20 +423,15 @@ class CloudKitHelper {
             print("Succesful")
             //Document is saved properly
             self._markPageAsUploadedToiCloud(with: [page.id])
-
+            
         }
         ckPrivateDB.add(query)
     }
     
-    
-    //TODO: - also save page ids locally
-    ///Checks iCloud for new document if any
-    private func _fetchDocumentsFromiCloudIfAny(with id: String? = nil) {
+    private func _updateWithiCloud() {
         DispatchQueue.global().async {
-            let predicate = NSPredicate(format: "NOT (\(CloudKitConstants.DocumentRecordFields.id) IN %@)", self.idsOfDocumentUploadedToiCloud)
+            let predicate = NSPredicate(value: true)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
-            dump(self.idsOfDocumentUploadedToiCloud)
-            print(predicate)
             self.ckPrivateDB.perform(query, inZoneWith: nil) { documentRecords, error in
                 guard error == nil,
                       let documentRecords = documentRecords else {
@@ -393,6 +439,14 @@ class CloudKitHelper {
                     return
                 }
                 
+                var allDocuments: [Document] = [] {
+                    didSet {
+                        if allDocuments.count == documentRecords.count {
+                            UserDefaults.standard.save(allDocuments, forKey: Constants.DocumentScannerDefaults.documentsListKey)
+                            NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil)
+                        }
+                    }
+                }
                 for documentRecord in documentRecords {
                     //fetching pages of documents
                     print(documentRecord)
@@ -426,20 +480,60 @@ class CloudKitHelper {
                         print("*******************Document fetched from iCloud")
                         dump(document)
                         _markDocumentAsUploadedToiCloud(document: document)
-                        document.save()
+                        allDocuments.append(document)
+                       
                         print("Document fetching succeeded")
-                        NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil)
                     }
                 }
+                
             }
         }
     }
-
+    
+    
+    private func _generateAndSaveDocument(from record: CKRecord) {
+        DispatchQueue.global().async {
+            let documentRecordID = record.recordID
+            let referenceRecordToMatch = CKRecord.Reference(recordID: documentRecordID, action: .deleteSelf)
+            print(referenceRecordToMatch)
+            let predicate = NSPredicate(format: "document == %@", referenceRecordToMatch)
+            print("Predicate")
+            print(predicate)
+            let query = CKQuery(recordType: "Page", predicate: predicate)
+            
+            var documentPages: [Page] = []
+            self.executeQuery(query) { [self] pages, error in
+                guard error == nil,
+                      let pages = pages else {
+                    // there is some error
+                    return
+                }
+                for page in pages {
+                    guard let pageObject = Page(record: page) else {
+                        return
+                    }
+                    documentPages.append(pageObject)
+                }
+                //creating documentObject and saving it on sucess
+                guard let document = Document(record: record, pages: documentPages) else {
+                    return
+                }
+                
+                print("*******************Document fetched from iCloud")
+                dump(document)
+                _markDocumentAsUploadedToiCloud(document: document)
+                document.save()
+                print("Document fetching succeeded")
+                NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil)
+            }
+        }
+    }
+    
     func deletedDocumentFromiCloud(with id: String) {
         DispatchQueue.global().async { [self] in
             let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", id)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
-
+            
             executeQuery(query) { records, error in
                 guard error == nil,
                       let records = records else {
@@ -464,12 +558,12 @@ class CloudKitHelper {
             }
         }
     }
-
+    
     private func _scaniCloudForDeletedDocumentsAndDeleteLocally() {
         DispatchQueue.global().async {
             let predicate = NSPredicate(value: true)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
-
+            
             self.ckPrivateDB.perform(query, inZoneWith: nil) { records, error in
                 guard error == nil,
                       let records = records else {
@@ -485,7 +579,7 @@ class CloudKitHelper {
                 print(documentIDsFetchedFromiCloud)
                 print(self.idsOfDocumentUploadedToiCloud)
                 let idsOfDocumentStoredLocally = DocumentHelper.shared.documents.map { $0.id }
-
+                
                 idsOfDocumentStoredLocally.forEach { id in
                     //local document id is not in ids fetched from iCloud and also not in ids marked for iCloud upload
                     //so delete the document locally as well
@@ -496,52 +590,90 @@ class CloudKitHelper {
             }
         }
     }
-
+    
     // MARK: - Hanadling cloud notification
     func handleCloudKit(notification: CKNotification) {
         if notification.notificationType == .query {
             guard let queryNotification = notification as? CKQueryNotification else { return }
-            switch queryNotification.queryNotificationReason {
-            case .recordCreated:
-                CloudKitHelper.shared._fetchDocumentsFromiCloudIfAny()
-                //TODO: - Fetch newly added pages
-                //TODO: - Add analytics
-            case .recordUpdated:
-                //TODO: - Fetch the updated data based on
-                //queryNotification.recordFields
-                //TODO: - Add analytics
-            break
-            case .recordDeleted:
-                //TODO: - add analytics
-                
-            break
-              
-            @unknown default: break
-            }
-            NotificationCenter.default.post(name: .callsGotUpdatedInBackground, object: nil, userInfo: nil)
+            _fetchDataBaseChangesIfAny()
         }
     }
     
     private func _fetchDataBaseChangesIfAny() {
-        let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
-        configuration.previousServerChangeToken = serverChangeToken
-        let zoneChangeOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [.default], configurationsByRecordZoneID: [.default: configuration])
-        
-        zoneChangeOperation.recordChangedBlock = { record in
-            if record.recordType == CloudKitConstants.Records.document {
-                //TODO: - check if document name key way changes
-                //If pages reference was changes then fetch perticular document from cloud and resave
-            } else if record.recordType == CloudKitConstants.Records.page {
-                //TODO: - if edited image field was change then get local page with id and updated edited image
-            }
-        }
-        
-        zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
+        DispatchQueue.global(qos: .userInitiated).async { [self] in
             
+            let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
+            configuration.previousServerChangeToken = serverChangeToken
+            let zoneChangeOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [.default], configurationsByRecordZoneID: [.default: configuration])
+            
+            zoneChangeOperation.recordChangedBlock = { record in
+                print(record.recordType)
+                if record.recordType == CloudKitConstants.Records.document {
+                    guard let documentID = record[CloudKitConstants.DocumentRecordFields.id] as? String else { return }
+                    //Check if document exists locally
+                    if let document = DocumentHelper.shared.getDocument(with: documentID) {
+                        //check if document name was updated
+                        if record.changedKeys().contains(CloudKitConstants.DocumentRecordFields.name) {
+                            guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return }
+                            document.rename(new: name, updatedFromCloud: true)
+                        }
+                    } else {
+                        //save the document locally
+                        self._generateAndSaveDocument(from: record)
+                    }
+                } else if record.recordType == CloudKitConstants.Records.page {
+                    guard let pageID = record[CloudKitConstants.PageRecordFields.id] as? String else { return }
+                    let pageAndDocument = DocumentHelper.shared.getPageAndDocumentContainingPage(with: pageID)
+                    //check if page and document exists locally
+                    if pageAndDocument.page != nil && pageAndDocument.document != nil {
+                        //page exists locally check id edited image was changes
+                        if record.changedKeys().contains(CloudKitConstants.PageRecordFields.editedImage) {
+                            guard let editedImageAsset = record[CloudKitConstants.PageRecordFields.editedImage] as? CKAsset,
+                                  let editedImageURL = editedImageAsset.fileURL,
+                                  let editedImage = UIImage(contentsOfFile: editedImageURL.path) else { return }
+                            _ = DocumentHelper.shared.updateEditedImage(editedImage,
+                                                                        for: pageAndDocument.page!,
+                                                                        of: pageAndDocument.document!,
+                                                                        fromCloud: true)
+                        }
+                    } else {
+                        //page and document not exist
+                        //1. get parent document and check if document exist locally
+                        guard let parentDoc = record[CloudKitConstants.PageRecordFields.document]  as? CKRecord.Reference else { return }
+                        let predicate = NSPredicate(format: "name == %@",parentDoc.recordID)
+                        print(parentDoc.recordID)
+                        let query = CKQuery(recordType: "Document", predicate: predicate)
+                        
+                        self.executeQuery(query) { records, error in
+                            guard let _ = error else { return }
+                            guard let parentDocumentRecord = records?.first else {
+                                print("No records were found of parent")
+                                return
+                            }
+                            guard let parentDocumentId = parentDocumentRecord[CloudKitConstants.DocumentRecordFields.id] as? String else { return }
+                            if let document = DocumentHelper.shared.getDocument(with: parentDocumentId) {
+                                //document exist locally, add page to document
+                                guard let page = Page(record: record) else { return }
+                                DocumentHelper.shared.addPages([page], to: document, fromCloud: true)
+                            } else {
+                                //document does not exist so fetch it from iCloud
+                                self._generateAndSaveDocument(from: parentDocumentRecord)
+                            }
+                        }
+                    }
+                }
+                NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil )
+            }
+            
+            zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
+                if let changeToken = token {
+                    print(zoneID)
+                    self.serverChangeToken = changeToken
+                }
+            }
+            
+            zoneChangeOperation.qualityOfService = .userInitiated
+            self.ckPrivateDB.add(zoneChangeOperation)
         }
-        
-        zoneChangeOperation.qualityOfService = .userInitiated
-        ckPrivateDB.add(zoneChangeOperation)
-        
     }
 }

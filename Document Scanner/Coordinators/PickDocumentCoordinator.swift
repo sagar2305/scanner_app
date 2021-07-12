@@ -100,6 +100,7 @@ extension PickDocumentCoordinator: CorrectionVCDelegate {
                 alertVC.gravityDismissAnimation = false
                 viewController.present(alertVC, animated: true, completion: nil)
             }
+            NVActivityIndicatorView.stop()
         }
     }
     
