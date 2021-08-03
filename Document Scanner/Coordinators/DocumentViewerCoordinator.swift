@@ -116,9 +116,6 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
         DocumentHelper.shared.delete(document: document)
-        AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
-                                            .documentID: document.id,
-         ])
         navigationController.popToRootViewController(animated: true)
     }
     

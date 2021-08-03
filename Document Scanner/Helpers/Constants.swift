@@ -90,7 +90,9 @@ struct Constants {
         case userPlan = "User Plan"
         case dateOfSubScription = "Date Of Subscription"
         case numberOfDocuments = "Number Of Document"
-          case appVersion = "App Version"
+        case appVersion = "App Version"
+        case subscribedToDocumentRecordChanges = "Subscribed To Document Record Changes"
+        case subscribedToPageRecordChanges = "Subscribed To Page Record Changes"
     }
     
     enum AnalyticsEvent: String, CustomStringConvertible {
@@ -137,6 +139,19 @@ struct Constants {
         case setBlackAndWhiteImage = "Set BlackAndWhite Image Color" //done
         case setGrayScaleImage = "Set GrayScale Image Color" //done
         
+        //CloudKit syncing
+        case documentUploadedToCloud = "iCloud - Document Uploaded" //done
+        case documentUploadFailed = "iCloud - Document Upload Failed" //done
+        case addedNewPageToDocument = "iCloud - Added New Page To Document" 
+        case pageUploadFailed = "iCloud - Page Upload Failed" //done
+        case updatedDocumentPage = "iCloud - Updated Page" //done
+        case pageUpdateFailed = "iCloud - Page Update Failed" //done
+        case documentRenamed = "iCloud - Document Renamed" //done
+        case documentRenamingFailed = "iCloud - Document Renaming Failed" //done
+        case deletedDocument = "iCloud - Document Deleted" //done
+        case documentDeletionFailed =  "iCloud - Document Deletion Failed" //done
+        case recievedCloudNotification = "iCloud - Received Notification" //done
+        
     }
 
     enum AnalyticsEventProperties: String, CustomStringConvertible {
@@ -157,9 +172,13 @@ struct Constants {
         
         //iCloud
         case recordId = "Record Id"
+        case recordType = "Record Type"
         case lastFetchDate = "Last Fetch Date"
         case recordingReceived = "Recording fetched"
         case autoTriggered = "Auto Triggered"
+        case newName = "New Name"
+        case reason = "Reason"
+        case notificationType = "Notif"
         
         //recording API
         case dateQueryItem = "Query Date"

@@ -74,6 +74,9 @@ struct DocumentHelper {
         documents.removeAll { document in document.id == id }
         documents.forEach( { $0.printIDS() })
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
+        AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
+                                            .documentID: id,
+         ])
         NotificationCenter.default.post(name: .documentDeletedLocally, object: self)
         if !isNotifiedFromiCloud {
             CloudKitHelper.shared.deletedDocumentFromiCloud(with: id)

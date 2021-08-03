@@ -100,7 +100,7 @@ class CloudKitHelper {
                 guard error == nil else { return }
                 guard subscription != nil else { return }
                 UserDefaults.standard.set(true, forKey: Constants.DocumentScannerDefaults.iCloudDocumentRecordSubscriptionKey)
-                //TODO: - Add analytics
+                AnalyticsHelper.shared.saveUserProperty(.subscribedToDocumentRecordChanges, value: "Yes")
             }
         }
         if !UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.iCloudPageRecordSubscriptionKey) {
@@ -108,7 +108,7 @@ class CloudKitHelper {
                 guard error == nil else { return }
                 guard subscription != nil else { return }
                 UserDefaults.standard.set(true, forKey: Constants.DocumentScannerDefaults.iCloudPageRecordSubscriptionKey)
-                //TODO: - Add analytics
+                AnalyticsHelper.shared.saveUserProperty(.subscribedToPageRecordChanges, value: "Yes")
             }
         }
     }
@@ -234,7 +234,7 @@ class CloudKitHelper {
         return Set(pageIds)
     }
     
-    ///this function is for testing purpose only
+    ///this function is for testing purpose only, should never call in production
     private func _deleteLocalCaches() {
         UserDefaults.standard.setValue([], forKey: Constants.DocumentScannerDefaults.idsOfDocumentUploadedToiCLoudKey)
         UserDefaults.standard.setValue([], forKey: Constants.DocumentScannerDefaults.idsOfPagesUploadedToiCloudKey)
@@ -288,13 +288,16 @@ class CloudKitHelper {
             query.modifyRecordsCompletionBlock = { records, recordIds, error in
                 guard error == nil else {
                     _markDocumentForiCloudUpload(document)
-                    print(error!)
-                    print("Failed whiles saving" )
+                    AnalyticsHelper.shared.logEvent(.documentSavingFailed, properties: [
+                                                        .documentID: document.id,
+                                                        .reason: error?.localizedDescription ?? "--"])
                     return
                 }
                 
-                print("Succesful")
-                //Document is saved properly
+                AnalyticsHelper.shared.logEvent(.documentUploadedToCloud, properties: [
+                                                    .documentID: document.id,
+                                                    .numberOfDocumentPages: document.pages.count]
+                )
                 _markDocumentAsUploadedToiCloud(document: document)
                 //setting pages as uploaded
                 let pageIDs = document.pages.map { return $0.id }
@@ -313,6 +316,9 @@ class CloudKitHelper {
                 guard error == nil else {
                     print("ERROR: While getting document record")
                     _markDocumentForRenamingOniCloud(document: document)
+                    AnalyticsHelper.shared.logEvent(.documentRenamingFailed, properties: [
+                                                        .documentID: document.id,
+                                                        .reason: error?.localizedDescription ?? "--"])
                     return
                 }
                 
@@ -325,8 +331,13 @@ class CloudKitHelper {
                 saveRecord(documentRecord) { record, error in
                     guard error == nil else  {
                         _markDocumentForRenamingOniCloud(document: document)
+                        AnalyticsHelper.shared.logEvent(.documentRenamingFailed, properties: [
+                                                            .documentID: document.id,
+                                                            .reason: error?.localizedDescription ?? "--"])
                         return
                     }
+                    AnalyticsHelper.shared.logEvent(.documentRenamed, properties: [
+                                                        .documentID: document.id ])
                     var idsOfDocumentMarkedForRenaming = idsOfDocumentMarkedForRenaming
                     idsOfDocumentMarkedForRenaming.remove(document.id)
                     UserDefaults.standard.setValue(Array(idsOfDocumentMarkedForRenaming), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey)
@@ -387,10 +398,14 @@ class CloudKitHelper {
                 saveRecord(pageRecord) { record, error in
                     guard error == nil else  {
                         _markPageForiCloudUpload(page: page)
+                        AnalyticsHelper.shared.logEvent(.pageUpdateFailed, properties: [.pageID: page.id,
+                                                                                        .documentID: document.id,
+                                                                                        .reason: error?.localizedDescription ?? "--"])
                         return
                     }
                     print("Successfully uploaded edited image")
-                    //TODO: - Save record success
+                    AnalyticsHelper.shared.logEvent(.updatedDocumentPage, properties: [.pageID: page.id,
+                                                                                    .documentID: document.id])
                 }
             }
         }
@@ -402,6 +417,8 @@ class CloudKitHelper {
         guard var documentPageReferences = record[CloudKitConstants.DocumentRecordFields.pages] as? [CKRecord.Reference],
               let pageRecord = page.cloudKitRecord(parent: record) else {
             _markPageForiCloudUpload(page: page)
+            AnalyticsHelper.shared.logEvent(.pageUploadFailed, properties: [.pageID: page.id,
+                                                                            .reason: "Unable to create page ckrecord"])
             return
         }
         documentPageReferences.append(CKRecord.Reference(record: record, action: .none))
@@ -415,19 +432,23 @@ class CloudKitHelper {
         query.modifyRecordsCompletionBlock = { records, recordIds, error in
             guard error == nil else {
                 self._markPageForiCloudUpload(page: page)
-                print(error!)
-                print("Failed whiles saving" )
+                AnalyticsHelper.shared.logEvent(.pageUploadFailed, properties: [.pageID: page.id,
+                                                                                .reason: error?.localizedDescription ?? "--"])
                 return
             }
             
-            print("Succesful")
-            //Document is saved properly
+            AnalyticsHelper.shared.logEvent(.addedNewPageToDocument, properties: [.pageID: page.id,
+                                                                            .reason: error?.localizedDescription ?? "--"])
             self._markPageAsUploadedToiCloud(with: [page.id])
             
         }
         ckPrivateDB.add(query)
     }
     
+    //Below function works as temporary solution to update the local documents with any changes changes
+    //made to document on cloud from another devices. Might be time consuming and inefficient when the
+    //numbers of document owned by user is large. So use _fetchDataBaseChangesIfAny to fetch changes.
+    ///Fetches all the documents from iCloud and replaces the  local cached documents with updated cloud version
     private func _updateWithiCloud() {
         DispatchQueue.global().async {
             let predicate = NSPredicate(value: true)
@@ -539,6 +560,8 @@ class CloudKitHelper {
                       let records = records else {
                     print("Unable to fetch selected record for deletion from iCloud: \(error?.localizedDescription ?? "")")
                     _markDocumentIDForDeletion(id)
+                    AnalyticsHelper.shared.logEvent(.documentDeletionFailed, properties: [
+                                                        .documentID: id])
                     return
                 }
                 
@@ -547,12 +570,16 @@ class CloudKitHelper {
                         if let error = error {
                             print("Unable to delete record from iCloud: \(error.localizedDescription)")
                             _markDocumentIDForDeletion(id)
+                            AnalyticsHelper.shared.logEvent(.documentDeletionFailed, properties: [
+                                                                .documentID: id])
                         }
                         print("success")
                         //removing document id from list of marked document for deletion
                         var updatedIdsList = self.idsOfDocumentMarkedForDeletionFromiCloud
                         updatedIdsList.remove(id)
                         UserDefaults.standard.setValue(Array(updatedIdsList), forKey: Constants.DocumentScannerDefaults.idsOfDocumentsMarkedForDeletionFromiCloudKey)
+                        AnalyticsHelper.shared.logEvent(.deletedDocument, properties: [
+                                                            .documentID: id])
                     }
                 }
             }
@@ -595,6 +622,19 @@ class CloudKitHelper {
     func handleCloudKit(notification: CKNotification) {
         if notification.notificationType == .query {
             guard let queryNotification = notification as? CKQueryNotification else { return }
+            var reason: String
+            switch queryNotification.queryNotificationReason.rawValue {
+            case 1: reason = "Created"
+            case 2: reason = "Updated"
+            case 3: reason = "Deleted"
+            default: reason = "UnKnown"
+            }
+            
+            AnalyticsHelper.shared.logEvent(.recievedCloudNotification, properties: [
+                .notificationType: reason,
+                .recordId: queryNotification.recordID ?? "--"
+                
+            ])
             _fetchDataBaseChangesIfAny()
         }
     }
@@ -604,7 +644,9 @@ class CloudKitHelper {
             
             let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
             configuration.previousServerChangeToken = serverChangeToken
+            
             let zoneChangeOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [.default], configurationsByRecordZoneID: [.default: configuration])
+            zoneChangeOperation.fetchAllChanges = true
             
             zoneChangeOperation.recordChangedBlock = { record in
                 print(record.recordType)
@@ -666,6 +708,13 @@ class CloudKitHelper {
             }
             
             zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
+                if let changeToken = token {
+                    print(zoneID)
+                    self.serverChangeToken = changeToken
+                }
+            }
+            
+            zoneChangeOperation.recordZoneFetchCompletionBlock =  { zoneID, token, data, hasChanges, error in
                 if let changeToken = token {
                     print(zoneID)
                     self.serverChangeToken = changeToken
