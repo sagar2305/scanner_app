@@ -41,6 +41,9 @@
 		<string>SofiaProRegular.ttf</string>
 		<string>SofiaProSemiBold.ttf</string>
 		<string>SofiaProUltraLight.ttf</string>
+		<string>DMSans-Bold.ttf</string>
+		<string>DMSans-Medium.ttf</string>
+		<string>BMSans-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

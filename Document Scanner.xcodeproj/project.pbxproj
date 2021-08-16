@@ -75,9 +75,17 @@
 		02B662242604691E008CCF36 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B662232604691E008CCF36 /* DocumentScannerViewController.swift */; };
 		02BA3C8F2621BB9400FA9194 /* AlertMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */; };
 		02BA3CC326220D7B00FA9194 /* scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA3CC226220D7B00FA9194 /* scanner.json */; };
+		02BB07B626C3F4AE00E928A1 /* AppTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB07B326C3F4AE00E928A1 /* AppTabBarViewController.swift */; };
+		02BB07B826C3F5AF00E928A1 /* AppTabBarViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02BB07B726C3F5AF00E928A1 /* AppTabBarViewController.storyboard */; };
+		02BB07CF26C507E700E928A1 /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB07CD26C507E700E928A1 /* FolderCollectionViewCell.swift */; };
+		02BB07D026C507E700E928A1 /* FolderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02BB07CE26C507E700E928A1 /* FolderCollectionViewCell.xib */; };
 		02BD24D6261435A8005B5261 /* LegacyHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */; };
 		02BF4D4C266F8C530009F3D4 /* ReviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */; };
 		02C4DD0F26318EF800B01C3E /* DocumentPreviewControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */; };
+		02C51A0526CA66D6008364E9 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02C51A0226CA66D6008364E9 /* DMSans-Bold.ttf */; };
+		02C51A0626CA66D6008364E9 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02C51A0326CA66D6008364E9 /* DMSans-Regular.ttf */; };
+		02C51A0726CA66D6008364E9 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02C51A0426CA66D6008364E9 /* DMSans-Medium.ttf */; };
+		02C51A0926CA9818008364E9 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C51A0826CA9818008364E9 /* Folder.swift */; };
 		02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */; };
 		02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD8D8C265EAA420053520A /* DocumentHelper.swift */; };
 		02E008B926023BF000278002 /* EditDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E008B826023BF000278002 /* EditDocumentCoordinator.swift */; };
@@ -201,9 +209,17 @@
 		02B662232604691E008CCF36 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
 		02BA3C8C2621BB9400FA9194 /* AlertMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageHelper.swift; sourceTree = "<group>"; };
 		02BA3CC226220D7B00FA9194 /* scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scanner.json; sourceTree = "<group>"; };
+		02BB07B326C3F4AE00E928A1 /* AppTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTabBarViewController.swift; sourceTree = "<group>"; };
+		02BB07B726C3F5AF00E928A1 /* AppTabBarViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AppTabBarViewController.storyboard; sourceTree = "<group>"; };
+		02BB07CD26C507E700E928A1 /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionViewCell.swift; sourceTree = "<group>"; };
+		02BB07CE26C507E700E928A1 /* FolderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderCollectionViewCell.xib; sourceTree = "<group>"; };
 		02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHomeViewController.swift; sourceTree = "<group>"; };
 		02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHelper.swift; sourceTree = "<group>"; };
 		02C4DD0E26318EF800B01C3E /* DocumentPreviewControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPreviewControls.swift; sourceTree = "<group>"; };
+		02C51A0226CA66D6008364E9 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Bold.ttf"; sourceTree = "<group>"; };
+		02C51A0326CA66D6008364E9 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Regular.ttf"; sourceTree = "<group>"; };
+		02C51A0426CA66D6008364E9 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Medium.ttf"; sourceTree = "<group>"; };
+		02C51A0826CA9818008364E9 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		02CC9EF6264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
 		02CD8D8C265EAA420053520A /* DocumentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHelper.swift; sourceTree = "<group>"; };
 		02E008B826023BF000278002 /* EditDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDocumentCoordinator.swift; sourceTree = "<group>"; };
@@ -268,6 +284,7 @@
 				025DB1B7260106ED006943C0 /* Setting.swift */,
 				025DB1C726011E8A006943C0 /* Filter.swift */,
 				023EC566260A56F30041E6BF /* Page.swift */,
+				02C51A0826CA9818008364E9 /* Folder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -293,6 +310,8 @@
 				024F07CD25FFC5DD0091C73C /* DocumentCollectionViewCell.xib */,
 				02F1915D260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift */,
 				02F1915E260083AD00D8CB8A /* FilterSelectionCollectionViewCell.xib */,
+				02BB07CD26C507E700E928A1 /* FolderCollectionViewCell.swift */,
+				02BB07CE26C507E700E928A1 /* FolderCollectionViewCell.xib */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -369,6 +388,8 @@
 		025BDAA125F0A022000834AE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				02BB07B726C3F5AF00E928A1 /* AppTabBarViewController.storyboard */,
+				02BB07B326C3F4AE00E928A1 /* AppTabBarViewController.swift */,
 				0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */,
 				0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */,
 				02E77073260143F300C1887F /* DocumentReviewVC.swift */,
@@ -380,6 +401,7 @@
 				02F19222260096DF00D8CB8A /* HomeViewController.swift */,
 				02F19220260096DF00D8CB8A /* HomeViewController.xib */,
 				02BD24D5261435A8005B5261 /* LegacyHomeViewController.swift */,
+				02A6C3F92680A0FE00210F67 /* MarkupVC.swift */,
 				02620D32263678B800AEB15F /* OnboardingVC.swift */,
 				02620D33263678B800AEB15F /* OnboardingVC.xib */,
 				02F19221260096DF00D8CB8A /* ScannerVC.swift */,
@@ -388,7 +410,6 @@
 				025DB1A72600FE86006943C0 /* SettingsVC.xib */,
 				025DB1BF26011214006943C0 /* WebViewVC.swift */,
 				025DB1C026011214006943C0 /* WebViewVC.xib */,
-				02A6C3F92680A0FE00210F67 /* MarkupVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -414,6 +435,9 @@
 		0271CA75262583B100052565 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				02C51A0226CA66D6008364E9 /* DMSans-Bold.ttf */,
+				02C51A0426CA66D6008364E9 /* DMSans-Medium.ttf */,
+				02C51A0326CA66D6008364E9 /* DMSans-Regular.ttf */,
 				029E339B265CFC2400D92A00 /* SofiaProBlack.ttf */,
 				029E339C265CFC2400D92A00 /* SofiaProBold.ttf */,
 				029E3396265CFC2400D92A00 /* SofiaProExtraLight.ttf */,
@@ -585,13 +609,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				029E33A3265CFC2500D92A00 /* SofiaProBlack.ttf in Resources */,
+				02C51A0726CA66D6008364E9 /* DMSans-Medium.ttf in Resources */,
 				02620D35263678B800AEB15F /* OnboardingVC.xib in Resources */,
 				029E33A0265CFC2500D92A00 /* SofiaProExtraLight.ttf in Resources */,
 				029E33A5265CFC2500D92A00 /* SofiaProMedium.ttf in Resources */,
 				025DB1C226011214006943C0 /* WebViewVC.xib in Resources */,
+				02BB07D026C507E700E928A1 /* FolderCollectionViewCell.xib in Resources */,
 				024F07C325FFC4CD0091C73C /* Assets.xcassets in Resources */,
 				0271CA7C262583B200052565 /* Avenir Book.ttf in Resources */,
 				025BDA9225F09AA6000834AE /* LaunchScreen.storyboard in Resources */,
+				02C51A0626CA66D6008364E9 /* DMSans-Regular.ttf in Resources */,
 				0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */,
 				029E33A7265CFC2500D92A00 /* SofiaProRegular.ttf in Resources */,
 				029E33A4265CFC2500D92A00 /* SofiaProBold.ttf in Resources */,
@@ -606,6 +633,7 @@
 				025DB1B22600FF21006943C0 /* SettingsTableViewCell.xib in Resources */,
 				024F07CF25FFC5DD0091C73C /* DocumentCollectionViewCell.xib in Resources */,
 				02F19224260096DF00D8CB8A /* EditImageVC.xib in Resources */,
+				02BB07B826C3F5AF00E928A1 /* AppTabBarViewController.storyboard in Resources */,
 				029E33A6265CFC2500D92A00 /* SofiaProSemiBold.ttf in Resources */,
 				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02FCE5F92660FB4400EA6F95 /* Localizable.strings in Resources */,
@@ -613,6 +641,7 @@
 				029E33A2265CFC2500D92A00 /* SofiaProUltraLight.ttf in Resources */,
 				025DB1A92600FE86006943C0 /* SettingsVC.xib in Resources */,
 				0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */,
+				02C51A0526CA66D6008364E9 /* DMSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +729,7 @@
 				02F19228260096DF00D8CB8A /* HomeViewController.swift in Sources */,
 				025DB1A82600FE86006943C0 /* SettingsVC.swift in Sources */,
 				02CC9EF7264F97C900EA15B8 /* NVActivityIndicatorView+Extension.swift in Sources */,
+				02BB07B626C3F4AE00E928A1 /* AppTabBarViewController.swift in Sources */,
 				024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */,
 				02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */,
 				02F19225260096DF00D8CB8A /* EditImageVC.swift in Sources */,
@@ -720,11 +750,13 @@
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,
 				02B6621E260467D1008CCF36 /* DocumentScannerNavigationController.swift in Sources */,
 				02CD8D8D265EAA420053520A /* DocumentHelper.swift in Sources */,
+				02BB07CF26C507E700E928A1 /* FolderCollectionViewCell.swift in Sources */,
 				0214005C262DEE5B008B0AEE /* TranformImageControls.swift in Sources */,
 				02B661E326039EC4008CCF36 /* UIKit+Extension.swift in Sources */,
 				02142576264BB39C00E2D8D7 /* NewDocumentImageView.swift in Sources */,
 				02F1921C260096C100D8CB8A /* Constants.swift in Sources */,
 				02B58778260C42F900CBAB82 /* DocumentViewerCoordinator.swift in Sources */,
+				02C51A0926CA9818008364E9 /* Folder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

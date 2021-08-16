@@ -54,6 +54,9 @@ struct Constants {
         case avenirLight = "Avenir Light"
         case avenirMedium = "Avenir Medium"
         case avenirRegular = "Avenir Regular"
+        case DMSansRegular = "DMSans-Regular"
+        case DMSansMedium = "DMSans-Medium"
+        case DMSansBold = "DMSans-Bold"
     }
     
     struct APIKeys {

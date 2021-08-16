@@ -155,8 +155,8 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupCollectionView() {
         documentsCollectionView.isHeroEnabled = true
-        documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.identifier, bundle: nil),
-                                         forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
+        documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.reuseIdentifier, bundle: nil),
+                                         forCellWithReuseIdentifier: DocumentCollectionViewCell.reuseIdentifier)
         let layout = UICollectionViewFlowLayout()
         documentsCollectionView.collectionViewLayout = layout
         layout.sectionHeadersPinToVisibleBounds = true
@@ -246,8 +246,8 @@ extension LegacyHomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.identifier, for: indexPath) as? DocumentCollectionViewCell else {
-            fatalError("ERROR: Unable to dequeue collection view cell with identifier \(DocumentCollectionViewCell.identifier)")
+        guard let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.reuseIdentifier, for: indexPath) as? DocumentCollectionViewCell else {
+            fatalError("ERROR: Unable to dequeue collection view cell with identifier \(DocumentCollectionViewCell.reuseIdentifier)")
         }
         documentCell.document = filteredDocuments[indexPath.row]
         documentCell.delegate = self

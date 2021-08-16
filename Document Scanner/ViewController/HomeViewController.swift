@@ -27,30 +27,45 @@ protocol HomeViewControllerDelegate: AnyObject {
 @available(iOS 13.0, *)
 class HomeViewController: DocumentScannerViewController, HomeVC {
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, Document>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Document>
+    typealias FolderDataSource = UICollectionViewDiffableDataSource<Int, Folder>
+    typealias FoldertSnapShot = NSDiffableDataSourceSnapshot<Int, Folder>
+    
+    typealias DocumentDataSource = UICollectionViewDiffableDataSource<Int, Document>
+    typealias DocumentSnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
     private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
-    private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
-    private lazy var dataSource = _getDocumentCollectionViewDataSource()
+    private lazy var documentDataSource = _getDocumentCollectionViewDataSource()
+    private lazy var folderDataSource = _getFoldersCollectionViewDataSource()
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document]  = [Document]()
-    
-    private var searchBar: UISearchBar!
+    var folders = [Folder]()
+
 
     @IBOutlet private weak var headerView: UIView!
-    @IBOutlet private weak var headerLabel: UILabel!
-    @IBOutlet private weak var searchButton: UIButton!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var searchBarRightImageView: UIImageView!
     @IBOutlet private weak var noDocumentsMessageLabel: UILabel!
+    
+    //folder collection view
+    @IBOutlet private weak var foldersHeaderView: UIView!
+    @IBOutlet private weak var foldersHeaderLabel: UILabel!
+    @IBOutlet private weak var addFolderButton: UIButton!
+    @IBOutlet private weak var folderCollectionView: UICollectionView!
+    
+    //document collection view
+    @IBOutlet private weak var documentsHeaderView: UIView!
+    @IBOutlet private weak var documentsLabel: UILabel!
+    @IBOutlet private weak var sortDocumentsButton: UIButton!
+    @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
     @IBOutlet private weak var footerView: UIView!
     @IBOutlet private weak var quickAccessButton: FooterButton!
     @IBOutlet private weak var footerHeaderView: UIView!
     @IBOutlet private weak var footerContentView: UIStackView!
     @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var documentsCollectionView: UICollectionView!
+   
     
     @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
     @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
@@ -59,13 +74,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         _setupViews()
-        _setupCollectionView()
+        _setupCollectionViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        _getDocuments()
+        _getDocumentsAndFolders()
         
         quickAccessButton.onTap = ({ [self] button in
             presentQuickAccess.toggle()
@@ -82,15 +97,31 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         delegate?.viewDidAppear(_controller: self)
     }
 
-    func _getDocuments() {
-        let documents: [Document] = DocumentHelper.shared.documents
+    func _getDocumentsAndFolders() {
+        let documents: [Document] = DocumentHelper.shared.untaggedDocuments
         self.allDocuments = documents
         self.filteredDocuments = documents
         noDocumentsMessageLabel.isHidden = allDocuments.count > 0
-        _applySnapshot(animatingDifferences: true)
+        folders = DocumentHelper.shared.folders
+        _applyFolderSnapshot(animatingDifferences: true)
+        _applyDocumentSnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
+        
+        _setupSearchBar()
+        foldersHeaderLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
+        //TODO: - Localize
+        foldersHeaderLabel.text = "My\nFolders"
+        
+        addFolderButton.titleLabel?.configure(with: UIFont.font(.DMSansMedium, style: .callout))
+        addFolderButton.titleLabel?.textColor = .primary
+        //TODO: - Localize
+        addFolderButton.setTitle("Add Folder", for: .normal)
+        
+        documentsLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
+        //TODO: - Localize
+        documentsLabel.text = "My\nScans"
         
         pickDocumentFooterButton.textColor = .primaryText
         scanDocumentFooterButton.textColor = .primaryText
@@ -109,8 +140,6 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
         footerView.layer.cornerRadius = 16
         footerView.clipsToBounds = true
-        headerLabel.configure(with: UIFont.font(.avenirMedium, style: .title3))
-        headerLabel.text = "My Documents".localized
         definesPresentationContext = true
     }
     
@@ -135,75 +164,87 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         })
     }
     
-    private func showOrHideSearchBar() {
-        if presentSearchBar {
-            searchBar = UISearchBar(frame: searchButton.frame)
-            searchBar.searchBarStyle = .minimal
-            searchBar.searchTextField.backgroundColor = .clear
-            searchBar.searchTextField.layer.borderColor = UIColor.black.cgColor
-            searchBar.tintColor = .text
-            headerView.addSubview(searchBar)
-            searchBar.delegate = self
-            self.searchBar.searchTextField.becomeFirstResponder()
-            UIView.animateKeyframes(withDuration: 0.3,
-                                    delay: 0,
-                                    options: []) {
-                self.searchBar.frame = CGRect(x: 16,
-                                         y: 4,
-                                         width: self.headerView.frame.width - 32,
-                                         height: self.headerView.frame.height - 8)
-                self.searchButton.alpha = 0
-                self.headerLabel.alpha = 0
-                
-            } completion: { completed in
-                self.searchButton.isHidden = true
-                self.headerLabel.isHidden = true
-            }
-
-        } else {
-            if searchBar != nil {
-                UIView.animateKeyframes(withDuration: 0.3,
-                                        delay: 0,
-                                        options: []) {
-                    self.searchBar.frame = self.searchButton.frame
-                    self.searchButton.alpha = 1
-                    self.headerLabel.alpha = 1
-                } completion: { completed in
-                    self.searchButton.isHidden = false
-                    self.headerLabel.isHidden = false
-                    self.searchBar.removeFromSuperview()
-                    self.searchBar = nil
-                }
-            }
-        }
+    private func _setupSearchBar() {
+        searchBar.searchTextField.leftView = nil
+        searchBar.backgroundColor = .clear
+        searchBar.delegate = self
     }
     
-    private func _setupCollectionView() {
+    private func _setupCollectionViews() {
+        _setupFoldersCollectionViewCell()
+        _setupDocumentsCollectionViewCell()
+    }
+    
+    private func _setupFoldersCollectionViewCell() {
+        folderCollectionView.isHeroEnabled = true
+        folderCollectionView.hero.modifiers = [.cascade]
+        folderCollectionView.register(UINib(nibName: FolderCollectionViewCell.reuseIdentifier, bundle: nil),
+                                         forCellWithReuseIdentifier: FolderCollectionViewCell.reuseIdentifier)
+        folderCollectionView.collectionViewLayout = _foldersCollectionViewLayout()
+        folderCollectionView.delegate = self
+        _applyFolderSnapshot()
+    }
+    
+    private func _setupDocumentsCollectionViewCell() {
         documentsCollectionView.isHeroEnabled = true
         documentsCollectionView.hero.modifiers = [.cascade]
-        documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.identifier, bundle: nil),
-                                         forCellWithReuseIdentifier: DocumentCollectionViewCell.identifier)
-        documentsCollectionView.collectionViewLayout = _collectionViewLayout()
+        documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.reuseIdentifier, bundle: nil),
+                                         forCellWithReuseIdentifier: DocumentCollectionViewCell.reuseIdentifier)
+        documentsCollectionView.collectionViewLayout = _documentsCollectionViewLayout()
         documentsCollectionView.delegate = self
-        _applySnapshot()
+        _applyFolderSnapshot()
+        _applyDocumentSnapshot()
     }
     
-    private func _collectionViewLayout() -> UICollectionViewLayout {
+    private func _foldersCollectionViewLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets.leading = 8
+        item.contentInsets.trailing = 8
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .absolute(120))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+    
+    private func _documentsCollectionViewLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    private func _getDocumentCollectionViewDataSource() -> DataSource {
-        let dataSource = DataSource(collectionView: documentsCollectionView) { (collectionView, indexPath, document) -> UICollectionViewCell? in
-            guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.identifier, for: indexPath) as? DocumentCollectionViewCell else {
-                fatalError("ERROR: Unable to find and dequeue cell with identifier \(DocumentCollectionViewCell.identifier)")
+    
+    private func _getFoldersCollectionViewDataSource() -> FolderDataSource {
+        let dataSource = FolderDataSource(collectionView: folderCollectionView) { (collectionView, indexPath, str) -> UICollectionViewCell? in
+            guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: FolderCollectionViewCell.reuseIdentifier, for: indexPath) as? FolderCollectionViewCell else {
+                fatalError("ERROR: Unable to find and dequeue cell with identifier \(FolderCollectionViewCell.reuseIdentifier)")
+            }
+            return collectionViewCell
+        }
+        return dataSource
+    }
+    
+    private func _applyFolderSnapshot(animatingDifferences: Bool = true) {
+        var snapShot = FoldertSnapShot()
+        snapShot.appendSections([0])
+        snapShot.appendItems(folders)
+        folderDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
+    }
+    
+    
+    private func _getDocumentCollectionViewDataSource() -> DocumentDataSource {
+        let dataSource = DocumentDataSource(collectionView: documentsCollectionView) { (collectionView, indexPath, document) -> UICollectionViewCell? in
+            guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DocumentCollectionViewCell.reuseIdentifier, for: indexPath) as? DocumentCollectionViewCell else {
+                fatalError("ERROR: Unable to find and dequeue cell with identifier \(DocumentCollectionViewCell.reuseIdentifier)")
             }
             collectionViewCell.document = document
             collectionViewCell.delegate = self
@@ -212,11 +253,11 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         return dataSource
     }
     
-    private func _applySnapshot(animatingDifferences: Bool = true) {
-        var snapShot = SnapShot()
+    private func _applyDocumentSnapshot(animatingDifferences: Bool = true) {
+        var snapShot = DocumentSnapShot()
         snapShot.appendSections([0])
         snapShot.appendItems(filteredDocuments)
-        dataSource.apply(snapShot, animatingDifferences: animatingDifferences)
+        documentDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
     }
     
     private func _rename(_ document: Document) {
@@ -238,9 +279,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                     return
                 }
                 document.rename(new: documentName)
-                var snapshot = self.dataSource.snapshot()
+                var snapshot = self.documentDataSource.snapshot()
                 snapshot.reloadItems([document])
-                self.dataSource.apply(snapshot,animatingDifferences: true)
+                self.documentDataSource.apply(snapshot,animatingDifferences: true)
             }
             doneAction.setTitleColor(.primary, for: .normal)
             alertVC.addAction(doneAction)
@@ -252,10 +293,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
             
             self.present(alertVC, animated: true, completion: nil)
     }
-    
-    @IBAction func didTapSearchButton(_ sender: UIButton) {
-        presentSearchBar.toggle()
-    }
+
     
     @IBAction func didTapShowQuickAccessButton(_ sender: FooterButton) {
         presentQuickAccess.toggle()
@@ -288,23 +326,43 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        searchBarRightImageView.isHidden = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        if searchBar.searchTextField.isEmpty {
+            searchBarRightImageView.isHidden = false
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         UIView.animate(withDuration: 0.3) { self.navigationItem.searchController = nil }
         filteredDocuments = allDocuments
+        searchBar.searchTextField.text = nil
         searchBar.searchTextField.endEditing(true)
-        presentSearchBar.toggle()
-        _applySnapshot()
+        _applyFolderSnapshot()
+        _applyDocumentSnapshot()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
+        search(for: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search(for: searchBar.searchTextField.text ?? "")
+        searchBar.endEditing(true)
+    }
+    
+    private func search(for text: String) {
+        if text.isEmpty {
             filteredDocuments = allDocuments
-            _applySnapshot()
+            _applyFolderSnapshot()
+            _applyDocumentSnapshot()
         } else {
-            filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(searchText.lowercased()) }
-            _applySnapshot()
+            filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(text.lowercased()) }
+            _applyFolderSnapshot()
+            _applyDocumentSnapshot()
         }
     }
 }
@@ -316,20 +374,21 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
                         for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [self] _, indexPath in
             // handle action by updating model with deletion
-            guard let document = self.dataSource.itemIdentifier(for: indexPath) else {
+            guard let document = self.documentDataSource.itemIdentifier(for: indexPath) else {
                 return
             }
             
             document.delete()
             self.allDocuments.removeAll { $0.id == document.id }
             self.filteredDocuments.removeAll { $0.id == document.id }
-            self._applySnapshot()
+            self._applyFolderSnapshot()
+            self._applyDocumentSnapshot()
         }
 
         let renameAction = SwipeAction(style: .default, title: "Rename") { _, indexPath in
-            guard let document = self.dataSource.itemIdentifier(for: indexPath) else {
+            guard let document = self.documentDataSource.itemIdentifier(for: indexPath) else {
                 return
             }
             
