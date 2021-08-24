@@ -15,6 +15,7 @@
 		021BA67C26414552003DBD73 /* ImageCorrectionControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */; };
 		0233631B26538CA30004D1B8 /* PDFGeneratorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */; };
 		0234DAD2262ECFFD00CE711F /* ImageEditingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */; };
+		0239B61B26CF62380014D38B /* SubcriptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0239B61A26CF62380014D38B /* SubcriptionHelper.swift */; };
 		023EC567260A56F30041E6BF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023EC566260A56F30041E6BF /* Page.swift */; };
 		024AFE8C262FE98000E3730C /* ImageColorControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024AFE8B262FE98000E3730C /* ImageColorControls.swift */; };
 		024F074825FF3B860091C73C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F074725FF3B860091C73C /* UIImage+Extension.swift */; };
@@ -141,6 +142,7 @@
 		021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCorrectionControls.swift; sourceTree = "<group>"; };
 		0233631A26538CA30004D1B8 /* PDFGeneratorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFGeneratorHelper.swift; path = "Document Scanner/Debug/PDFGeneratorHelper.swift"; sourceTree = SOURCE_ROOT; };
 		0234DAD1262ECFFD00CE711F /* ImageEditingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditingControls.swift; sourceTree = "<group>"; };
+		0239B61A26CF62380014D38B /* SubcriptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionHelper.swift; sourceTree = "<group>"; };
 		023EC566260A56F30041E6BF /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		024AFE8B262FE98000E3730C /* ImageColorControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageColorControls.swift; sourceTree = "<group>"; };
 		024F074725FF3B860091C73C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				02CD8D8C265EAA420053520A /* DocumentHelper.swift */,
 				02A5FBDC2666305E00F67D99 /* AnalyticsHelper.swift */,
 				02BF4D4B266F8C530009F3D4 /* ReviewHelper.swift */,
+				0239B61A26CF62380014D38B /* SubcriptionHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				025DB1C826011E8A006943C0 /* Filter.swift in Sources */,
 				02F1915F260083AD00D8CB8A /* FilterSelectionCollectionViewCell.swift in Sources */,
 				025BDAB125F0D394000834AE /* PickDocumentCoordinator.swift in Sources */,
+				0239B61B26CF62380014D38B /* SubcriptionHelper.swift in Sources */,
 				025DB1B62601045D006943C0 /* SettingsHelper.swift in Sources */,
 				025DB1B12600FF21006943C0 /* SettingsTableViewCell.swift in Sources */,
 				025BDAA825F0A5B2000834AE /* ApplicationCoordinator.swift in Sources */,

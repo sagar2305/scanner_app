@@ -47,9 +47,9 @@ class SubscribeCoordinator: Coordinator {
 
         // after onboarding we need to show discounted rate and it will always be presented
         if presented {
-            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+            subscriptionVC = WeeklyMonthlyAndAnnualViewController(fromPod: true)
         } else {
-            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+            subscriptionVC = WeeklyMonthlyAndAnnualViewController(fromPod: true)
         }
         
         _lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.timeWhenUserSawSpecialOfferScreenKey)
@@ -113,8 +113,13 @@ class SubscribeCoordinator: Coordinator {
         callRecordLawsVC.delegate = self
         callRecordLawsVC.configureUI(title: "Terms of law".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.termsOfLaw
-        navigationController.pushViewController(callRecordLawsVC, animated: true)
-        navigationController.setNavigationBarHidden(true, animated: true)
+        if _presented {
+            rootViewController.navigationController?.pushViewController(callRecordLawsVC, animated: true)
+            rootViewController.navigationController?.setNavigationBarHidden(false, animated: true)
+        } else {
+            navigationController.pushViewController(callRecordLawsVC, animated: true)
+            navigationController.setNavigationBarHidden(false, animated: true)
+        }
     }
 
     private func showPrivacyPolicy() {
@@ -122,8 +127,13 @@ class SubscribeCoordinator: Coordinator {
         callRecordLawsVC.delegate = self
         callRecordLawsVC.configureUI(title: "Privacy policy".localized)
         callRecordLawsVC.webPageLink = Constants.WebLinks.privacyPolicy
-        navigationController.pushViewController(callRecordLawsVC, animated: true)
-        navigationController.setNavigationBarHidden(true, animated: true)
+        if _presented {
+            rootViewController.navigationController?.pushViewController(callRecordLawsVC, animated: true)
+            rootViewController.navigationController?.setNavigationBarHidden(false, animated: true)
+        } else {
+            navigationController.pushViewController(callRecordLawsVC, animated: true)
+            navigationController.setNavigationBarHidden(false, animated: true)
+        }
     }
 
     private func _updateSpecialOfferTimeLabel(_ timeRemainingForOffer: Double) {
@@ -341,6 +351,7 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
         }
         
         // - Do Not delete below commented code
+        if _showSpecialOffer {
             if lastTimeUserShownSubscriptionScreen == nil {
                 lastTimeUserShownSubscriptionScreen = Date()
                 showSpecialOffer()
@@ -352,6 +363,9 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
                     self._dismiss()
                 }
             }
+        } else {
+            self._dismiss()
+        }
     }
 
     func selectPlan(at index: Int, controller: SubscriptionViewControllerProtocol) {

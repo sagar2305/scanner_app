@@ -34,6 +34,8 @@
 		01C550A53C9E2047C83F8E85BBB558E6 /* ConstraintLayoutSupportDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743DB7A759BAE37E61A4F545F14BA2A /* ConstraintLayoutSupportDSL.swift */; };
 		01C8931A0187055DD3C32C427AC8826C /* Amplitude-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76FD552E2E90EB02392E273BCED9D992 /* Amplitude-dummy.m */; };
 		02225125CE79606D1F8B383F761EF346 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183D0AA0091AE258D8DA863AD7D14464 /* QuartzCore.framework */; };
+		0229835426CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0229835226CE3937002151CD /* WeeklyMonthlyAndAnnualViewController.xib */; };
+		0229835526CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0229835326CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.swift */; };
 		027198F04F122C470FF59DCBA4E1E1A6 /* PDFTableStyle+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D4C95B8ABD72CB491B18244916667 /* PDFTableStyle+Defaults.swift */; };
 		03351907A5D4CA5025145BA41C04B98D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CAED34F2C2C9AEF8E5900227C65591 /* Logger.swift */; };
 		039EAFE7935113805F3FC21BF1B7C9D5 /* LayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2A6AF77005A5DC78222C0CAF77FAE /* LayoutConstraint.swift */; };
@@ -1296,6 +1298,8 @@
 		01485018F68B89323592DEF4148AE063 /* UIView+Shadow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Shadow.swift"; path = "Source/Extensions/UIView+Shadow.swift"; sourceTree = "<group>"; };
 		019537BEB408182FF1E53C91649C6B37 /* EKWindowProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKWindowProvider.swift; path = Source/Infra/EKWindowProvider.swift; sourceTree = "<group>"; };
 		02178DD815EAE71C57E0BCD291BD5969 /* AMPUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AMPUtils.h; path = Sources/Amplitude/AMPUtils.h; sourceTree = "<group>"; };
+		0229835226CE3937002151CD /* WeeklyMonthlyAndAnnualViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeeklyMonthlyAndAnnualViewController.xib; sourceTree = "<group>"; };
+		0229835326CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyMonthlyAndAnnualViewController.swift; sourceTree = "<group>"; };
 		02E2DD6E230A72D526DCE95E6A1D3D58 /* SpecialOfferViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpecialOfferViewController.swift; sourceTree = "<group>"; };
 		031FFA76C399ECBD012C3B63099B6DA3 /* PDFTable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PDFTable.swift; path = Source/API/Table/PDFTable.swift; sourceTree = "<group>"; };
 		039DEBC830701E644497CA33715D644B /* RCHTTPRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RCHTTPRequest.m; path = Purchases/Networking/RCHTTPRequest.m; sourceTree = "<group>"; };
@@ -2985,6 +2989,8 @@
 		4E160D7683BD5C863DE9FF6BC211A407 /* SubscriptionFlow */ = {
 			isa = PBXGroup;
 			children = (
+				0229835326CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.swift */,
+				0229835226CE3937002151CD /* WeeklyMonthlyAndAnnualViewController.xib */,
 				1FAE3AB0E73D75804E2B3D04FF38E188 /* AnnualDiscountedNoTrialViewController.swift */,
 				7178C27B1389B78D25B6E886FD3C6A25 /* AnnualDiscountedNoTrialViewController.xib */,
 				B428BA93696F40C1BDBE227D30E34893 /* AnnualNoTrialViewController.swift */,
@@ -5279,6 +5285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0229835426CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.xib in Resources */,
 				F2B8D02916BA84DC8B00FE6E2FB834FC /* AnnualDiscountedNoTrialViewController.xib in Resources */,
 				8D993D25DBA20BEDBEC9473750BCE9D7 /* AnnualNoTrialViewController.xib in Resources */,
 				6341ABB6237A85864674A867D4EA0BD2 /* Assets.xcassets in Resources */,
@@ -6143,6 +6150,7 @@
 			files = (
 				E65C27DE369FB0BE30AB7146C99F9CAB /* AlertMessageHelper.swift in Sources */,
 				BFBA2B003330E5800887526D0CF57089 /* AnalyticsHelper.swift in Sources */,
+				0229835526CE3938002151CD /* WeeklyMonthlyAndAnnualViewController.swift in Sources */,
 				7D26BB96A75B82C77B589977B8927A0D /* AnnualDiscountedNoTrialViewController.swift in Sources */,
 				17E839ACF77FBF3FCA74D4699FBC9404 /* AnnualNoTrialViewController.swift in Sources */,
 				1DDA8C15610D88F1CDEE121CA6A28883 /* CommonExtensions.swift in Sources */,

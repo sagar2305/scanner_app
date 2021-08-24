@@ -39,6 +39,7 @@ struct Constants {
         static let onlyAnnual = "Only_annual"
         static let weekAndAnnual = "Weekandannual"
         static let weekAndAnnualReduced = "Weeklyandannualreduced"
+        static let weeklyMonthlyAndAnnual = "weeklymonthlyandannual"
         static let onlyAnnualDiscountedNoTrailOnboarding = "onlyannualdiscounted_notrial_onboarding"
         static let onlyAnnualDiscountedNoTrailHomeScreen = "onlyannualdiscounted_notrial_homescreen"
         static let onlyAnnualNoDiscountNoTrail = "Onlyannualnodiscountnotrial"
