@@ -12,3 +12,7 @@ struct Folder: Codable, Identifiable {
     let name: String
     let documetCount: Int
 }
+
+extension Folder: Hashable {
+
+}

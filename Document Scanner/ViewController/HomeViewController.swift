@@ -32,9 +32,10 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     typealias DocumentDataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias DocumentSnapShot = NSDiffableDataSourceSnapshot<Int, Document>
-    
-    private var presentQuickAccess: Bool = true { didSet { _showOrHideQuickAccessMenu() } }
-    private var presentSearchBar: Bool = false { didSet { _showOrHideSearchBar() } }
+  
+    private var isFloatingActionMenuExpanded: Bool = false {
+        didSet { _showOrHideFloatinActionMenu() }
+    }
     
     weak var delegate: HomeViewControllerDelegate?
     private lazy var documentDataSource = _getDocumentCollectionViewDataSource()
@@ -61,12 +62,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var sortDocumentsButton: UIButton!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
     
-    @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var quickAccessButton: FooterButton!
-    @IBOutlet private weak var footerHeaderView: UIView!
-    @IBOutlet private weak var footerContentView: UIStackView!
-    @IBOutlet private weak var footerViewBottomConstraint: NSLayoutConstraint!
-   
+    //floating button menu
+    @IBOutlet private weak var floatingActionsContainer: UIView!
+    @IBOutlet private weak var floatingActionsStackView: UIStackView!
+    @IBOutlet private weak var floatingActionPlusButton: UIButton!
+    @IBOutlet private weak var floatingActionSettingsButton: UIButton!
+    @IBOutlet private weak var floatingActionScanButton: UIButton!
+    @IBOutlet private weak var floatingActionPickButton: UIButton!
     
     @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
     @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
@@ -82,15 +84,11 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
-        
-        quickAccessButton.onTap = ({ [self] button in
-            presentQuickAccess.toggle()
-        })
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        _showOrHideQuickAccessMenu()
+        _showOrHideFloatinActionMenu()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,7 +97,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
 
     func _getDocumentsAndFolders() {
-        let documents: [Document] = DocumentHelper.shared.untaggedDocuments
+        let documents: [Document] = DocumentHelper.shared.untaggedDocument
         self.allDocuments = documents
         self.filteredDocuments = documents
         noDocumentsMessageLabel.isHidden = allDocuments.count > 0
@@ -123,43 +121,24 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         documentsLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
         //TODO: - Localize
         documentsLabel.text = "My\nScans"
-        
-        pickDocumentFooterButton.textColor = .primaryText
-        scanDocumentFooterButton.textColor = .primaryText
-        settingsFooterButton.textColor = .primaryText
-        
-        pickDocumentFooterButton.setTitle("Pick Document".localized, for: .normal)
-        scanDocumentFooterButton.setTitle("Scan Document", for: .normal)
-        settingsFooterButton.setTitle("Settings".localized, for: .normal)
-        
+               
         noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
         noDocumentsMessageLabel.numberOfLines = 0
         noDocumentsMessageLabel.text = "No document available message".localized
         
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
-        
-        footerView.hero.id = Constants.HeroIdentifiers.footerIdentifier
-        footerView.layer.cornerRadius = 16
-        footerView.clipsToBounds = true
         definesPresentationContext = true
     }
     
-    private func _showOrHideQuickAccessMenu() {
-        let footerViewHeight = footerView.getMyFrame(in: self.view).height
-        let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
+    private func _setupFloationActionMenu() {
         
-        if presentQuickAccess {
-            footerViewBottomConstraint.constant = -44
-            footerContentView.isHidden = false
-        } else {
-            footerViewBottomConstraint.constant = UIDevice.current.hasNotch ? -(footerViewHeight - footerHeaderHeight - 22)
-                                        : -(footerViewHeight - footerHeaderHeight)
-            if UIDevice.current.hasNotch { self.footerContentView.isHidden = true }
-        }
-        
+    }
+    
+    private func _showOrHideFloatinActionMenu() {
+        let transform = CGAffineTransform(rotationAngle: isFloatingActionMenuExpanded ? -45 : 0)
         UIView.animate(withDuration: 0.3, animations: { [self] in
-            self.quickAccessButton.iconView.transform = self.presentQuickAccess ? CGAffineTransform(scaleX: 1, y: -1) : .identity
-            self.view.layoutIfNeeded()
+            floatingActionsStackView.isHidden = isFloatingActionMenuExpanded
+            floatingActionPlusButton.transform = transform
         })
     }
     
@@ -294,8 +273,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
 
     
-    @IBAction func didTapShowQuickAccessButton(_ sender: FooterButton) {
-        presentQuickAccess.toggle()
+    @IBAction func didTapFloatinActionPlusButton(sender: UIButton) {
+        isFloatingActionMenuExpanded.toggle()
     }
     
     @IBAction func didTapPickImageButton(_ sender: FooterButton) {

@@ -19,6 +19,8 @@ struct DocumentHelper {
     
     var untaggedDocument: [Document] {
         return documents.filter { $0.tag == "" }
+    }
+    
     func generateDocument(originalImages: [UIImage], editedImages: [UIImage]) -> Document? {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
@@ -104,6 +106,7 @@ struct DocumentHelper {
     
     func deleteDocument(with id: String) {
     }
+        
     func getPageAndDocumentContainingPage(with id: String) -> (page: Page?,document: Document?) {
         for document in documents {
             if let matchingPage = document.pages.first(where: { page in page.id == id }) {
