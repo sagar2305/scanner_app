@@ -65,12 +65,21 @@ class FileHelper {
         }
     }
     
-    func getLocalURL(for file: String) -> URL?{
+    func fileURL(for imageName: String) -> URL? {
         guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
             return nil
         }
         
-        let fileName = file.appending(".jpeg")
-        return directory.appendingPathComponent(fileName)!
+        let fileName = imageName.appending(".jpeg")
+        let filePath: URL = directory.appendingPathComponent(fileName)!
+        let fileManager = FileManager.default
+        
+        if fileManager.fileExists(atPath: filePath.path) {
+            return filePath
+        } else {
+            return nil
+        }
+        
     }
+    
 }

@@ -111,7 +111,6 @@ class ImageEditorControls: UIView {
          transformFooterButton,
          adjustFooterButton,
          colorFooterButton].forEach { fButton in
-            print("****************** \(button === fButton)")
             let x = (button === fButton)
             button.setSelected = x
         }

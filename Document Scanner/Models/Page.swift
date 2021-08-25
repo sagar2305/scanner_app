@@ -6,21 +6,47 @@
 //
 
 import Foundation
-import WeScan
+import UIKit
+import CloudKit
 import QuickLook
 
 class Page: NSObject, Codable {
     
-    var id = UUID()
+    var id: String
     var originalImageName: String
     var editedImageName: String
     var previewData: Data?
+    var pageNumber = 0
     
     init?(documentID: String,
-         originalImage: UIImage,
-        editedImage: UIImage) {
-        self.originalImageName = documentID.appending("_\(id.uuid)_original")
-        self.editedImageName = documentID.appending("_\(id.uuid)_edited")
+          originalImage: UIImage,
+          editedImage: UIImage) {
+        id = UUID().uuidString
+        self.originalImageName = documentID.appending("_\(id)_original")
+        self.editedImageName = documentID.appending("_\(id)_edited")
+        super.init()
+        guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
+    }
+    
+    init?(record: CKRecord) {
+        guard let id = record[CloudKitConstants.PageRecordFields.id] as? String else { return nil }
+        guard let originalImageName = record[CloudKitConstants.PageRecordFields.originalImageName] as? String else { return nil }
+        guard let editedImageName = record[CloudKitConstants.PageRecordFields.editedImageName] as? String else { return nil }
+        guard let pageNumber = record[CloudKitConstants.PageRecordFields.pageNumber] as? Int else { return nil }
+        guard let originalImageAsset = record[CloudKitConstants.PageRecordFields.originalImage] as? CKAsset else { return nil }
+        guard let editedImageAsset = record[CloudKitConstants.PageRecordFields.editedImage] as? CKAsset else { return nil }
+        
+        guard let originalImageURL = originalImageAsset.fileURL,
+              let originalImage = UIImage(contentsOfFile: originalImageURL.path),
+              let editedImageURL = editedImageAsset.fileURL,
+              let editedImage = UIImage(contentsOfFile: editedImageURL.path) else {
+            return nil
+        }
+        
+        self.id = id
+        self.originalImageName = originalImageName
+        self.editedImageName = editedImageName
+        self.pageNumber = pageNumber
         super.init()
         guard saveOriginalImage(originalImage) && saveEditedImage(editedImage) else { return nil }
     }
@@ -50,8 +76,32 @@ class Page: NSObject, Codable {
     }
 }
 
+
+extension Page {
+    func cloudKitRecord(parent documentRecord: CKRecord) -> CKRecord? {
+        let cloudRecord = CKRecord(recordType: CloudKitConstants.Records.page)
+        guard let originalImageURL = FileHelper.shared.fileURL(for: originalImageName),
+              let editedImageURL = FileHelper.shared.fileURL(for: editedImageName) else {
+            return nil
+        }
+        let originalImageAsset = CKAsset(fileURL: originalImageURL)
+        let editedImageAsset = CKAsset(fileURL: editedImageURL)
+        
+        cloudRecord.setValue(id as NSString, forKey: CloudKitConstants.PageRecordFields.id)
+        cloudRecord.setValue(originalImageName as NSString, forKey: CloudKitConstants.PageRecordFields.originalImageName)
+        cloudRecord.setValue(editedImageName as NSString, forKey: CloudKitConstants.PageRecordFields.editedImageName)
+        cloudRecord.setValue(originalImageAsset, forKey: CloudKitConstants.PageRecordFields.originalImage)
+        cloudRecord.setValue(editedImageAsset, forKey: CloudKitConstants.PageRecordFields.editedImage)
+        cloudRecord.setValue(pageNumber, forKey: CloudKitConstants.PageRecordFields.pageNumber)
+        
+        let parent = CKRecord.Reference(record: documentRecord, action: .deleteSelf)
+        cloudRecord.setValue(parent, forKey: CloudKitConstants.PageRecordFields.document)
+        return cloudRecord
+    }
+}
+
 extension Page: QLPreviewItem {
     var previewItemURL: URL? {
-        return FileHelper.shared.getLocalURL(for: editedImageName)
+        return FileHelper.shared.fileURL(for: editedImageName)
     }
 }

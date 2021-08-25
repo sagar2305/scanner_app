@@ -14,8 +14,8 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
     var allDocuments: [Document] = [Document]()
     var filteredDocuments: [Document] = [Document]()
     
-    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
-    private var presentSearchBar: Bool = false { didSet { showOrHideSearchBar() } }
+    private var presentQuickAccess: Bool = true { didSet { _showOrHideQuickAccessMenu() } }
+    private var presentSearchBar: Bool = false { didSet { _showOrHideSearchBar() } }
     private var searchBar: UISearchBar!
     
     var delegate: HomeViewControllerDelegate?
@@ -47,20 +47,28 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         _getDocuments()
+        _addObservers()
         documentsCollectionView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        showOrHideQuickAccessMenu()
+        _showOrHideQuickAccessMenu()
     }
 
-    func _getDocuments() {
-        let documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
-        self.allDocuments = documents
-        self.filteredDocuments = documents
-        noDocumentsMessageLabel.isHidden = allDocuments.count > 0
-        documentsCollectionView.reloadData()
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        _removeObservers()
+    }
+    
+    @objc func _getDocuments() {
+        DispatchQueue.main.async { [self] in
+            let documents: [Document] = DocumentHelper.shared.documents
+            self.allDocuments = documents
+            self.filteredDocuments = documents
+            noDocumentsMessageLabel.isHidden = allDocuments.count > 0
+            documentsCollectionView.reloadData()
+        }
     }
     
     private func _setupViews() {
@@ -84,11 +92,9 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         definesPresentationContext = true
     }
     
-    private func showOrHideQuickAccessMenu() {
+    private func _showOrHideQuickAccessMenu() {
         let footerViewHeight = footerView.getMyFrame(in: self.view).height
         let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
-        print(footerViewHeight)
-        print(footerHeaderHeight)
         
         if presentQuickAccess {
             footerViewBottomConstraint.constant = -44
@@ -105,7 +111,20 @@ class LegacyHomeViewController: DocumentScannerViewController, HomeVC {
         })
     }
     
-    private func showOrHideSearchBar() {
+    private func _addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(_getDocuments),
+                                               name: .documentFetchedFromiCloudNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(_getDocuments),
+                                               name: .documentDeletedLocally, object: nil)
+    }
+    
+    private func _removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+    
+    private func _showOrHideSearchBar() {
         if presentSearchBar {
             searchBar = UISearchBar(frame: searchButton.frame)
             searchBar.searchBarStyle = .minimal
@@ -301,7 +320,7 @@ extension LegacyHomeViewController: SwipeCollectionViewCellDelegate {
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
             // handle action by updating model with deletion
             
-            document.delete()
+            DocumentHelper.shared.delete(document: document)
             self.allDocuments.removeAll { $0.id == document.id }
             self.filteredDocuments.removeAll { $0.id == document.id }
             self.documentsCollectionView.reloadData()

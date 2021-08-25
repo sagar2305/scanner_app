@@ -9,4 +9,6 @@ import Foundation
 
 extension Notification.Name {
     static let iapProductsFetchedNotification = Notification.Name("CallRecorderIAPProductsFetchedNotification")
+    static let documentFetchedFromiCloudNotification = Notification.Name("FetchedNewDocumentFromiCloud")
+    static let documentDeletedLocally = Notification.Name("DocumentDeletedLocally")
 }

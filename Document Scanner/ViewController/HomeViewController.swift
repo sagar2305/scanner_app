@@ -33,7 +33,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     typealias DocumentDataSource = UICollectionViewDiffableDataSource<Int, Document>
     typealias DocumentSnapShot = NSDiffableDataSourceSnapshot<Int, Document>
     
-    private var presentQuickAccess: Bool = true { didSet { showOrHideQuickAccessMenu() } }
+    private var presentQuickAccess: Bool = true { didSet { _showOrHideQuickAccessMenu() } }
+    private var presentSearchBar: Bool = false { didSet { _showOrHideSearchBar() } }
     
     weak var delegate: HomeViewControllerDelegate?
     private lazy var documentDataSource = _getDocumentCollectionViewDataSource()
@@ -89,7 +90,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        showOrHideQuickAccessMenu()
+        _showOrHideQuickAccessMenu()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,11 +144,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         definesPresentationContext = true
     }
     
-    private func showOrHideQuickAccessMenu() {
+    private func _showOrHideQuickAccessMenu() {
         let footerViewHeight = footerView.getMyFrame(in: self.view).height
         let footerHeaderHeight = footerHeaderView.getMyFrame(in: footerView).height
-        print(footerViewHeight)
-        print(footerHeaderHeight)
         
         if presentQuickAccess {
             footerViewBottomConstraint.constant = -44
@@ -380,7 +379,7 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
                 return
             }
             
-            document.delete()
+            DocumentHelper.shared.delete(document: document)
             self.allDocuments.removeAll { $0.id == document.id }
             self.filteredDocuments.removeAll { $0.id == document.id }
             self._applyFolderSnapshot()
