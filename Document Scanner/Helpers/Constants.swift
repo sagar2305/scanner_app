@@ -10,6 +10,7 @@ import Foundation
 struct Constants {
     struct DocumentScannerDefaults {
         static let documentsListKey = "DocumentsListKey"
+        static let emptyFoldersListKey = "EmptyDocumentListKey"
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"

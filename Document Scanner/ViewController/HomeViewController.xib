@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,6 +17,7 @@
                 <outlet property="documentsCollectionView" destination="a9B-JH-h6P" id="yOH-cH-nLp"/>
                 <outlet property="documentsHeaderView" destination="jZD-hD-ksE" id="FZh-2X-iNz"/>
                 <outlet property="documentsLabel" destination="1sT-C7-kYi" id="ViP-Yo-cID"/>
+                <outlet property="floatingActionMenuLeftPaddingConstraint" destination="zsW-1X-JTk" id="iJi-VS-gso"/>
                 <outlet property="floatingActionPickButton" destination="Rt7-T3-CV5" id="nju-Ar-86b"/>
                 <outlet property="floatingActionPlusButton" destination="aUk-VZ-JXB" id="QPc-ap-uEM"/>
                 <outlet property="floatingActionScanButton" destination="BvB-dB-PbR" id="pbI-kU-yoc"/>
@@ -243,6 +245,9 @@
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ffz-YQ-Gdi">
                                     <rect key="frame" x="312" y="25" width="46" height="30"/>
                                     <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="addNewFolder:" destination="-1" eventType="touchUpInside" id="7SA-ZO-Hf5"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -284,48 +289,61 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMA-YV-Jv4">
-                    <rect key="frame" x="179" y="742" width="187" height="44"/>
+                    <rect key="frame" x="169" y="742" width="197" height="44"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kos-7w-xTd">
-                            <rect key="frame" x="0.0" y="0.0" width="187" height="44"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kos-7w-xTd">
+                            <rect key="frame" x="16" y="0.0" width="181" height="44"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="JkO-H7-ZtZ">
-                                    <rect key="frame" x="0.0" y="7" width="138" height="30"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="JkO-H7-ZtZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="132" height="44"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rt7-T3-CV5">
-                                            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-                                            <color key="backgroundColor" systemColor="systemPinkColor"/>
-                                            <state key="normal" title="Button"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rt7-T3-CV5">
+                                            <rect key="frame" x="0.0" y="0.0" width="32" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="If1-PV-nVb"/>
+                                                <constraint firstAttribute="height" constant="32" id="dms-fV-9eV"/>
+                                            </constraints>
+                                            <state key="normal" image="upload"/>
                                             <connections>
                                                 <action selector="didTapPickImageButton:" destination="-1" eventType="touchUpInside" id="Mtm-3U-Ura"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvB-dB-PbR">
-                                            <rect key="frame" x="46" y="0.0" width="46" height="30"/>
-                                            <color key="backgroundColor" systemColor="systemPinkColor"/>
-                                            <state key="normal" title="Button"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvB-dB-PbR">
+                                            <rect key="frame" x="50" y="0.0" width="32" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="GfD-UN-630"/>
+                                                <constraint firstAttribute="height" constant="32" id="bmi-Fg-9gf"/>
+                                            </constraints>
+                                            <state key="normal" image="camera"/>
                                             <connections>
                                                 <action selector="didTapScanButton:" destination="-1" eventType="touchUpInside" id="QRJ-N2-oxo"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ewy-Yz-uaa">
-                                            <rect key="frame" x="92" y="0.0" width="46" height="30"/>
-                                            <color key="backgroundColor" systemColor="systemPinkColor"/>
-                                            <state key="normal" title="Button"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ewy-Yz-uaa">
+                                            <rect key="frame" x="100" y="0.0" width="32" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="AcE-E4-yvD"/>
+                                                <constraint firstAttribute="height" constant="32" id="hKI-6J-RtW"/>
+                                            </constraints>
+                                            <state key="normal" image="settingsv2"/>
                                             <connections>
                                                 <action selector="didTapSettingsButton:" destination="-1" eventType="touchUpInside" id="zDA-5U-4H5"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUk-VZ-JXB">
-                                    <rect key="frame" x="143" y="0.0" width="44" height="44"/>
-                                    <color key="backgroundColor" name="buttonTextColor"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUk-VZ-JXB">
+                                    <rect key="frame" x="137" y="0.0" width="44" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="3kF-Cc-xuS"/>
                                         <constraint firstAttribute="width" constant="44" id="jov-8g-LKg"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                    <color key="tintColor" name="navigationTitleTextColor"/>
+                                    <state key="normal">
+                                        <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="37" scale="large"/>
+                                    </state>
                                     <connections>
                                         <action selector="didTapFloatinActionPlusButtonWithSender:" destination="-1" eventType="touchUpInside" id="CW6-vW-yRd"/>
                                     </connections>
@@ -339,11 +357,11 @@
                         <constraint firstAttribute="trailing" secondItem="Kos-7w-xTd" secondAttribute="trailing" id="XaS-1l-YyX"/>
                         <constraint firstItem="Kos-7w-xTd" firstAttribute="top" secondItem="JMA-YV-Jv4" secondAttribute="top" id="YDi-Wk-PMN"/>
                         <constraint firstAttribute="height" constant="44" id="lQc-cb-Pks"/>
-                        <constraint firstItem="Kos-7w-xTd" firstAttribute="leading" secondItem="JMA-YV-Jv4" secondAttribute="leading" id="zsW-1X-JTk"/>
+                        <constraint firstItem="Kos-7w-xTd" firstAttribute="leading" secondItem="JMA-YV-Jv4" secondAttribute="leading" constant="16" id="zsW-1X-JTk"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="12"/>
+                            <real key="value" value="22"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
@@ -382,15 +400,19 @@
     </objects>
     <resources>
         <image name="Sort" width="30" height="31"/>
+        <image name="camera" width="26" height="26"/>
         <image name="navigation-tip" width="24" height="24"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="scan-document" width="52" height="52"/>
         <image name="search" width="18" height="18"/>
         <image name="settings" width="52" height="52"/>
+        <image name="settingsv2" width="23" height="23"/>
+        <image name="upload" width="20" height="20"/>
         <image name="upload-document" width="52" height="52"/>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <namedColor name="buttonTextColor">
+        <namedColor name="navigationTitleTextColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="primary">
@@ -407,9 +429,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

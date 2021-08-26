@@ -34,7 +34,10 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     typealias DocumentSnapShot = NSDiffableDataSourceSnapshot<Int, Document>
   
     private var isFloatingActionMenuExpanded: Bool = false {
-        didSet { _showOrHideFloatinActionMenu() }
+        didSet {
+            _showOrHideFloatinActionMenu()
+            
+        }
     }
     
     weak var delegate: HomeViewControllerDelegate?
@@ -69,6 +72,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var floatingActionSettingsButton: UIButton!
     @IBOutlet private weak var floatingActionScanButton: UIButton!
     @IBOutlet private weak var floatingActionPickButton: UIButton!
+    @IBOutlet private weak var floatingActionMenuLeftPaddingConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
     @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
@@ -82,6 +86,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        _showOrHideFloatinActionMenu()
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
     }
@@ -135,10 +140,12 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     }
     
     private func _showOrHideFloatinActionMenu() {
-        let transform = CGAffineTransform(rotationAngle: isFloatingActionMenuExpanded ? -45 : 0)
+        let transform = CGAffineTransform(rotationAngle: isFloatingActionMenuExpanded ? CGFloat.pi / 4 : 0)
+        floatingActionMenuLeftPaddingConstraint.constant = isFloatingActionMenuExpanded ? 16 : 0
+        floatingActionsStackView.isHidden = !isFloatingActionMenuExpanded
         UIView.animate(withDuration: 0.3, animations: { [self] in
-            floatingActionsStackView.isHidden = isFloatingActionMenuExpanded
             floatingActionPlusButton.transform = transform
+            view.layoutIfNeeded()
         })
     }
     
@@ -206,6 +213,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
             guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: FolderCollectionViewCell.reuseIdentifier, for: indexPath) as? FolderCollectionViewCell else {
                 fatalError("ERROR: Unable to find and dequeue cell with identifier \(FolderCollectionViewCell.reuseIdentifier)")
             }
+            collectionViewCell.folder = self.folders[indexPath.row]
             return collectionViewCell
         }
         return dataSource
@@ -272,20 +280,55 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
             self.present(alertVC, animated: true, completion: nil)
     }
 
+    @IBAction func addNewFolder(_ sender: UIButton) {
+        let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
+        alertVC.alertTitle.textColor = .primary
+        
+        alertVC.addTextField { (textField) in
+            textField?.placeholder = "Folder Name".localized
+                }
+        
+        alertVC.alertActionStackView.axis = .horizontal
+        let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
+            let textField = alertVC.textFields[0]
+            guard let folderName = textField.text,
+                  !folderName.isEmpty else {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error)
+                return
+            }
+            let folder = Folder(name: folderName, documetCount: 0)
+            DocumentHelper.shared.addNewEmpty(folder: folder)
+            self.folders.append(folder)
+            self._applyFolderSnapshot()
+        }
+        doneAction.setTitleColor(.primary, for: .normal)
+        alertVC.addAction(doneAction)
+        
+        let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
+        alertVC.addAction(cancelAction)
+        alertVC.gravityDismissAnimation = false
+
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
     
     @IBAction func didTapFloatinActionPlusButton(sender: UIButton) {
         isFloatingActionMenuExpanded.toggle()
     }
     
     @IBAction func didTapPickImageButton(_ sender: FooterButton) {
+        isFloatingActionMenuExpanded.toggle()
         delegate?.pickNewDocument(self)
     }
     
     @IBAction func didTapScanButton(_ sender: FooterButton) {
+        isFloatingActionMenuExpanded.toggle()
         delegate?.scanNewDocument(self)
     }
     
     @IBAction func didTapSettingsButton(_ sender: FooterButton) {
+        isFloatingActionMenuExpanded.toggle()
         delegate?.showSettings(self)
     }
 

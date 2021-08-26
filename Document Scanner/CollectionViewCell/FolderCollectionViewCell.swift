@@ -15,6 +15,14 @@ class FolderCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var documentCountsLabel: UILabel!
     @IBOutlet private weak var moreOptionButton: UIButton!
     
+    var folder: Folder? {
+        didSet {
+            guard let folder = folder else { return }
+            folderNameLabel.text = folder.name
+            documentCountsLabel.text = "\(folder.documetCount)"
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         _setupViews()

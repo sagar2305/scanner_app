@@ -128,11 +128,22 @@ struct DocumentHelper {
                 folderDictionary[document.tag] = [document]
             }
         }
-        
         folderDictionary.forEach { key, documents in
             let folder = Folder(name: key, documetCount: documents.count)
             folders.append(folder)
         }
+        folders += emptyFolders
         return folders
     }
+    
+    func addNewEmpty(folder: Folder) {
+        var emptyFoldersList = emptyFolders
+        emptyFoldersList.append(folder)
+        UserDefaults.standard.save(emptyFoldersList, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+    }
+    
+    var emptyFolders: [Folder] {
+        UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey) ?? []
+    }
+    
 }
