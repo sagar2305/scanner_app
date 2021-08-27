@@ -87,7 +87,15 @@ class Document: Codable, Identifiable {
         self.name = name
         update()
         if !updatedFromCloud {
-            CloudKitHelper.shared.rename(document: self)
+            CloudKitHelper.shared.update(document: self)
+        }
+    }
+    
+    func updateTag(new tag: String, updatedFromCloud: Bool = false) {
+        self.tag = tag
+        update()
+        if !updatedFromCloud {
+            CloudKitHelper.shared.update(document: self)
         }
     }
     
@@ -122,5 +130,6 @@ extension Document {
         CloudKitHelper.shared.saveToCloud(document: self)
     }
 }
+
 
 

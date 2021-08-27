@@ -167,6 +167,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                                          forCellWithReuseIdentifier: FolderCollectionViewCell.reuseIdentifier)
         folderCollectionView.collectionViewLayout = _foldersCollectionViewLayout()
         folderCollectionView.delegate = self
+        folderCollectionView.dropDelegate = self
         _applyFolderSnapshot()
     }
     
@@ -431,4 +432,24 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
         return [renameAction, deleteAction]
     }
 }
+
+@available(iOS 13.0, *)
+extension HomeViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+       return []
+    }
+    
+    
+}
+
+@available(iOS 13.0, *)
+extension HomeViewController: UICollectionViewDropDelegate {
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        
+    }
+    
+    
+}
+
+
 

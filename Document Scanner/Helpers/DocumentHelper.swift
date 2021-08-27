@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 struct DocumentHelper {
     
@@ -104,8 +105,7 @@ struct DocumentHelper {
         return documents.first { $0.id == id }
     }
     
-    func deleteDocument(with id: String) {
-    }
+
         
     func getPageAndDocumentContainingPage(with id: String) -> (page: Page?,document: Document?) {
         for document in documents {
@@ -114,6 +114,11 @@ struct DocumentHelper {
             }
         }
         return (nil, nil)
+    }
+    
+    func move(document: Document, to folder: Folder) {
+        document.updateTag(new: folder.name, updatedFromCloud: false)
+        
     }
     
     var folders: [Folder] {
@@ -146,4 +151,11 @@ struct DocumentHelper {
         UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey) ?? []
     }
     
+}
+
+
+extension Document: NSItemProviderWriting {
+    static var writableTypeIdentifiersForItemProvider: [String] {
+        return kUTTypeData
+    }
 }
