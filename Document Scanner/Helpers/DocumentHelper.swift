@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MobileCoreServices
 
 struct DocumentHelper {
     
@@ -118,8 +117,12 @@ struct DocumentHelper {
     
     func move(document: Document, to folder: Folder) {
         document.updateTag(new: folder.name, updatedFromCloud: false)
-        
+        var emptyFolders = emptyFolders
+        emptyFolders.removeAll { $0.id == folder.id }
+        UserDefaults.standard.save(emptyFolders, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+        NotificationCenter.default.post(name: .documentMovedToFolder, object: nil)
     }
+    
     
     var folders: [Folder] {
         dump(documents)
@@ -149,13 +152,5 @@ struct DocumentHelper {
     
     var emptyFolders: [Folder] {
         UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey) ?? []
-    }
-    
-}
-
-
-extension Document: NSItemProviderWriting {
-    static var writableTypeIdentifiersForItemProvider: [String] {
-        return kUTTypeData
     }
 }

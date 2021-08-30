@@ -27,6 +27,9 @@ protocol HomeViewControllerDelegate: AnyObject {
 @available(iOS 13.0, *)
 class HomeViewController: DocumentScannerViewController, HomeVC {
     
+    let folderCollectionViewTAG = 44
+    let documentsCollectionViewTAG = 55
+    
     typealias FolderDataSource = UICollectionViewDiffableDataSource<Int, Folder>
     typealias FoldertSnapShot = NSDiffableDataSourceSnapshot<Int, Folder>
     
@@ -89,6 +92,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         _showOrHideFloatinActionMenu()
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(_getDocumentsAndFolders), name: .documentMovedToFolder, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -101,7 +106,12 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         delegate?.viewDidAppear(_controller: self)
     }
 
-    func _getDocumentsAndFolders() {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        NotificationCenter.default.removeObserver(self, name: .documentMovedToFolder, object: nil)
+    }
+    
+    @objc func _getDocumentsAndFolders() {
         let documents: [Document] = DocumentHelper.shared.untaggedDocument
         self.allDocuments = documents
         self.filteredDocuments = documents
@@ -162,6 +172,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupFoldersCollectionViewCell() {
         folderCollectionView.isHeroEnabled = true
+        folderCollectionView.tag = folderCollectionViewTAG
         folderCollectionView.hero.modifiers = [.cascade]
         folderCollectionView.register(UINib(nibName: FolderCollectionViewCell.reuseIdentifier, bundle: nil),
                                          forCellWithReuseIdentifier: FolderCollectionViewCell.reuseIdentifier)
@@ -173,11 +184,13 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     private func _setupDocumentsCollectionViewCell() {
         documentsCollectionView.isHeroEnabled = true
+        documentsCollectionView.tag = documentsCollectionViewTAG
         documentsCollectionView.hero.modifiers = [.cascade]
         documentsCollectionView.register(UINib(nibName: DocumentCollectionViewCell.reuseIdentifier, bundle: nil),
                                          forCellWithReuseIdentifier: DocumentCollectionViewCell.reuseIdentifier)
         documentsCollectionView.collectionViewLayout = _documentsCollectionViewLayout()
         documentsCollectionView.delegate = self
+        documentsCollectionView.dragDelegate = self
         _applyFolderSnapshot()
         _applyDocumentSnapshot()
     }
@@ -338,10 +351,14 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
 @available(iOS 13.0, *)
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let document = filteredDocuments[indexPath.row]
-        delegate?.viewDocument(self, document: document)
+        if collectionView.tag == documentsCollectionViewTAG {
+            let document = filteredDocuments[indexPath.row]
+            delegate?.viewDocument(self, document: document)
+        } else if collectionView.tag == folderCollectionViewTAG {
+            //TODO: - handle folder taps
+        }
     }
-
+    
 }
 
 @available(iOS 13.0, *)
@@ -391,6 +408,22 @@ extension HomeViewController: UISearchBarDelegate {
 
 @available(iOS 13, *)
 extension HomeViewController: SwipeCollectionViewCellDelegate {
+    
+    
+    func moveDocument(document: Document) {
+        let controller = UIAlertController(title: "Select Folder", message: nil, preferredStyle: .actionSheet)
+        for folder in folders {
+            let action = UIAlertAction(title: folder.name, style: .default) { _ in
+                DocumentHelper.shared.move(document: document, to: folder)
+            }
+            controller.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        controller.addAction(cancelAction)
+        present(controller, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         editActionsForItemAt indexPath: IndexPath,
                         for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
@@ -417,6 +450,17 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
             self._rename(document)
         }
         
+        let moveToFolderAction = SwipeAction(style: .default, title: "Move") { _, indexPath in
+            guard let document = self.documentDataSource.itemIdentifier(for: indexPath) else {
+                return
+            }
+            self.moveDocument(document: document)
+        }
+        
+        moveToFolderAction.backgroundColor = .green
+        let moveImage = UIImage(systemName: "folder")?.withRenderingMode(.alwaysTemplate)
+        moveImage?.withTintColor(.white)
+        
         // customize the action appearance
         renameAction.backgroundColor = .primary
         let renameImage = UIImage(named: "rename")?.withRenderingMode(.alwaysTemplate)
@@ -427,19 +471,22 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
         
         renameAction.image = renameImage
         deleteAction.image = deleteImage
+        moveToFolderAction.image = moveImage
     
 
-        return [renameAction, deleteAction]
+        return [renameAction,moveToFolderAction, deleteAction]
     }
 }
 
 @available(iOS 13.0, *)
 extension HomeViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-       return []
+        
+        let document = filteredDocuments[indexPath.row]
+        let itemProvider = NSItemProvider(object: document)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
     }
-    
-    
 }
 
 @available(iOS 13.0, *)
@@ -447,8 +494,6 @@ extension HomeViewController: UICollectionViewDropDelegate {
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         
     }
-    
-    
 }
 
 

@@ -23,7 +23,7 @@ class CloudKitHelper {
         ckPrivateDB = ckContainer.privateCloudDatabase
         //_deleteLocalCaches() //Use only for testing purpose
         addSubscriptions()
- 
+        
         if idsOfPagesMarkedForiCloudUpload.isEmpty &&
             idsOfDocumentMarkedForiCloudUpload.isEmpty &&
             idsOfDocumentMarkedForDeletionFromiCloud.isEmpty &&
@@ -47,7 +47,7 @@ class CloudKitHelper {
             deletedDocumentFromiCloud(with: documentID)
         }
     }
-
+    
     private func _uploadPendingDocumentToiCloudIfAny() {
         for documentID in idsOfDocumentMarkedForiCloudUpload {
             if idsOfDocumentUploadedToiCloud.contains(documentID) { return }
@@ -164,7 +164,7 @@ class CloudKitHelper {
         var documentIdSet = idsOfDocumentMarkedForUpdate
         documentIdSet.insert(document.id)
         UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForUpdateKey)
-
+        
     }
     
     var idsOfDocumentMarkedForUpdate: Set<String> {
@@ -407,7 +407,7 @@ class CloudKitHelper {
                     }
                     print("Successfully uploaded edited image")
                     AnalyticsHelper.shared.logEvent(.updatedDocumentPage, properties: [.pageID: page.id,
-                                                                                    .documentID: document.id])
+                                                                                       .documentID: document.id])
                 }
             }
         }
@@ -440,7 +440,7 @@ class CloudKitHelper {
             }
             
             AnalyticsHelper.shared.logEvent(.addedNewPageToDocument, properties: [.pageID: page.id,
-                                                                            .reason: error?.localizedDescription ?? "--"])
+                                                                                  .reason: error?.localizedDescription ?? "--"])
             self._markPageAsUploadedToiCloud(with: [page.id])
             
         }
@@ -504,7 +504,7 @@ class CloudKitHelper {
                         dump(document)
                         _markDocumentAsUploadedToiCloud(document: document)
                         allDocuments.append(document)
-                       
+                        
                         print("Document fetching succeeded")
                     }
                 }
@@ -733,4 +733,5 @@ class CloudKitHelper {
                 self.ckPrivateDB.add(zoneChangeOperation)
             }
         }
+    }
 }
