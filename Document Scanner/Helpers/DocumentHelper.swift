@@ -21,6 +21,10 @@ struct DocumentHelper {
         return documents.filter { $0.tag == "" }
     }
     
+    func getDocument(with tag: String) -> [Document] {
+        return documents.filter { $0.tag == tag }
+    }
+    
     func generateDocument(originalImages: [UIImage], editedImages: [UIImage]) -> Document? {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()

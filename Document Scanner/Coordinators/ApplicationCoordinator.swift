@@ -53,6 +53,8 @@ class ApplicationCoordinator: Coordinator {
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
+    
+    
     func viewDidAppear(_controller: HomeVC) {
         ReviewHelper.shared.requestAppRating()
     }
@@ -89,6 +91,14 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
         let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
         childCoordinators.append(documentViewerCoordinator)
         documentViewerCoordinator.start()
+    }
+    
+    func openFolder(_ controller: HomeVC, folder: Folder) {
+        if #available(iOS 13.0, *) {
+            let foldersCoordinator = FoldersCoordinator(navigationController, folder: folder)
+            childCoordinators.append(foldersCoordinator)
+            foldersCoordinator.start()
+        }
     }
 }
 

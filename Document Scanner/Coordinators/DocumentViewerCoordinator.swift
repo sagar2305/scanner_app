@@ -111,7 +111,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     }
     
     func documentReviewVC(exit controller: DocumentReviewVC) {
-        navigationController.popToRootViewController(animated: true)
+        navigationController.popViewController(animated: true)
     }
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {

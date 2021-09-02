@@ -22,6 +22,7 @@ protocol HomeViewControllerDelegate: AnyObject {
     func pickNewDocument(_ controller: HomeVC)
     func showSettings(_ controller: HomeVC)
     func viewDocument(_ controller: HomeVC, document: Document)
+    func openFolder(_ controller: HomeVC, folder: Folder)
 }
 
 @available(iOS 13.0, *)
@@ -355,12 +356,14 @@ extension HomeViewController: UICollectionViewDelegate {
             let document = filteredDocuments[indexPath.row]
             delegate?.viewDocument(self, document: document)
         } else if collectionView.tag == folderCollectionViewTAG {
-            //TODO: - handle folder taps
+            let folder = folders[indexPath.row]
+            delegate?.openFolder(self, folder: folder)
         }
     }
     
 }
 
+// MARK: - UISearchBarDelegate
 @available(iOS 13.0, *)
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -406,11 +409,10 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - SwipeCollectionViewCellDelegate
 @available(iOS 13, *)
 extension HomeViewController: SwipeCollectionViewCellDelegate {
-    
-    
-    func moveDocument(document: Document) {
+        func moveDocument(document: Document) {
         let controller = UIAlertController(title: "Select Folder", message: nil, preferredStyle: .actionSheet)
         for folder in folders {
             let action = UIAlertAction(title: folder.name, style: .default) { _ in
@@ -478,6 +480,7 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
     }
 }
 
+// MARK: - UICollectionViewDragDelegate
 @available(iOS 13.0, *)
 extension HomeViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -489,6 +492,7 @@ extension HomeViewController: UICollectionViewDragDelegate {
     }
 }
 
+// MARK: - UICollectionViewDropDelegate
 @available(iOS 13.0, *)
 extension HomeViewController: UICollectionViewDropDelegate {
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
