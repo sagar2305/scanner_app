@@ -17,5 +17,6 @@ target 'Document Scanner' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Tatsi'
   pod 'SwipeCellKit'
+  pod 'AdvancedPageControl'
   pod 'TTInAppPurchases', :path => '~/Documents/Develop/TTInAppPurchases'
 end

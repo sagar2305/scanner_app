@@ -1,4 +1,5 @@
 PODS:
+  - AdvancedPageControl (0.1.5)
   - Amplitude (7.2.1)
   - Hero (1.5.0)
   - LGButton (1.1.6)
@@ -42,6 +43,7 @@ PODS:
   - WeScan (1.7.0)
 
 DEPENDENCIES:
+  - AdvancedPageControl
   - Hero
   - LGButton
   - lottie-ios
@@ -58,6 +60,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - AdvancedPageControl
     - Amplitude
     - Hero
     - LGButton
@@ -84,6 +87,7 @@ EXTERNAL SOURCES:
     :path: "~/Documents/Develop/TTInAppPurchases"
 
 SPEC CHECKSUMS:
+  AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
   Amplitude: 70316573d6174f0a467853b460f2f319af3aa0b3
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
@@ -106,6 +110,6 @@ SPEC CHECKSUMS:
   TTInAppPurchases: a7359b2d60dbd93ff3f288625429478be02cfdbb
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: 7b2ef92f581ba1006ae4180a701af4e1fdc49854
+PODFILE CHECKSUM: cbaa72731a9db63ea2dbad852cfcb1ac6554f20b
 
 COCOAPODS: 1.10.0

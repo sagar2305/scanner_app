@@ -55,6 +55,7 @@
 		0271CA7E262583B200052565 /* Avenir Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA79262583B100052565 /* Avenir Medium.ttf */; };
 		0271CA7F262583B200052565 /* Avenir Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0271CA7A262583B100052565 /* Avenir Regular.ttf */; };
 		028FE77E263531D40049C587 /* CropFooterControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028FE77D263531D40049C587 /* CropFooterControls.swift */; };
+		0295F7FE26E738E200C5361F /* AppPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0295F7FD26E738E200C5361F /* AppPageControl.swift */; };
 		02977F00262F0DB600AB5888 /* ImageAdjustControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */; };
 		0297DA4F26269E9400F8BF42 /* CorrectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */; };
 		0297DA5026269E9400F8BF42 /* CorrectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */; };
@@ -195,6 +196,7 @@
 		0271CA79262583B100052565 /* Avenir Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Medium.ttf"; sourceTree = "<group>"; };
 		0271CA7A262583B100052565 /* Avenir Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Regular.ttf"; sourceTree = "<group>"; };
 		028FE77D263531D40049C587 /* CropFooterControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropFooterControls.swift; sourceTree = "<group>"; };
+		0295F7FD26E738E200C5361F /* AppPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPageControl.swift; sourceTree = "<group>"; };
 		02977EFF262F0DB600AB5888 /* ImageAdjustControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAdjustControls.swift; sourceTree = "<group>"; };
 		0297DA4D26269E9400F8BF42 /* CorrectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionVC.swift; sourceTree = "<group>"; };
 		0297DA4E26269E9400F8BF42 /* CorrectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CorrectionVC.xib; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				024AFE8B262FE98000E3730C /* ImageColorControls.swift */,
 				028FE77D263531D40049C587 /* CropFooterControls.swift */,
 				021BA67B26414552003DBD73 /* ImageCorrectionControls.swift */,
+				0295F7FD26E738E200C5361F /* AppPageControl.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				02F1922B260096F100D8CB8A /* Document.swift in Sources */,
 				02F1921B260096C100D8CB8A /* IconsHelper.swift in Sources */,
 				025BDA9E25F09E12000834AE /* Coordinator.swift in Sources */,
+				0295F7FE26E738E200C5361F /* AppPageControl.swift in Sources */,
 				025BDA8A25F09AA1000834AE /* ViewController.swift in Sources */,
 				02F1921D260096C100D8CB8A /* FileHelper.swift in Sources */,
 				02620D3926367B6700AEB15F /* OnboardingView.swift in Sources */,
