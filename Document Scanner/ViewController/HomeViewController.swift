@@ -40,7 +40,6 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     private var isFloatingActionMenuExpanded: Bool = false {
         didSet {
             _showOrHideFloatinActionMenu()
-            
         }
     }
     
@@ -55,9 +54,9 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var searchBarRightImageView: UIImageView!
-    @IBOutlet private weak var noDocumentsMessageLabel: UILabel!
     
     //folder collection view
+    @IBOutlet private weak var foldersView: UIView!
     @IBOutlet private weak var foldersHeaderView: UIView!
     @IBOutlet private weak var foldersHeaderLabel: UILabel!
     @IBOutlet private weak var addFolderButton: UIButton!
@@ -68,6 +67,8 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var documentsLabel: UILabel!
     @IBOutlet private weak var sortDocumentsButton: UIButton!
     @IBOutlet private weak var documentsCollectionView: UICollectionView!
+    @IBOutlet private weak var noScanAvailableView: UIView!
+    @IBOutlet private weak var noScansAvailableDescriptionLabel: UILabel!
     
     //floating button menu
     @IBOutlet private weak var floatingActionsContainer: UIView!
@@ -76,20 +77,18 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     @IBOutlet private weak var floatingActionSettingsButton: UIButton!
     @IBOutlet private weak var floatingActionScanButton: UIButton!
     @IBOutlet private weak var floatingActionPickButton: UIButton!
+    
     @IBOutlet private weak var floatingActionMenuLeftPaddingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private weak var pickDocumentFooterButton: FooterButton!
-    @IBOutlet private weak var scanDocumentFooterButton: FooterButton!
-    @IBOutlet private weak var settingsFooterButton: FooterButton!
-    
+    @IBOutlet private weak var folderViewHeightConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        _setupViews()
         _setupCollectionViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        _setupViews()
         _showOrHideFloatinActionMenu()
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
@@ -116,14 +115,12 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         let documents: [Document] = DocumentHelper.shared.untaggedDocument
         self.allDocuments = documents
         self.filteredDocuments = documents
-        noDocumentsMessageLabel.isHidden = allDocuments.count > 0
         folders = DocumentHelper.shared.folders
         _applyFolderSnapshot(animatingDifferences: true)
         _applyDocumentSnapshot(animatingDifferences: true)
     }
     
     private func _setupViews() {
-        
         _setupSearchBar()
         foldersHeaderLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
         //TODO: - Localize
@@ -137,13 +134,25 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         documentsLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
         //TODO: - Localize
         documentsLabel.text = "My\nScans"
-               
-        noDocumentsMessageLabel.configure(with: UIFont.font(.avenirRegular, style: .body))
-        noDocumentsMessageLabel.numberOfLines = 0
-        noDocumentsMessageLabel.text = "No document available message".localized
         
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         definesPresentationContext = true
+        
+       
+        if DocumentHelper.shared.totalDocumentsCount == 0 {
+            _setupNoScanAvailableView()
+        } else {
+            noScanAvailableView.isHidden = true
+        }
+    }
+    
+    private func _setupNoScanAvailableView() {
+        foldersView.isHidden = true
+        folderViewHeightConstraint.constant = 0
+        noScansAvailableDescriptionLabel.configure(with: UIFont.font(.DMSansRegular, style: .callout))
+        noScansAvailableDescriptionLabel.textColor = .secondaryText
+        //TODO: - Localize
+        noScansAvailableDescriptionLabel.text = "Please scan your first \ndocument"
     }
     
     private func _setupFloationActionMenu() {

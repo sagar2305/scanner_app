@@ -17,6 +17,10 @@ struct DocumentHelper {
         return UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
     }
     
+    var totalDocumentsCount: Int {
+        return documents.count
+    }
+    
     var untaggedDocument: [Document] {
         return documents.filter { $0.tag == "" }
     }

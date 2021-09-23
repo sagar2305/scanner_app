@@ -115,7 +115,11 @@ class OnboardingVC: DocumentScannerViewController {
     
     
     @IBAction func didTapNext(_ sender: UIButton) {
-        changePage(direction: .forward)
+        if currentPageIndex < 2 {
+            changePage(direction: .forward)
+        } else {
+            delegate?.onboardingVC(self)
+        }
     }
     
     @IBAction func didTapSkip(_ sender: UIButton) {
