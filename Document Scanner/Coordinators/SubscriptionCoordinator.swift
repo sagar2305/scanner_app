@@ -195,7 +195,8 @@ class SubscribeCoordinator: Coordinator {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
                 }
-                self?._dismiss()
+                //TODO: - localize
+                AlertMessageHelper.shared.presentRestorationSuccessAlert { }
             }
         }
     }
@@ -290,7 +291,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
     }
     
     func monthlyBreakdownOfPrice(withIntroDiscount withDiscount: Bool, withDurationSuffix: Bool) -> String {
-        guard let availableProduct = availableProducts?.first else {
+        guard let availableProduct = availableProducts?.last else {
             return ""
         }
 
