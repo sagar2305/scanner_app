@@ -180,10 +180,12 @@ class SubscribeCoordinator: Coordinator {
     }
 
     private func _restorePurchases() {
+        NVActivityIndicatorView.start()
         DispatchQueue.global().async {
             TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
         }
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
+            NVActivityIndicatorView.stop()
             guard error == nil else {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
@@ -197,6 +199,7 @@ class SubscribeCoordinator: Coordinator {
                 }
                 //TODO: - localize
                 AlertMessageHelper.shared.presentRestorationSuccessAlert { }
+                self?._dismiss()
             }
         }
     }
