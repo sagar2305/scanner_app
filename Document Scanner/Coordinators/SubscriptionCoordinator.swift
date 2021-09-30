@@ -180,10 +180,12 @@ class SubscribeCoordinator: Coordinator {
     }
 
     private func _restorePurchases() {
+        NVActivityIndicatorView.start()
         DispatchQueue.global().async {
             TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restoredPurchase)
         }
         SubscriptionHelper.shared.restorePurchases {[weak self] (success, error) in
+            NVActivityIndicatorView.stop()
             guard error == nil else {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
@@ -195,6 +197,8 @@ class SubscribeCoordinator: Coordinator {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
                 }
+                //TODO: - localize
+                AlertMessageHelper.shared.presentRestorationSuccessAlert { }
                 self?._dismiss()
             }
         }
@@ -290,7 +294,7 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
     }
     
     func monthlyBreakdownOfPrice(withIntroDiscount withDiscount: Bool, withDurationSuffix: Bool) -> String {
-        guard let availableProduct = availableProducts?.first else {
+        guard let availableProduct = availableProducts?.last else {
             return ""
         }
 

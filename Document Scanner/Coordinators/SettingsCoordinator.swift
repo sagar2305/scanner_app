@@ -162,11 +162,12 @@ extension SettingsCoordinator: SettingsVCDelegate {
                 return
             }
             if success {
-                print("SUCESS *****************")
+                AlertMessageHelper.shared.presentRestorationSuccessAlert {
+                    ReviewHelper.shared.requestAppRating()
+                }
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationSuccessful)
                 }
-                ReviewHelper.shared.requestAppRating()
             } else {
                 DispatchQueue.global().async {
                     TTInAppPurchases.AnalyticsHelper.shared.logEvent(.restorationFailure)
