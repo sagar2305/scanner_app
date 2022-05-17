@@ -13,9 +13,22 @@ struct Constants {
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
-        static let hasUserScannedUsingLibrary = "HasUserScannedUsingCameraKey"
-        static let documentScannedUsingCamera = "HasUserPickedImageFromLibrary"
-        static let lastReviewRequestDate = "LastReviewRequestDate"
+        static let hasUserScannedUsingLibraryKey = "HasUserScannedUsingCameraKey"
+        static let documentScannedUsingCameraKey = "HasUserPickedImageFromLibrary"
+        static let lastReviewRequestDateKey = "LastReviewRequestDateKey"
+        static let idsOfDocumentUploadedToiCLoudKey = "IdsOfDocumentUploadedToiCLoudKey"
+        static let idsOfPagesUploadedToiCloudKey = "IdsOfPagesUploadedToiCloudKey"
+        static let idsOfDocumentsMarkedForiCloudUploadKey = "IdsOfDocumentsMarkedForiCloudUploadKey"
+        static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
+        static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
+        static let idsOfDocumentMarkedForRenamingKey = "IdsOfDocumentMarkedForRenamingKey"
+        static let idsOfPagesMarkedForDeletionFromiCloudKey = "idsOfPagesMarkedForDeletionFromiCloudKey"
+        
+        //iCloud-Subscription Keys & ChangeToken
+        static let iCloudDocumentRecordSubscriptionKey = "iCloudDocumentRecordSubscriptionKey"
+        static let iCloudPageRecordSubscriptionKey = "iCloudPageRecordSubscriptionKey"
+        static let iCloudDBChangeTokenKey = "iCloudDBChangeTokenKey"
+
     }
     
     struct WebLinks {
@@ -77,7 +90,9 @@ struct Constants {
         case userPlan = "User Plan"
         case dateOfSubScription = "Date Of Subscription"
         case numberOfDocuments = "Number Of Document"
-          case appVersion = "App Version"
+        case appVersion = "App Version"
+        case subscribedToDocumentRecordChanges = "Subscribed To Document Record Changes"
+        case subscribedToPageRecordChanges = "Subscribed To Page Record Changes"
     }
     
     enum AnalyticsEvent: String, CustomStringConvertible {
@@ -124,6 +139,19 @@ struct Constants {
         case setBlackAndWhiteImage = "Set BlackAndWhite Image Color" //done
         case setGrayScaleImage = "Set GrayScale Image Color" //done
         
+        //CloudKit syncing
+        case documentUploadedToCloud = "iCloud - Document Uploaded" //done
+        case documentUploadFailed = "iCloud - Document Upload Failed" //done
+        case addedNewPageToDocument = "iCloud - Added New Page To Document" 
+        case pageUploadFailed = "iCloud - Page Upload Failed" //done
+        case updatedDocumentPage = "iCloud - Updated Page" //done
+        case pageUpdateFailed = "iCloud - Page Update Failed" //done
+        case documentRenamed = "iCloud - Document Renamed" //done
+        case documentRenamingFailed = "iCloud - Document Renaming Failed" //done
+        case deletedDocument = "iCloud - Document Deleted" //done
+        case documentDeletionFailed =  "iCloud - Document Deletion Failed" //done
+        case recievedCloudNotification = "iCloud - Received Notification" //done
+        
     }
 
     enum AnalyticsEventProperties: String, CustomStringConvertible {
@@ -144,12 +172,44 @@ struct Constants {
         
         //iCloud
         case recordId = "Record Id"
+        case recordType = "Record Type"
         case lastFetchDate = "Last Fetch Date"
         case recordingReceived = "Recording fetched"
         case autoTriggered = "Auto Triggered"
+        case newName = "New Name"
+        case reason = "Reason"
+        case notificationType = "Notif"
         
         //recording API
         case dateQueryItem = "Query Date"
         
+    }
+}
+
+
+struct CloudKitConstants {
+    static let containerID = "iCloud.com.triviatribe.scanner"
+    
+    struct Records {
+        static let page = "Page"
+        static let document = "Document"
+    }
+    
+    struct PageRecordFields {
+        static let id = "id"
+        static let originalImage = "originalImage"
+        static let originalImageName = "originalImageName"
+        static let editedImage = "editedImage"
+        static let editedImageName = "editedImageName"
+        static let document = "document"
+        static let pageNumber = "pageNumber"
+    }
+    
+    struct DocumentRecordFields {
+        static let id = "id"
+        static let date = "date"
+        static let name = "name"
+        static let pages = "pages"
+        static let tag = "tag"
     }
 }

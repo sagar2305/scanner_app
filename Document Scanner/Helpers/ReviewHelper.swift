@@ -13,12 +13,12 @@ class ReviewHelper {
     
     private var requestDate: Date? {
         get {
-            let date = UserDefaults.standard.object(forKey: Constants.DocumentScannerDefaults.lastReviewRequestDate) as? Date
+            let date = UserDefaults.standard.object(forKey: Constants.DocumentScannerDefaults.lastReviewRequestDateKey) as? Date
             return date
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: Constants.DocumentScannerDefaults.lastReviewRequestDate)
+            UserDefaults.standard.set(newValue, forKey: Constants.DocumentScannerDefaults.lastReviewRequestDateKey)
         }
     }
     

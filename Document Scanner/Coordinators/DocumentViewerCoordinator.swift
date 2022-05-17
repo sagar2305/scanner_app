@@ -12,6 +12,11 @@ protocol DocumentViewerCoordinatorDelegate: AnyObject {
     func exit(_ coordinator: DocumentViewerCoordinator)
 }
 
+enum PageScanOption {
+    case Library
+    case Camera
+}
+
 class DocumentViewerCoordinator: NSObject, Coordinator {
     
     var rootViewController: UIViewController {
@@ -44,7 +49,7 @@ class DocumentViewerCoordinator: NSObject, Coordinator {
 extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(viewDidAppear controller: DocumentScannerViewController) {
         AnalyticsHelper.shared.logEvent(.userOpenedDocument, properties: [
-                                            .documentID: document.id.uuidString,
+                                            .documentID: document.id,
                                             .numberOfDocumentPages: document.pages.count
          ])
     }
@@ -52,7 +57,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     func documentReviewVC(rename document: Document, name: String) {
         document.rename(new: name)
         AnalyticsHelper.shared.logEvent(.renamedDocument, properties: [
-                                            .documentID: document.id.uuidString,
+                                            .documentID: document.id,
          ])
     }
     
@@ -95,11 +100,11 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         activityVC.completionWithItemsHandler = { activity, completed, item, error in
             if error != nil || !completed {
                 AnalyticsHelper.shared.logEvent(.documentSharingFailed, properties: [
-                    .documentID: share.id.uuidString
+                    .documentID: share.id
                 ])
             }
             AnalyticsHelper.shared.logEvent(.userSharedDocument, properties: [
-                .documentID: share.id.uuidString
+                .documentID: share.id
             ])
         }
         navigationController.present(activityVC, animated: true)
@@ -110,10 +115,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
     }
     
     func documentReviewVC(delete document: Document, controller: DocumentReviewVC) {
-        document.delete()
-        AnalyticsHelper.shared.logEvent(.userDeletedDocument, properties: [
-                                            .documentID: document.id.uuidString,
-         ])
+        DocumentHelper.shared.delete(document: document)
         navigationController.popToRootViewController(animated: true)
     }
     
@@ -127,6 +129,21 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
             controller.present(markupVC, animated: true)
         }
     }
+    
+    func documentReviewVC(controller: DocumentReviewVC, addPages to: Document, from: PageScanOption) {
+        switch from {
+            
+        case .Library:
+            let documentPickerCoordinator = PickDocumentCoordinator(navigationController, existing: document)
+            childCoordinators.append(documentPickerCoordinator)
+            documentPickerCoordinator.start()
+        case .Camera:
+            let documentScanCoordinator = ScanDocumentCoordinator(navigationController, existing: document)
+            childCoordinators.append(documentScanCoordinator)
+            documentScanCoordinator.start()
+        }
+    }
+
 }
 
 extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
@@ -134,12 +151,12 @@ extension DocumentViewerCoordinator: EditDocumentCoordinatorDelegate {
         guard let  pageBeingEdited = pageBeingEdited else {
             fatalError("ERROR: no page is set for editing")
         }
-        if pageBeingEdited.saveEditedImage(editedImage) {
-            document.update()
+        if DocumentHelper.shared.updateEditedImage(editedImage, for: pageBeingEdited, of: document) {
             navigationController.popViewController(animated: true)
+        } else {
+            //TODO: - Show image changes edit failed error
         }
     }
-    
     
     func didCancelEditing(_ coordinator: EditDocumentCoordinator) {
         navigationController.popViewController(animated: true)
@@ -164,5 +181,8 @@ extension DocumentViewerCoordinator: QLPreviewControllerDelegate {
         .updateContents
     }
     
-    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {    }
+    func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {
+        guard let pageBeingEdited = pageBeingEdited else { fatalError("Page not set")}
+        CloudKitHelper.shared.addOrUpdatePage(pageBeingEdited, of: document)
+    }
 }
