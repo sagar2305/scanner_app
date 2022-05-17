@@ -8,8 +8,9 @@
 import UIKit
 import PDFGenerator
 import CloudKit
+import MobileCoreServices
 
-class Document: Codable, Identifiable {
+class Document: NSObject, Codable, Identifiable {
     
     var id: String
     var pages: [Page]
@@ -36,6 +37,7 @@ class Document: Codable, Identifiable {
             pages.append(page)
         }
         self.pages = pages
+        super.init()
         self.name = creationDate
     }
     
@@ -87,7 +89,15 @@ class Document: Codable, Identifiable {
         self.name = name
         update()
         if !updatedFromCloud {
-            CloudKitHelper.shared.rename(document: self)
+            CloudKitHelper.shared.update(document: self)
+        }
+    }
+    
+    func updateTag(new tag: String, updatedFromCloud: Bool = false) {
+        self.tag = tag
+        update()
+        if !updatedFromCloud {
+            CloudKitHelper.shared.update(document: self)
         }
     }
     
@@ -97,13 +107,9 @@ class Document: Codable, Identifiable {
     }
 }
 
-extension Document: Hashable {
+extension Document {
     static func == (lhs: Document, rhs: Document) -> Bool {
         lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }
 
@@ -120,6 +126,47 @@ extension Document {
     
     private func _saveToCloudKit() {
         CloudKitHelper.shared.saveToCloud(document: self)
+    }
+}
+
+extension Document: NSItemProviderWriting {
+    
+    static var writableTypeIdentifiersForItemProvider: [String] {
+        return [(kUTTypeData) as String]
+    }
+    
+    func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
+        let progress = Progress(totalUnitCount: 100)
+        
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(self)
+            let json = String(data: data, encoding: String.Encoding.utf8)
+            progress.completedUnitCount = 100
+            completionHandler(data, nil)
+        } catch {
+            
+            completionHandler(nil, error)
+        }
+        return progress
+    }
+}
+
+
+extension Document: NSItemProviderReading {
+    static var readableTypeIdentifiersForItemProvider: [String] {
+        return [(kUTTypeData) as String]
+    }
+    
+    static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
+        let decoder = JSONDecoder()
+        do {
+            let myJSON: Document = try decoder.decode(Document.self, from: data)
+            return myJSON as! Self
+        } catch {
+            fatalError("Err")
+        }
     }
 }
 

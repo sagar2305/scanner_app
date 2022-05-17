@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AnalyticsHelper.shared.saveUserProperty(.appInstallationDate, value: Date().toFormat("yyyy-MM-dd HH:mm"))
             rootCoordinator = OnboardingCoordinator(window!)
         }
-
         UIApplication.shared.registerForRemoteNotifications()
         Purchases.configure(withAPIKey: Constants.APIKeys.revenueCat)
         _ = TTInAppPurchases.SubscriptionHelper.shared // updating whether user is pro or not on app launch

@@ -22,9 +22,25 @@ class OnboardingView: UIView {
         return view
     }()
     
+    private lazy var headerContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .backgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var headerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.configure(with: UIFont.font(.avenirMedium, style: .title1))
+        label.configure(with: UIFont.font(.DMSansRegular, style: .title3))
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -32,7 +48,7 @@ class OnboardingView: UIView {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.configure(with: UIFont.font(.avenirLight, style: .title3))
+        label.configure(with: UIFont.font(.DMSansMedium, style: .body))
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .secondaryText
@@ -69,29 +85,31 @@ class OnboardingView: UIView {
         
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-            make.bottom.right.lessThanOrEqualToSuperview()
-            //make.top.right.lessThanOrEqualToSuperview()
+            make.right.bottom.left.top.equalToSuperview()
         }
         
-        containerView.addSubview(headerLabel)
+        containerView.addSubview(headerContainer)
+        headerContainer.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(containerView.snp.height).multipliedBy(0.4)
+        }
+        
+        headerStackView.addArrangedSubview(headerLabel)
+        headerStackView.addArrangedSubview(descriptionLabel)
         headerLabel.text = header
-        headerLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(12)
-            make.top.equalToSuperview().inset(16)
-        }
-        
-        containerView.addSubview(descriptionLabel)
         descriptionLabel.text = desc
-        descriptionLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(8)
-            make.top.equalTo(headerLabel.snp.bottom).offset(12)
+        
+        headerContainer.addSubview(headerStackView)
+        headerStackView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
         }
         
         containerView.addSubview(imageView)
         imageView.image = image
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(16)
+            make.top.equalTo(headerContainer.snp.bottom).offset(8)
             make.left.right.equalToSuperview().offset(8)
             make.bottom.lessThanOrEqualToSuperview()
             

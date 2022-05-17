@@ -3,16 +3,6 @@
     {
       "filename" : "camera.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "camera-dark.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {

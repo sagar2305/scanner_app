@@ -10,7 +10,7 @@ import SwipeCellKit
 
 class DocumentCollectionViewCell: SwipeCollectionViewCell {
 
-    static let identifier = "DocumentCollectionViewCell"
+    static let reuseIdentifier = "DocumentCollectionViewCell"
     
     var document: Document? {
         didSet {
@@ -31,8 +31,8 @@ class DocumentCollectionViewCell: SwipeCollectionViewCell {
         _configureCell()
         layer.cornerRadius = 16
         layer.shadowColor = UIColor.shadow.cgColor
-        documentNameLabel.configure(with: UIFont.font(.avenirMedium, style: .body))
-        documentDetailLabel.configure(with: UIFont.font(.avenirRegular, style: .footnote))
+        documentNameLabel.configure(with: UIFont.font(.DMSansRegular, style: .body))
+        documentDetailLabel.configure(with: UIFont.font(.DMSansRegular, style: .footnote))
     }
     
     private func _configureCell() {

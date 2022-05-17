@@ -17,6 +17,18 @@ struct DocumentHelper {
         return UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
     }
     
+    var totalDocumentsCount: Int {
+        return documents.count
+    }
+    
+    var untaggedDocument: [Document] {
+        return documents.filter { $0.tag == "" }
+    }
+    
+    func getDocument(with tag: String) -> [Document] {
+        return documents.filter { $0.tag == tag }
+    }
+    
     func generateDocument(originalImages: [UIImage], editedImages: [UIImage]) -> Document? {
         if let document = Document(originalImages: originalImages, editedImages: editedImages) {
             document.save()
@@ -100,6 +112,8 @@ struct DocumentHelper {
         return documents.first { $0.id == id }
     }
     
+
+        
     func getPageAndDocumentContainingPage(with id: String) -> (page: Page?,document: Document?) {
         for document in documents {
             if let matchingPage = document.pages.first(where: { page in page.id == id }) {
@@ -107,5 +121,44 @@ struct DocumentHelper {
             }
         }
         return (nil, nil)
+    }
+    
+    func move(document: Document, to folder: Folder) {
+        document.updateTag(new: folder.name, updatedFromCloud: false)
+        var emptyFolders = emptyFolders
+        emptyFolders.removeAll { $0.id == folder.id }
+        UserDefaults.standard.save(emptyFolders, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+        NotificationCenter.default.post(name: .documentMovedToFolder, object: nil)
+    }
+    
+    
+    var folders: [Folder] {
+        dump(documents)
+        var folderDictionary: [String: [Document]] = [:]
+        var folders: [Folder] = []
+        
+        for document in documents where document.tag != "" {
+            if folderDictionary.keys.contains(document.tag) {
+                folderDictionary[document.tag]?.append(document)
+            } else {
+                folderDictionary[document.tag] = [document]
+            }
+        }
+        folderDictionary.forEach { key, documents in
+            let folder = Folder(name: key, documetCount: documents.count)
+            folders.append(folder)
+        }
+        folders += emptyFolders
+        return folders
+    }
+    
+    func addNewEmpty(folder: Folder) {
+        var emptyFoldersList = emptyFolders
+        emptyFoldersList.append(folder)
+        UserDefaults.standard.save(emptyFoldersList, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+    }
+    
+    var emptyFolders: [Folder] {
+        UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey) ?? []
     }
 }

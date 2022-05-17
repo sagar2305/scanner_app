@@ -16,11 +16,7 @@ class OnboardingVC: DocumentScannerViewController {
 
     private var pageControllerItems: [UIViewController] = []
     private var currentPageIndex = 0
-    private var haveUserReadLastPage = false {
-        didSet {
-            if haveUserReadLastPage { continueButton.setTitle("Continue".localized, for: .normal) }
-        }
-    }
+    
     private lazy var pageController: UIPageViewController = {
         let controller = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         controller.dataSource = self
@@ -32,8 +28,9 @@ class OnboardingVC: DocumentScannerViewController {
     var delegate: OnboardingVCDelegate?
     
     @IBOutlet weak var pageControllerContainer: UIView!
-    @IBOutlet var continueButton: UIButton!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +45,13 @@ class OnboardingVC: DocumentScannerViewController {
     }
     
     private func _setupView() {
-        continueButton.layer.cornerRadius = 8
-        continueButton.titleLabel?.configure(with: UIFont.font(.avenirMedium, style: .callout))
-        continueButton.setTitle("Next".localized, for: .normal)
+     
+        skipButton.titleLabel?.configure(with: UIFont.font(.DMSansMedium, style: .body))
+        nextButton.titleLabel?.configure(with: UIFont.font(.DMSansMedium, style: .body))
+        
+        //TODO: - Localize
+        skipButton.setTitle("Skip", for: .normal)
+        nextButton.setTitle("Next", for: .normal)
     }
     
     private func _generateItemsForPageControls() {
@@ -99,9 +100,6 @@ class OnboardingVC: DocumentScannerViewController {
         _logEventForPage(index: currentPageIndex)
         pageController.setViewControllers([nextVC], direction: direction, animated: true)
         pageControl.currentPage = currentPageIndex
-        if !haveUserReadLastPage {
-            haveUserReadLastPage = currentPageIndex == pageControllerItems.count - 1
-        }
     }
     
     private func _logEventForPage(index: Int) {
@@ -113,13 +111,21 @@ class OnboardingVC: DocumentScannerViewController {
         }
     }
     
-    @IBAction func didTapContinue(_ sender: UIButton) {
-        if haveUserReadLastPage {
-            delegate?.onboardingVC(self)
-        } else {
+    
+    
+    
+    @IBAction func didTapNext(_ sender: UIButton) {
+        if currentPageIndex < 2 {
             changePage(direction: .forward)
+        } else {
+            delegate?.onboardingVC(self)
         }
     }
+    
+    @IBAction func didTapSkip(_ sender: UIButton) {
+        delegate?.onboardingVC(self)
+    }
+    
     
 }
 
@@ -156,9 +162,6 @@ extension OnboardingVC: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         
         let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
-        if !haveUserReadLastPage {
-            haveUserReadLastPage = (index ?? 0) == pageControllerItems.count - 1 ? true : false
-        }
         pageControl.currentPage = index ?? 0
     }
 }

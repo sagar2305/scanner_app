@@ -10,6 +10,7 @@ import Foundation
 struct Constants {
     struct DocumentScannerDefaults {
         static let documentsListKey = "DocumentsListKey"
+        static let emptyFoldersListKey = "EmptyDocumentListKey"
         static let userIsOnboardedKey = "UserIsOnboardedKey"
         static let timeWhenUserSawSpecialOfferScreenKey = "TimeWhenUserSawSpecialOfferScreenKey"
         static let userPropertiesKey = "UserPropertiesKey"
@@ -21,7 +22,7 @@ struct Constants {
         static let idsOfDocumentsMarkedForiCloudUploadKey = "IdsOfDocumentsMarkedForiCloudUploadKey"
         static let idsOfPagesMarkedForiCloudUploadKey = "IdsOfPagesMarkedForiCloudUploadKey"
         static let idsOfDocumentsMarkedForDeletionFromiCloudKey = "IdsOfDocumentsMarkedForDeletionFromiCloudKey"
-        static let idsOfDocumentMarkedForRenamingKey = "IdsOfDocumentMarkedForRenamingKey"
+        static let idsOfDocumentMarkedForUpdateKey = "IdsOfDocumentMarkedForUpdateKey"
         static let idsOfPagesMarkedForDeletionFromiCloudKey = "idsOfPagesMarkedForDeletionFromiCloudKey"
         
         //iCloud-Subscription Keys & ChangeToken
@@ -67,6 +68,9 @@ struct Constants {
         case avenirLight = "Avenir Light"
         case avenirMedium = "Avenir Medium"
         case avenirRegular = "Avenir Regular"
+        case DMSansRegular = "DMSans-Regular"
+        case DMSansMedium = "DMSans-Medium"
+        case DMSansBold = "DMSans-Bold"
     }
     
     struct APIKeys {

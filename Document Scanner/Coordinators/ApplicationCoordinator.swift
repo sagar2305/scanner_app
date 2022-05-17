@@ -53,12 +53,14 @@ class ApplicationCoordinator: Coordinator {
 }
 
 extension ApplicationCoordinator: HomeViewControllerDelegate {
+    
+    
     func viewDidAppear(_controller: HomeVC) {
         ReviewHelper.shared.requestAppRating()
     }
     
     func scanNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.documents.count < 3 {
+        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
             let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
             scanDocumentCoordinator.delegate = self
             childCoordinators.append(scanDocumentCoordinator)
@@ -69,7 +71,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func pickNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.documents.count < 3 {
+        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
             let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
             pickDocumentCoordinator.delegate = self
             childCoordinators.append(pickDocumentCoordinator)
@@ -89,6 +91,14 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
         let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
         childCoordinators.append(documentViewerCoordinator)
         documentViewerCoordinator.start()
+    }
+    
+    func openFolder(_ controller: HomeVC, folder: Folder) {
+        if #available(iOS 13.0, *) {
+            let foldersCoordinator = FoldersCoordinator(navigationController, folder: folder)
+            childCoordinators.append(foldersCoordinator)
+            foldersCoordinator.start()
+        }
     }
 }
 

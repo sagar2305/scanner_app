@@ -23,11 +23,11 @@ class CloudKitHelper {
         ckPrivateDB = ckContainer.privateCloudDatabase
         //_deleteLocalCaches() //Use only for testing purpose
         addSubscriptions()
- 
+        
         if idsOfPagesMarkedForiCloudUpload.isEmpty &&
             idsOfDocumentMarkedForiCloudUpload.isEmpty &&
             idsOfDocumentMarkedForDeletionFromiCloud.isEmpty &&
-            idsOfDocumentMarkedForRenaming.isEmpty {
+            idsOfDocumentMarkedForUpdate.isEmpty {
             _updateWithiCloud()
         } else {
             _runBackgroundUpdates()
@@ -47,7 +47,7 @@ class CloudKitHelper {
             deletedDocumentFromiCloud(with: documentID)
         }
     }
-
+    
     private func _uploadPendingDocumentToiCloudIfAny() {
         for documentID in idsOfDocumentMarkedForiCloudUpload {
             if idsOfDocumentUploadedToiCloud.contains(documentID) { return }
@@ -56,10 +56,10 @@ class CloudKitHelper {
         }
     }
     
-    private func _renamePendingDocumentsIfAny() {
-        for documentID in idsOfDocumentMarkedForRenaming {
+    private func _updatePendingDocumentsIfAny() {
+        for documentID in idsOfDocumentMarkedForUpdate {
             guard let document = DocumentHelper.shared.getDocument(with: documentID) else { return }
-            self.rename(document: document)
+            self.update(document: document)
         }
     }
     
@@ -159,15 +159,16 @@ class CloudKitHelper {
         guard let documentIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
         return Set(documentIDs)
     }
-    private func _markDocumentForRenamingOniCloud(document: Document) {
-        var documentIdSet = idsOfDocumentMarkedForRenaming
+    
+    private func _markDocumentForUpdateOniCloud(document: Document) {
+        var documentIdSet = idsOfDocumentMarkedForUpdate
         documentIdSet.insert(document.id)
-        UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey)
-
+        UserDefaults.standard.setValue(Array(documentIdSet), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForUpdateKey)
+        
     }
     
-    var idsOfDocumentMarkedForRenaming: Set<String> {
-        let userDefaultKey = Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey
+    var idsOfDocumentMarkedForUpdate: Set<String> {
+        let userDefaultKey = Constants.DocumentScannerDefaults.idsOfDocumentMarkedForUpdateKey
         guard let documentIDs = UserDefaults.standard.object(forKey: userDefaultKey) as? [String] else { return [] }
         return Set(documentIDs)
     }
@@ -307,15 +308,15 @@ class CloudKitHelper {
         }
     }
     
-    // MARK: - Renaming document
-    func rename(document: Document) {
+    // MARK: - Updating document i.e either document is remaned or tagged with folder
+    func update(document: Document) {
         DispatchQueue.global(qos: .utility).async { [self] in
             let predicate = NSPredicate(format: "\(CloudKitConstants.DocumentRecordFields.id) == %@", document.id)
             let query = CKQuery(recordType: CloudKitConstants.Records.document, predicate: predicate)
             executeQuery(query) { records, error in
                 guard error == nil else {
                     print("ERROR: While getting document record")
-                    _markDocumentForRenamingOniCloud(document: document)
+                    _markDocumentForUpdateOniCloud(document: document)
                     AnalyticsHelper.shared.logEvent(.documentRenamingFailed, properties: [
                                                         .documentID: document.id,
                                                         .reason: error?.localizedDescription ?? "--"])
@@ -328,9 +329,10 @@ class CloudKitHelper {
                 }
                 
                 documentRecord.setValue(document.name as NSString, forKey: CloudKitConstants.DocumentRecordFields.name)
+                documentRecord.setValue(document.tag as NSString, forKey: CloudKitConstants.DocumentRecordFields.tag)
                 saveRecord(documentRecord) { record, error in
                     guard error == nil else  {
-                        _markDocumentForRenamingOniCloud(document: document)
+                        _markDocumentForUpdateOniCloud(document: document)
                         AnalyticsHelper.shared.logEvent(.documentRenamingFailed, properties: [
                                                             .documentID: document.id,
                                                             .reason: error?.localizedDescription ?? "--"])
@@ -338,9 +340,9 @@ class CloudKitHelper {
                     }
                     AnalyticsHelper.shared.logEvent(.documentRenamed, properties: [
                                                         .documentID: document.id ])
-                    var idsOfDocumentMarkedForRenaming = idsOfDocumentMarkedForRenaming
-                    idsOfDocumentMarkedForRenaming.remove(document.id)
-                    UserDefaults.standard.setValue(Array(idsOfDocumentMarkedForRenaming), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForRenamingKey)
+                    var idsOfDocumentMarkedForUpdates = idsOfDocumentMarkedForUpdate
+                    idsOfDocumentMarkedForUpdates.remove(document.id)
+                    UserDefaults.standard.setValue(Array(idsOfDocumentMarkedForUpdates), forKey: Constants.DocumentScannerDefaults.idsOfDocumentMarkedForUpdateKey)
                 }
             }
         }
@@ -405,7 +407,7 @@ class CloudKitHelper {
                     }
                     print("Successfully uploaded edited image")
                     AnalyticsHelper.shared.logEvent(.updatedDocumentPage, properties: [.pageID: page.id,
-                                                                                    .documentID: document.id])
+                                                                                       .documentID: document.id])
                 }
             }
         }
@@ -438,7 +440,7 @@ class CloudKitHelper {
             }
             
             AnalyticsHelper.shared.logEvent(.addedNewPageToDocument, properties: [.pageID: page.id,
-                                                                            .reason: error?.localizedDescription ?? "--"])
+                                                                                  .reason: error?.localizedDescription ?? "--"])
             self._markPageAsUploadedToiCloud(with: [page.id])
             
         }
@@ -502,7 +504,7 @@ class CloudKitHelper {
                         dump(document)
                         _markDocumentAsUploadedToiCloud(document: document)
                         allDocuments.append(document)
-                       
+                        
                         print("Document fetching succeeded")
                     }
                 }
@@ -658,71 +660,78 @@ class CloudKitHelper {
                         if record.changedKeys().contains(CloudKitConstants.DocumentRecordFields.name) {
                             guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return }
                             document.rename(new: name, updatedFromCloud: true)
-                        }
-                    } else {
-                        //save the document locally
-                        self._generateAndSaveDocument(from: record)
-                    }
-                } else if record.recordType == CloudKitConstants.Records.page {
-                    guard let pageID = record[CloudKitConstants.PageRecordFields.id] as? String else { return }
-                    let pageAndDocument = DocumentHelper.shared.getPageAndDocumentContainingPage(with: pageID)
-                    //check if page and document exists locally
-                    if pageAndDocument.page != nil && pageAndDocument.document != nil {
-                        //page exists locally check id edited image was changes
-                        if record.changedKeys().contains(CloudKitConstants.PageRecordFields.editedImage) {
-                            guard let editedImageAsset = record[CloudKitConstants.PageRecordFields.editedImage] as? CKAsset,
-                                  let editedImageURL = editedImageAsset.fileURL,
-                                  let editedImage = UIImage(contentsOfFile: editedImageURL.path) else { return }
-                            _ = DocumentHelper.shared.updateEditedImage(editedImage,
-                                                                        for: pageAndDocument.page!,
-                                                                        of: pageAndDocument.document!,
-                                                                        fromCloud: true)
-                        }
-                    } else {
-                        //page and document not exist
-                        //1. get parent document and check if document exist locally
-                        guard let parentDoc = record[CloudKitConstants.PageRecordFields.document]  as? CKRecord.Reference else { return }
-                        let predicate = NSPredicate(format: "name == %@",parentDoc.recordID)
-                        print(parentDoc.recordID)
-                        let query = CKQuery(recordType: "Document", predicate: predicate)
-                        
-                        self.executeQuery(query) { records, error in
-                            guard let _ = error else { return }
-                            guard let parentDocumentRecord = records?.first else {
-                                print("No records were found of parent")
-                                return
+                            
+                            if record.changedKeys().contains(CloudKitConstants.DocumentRecordFields.tag) {
+                                guard let name = record[CloudKitConstants.DocumentRecordFields.name] as? String else { return }
+                                document.updateTag(new: name, updatedFromCloud: true)
+                                
+                                
                             }
-                            guard let parentDocumentId = parentDocumentRecord[CloudKitConstants.DocumentRecordFields.id] as? String else { return }
-                            if let document = DocumentHelper.shared.getDocument(with: parentDocumentId) {
-                                //document exist locally, add page to document
-                                guard let page = Page(record: record) else { return }
-                                DocumentHelper.shared.addPages([page], to: document, fromCloud: true)
-                            } else {
-                                //document does not exist so fetch it from iCloud
-                                self._generateAndSaveDocument(from: parentDocumentRecord)
+                        } else {
+                            //save the document locally
+                            self._generateAndSaveDocument(from: record)
+                        }
+                    } else if record.recordType == CloudKitConstants.Records.page {
+                        guard let pageID = record[CloudKitConstants.PageRecordFields.id] as? String else { return }
+                        let pageAndDocument = DocumentHelper.shared.getPageAndDocumentContainingPage(with: pageID)
+                        //check if page and document exists locally
+                        if pageAndDocument.page != nil && pageAndDocument.document != nil {
+                            //page exists locally check id edited image was changes
+                            if record.changedKeys().contains(CloudKitConstants.PageRecordFields.editedImage) {
+                                guard let editedImageAsset = record[CloudKitConstants.PageRecordFields.editedImage] as? CKAsset,
+                                      let editedImageURL = editedImageAsset.fileURL,
+                                      let editedImage = UIImage(contentsOfFile: editedImageURL.path) else { return }
+                                _ = DocumentHelper.shared.updateEditedImage(editedImage,
+                                                                            for: pageAndDocument.page!,
+                                                                            of: pageAndDocument.document!,
+                                                                            fromCloud: true)
+                            }
+                        } else {
+                            //page and document not exist
+                            //1. get parent document and check if document exist locally
+                            guard let parentDoc = record[CloudKitConstants.PageRecordFields.document]  as? CKRecord.Reference else { return }
+                            let predicate = NSPredicate(format: "name == %@",parentDoc.recordID)
+                            print(parentDoc.recordID)
+                            let query = CKQuery(recordType: "Document", predicate: predicate)
+                            
+                            self.executeQuery(query) { records, error in
+                                guard let _ = error else { return }
+                                guard let parentDocumentRecord = records?.first else {
+                                    print("No records were found of parent")
+                                    return
+                                }
+                                guard let parentDocumentId = parentDocumentRecord[CloudKitConstants.DocumentRecordFields.id] as? String else { return }
+                                if let document = DocumentHelper.shared.getDocument(with: parentDocumentId) {
+                                    //document exist locally, add page to document
+                                    guard let page = Page(record: record) else { return }
+                                    DocumentHelper.shared.addPages([page], to: document, fromCloud: true)
+                                } else {
+                                    //document does not exist so fetch it from iCloud
+                                    self._generateAndSaveDocument(from: parentDocumentRecord)
+                                }
                             }
                         }
                     }
+                    NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil )
                 }
-                NotificationCenter.default.post(name: .documentFetchedFromiCloudNotification, object: nil )
-            }
-            
-            zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
-                if let changeToken = token {
-                    print(zoneID)
-                    self.serverChangeToken = changeToken
+                
+                zoneChangeOperation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, _ in
+                    if let changeToken = token {
+                        print(zoneID)
+                        self.serverChangeToken = changeToken
+                    }
                 }
-            }
-            
-            zoneChangeOperation.recordZoneFetchCompletionBlock =  { zoneID, token, data, hasChanges, error in
-                if let changeToken = token {
-                    print(zoneID)
-                    self.serverChangeToken = changeToken
+                
+                zoneChangeOperation.recordZoneFetchCompletionBlock =  { zoneID, token, data, hasChanges, error in
+                    if let changeToken = token {
+                        print(zoneID)
+                        self.serverChangeToken = changeToken
+                    }
                 }
+                
+                zoneChangeOperation.qualityOfService = .userInitiated
+                self.ckPrivateDB.add(zoneChangeOperation)
             }
-            
-            zoneChangeOperation.qualityOfService = .userInitiated
-            self.ckPrivateDB.add(zoneChangeOperation)
         }
     }
 }
