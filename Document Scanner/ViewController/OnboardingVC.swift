@@ -62,7 +62,7 @@ class OnboardingVC: DocumentScannerViewController {
         pageControllerItems.append(pageControlItem1)
         
         let pageControlItem2 = UIViewController()
-        pageControlItem2.view = OnboardingView(header: "Organise files easily".localized.uppercased(),
+        pageControlItem2.view = OnboardingView(header: "Organize files easily".localized.uppercased(),
                                                description: "Have all your digital document in one place".localized,
                                                image: UIImage(named: "organize-document")!)
         pageControllerItems.append(pageControlItem2)
