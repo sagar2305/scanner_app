@@ -5,6 +5,7 @@ use_frameworks!
 
 
 target 'Document Scanner' do
+  pod 'FirebaseCrashlytics'
   pod 'SwiftLint'
   pod 'WeScan', '>= 0.9'
   pod 'LGButton'

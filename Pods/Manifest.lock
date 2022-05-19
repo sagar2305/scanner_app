@@ -1,12 +1,47 @@
 PODS:
   - AdvancedPageControl (0.1.5)
   - Amplitude (7.2.1)
+  - FirebaseCore (8.3.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.3.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+    - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.3.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.0)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstallations (8.3.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
+    - PromisesObjC (~> 1.2)
+  - GoogleDataTransport (9.1.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Environment (7.5.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.5.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/UserDefaults (7.5.0):
+    - GoogleUtilities/Logger
   - Hero (1.5.0)
   - LGButton (1.1.6)
   - lottie-ios (3.1.9)
   - Mixpanel-swift (2.8.1):
     - Mixpanel-swift/Complete (= 2.8.1)
   - Mixpanel-swift/Complete (2.8.1)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
@@ -18,6 +53,7 @@ PODS:
   - PhoneNumberKit/UIKit (3.3.1):
     - PhoneNumberKit/PhoneNumberKitCore
   - PMAlertController (4.0.1)
+  - PromisesObjC (1.2.12)
   - Purchases (3.9.2):
     - PurchasesCoreSwift (= 3.9.2)
   - PurchasesCoreSwift (3.9.2)
@@ -44,6 +80,7 @@ PODS:
 
 DEPENDENCIES:
   - AdvancedPageControl
+  - FirebaseCrashlytics
   - Hero
   - LGButton
   - lottie-ios
@@ -62,14 +99,22 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AdvancedPageControl
     - Amplitude
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - GoogleDataTransport
+    - GoogleUtilities
     - Hero
     - LGButton
     - lottie-ios
     - Mixpanel-swift
+    - nanopb
     - NVActivityIndicatorView
     - PDFGenerator
     - PhoneNumberKit
     - PMAlertController
+    - PromisesObjC
     - Purchases
     - PurchasesCoreSwift
     - QuickLayout
@@ -89,14 +134,22 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
   Amplitude: 70316573d6174f0a467853b460f2f319af3aa0b3
+  FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
+  FirebaseCoreDiagnostics: 7e873baabcfaa9512f538554ae4fa0817aaafbdb
+  FirebaseCrashlytics: 3d83f2e8a47f476f47c82ff4536b169df6781271
+  FirebaseInstallations: b69db7680870dbac17bba7a51fc0b5c4b365baa7
+  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   LGButton: 9f0a7f9d3030e3f504108342f6b66d64a429371b
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   Mixpanel-swift: 9d3a2597ef015f187abae0bfa5fda5997d5e4429
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   PDFGenerator: 17d6bc525db0a3fcd156fbf00f9d1b8d5cc75d1e
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PMAlertController: ab5fcf4d085b7878c9451466d701449c4bf6efb8
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Purchases: d8a798c9c7552fe66b550bf314a143e94ffa70c8
   PurchasesCoreSwift: ea4eabae180416e580ac60366f41aa1fefec0693
   QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
@@ -110,6 +163,6 @@ SPEC CHECKSUMS:
   TTInAppPurchases: a7359b2d60dbd93ff3f288625429478be02cfdbb
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
-PODFILE CHECKSUM: cbaa72731a9db63ea2dbad852cfcb1ac6554f20b
+PODFILE CHECKSUM: 5096ceaba1988510dc6e5320995bbe006eaa06a5
 
 COCOAPODS: 1.10.1

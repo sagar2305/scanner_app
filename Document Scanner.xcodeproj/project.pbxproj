@@ -113,6 +113,7 @@
 		02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02F19223260096DF00D8CB8A /* ScannerVC.xib */; };
 		02F1922B260096F100D8CB8A /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F1922A260096F100D8CB8A /* Document.swift */; };
 		02FCE5F92660FB4400EA6F95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02FCE5FB2660FB4400EA6F95 /* Localizable.strings */; };
+		1B329A672836616600A9056B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B329A642836616600A9056B /* GoogleService-Info.plist */; };
 		A47F8D2F50802035D8F36212 /* Pods_Document_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A51E4D4B7AD451392E50E274 /* Pods_Document_Scanner.framework */; };
 /* End PBXBuildFile section */
 
@@ -259,6 +260,7 @@
 		02FCE5F82660FAF800EA6F95 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		02FCE5FA2660FB4400EA6F95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02FCE5FC2660FB4800EA6F95 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1B329A642836616600A9056B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A0F1082694267CE4DBA3FC04 /* Pods-Document Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.debug.xcconfig"; sourceTree = "<group>"; };
 		A51E4D4B7AD451392E50E274 /* Pods_Document_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Document_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E9270EB2840C7A7985ECB8 /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.release.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				025BDA8425F09AA1000834AE /* Document Scanner */,
+				1B329A642836616600A9056B /* GoogleService-Info.plist */,
 				025BDA8325F09AA1000834AE /* Products */,
 				8FFBA49EBD6AE71463991EDC /* Pods */,
 				4C0B03C443DA94E9FFA99851 /* Frameworks */,
@@ -562,6 +565,7 @@
 				025BDA8025F09AA1000834AE /* Resources */,
 				02751F7B26006CAB00E8BE90 /* Embed Frameworks */,
 				FF30BCEB869D1E053AE84460 /* [CP] Embed Pods Frameworks */,
+				1B329A6B283663E200A9056B /* Upload Dsym */,
 			);
 			buildRules = (
 			);
@@ -662,6 +666,7 @@
 				029E33A6265CFC2500D92A00 /* SofiaProSemiBold.ttf in Resources */,
 				02E77076260143F300C1887F /* DocumentReviewVC.xib in Resources */,
 				02FCE5F92660FB4400EA6F95 /* Localizable.strings in Resources */,
+				1B329A672836616600A9056B /* GoogleService-Info.plist in Resources */,
 				02F19229260096DF00D8CB8A /* ScannerVC.xib in Resources */,
 				029E33A2265CFC2500D92A00 /* SofiaProUltraLight.ttf in Resources */,
 				02A3949926DF49FE00CC1720 /* FolderViewController.xib in Resources */,
@@ -674,6 +679,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1B329A6B283663E200A9056B /* Upload Dsym */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Upload Dsym";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		F9A3D6E8EC2390940E6A017B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -952,6 +977,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 26;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
