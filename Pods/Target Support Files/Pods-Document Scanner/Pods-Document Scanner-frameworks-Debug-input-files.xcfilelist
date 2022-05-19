@@ -1,6 +1,12 @@
 ${PODS_ROOT}/Target Support Files/Pods-Document Scanner/Pods-Document Scanner-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AdvancedPageControl/AdvancedPageControl.framework
 ${BUILT_PRODUCTS_DIR}/Amplitude/Amplitude.framework
+${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework
+${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework
+${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework
+${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework
+${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework
+${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework
 ${BUILT_PRODUCTS_DIR}/Hero/Hero.framework
 ${BUILT_PRODUCTS_DIR}/LGButton/LGButton.framework
 ${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework
@@ -8,6 +14,7 @@ ${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework
 ${BUILT_PRODUCTS_DIR}/PDFGenerator/PDFGenerator.framework
 ${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework
 ${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework
+${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/Purchases/Purchases.framework
 ${BUILT_PRODUCTS_DIR}/PurchasesCoreSwift/PurchasesCoreSwift.framework
 ${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework
@@ -20,3 +27,4 @@ ${BUILT_PRODUCTS_DIR}/TTInAppPurchases/TTInAppPurchases.framework
 ${BUILT_PRODUCTS_DIR}/Tatsi/Tatsi.framework
 ${BUILT_PRODUCTS_DIR}/WeScan/WeScan.framework
 ${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework
+${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework

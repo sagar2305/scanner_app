@@ -12,6 +12,7 @@ import Mixpanel
 import Amplitude
 import TTInAppPurchases
 import CloudKit
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customisation after application launch.
+        
+        FirebaseApp.configure()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let isUserOnboarded = UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
@@ -44,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = TTInAppPurchases.SubscriptionHelper.shared // updating whether user is pro or not on app launch
         _ = CloudKitHelper.shared //for running background upadates
         rootCoordinator?.start()
+        
         return true
     }
 
