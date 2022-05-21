@@ -261,6 +261,7 @@
 		02FCE5FA2660FB4400EA6F95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02FCE5FC2660FB4800EA6F95 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1B329A642836616600A9056B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1B3CD8A928388D460046E170 /* Document ScannerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Document ScannerRelease.entitlements"; sourceTree = "<group>"; };
 		A0F1082694267CE4DBA3FC04 /* Pods-Document Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.debug.xcconfig"; sourceTree = "<group>"; };
 		A51E4D4B7AD451392E50E274 /* Pods_Document_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Document_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E9270EB2840C7A7985ECB8 /* Pods-Document Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Document Scanner.release.xcconfig"; path = "Target Support Files/Pods-Document Scanner/Pods-Document Scanner.release.xcconfig"; sourceTree = "<group>"; };
@@ -357,6 +358,7 @@
 		025BDA8425F09AA1000834AE /* Document Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				1B3CD8A928388D460046E170 /* Document ScannerRelease.entitlements */,
 				02A6C3FE2680B84800210F67 /* Document ScannerDebug.entitlements */,
 				025BDA9A25F09BAC000834AE /* App files */,
 				024F07CB25FFC5B80091C73C /* CollectionViewCell */,
@@ -944,6 +946,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -974,9 +977,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Document Scanner/Document ScannerDebug.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
@@ -999,9 +1001,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Document Scanner/Document ScannerRelease.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = 7QZND9GRW9;
 				INFOPLIST_FILE = "Document Scanner/App files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
