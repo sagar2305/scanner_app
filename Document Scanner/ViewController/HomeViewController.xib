@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -91,6 +91,9 @@
                                                 <constraint firstAttribute="width" constant="44" id="Vk8-pN-hTC"/>
                                             </constraints>
                                             <state key="normal" image="Sort"/>
+                                            <connections>
+                                                <action selector="didTapSortButton:" destination="-1" eventType="touchUpInside" id="mEa-3g-OPx"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <viewLayoutGuide key="safeArea" id="gHo-5W-Q6N"/>
@@ -323,7 +326,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Sort" width="30" height="31"/>
+        <image name="Sort" width="31" height="31"/>
         <image name="camera" width="26" height="26"/>
         <image name="no-scan" width="374" height="374"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>

@@ -29,12 +29,16 @@ class EditDocumentCoordinator: Coordinator {
     var isNewDocument: Bool
     var imageToEdit: UIImage
     var delegate: EditDocumentCoordinatorDelegate?
+    var page: Page?
+    var document: Document?
     
-    init(_ controller: DocumentScannerNavigationController, edit image: UIImage, originalImage: UIImage? = nil ) {
+    init(_ controller: DocumentScannerNavigationController, edit image: UIImage, originalImage: UIImage? = nil, page: Page? = nil, document: Document? = nil) {
         navigationController = controller
         self.imageToEdit = image
         self.originalImage = originalImage
         self.isNewDocument = originalImage == nil
+        self.page = page
+        self.document = document
     }
     
     func start() {
@@ -62,7 +66,28 @@ extension EditDocumentCoordinator: EditImageVCDelegate {
         delegate?.didCancelEditing(self)
         AnalyticsHelper.shared.logEvent(.cancelledEditingImage)
     }
-
+    
+    func deletePage(_ controller: EditImageVC) {
+        guard let  pageBeingEdited = page, let document = document else {
+            let viewControllers: [UIViewController] = self.navigationController.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is DocumentReviewVC {
+                    self.navigationController.popToViewController(aViewController, animated: true)
+                }
+            }
+            return
+        }
+        if document.pages.count > 1 {
+            DocumentHelper.shared.deletePage(pageBeingEdited, of: document)
+            let documentViewerCoordinator = DocumentViewerCoordinator(navigationController, document: document)
+            childCoordinators.append(documentViewerCoordinator)
+            documentViewerCoordinator.start()
+        } else {
+            DocumentHelper.shared.delete(document: document)
+            navigationController.popToRootViewController(animated: true)
+        }
+        
+    }
 }
 
 extension EditDocumentCoordinator: EditImageVCDataSource { }

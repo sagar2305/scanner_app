@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol FolderCollectionViewCellDelegate: AnyObject {
+    func folderCollectionViewCell(_ folderCollectionViewCell: FolderCollectionViewCell, moreButtonTappedFor folder: Folder)
+}
+
 class FolderCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifier = "FolderCollectionViewCell"
+    
+    weak var delegate: FolderCollectionViewCellDelegate?
     
     @IBOutlet private weak var folderNameLabel: UILabel!
     @IBOutlet private weak var documentCountsLabel: UILabel!
@@ -33,4 +39,10 @@ class FolderCollectionViewCell: UICollectionViewCell {
         documentCountsLabel.configure(with: UIFont.font(.DMSansMedium, style: .footnote))
     }
 
+    @IBAction func didTapMoreButton(_ sender: UIButton) {
+        if let delegate = delegate,
+           let folder = folder {
+            delegate.folderCollectionViewCell(self, moreButtonTappedFor: folder)
+        }
+    }
 }

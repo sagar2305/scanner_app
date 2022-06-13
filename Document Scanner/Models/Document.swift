@@ -101,6 +101,12 @@ class Document: NSObject, Codable, Identifiable {
         }
     }
     
+    func deletePage(_ page: Page) {
+        guard let pageIndex = pages.firstIndex(of: page) else { return }
+        pages.remove(at: pageIndex)
+        update()
+    }
+    
     //for test
     func printIDS() {
         print(id)

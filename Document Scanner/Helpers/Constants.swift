@@ -60,6 +60,7 @@ struct Constants {
         static let annualAndLifeTime = "annualnlifetime"
         static let annualReduced = "annualnlifetime"
         static let lifetime = "Lifetime"
+        static let weeklyMonthlyAndAnnual = "weeklyMonthlyAndAnnual"
     }
     
     enum Fonts: String {

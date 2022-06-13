@@ -42,11 +42,11 @@ class ApplicationCoordinator: Coordinator {
     
     private func startSubscriptionCoordinator() {
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
-                                                           offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
+                                                           offeringIdentifier: Constants.Offering.weeklyMonthlyAndAnnual,
                                                            presented: true,
                                                            giftOffer: false,
                                                            hideCloseButton: false,
-                                                           showSpecialOffer: true)
+                                                           showSpecialOffer: false)
         childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()
     }

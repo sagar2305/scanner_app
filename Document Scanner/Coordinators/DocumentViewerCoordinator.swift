@@ -65,7 +65,9 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
         pageBeingEdited = page
         let editDocumentCoordinator = EditDocumentCoordinator(navigationController,
                                                               edit: pageBeingEdited!.editedImage!,
-                                                              originalImage: pageBeingEdited!.originalImage!)
+                                                              originalImage: pageBeingEdited!.originalImage!,
+                                                              page: page,
+                                                              document: document)
         editDocumentCoordinator.delegate = self
         childCoordinators.append(editDocumentCoordinator)
         editDocumentCoordinator.start()
@@ -135,6 +137,7 @@ extension DocumentViewerCoordinator: DocumentReviewVCDelegate {
             
         case .Library:
             let documentPickerCoordinator = PickDocumentCoordinator(navigationController, existing: document)
+            documentPickerCoordinator.delegate = self
             childCoordinators.append(documentPickerCoordinator)
             documentPickerCoordinator.start()
         case .Camera:
@@ -185,4 +188,16 @@ extension DocumentViewerCoordinator: QLPreviewControllerDelegate {
         guard let pageBeingEdited = pageBeingEdited else { fatalError("Page not set")}
         CloudKitHelper.shared.addOrUpdatePage(pageBeingEdited, of: document)
     }
+}
+
+extension DocumentViewerCoordinator: PickerDocumentCoordinatorDelegate {
+    func didFinishedPickingImage(_ coordinator: PickDocumentCoordinator) {
+        
+    }
+    
+    func didCancelPickingImage(_ coordinator: PickDocumentCoordinator) {
+        navigationController.popViewController(animated: true)
+    }
+    
+    
 }
