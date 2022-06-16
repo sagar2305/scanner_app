@@ -162,13 +162,13 @@ class DocumentReviewVC: DocumentScannerViewController {
             fatalError("ERROR: No document is set")
         }
         
-        let deleteConfirmationAlert = PMAlertController(title: "Delete Document".localized, description: "Are you sure you want to delete the document?".localized, image: nil, style: .alert)
+        let deleteConfirmationAlert = PMAlertController(title: "Delete Page".localized, description: "Are you sure you want to delete the page?".localized, image: nil, style: .alert)
         deleteConfirmationAlert.alertTitle.textColor = .red
         
         
         deleteConfirmationAlert.alertActionStackView.axis = .horizontal
         let yesAction = PMAlertAction(title: "Yes".localized, style: .default) {
-            self.delegate?.documentReviewVC(delete: document, controller: self)
+            self._updatePageViewControllerFor(document: document)
         }
         yesAction.setTitleColor(.red, for: .normal)
         deleteConfirmationAlert.addAction(yesAction)
@@ -178,6 +178,26 @@ class DocumentReviewVC: DocumentScannerViewController {
         deleteConfirmationAlert.gravityDismissAnimation = false
         
         self.present(deleteConfirmationAlert, animated: true, completion: nil)
+    }
+    
+    private func _updatePageViewControllerFor(document: Document) {
+        guard var pageControllerItems = pageControllerItems as? [DocumentPageViewController] else {
+            return
+        }
+        let index = pageControl.currentPage
+        document.deletePage(pageControllerItems[index].page)
+        pageControllerItems.remove(at: index)
+        self.pageControllerItems = pageControllerItems
+        pageControl.numberOfPages = pageControllerItems.count
+        pageControl.isHidden = pageControllerItems.count == 1
+        if pageControllerItems.count == 0 {
+            DocumentHelper.shared.delete(document: document)
+            navigationController?.popToRootViewController(animated: true)
+        } else {
+            let direction: UIPageViewController.NavigationDirection = index == pageControllerItems.count ? .reverse : .forward
+            imagePageController.setViewControllers([pageControllerItems[pageControl.currentPage]], direction: direction, animated: true)
+        }
+        
     }
     
     private func didTapShare(_ sender: FooterButton) {

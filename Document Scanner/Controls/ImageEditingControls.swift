@@ -111,7 +111,7 @@ class ImageEditorControls: UIView {
         stackView.addArrangedSubview(transformFooterButton)
         stackView.addArrangedSubview(adjustFooterButton)
         stackView.addArrangedSubview(colorFooterButton)
-        stackView.addArrangedSubview(deleteButton)
+        //stackView.addArrangedSubview(deleteButton)
         //stackView.addArrangedSubview(editOriginalFooterButton)
         //stackView.addArrangedSubview(undoFooterButton)
         
