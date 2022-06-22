@@ -52,6 +52,7 @@ class DocumentReviewVC: DocumentScannerViewController {
     var pageControllerItems: [UIViewController]?
     var document: Document?
     var currentPageIndex: Int = 0
+    private var pendingIndex: Int?
     
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var backButton: UIButton!
@@ -196,6 +197,7 @@ class DocumentReviewVC: DocumentScannerViewController {
         } else {
             let direction: UIPageViewController.NavigationDirection = index == pageControllerItems.count ? .reverse : .forward
             imagePageController.setViewControllers([pageControllerItems[pageControl.currentPage]], direction: direction, animated: true)
+            currentPageIndex = pageControl.currentPage
         }
         
     }
@@ -250,8 +252,15 @@ extension DocumentReviewVC: UIPageViewControllerDelegate {
    
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         guard let pageControllerItems = pageControllerItems else { fatalError("Items for page control are not set")}
-        let index = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
-        currentPageIndex = index ?? 0
-        pageControl.currentPage = currentPageIndex
+        pendingIndex = pageControllerItems.firstIndex(of: pendingViewControllers.first ?? UIViewController())
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let index = pendingIndex {
+                currentPageIndex = index
+                pageControl.currentPage = index
+            }
+        }
     }
 }

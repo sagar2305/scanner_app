@@ -9,6 +9,7 @@ import UIKit
 import NVActivityIndicatorView
 import TTInAppPurchases
 import Lottie
+import StoreKit
 
 class SubscribeCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
@@ -291,6 +292,15 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
         }
 
         return availableProducts[index].offersFreeTrial
+    }
+    
+    func freeTrialDuration(for index: Int) -> String {
+        guard let availableProducts = availableProducts,
+              availableProducts.count > index else {
+            return ""
+        }
+        
+        return availableProducts[index].freeTrialDuration ?? ""
     }
     
     func monthlyBreakdownOfPrice(withIntroDiscount withDiscount: Bool, withDurationSuffix: Bool) -> String {

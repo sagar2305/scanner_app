@@ -60,7 +60,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func scanNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
+        if SubscriptionHelper.shared.isProUser {
             let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
             scanDocumentCoordinator.delegate = self
             childCoordinators.append(scanDocumentCoordinator)
@@ -71,7 +71,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func pickNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
+        if SubscriptionHelper.shared.isProUser {
             let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
             pickDocumentCoordinator.delegate = self
             childCoordinators.append(pickDocumentCoordinator)

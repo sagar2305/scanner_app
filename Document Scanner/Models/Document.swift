@@ -74,8 +74,8 @@ class Document: NSObject, Codable, Identifiable {
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
-        _saveToCloudKit()
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
+        _saveToCloudKit()
     }
     
     func update() {

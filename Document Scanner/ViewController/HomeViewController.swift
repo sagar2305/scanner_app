@@ -93,7 +93,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         _showOrHideFloatinActionMenu()
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
-        
+        _addObservers()
         NotificationCenter.default.addObserver(self, selector: #selector(_getDocumentsAndFolders), name: .documentMovedToFolder, object: nil)
     }
     
@@ -110,6 +110,24 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         NotificationCenter.default.removeObserver(self, name: .documentMovedToFolder, object: nil)
+        _removeObservers()
+    }
+    
+    private func _addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateSnapshot),
+                                               name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+    
+    private func _removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+    
+    @objc func updateSnapshot() {
+        DispatchQueue.main.async {
+            self._getDocumentsAndFolders()
+            self._setupNoScanAvailableView()
+        }
     }
     
     @objc func _getDocumentsAndFolders() {
@@ -139,17 +157,11 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         definesPresentationContext = true
         
-       
-        if DocumentHelper.shared.totalDocumentsCount == 0 {
-            _setupNoScanAvailableView()
-        } else {
-            noScanAvailableView.isHidden = true
-        }
+        _setupNoScanAvailableView()
     }
     
     private func _setupNoScanAvailableView() {
-       // foldersView.isHidden = true
-       // folderViewHeightConstraint.constant = 0
+        noScanAvailableView.isHidden = DocumentHelper.shared.totalDocumentsCount != 0
         noScansAvailableDescriptionLabel.configure(with: UIFont.font(.DMSansRegular, style: .callout))
         noScansAvailableDescriptionLabel.textColor = .secondaryText
         //TODO: - Localize
@@ -269,7 +281,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         var snapShot = DocumentSnapShot()
         snapShot.appendSections([0])
         snapShot.appendItems(filteredDocuments)
-        documentDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
+        self.documentDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
     }
     
     private func _rename(_ document: Document) {
@@ -371,7 +383,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     
     @IBAction func didTapSortButton(_ sender: UIButton) {
         ascending = !ascending
-        self.filteredDocuments.sort(by: ascending ? {$0.name < $1.name } : {$0.name > $1.name })
+        self.filteredDocuments.sort(by: ascending ? {$0.creationDate < $1.creationDate } : {$0.creationDate > $1.creationDate })
         _applyDocumentSnapshot(animatingDifferences: true)
     }
 }
