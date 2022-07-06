@@ -13,6 +13,7 @@ import Amplitude
 import TTInAppPurchases
 import CloudKit
 import FirebaseCore
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             rootCoordinator = OnboardingCoordinator(window!)
         }
         UIApplication.shared.registerForRemoteNotifications()
+        NotificationHelper.shared.requestAuthorization()
+        UNUserNotificationCenter.current().delegate = self
         Purchases.configure(withAPIKey: Constants.APIKeys.revenueCat)
         _ = TTInAppPurchases.SubscriptionHelper.shared // updating whether user is pro or not on app launch
         _ = CloudKitHelper.shared //for running background upadates
@@ -87,3 +90,32 @@ extension AppDelegate {
     }
 }
 
+
+extension AppDelegate: UNUserNotificationCenterDelegate{
+    
+    // This function will be called when the app receive notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
+    
+    // This function will be called right after user tap on the notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        startSubscriptionCoordinator()
+        completionHandler()
+    }
+    
+    private func startSubscriptionCoordinator() {
+        guard let navigationController = UIApplication.shared.keyWindow?.rootViewController as? DocumentScannerNavigationController else {
+            print("Couldn't access navigation controller")
+            return
+        }
+        let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
+                                                           offeringIdentifier: Constants.Offering.weeklyMonthlyAndAnnual,
+                                                           presented: true,
+                                                           giftOffer: false,
+                                                           hideCloseButton: false,
+                                                           showSpecialOffer: false)
+        rootCoordinator?.childCoordinators.append(subscriptionCoordinator)
+        subscriptionCoordinator.start()
+    }
+}

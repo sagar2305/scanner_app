@@ -21,6 +21,19 @@ class ApplicationCoordinator: Coordinator {
     let navigationController: DocumentScannerNavigationController
     var homeViewController: HomeVC
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    private var notificationShownStatus = false
+    
+    private var notificationStatus: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.localNotificationStatus)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: Constants.DocumentScannerDefaults.localNotificationStatus)
+        }
+    }
+    
     func start() {
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -56,6 +69,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     
     
     func viewDidAppear(_controller: HomeVC) {
+        scheduleLocalNotification()
         ReviewHelper.shared.requestAppRating()
     }
     
@@ -98,6 +112,16 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
             let foldersCoordinator = FoldersCoordinator(navigationController, folder: folder)
             childCoordinators.append(foldersCoordinator)
             foldersCoordinator.start()
+        }
+    }
+    
+    func scheduleLocalNotification() {
+        if SubscriptionHelper.shared.isProUser {
+            NotificationHelper.shared.removeScheduledNotification()
+        } else {
+            if notificationStatus { return }
+            notificationStatus = true
+            NotificationHelper.shared.scheduleNotification()
         }
     }
 }

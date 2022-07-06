@@ -155,6 +155,7 @@ class SubscribeCoordinator: Coordinator {
                     DispatchQueue.global().async {
                         TTInAppPurchases.AnalyticsHelper.shared.logEvent(.userCancelledPurchase, properties: [
                                                                             .productId: product.identifier])
+                        NotificationHelper.shared.scheduleNotificationAfterUserCancelledPurchase()
                     }
                     break
                 case .noProductsAvailable:
