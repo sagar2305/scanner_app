@@ -13,6 +13,7 @@ protocol EditImageVCDelegate: AnyObject {
     func viewDidAppear(_ controller: DocumentScannerViewController)
     func cancelImageEditing(_controller: EditImageVC)
     func finishedImageEditing(_ finalImage: UIImage, controller: EditImageVC, isRotated: Bool)
+    func deletePage(_ controller: EditImageVC)
 }
 
 protocol EditImageVCDataSource: AnyObject {
@@ -35,6 +36,7 @@ class EditImageVC: DocumentScannerViewController {
         imageEditControls.onColorTap = didTapColorImage
         imageEditControls.onOriginalTap = didTapOriginalImage
         imageEditControls.onCropTap = didTapCropImageOption
+        imageEditControls.onDeleteTap = didTapDelete
         imageEditControls.translatesAutoresizingMaskIntoConstraints = false
         return imageEditControls
     }()
@@ -285,6 +287,15 @@ extension EditImageVC {
         editControllerContainer.isHidden = true
         undoButton.isHidden = true
         doneButton.isHidden = true
+    }
+    
+    private func didTapDelete(_ sender: FooterButton) {
+        let alert = UIAlertController(title: "Delete Page?", message: "Are you sure you want to delete this page?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            self.delegate?.deletePage(self)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func didTapEditOriginalImage(_ sender: FooterButton) {

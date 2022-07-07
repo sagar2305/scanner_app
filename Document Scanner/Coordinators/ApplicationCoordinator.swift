@@ -21,6 +21,19 @@ class ApplicationCoordinator: Coordinator {
     let navigationController: DocumentScannerNavigationController
     var homeViewController: HomeVC
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    private var notificationShownStatus = false
+    
+    private var notificationStatus: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Constants.DocumentScannerDefaults.localNotificationStatus)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: Constants.DocumentScannerDefaults.localNotificationStatus)
+        }
+    }
+    
     func start() {
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -42,11 +55,11 @@ class ApplicationCoordinator: Coordinator {
     
     private func startSubscriptionCoordinator() {
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: navigationController,
-                                                           offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
+                                                           offeringIdentifier: Constants.Offering.weeklyMonthlyAndAnnual,
                                                            presented: true,
                                                            giftOffer: false,
                                                            hideCloseButton: false,
-                                                           showSpecialOffer: true)
+                                                           showSpecialOffer: false)
         childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()
     }
@@ -56,11 +69,12 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     
     
     func viewDidAppear(_controller: HomeVC) {
+        scheduleLocalNotification()
         ReviewHelper.shared.requestAppRating()
     }
     
     func scanNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
+        if SubscriptionHelper.shared.isProUser {
             let scanDocumentCoordinator = ScanDocumentCoordinator(navigationController)
             scanDocumentCoordinator.delegate = self
             childCoordinators.append(scanDocumentCoordinator)
@@ -71,7 +85,7 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
     }
     
     func pickNewDocument(_ controller: HomeVC) {
-        if SubscriptionHelper.shared.isProUser || DocumentHelper.shared.totalDocumentsCount < 3 {
+        if SubscriptionHelper.shared.isProUser {
             let pickDocumentCoordinator = PickDocumentCoordinator(navigationController)
             pickDocumentCoordinator.delegate = self
             childCoordinators.append(pickDocumentCoordinator)
@@ -98,6 +112,16 @@ extension ApplicationCoordinator: HomeViewControllerDelegate {
             let foldersCoordinator = FoldersCoordinator(navigationController, folder: folder)
             childCoordinators.append(foldersCoordinator)
             foldersCoordinator.start()
+        }
+    }
+    
+    func scheduleLocalNotification() {
+        if SubscriptionHelper.shared.isProUser {
+            NotificationHelper.shared.removeScheduledNotification()
+        } else {
+            if notificationStatus { return }
+            notificationStatus = true
+            NotificationHelper.shared.scheduleNotification()
         }
     }
 }

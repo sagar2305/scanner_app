@@ -29,6 +29,8 @@ struct Constants {
         static let iCloudDocumentRecordSubscriptionKey = "iCloudDocumentRecordSubscriptionKey"
         static let iCloudPageRecordSubscriptionKey = "iCloudPageRecordSubscriptionKey"
         static let iCloudDBChangeTokenKey = "iCloudDBChangeTokenKey"
+        
+        static let localNotificationStatus = "localNotificationStatus"
 
     }
     
@@ -60,6 +62,7 @@ struct Constants {
         static let annualAndLifeTime = "annualnlifetime"
         static let annualReduced = "annualnlifetime"
         static let lifetime = "Lifetime"
+        static let weeklyMonthlyAndAnnual = "weeklyMonthlyAndAnnual"
     }
     
     enum Fonts: String {
@@ -155,6 +158,7 @@ struct Constants {
         case deletedDocument = "iCloud - Document Deleted" //done
         case documentDeletionFailed =  "iCloud - Document Deletion Failed" //done
         case recievedCloudNotification = "iCloud - Received Notification" //done
+    
         
     }
 

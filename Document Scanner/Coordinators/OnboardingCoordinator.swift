@@ -35,11 +35,11 @@ extension OnboardingCoordinator: OnboardingVCDelegate {
        UserDefaults.standard.setValue(true, forKey: Constants.DocumentScannerDefaults.userIsOnboardedKey)
         AnalyticsHelper.shared.logEvent(.completedOnboarding)
         let subscriptionCoordinator = SubscribeCoordinator(navigationController: rootVC,
-                                                           offeringIdentifier: Constants.Offering.annualFullPriceAndSpecialOffer,
+                                                           offeringIdentifier: Constants.Offering.weeklyMonthlyAndAnnual,
                                                            presented: false,
                                                            giftOffer: false,
                                                            hideCloseButton: false,
-                                                           showSpecialOffer: true)
+                                                           showSpecialOffer: false)
         childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()
     }

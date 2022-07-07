@@ -85,6 +85,7 @@ class DocumentPreviewControls: UIView {
         } 
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(editButton)
+        stackView.addArrangedSubview(deleteButton)
     }
     
     @objc private func _markupButtonTapped(_ sender: FooterButton) {

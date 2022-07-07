@@ -79,6 +79,10 @@ struct DocumentHelper {
         }
     }
     
+    func deletePage(_ page: Page, of document: Document, fromCloud: Bool = false) {
+        document.deletePage(page)
+    }
+    
     func deleteDocumentWithID(_ id: String, isNotifiedFromiCloud: Bool) {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.forEach( { $0.printIDS() })
@@ -160,5 +164,33 @@ struct DocumentHelper {
     
     var emptyFolders: [Folder] {
         UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey) ?? []
+    }
+    
+    func renamefolder(_ folder: Folder, with name: String) {
+        let documents = documents.filter { $0.tag == folder.name }
+        if documents.isEmpty {
+            var emptyFolders = emptyFolders
+            if let row = self.emptyFolders.firstIndex(where: {$0.name == folder.name}) {
+                emptyFolders[row].name = name
+            }
+            UserDefaults.standard.save(emptyFolders, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+        } else {
+            for document in documents {
+                document.updateTag(new: name)
+            }
+        }
+    }
+    
+    func deleteFolder(_ folder: Folder) {
+        let documents = documents.filter { $0.tag == folder.name }
+        if documents.isEmpty {
+            var emptyFolders = emptyFolders
+            emptyFolders.removeAll { $0.id == folder.id }
+            UserDefaults.standard.save(emptyFolders, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+        } else {
+            for document in documents {
+                deleteDocumentWithID(document.id, isNotifiedFromiCloud: false)
+            }
+        }
     }
 }

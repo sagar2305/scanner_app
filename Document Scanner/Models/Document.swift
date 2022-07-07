@@ -74,8 +74,8 @@ class Document: NSObject, Codable, Identifiable {
     func save() {
         var documents: [Document] = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.documentsListKey) ?? []
         documents.append(self)
-        _saveToCloudKit()
         UserDefaults.standard.save(documents, forKey: Constants.DocumentScannerDefaults.documentsListKey)
+        _saveToCloudKit()
     }
     
     func update() {
@@ -99,6 +99,12 @@ class Document: NSObject, Codable, Identifiable {
         if !updatedFromCloud {
             CloudKitHelper.shared.update(document: self)
         }
+    }
+    
+    func deletePage(_ page: Page) {
+        guard let pageIndex = pages.firstIndex(of: page) else { return }
+        pages.remove(at: pageIndex)
+        update()
     }
     
     //for test

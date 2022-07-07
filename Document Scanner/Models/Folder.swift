@@ -9,7 +9,7 @@ import Foundation
 
 struct Folder: Codable, Identifiable {
     var id = UUID()
-    let name: String
+    var name: String
     let documetCount: Int
 }
 

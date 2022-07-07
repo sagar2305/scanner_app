@@ -62,6 +62,18 @@ extension UIColor {
     static var shadow: UIColor {
         UIColor(named: "shadow")!
     }
+    
+    static var renameBackground: UIColor {
+        UIColor(named: "renameBackground")!
+    }
+    
+    static var deleteBackground: UIColor {
+        UIColor(named: "deleteBackground")!
+    }
+    
+    static var moveBackground: UIColor {
+        UIColor(named: "moveBackground")!
+    }
 }
 
 extension UILabel {

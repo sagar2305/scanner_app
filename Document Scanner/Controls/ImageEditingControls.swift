@@ -17,6 +17,7 @@ class ImageEditorControls: UIView {
     var onOriginalTap: ((FooterButton) -> Void)?
     var onUndoTap: ((FooterButton) -> Void)?
     var onCropTap: ((FooterButton) -> Void)?
+    var onDeleteTap: ((FooterButton) -> Void)?
 
 
     private lazy var stackView: UIStackView = {
@@ -73,6 +74,15 @@ class ImageEditorControls: UIView {
         return footerButton
     }()
     
+    private lazy var deleteButton: FooterButton =  {
+        let footerButton = FooterButton()
+        footerButton.title = "Delete".localized
+        footerButton.textColor = .text
+        footerButton.icon = UIImage(named: "delete")!
+        footerButton.addTarget(self, action: #selector(_deleteButtonTapped(_:)), for: .touchUpInside)
+        return footerButton
+    }()
+    
     var editOriginalImageOptionIsHidden = false {
         didSet { editOriginalFooterButton.isHidden = editOriginalImageOptionIsHidden }
     }
@@ -101,6 +111,7 @@ class ImageEditorControls: UIView {
         stackView.addArrangedSubview(transformFooterButton)
         stackView.addArrangedSubview(adjustFooterButton)
         stackView.addArrangedSubview(colorFooterButton)
+        //stackView.addArrangedSubview(deleteButton)
         //stackView.addArrangedSubview(editOriginalFooterButton)
         //stackView.addArrangedSubview(undoFooterButton)
         
@@ -152,6 +163,11 @@ class ImageEditorControls: UIView {
     @objc private func _undoButtonTapped(_ sender: FooterButton) {
         onUndoTap?(sender)
     }
+    
+    @objc private func _deleteButtonTapped(_ sender: FooterButton) {
+        onDeleteTap?(sender)
+    }
+
     
     @objc private func _cropButtonTapped(_ sender: FooterButton) {
         cropFooterButton.setSelected = false

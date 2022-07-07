@@ -47,16 +47,28 @@ class FolderViewController: DocumentScannerViewController  {
         _getDocumentsAndFolders()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(_getDocumentsAndFolders), name: .documentMovedToFolder, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        NotificationCenter.default.removeObserver(self, name: .documentMovedToFolder, object: nil)
+    }
+    
     private func _setupSearchBar() {
         searchBar.searchTextField.leftView = nil
         searchBar.backgroundColor = .clear
         searchBar.delegate = self
     }
 
-     func _getDocumentsAndFolders() {
+    @objc func _getDocumentsAndFolders() {
         guard let folder = folder else {
             fatalError("ERROR: folder is not set")
         }
+        headerLabel.text = folder.name
         let documents: [Document] = DocumentHelper.shared.getDocument(with: folder.name)
         self.allDocuments = documents
         self.filteredDocuments = documents
@@ -207,7 +219,9 @@ extension FolderViewController: SwipeCollectionViewCellDelegate {
             guard let document = self.documentDataSource.itemIdentifier(for: indexPath) else {
                 return
             }
-            
+            if self.allDocuments.count == 1, let folder = self.folder {
+                DocumentHelper.shared.addNewEmpty(folder: Folder(name: folder.name, documetCount: 0))
+            }
             DocumentHelper.shared.delete(document: document)
             self.allDocuments.removeAll { $0.id == document.id }
             self.filteredDocuments.removeAll { $0.id == document.id }
@@ -225,18 +239,19 @@ extension FolderViewController: SwipeCollectionViewCellDelegate {
             guard let document = self.documentDataSource.itemIdentifier(for: indexPath) else {
                 return
             }
-            //self.moveDocument(document: document)
+            self.moveDocument(document: document)
         }
         
-        moveToFolderAction.backgroundColor = .green
+        moveToFolderAction.backgroundColor = .moveBackground
         let moveImage = UIImage(systemName: "folder")?.withRenderingMode(.alwaysTemplate)
         moveImage?.withTintColor(.white)
         
         // customize the action appearance
-        renameAction.backgroundColor = .primary
+        renameAction.backgroundColor = .renameBackground
         let renameImage = UIImage(named: "rename")?.withRenderingMode(.alwaysTemplate)
         renameImage?.withTintColor(.white)
         
+        deleteAction.backgroundColor = .deleteBackground
         let deleteImage = UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate)
         deleteImage?.withTintColor(.white)
         
@@ -246,5 +261,23 @@ extension FolderViewController: SwipeCollectionViewCellDelegate {
     
 
         return [renameAction,moveToFolderAction, deleteAction]
+    }
+    
+    func moveDocument(document: Document) {
+        let controller = UIAlertController(title: "Select Folder", message: nil, preferredStyle: .actionSheet)
+        let folders = DocumentHelper.shared.folders
+        for folder in folders {
+            if case folder.name = self.folder?.name { continue }
+            let action = UIAlertAction(title: folder.name, style: .default) { _ in
+                if self.allDocuments.count == 1, let folder = self.folder {
+                    DocumentHelper.shared.addNewEmpty(folder: Folder(name: folder.name, documetCount: 0))
+                }
+                DocumentHelper.shared.move(document: document, to: folder)
+            }
+            controller.addAction(action)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        controller.addAction(cancelAction)
+        present(controller, animated: true)
     }
 }

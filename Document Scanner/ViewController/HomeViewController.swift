@@ -50,6 +50,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     var filteredDocuments: [Document]  = [Document]()
     var folders = [Folder]()
 
+    private var ascending = true
 
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var searchBar: UISearchBar!
@@ -92,7 +93,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         _showOrHideFloatinActionMenu()
         navigationController?.navigationBar.isHidden = true
         _getDocumentsAndFolders()
-        
+        _addObservers()
         NotificationCenter.default.addObserver(self, selector: #selector(_getDocumentsAndFolders), name: .documentMovedToFolder, object: nil)
     }
     
@@ -109,6 +110,24 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         NotificationCenter.default.removeObserver(self, name: .documentMovedToFolder, object: nil)
+        _removeObservers()
+    }
+    
+    private func _addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateSnapshot),
+                                               name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+    
+    private func _removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .documentFetchedFromiCloudNotification, object: nil)
+    }
+    
+    @objc func updateSnapshot() {
+        DispatchQueue.main.async {
+            self._getDocumentsAndFolders()
+            self._setupNoScanAvailableView()
+        }
     }
     
     @objc func _getDocumentsAndFolders() {
@@ -124,7 +143,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         _setupSearchBar()
         foldersHeaderLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
         //TODO: - Localize
-        foldersHeaderLabel.text = "My\nFolders"
+        foldersHeaderLabel.text = "My Folders"
         
         addFolderButton.titleLabel?.configure(with: UIFont.font(.DMSansMedium, style: .callout))
         addFolderButton.titleLabel?.textColor = .primary
@@ -133,22 +152,16 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         
         documentsLabel.configure(with: UIFont.font(.DMSansBold, style: .title3))
         //TODO: - Localize
-        documentsLabel.text = "My\nScans"
+        documentsLabel.text = "My Scans"
         
         headerView.hero.id = Constants.HeroIdentifiers.headerIdentifier
         definesPresentationContext = true
         
-       
-        if DocumentHelper.shared.totalDocumentsCount == 0 {
-            _setupNoScanAvailableView()
-        } else {
-            noScanAvailableView.isHidden = true
-        }
+        _setupNoScanAvailableView()
     }
     
     private func _setupNoScanAvailableView() {
-        foldersView.isHidden = true
-        folderViewHeightConstraint.constant = 0
+        noScanAvailableView.isHidden = DocumentHelper.shared.totalDocumentsCount != 0
         noScansAvailableDescriptionLabel.configure(with: UIFont.font(.DMSansRegular, style: .callout))
         noScansAvailableDescriptionLabel.textColor = .secondaryText
         //TODO: - Localize
@@ -238,6 +251,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                 fatalError("ERROR: Unable to find and dequeue cell with identifier \(FolderCollectionViewCell.reuseIdentifier)")
             }
             collectionViewCell.folder = self.folders[indexPath.row]
+            collectionViewCell.delegate = self
             return collectionViewCell
         }
         return dataSource
@@ -267,7 +281,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         var snapShot = DocumentSnapShot()
         snapShot.appendSections([0])
         snapShot.appendItems(filteredDocuments)
-        documentDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
+        self.documentDataSource.apply(snapShot, animatingDifferences: animatingDifferences)
     }
     
     private func _rename(_ document: Document) {
@@ -321,6 +335,17 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                 generator.notificationOccurred(.error)
                 return
             }
+            //check if folder with same name exists
+            
+            let results = self.folders.filter { $0.name == folderName }
+            let folderExists = results.isEmpty == false
+            if folderExists {
+                let innerAlert = UIAlertController(title: nil, message: "Folder with same name already exists", preferredStyle: .alert)
+                  innerAlert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+                self.present(innerAlert, animated: true, completion: nil)
+                return
+            }
+    
             let folder = Folder(name: folderName, documetCount: 0)
             DocumentHelper.shared.addNewEmpty(folder: folder)
             self.folders.append(folder)
@@ -355,7 +380,12 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         isFloatingActionMenuExpanded.toggle()
         delegate?.showSettings(self)
     }
-
+    
+    @IBAction func didTapSortButton(_ sender: UIButton) {
+        ascending = !ascending
+        self.filteredDocuments.sort(by: ascending ? {$0.creationDate < $1.creationDate } : {$0.creationDate > $1.creationDate })
+        _applyDocumentSnapshot(animatingDifferences: true)
+    }
 }
 
 @available(iOS 13.0, *)
@@ -468,15 +498,16 @@ extension HomeViewController: SwipeCollectionViewCellDelegate {
             self.moveDocument(document: document)
         }
         
-        moveToFolderAction.backgroundColor = .green
+        moveToFolderAction.backgroundColor = .moveBackground
         let moveImage = UIImage(systemName: "folder")?.withRenderingMode(.alwaysTemplate)
         moveImage?.withTintColor(.white)
         
         // customize the action appearance
-        renameAction.backgroundColor = .primary
+        renameAction.backgroundColor = .renameBackground
         let renameImage = UIImage(named: "rename")?.withRenderingMode(.alwaysTemplate)
         renameImage?.withTintColor(.white)
         
+        deleteAction.backgroundColor = .deleteBackground
         let deleteImage = UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate)
         deleteImage?.withTintColor(.white)
         
@@ -506,8 +537,111 @@ extension HomeViewController: UICollectionViewDragDelegate {
 extension HomeViewController: UICollectionViewDropDelegate {
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         
+        let destinationIndexPath: IndexPath
+        let items = coordinator.items
+        if  items.count == 1, let item = items.first,
+            let indexPath = coordinator.destinationIndexPath {
+            print("Destination Indexpath: \(indexPath)")
+            destinationIndexPath = indexPath
+            let folder = folders[destinationIndexPath.item]
+
+            item.dragItem.itemProvider.loadObject(ofClass: Document.self) { document, error in
+                guard let dropDocument = document as? Document else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    DocumentHelper.shared.move(document: dropDocument, to: folder)
+                }
+            }
+        }
     }
 }
 
-
+@available(iOS 13.0, *)
+extension HomeViewController: FolderCollectionViewCellDelegate {
+    func folderCollectionViewCell(_ folderCollectionViewCell: FolderCollectionViewCell, moreButtonTappedFor folder: Folder) {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let renameAction = UIAlertAction(title: "Rename", style: .default) { _ in
+            guard let indexpath = self.folderCollectionView.indexPath(for: folderCollectionViewCell), let folder = self.folderDataSource.itemIdentifier(for: indexpath) else {
+                return
+            }
+            self.rename(folder)
+        }
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .default) { _ in
+            guard let indexpath = self.folderCollectionView.indexPath(for: folderCollectionViewCell), let folder = self.folderDataSource.itemIdentifier(for: indexpath) else {
+                return
+            }
+            self.deleteFolder(folder)
+        }
+    
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        controller.addAction(renameAction)
+        controller.addAction(deleteAction)
+        controller.addAction(cancelAction)
+        present(controller, animated: true)
+    }
+    
+    func rename(_ folder: Folder) {
+        let alertVC = PMAlertController(title: "Enter Name".localized, description: nil, image: nil, style: .alert)
+        alertVC.alertTitle.textColor = .primary
+        
+        alertVC.addTextField { (textField) in
+            textField?.placeholder = "Folder Name".localized
+                }
+        
+        alertVC.alertActionStackView.axis = .horizontal
+        let doneAction = PMAlertAction(title: "Done".localized, style: .default) {
+            let textField = alertVC.textFields[0]
+            guard let folderName = textField.text,
+                  !folderName.isEmpty else {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error)
+                return
+            }
+            
+            let results = self.folders.filter { $0.name == folderName }
+            let folderExists = results.isEmpty == false
+            if folderExists {
+                let innerAlert = UIAlertController(title: nil, message: "Folder with same name already exists", preferredStyle: .alert)
+                  innerAlert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+                self.present(innerAlert, animated: true, completion: nil)
+                return
+            }
+            
+            DocumentHelper.shared.renamefolder(folder, with: folderName)
+            self.folders = DocumentHelper.shared.folders
+            self._applyFolderSnapshot(animatingDifferences: true)
+        }
+        
+        doneAction.setTitleColor(.primary, for: .normal)
+        alertVC.addAction(doneAction)
+        
+        let cancelAction = PMAlertAction(title: "Cancel".localized, style: .cancel) {  }
+        alertVC.addAction(cancelAction)
+        alertVC.gravityDismissAnimation = false
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func deleteFolder(_ folder: Folder) {
+        let deleteConfirmationAlert = PMAlertController(title: "Delete Folder".localized, description: "Are you sure you want to delete the folder?".localized, image: nil, style: .alert)
+        deleteConfirmationAlert.alertTitle.textColor = .red
+        
+        
+        deleteConfirmationAlert.alertActionStackView.axis = .horizontal
+        let yesAction = PMAlertAction(title: "Yes".localized, style: .default) {
+            DocumentHelper.shared.deleteFolder(folder)
+            self.folders.removeAll { $0.id == folder.id }
+            self._applyFolderSnapshot()
+        }
+        yesAction.setTitleColor(.red, for: .normal)
+        deleteConfirmationAlert.addAction(yesAction)
+        
+        let cancelAction = PMAlertAction(title: "No".localized, style: .cancel) {  }
+        deleteConfirmationAlert.addAction(cancelAction)
+        deleteConfirmationAlert.gravityDismissAnimation = false
+        
+        self.present(deleteConfirmationAlert, animated: true, completion: nil)
+    }
+}
 

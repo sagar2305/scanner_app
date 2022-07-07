@@ -9,6 +9,7 @@ import UIKit
 import NVActivityIndicatorView
 import TTInAppPurchases
 import Lottie
+import StoreKit
 
 class SubscribeCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
@@ -47,9 +48,9 @@ class SubscribeCoordinator: Coordinator {
 
         // after onboarding we need to show discounted rate and it will always be presented
         if presented {
-            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+            subscriptionVC = WeeklyMonthlyAndAnnualViewController(fromPod: true)
         } else {
-            subscriptionVC = AnnualNoTrialViewController(fromPod: true)
+            subscriptionVC = WeeklyMonthlyAndAnnualViewController(fromPod: true)
         }
         
         _lastTimeUserShownSubscriptionScreen = UserDefaults.standard.fetch(forKey: Constants.DocumentScannerDefaults.timeWhenUserSawSpecialOfferScreenKey)
@@ -154,6 +155,7 @@ class SubscribeCoordinator: Coordinator {
                     DispatchQueue.global().async {
                         TTInAppPurchases.AnalyticsHelper.shared.logEvent(.userCancelledPurchase, properties: [
                                                                             .productId: product.identifier])
+                        NotificationHelper.shared.scheduleNotificationAfterUserCancelledPurchase()
                     }
                     break
                 case .noProductsAvailable:
@@ -293,6 +295,15 @@ extension SubscribeCoordinator: UpgradeUIProviderDelegate {
         return availableProducts[index].offersFreeTrial
     }
     
+    func freeTrialDuration(for index: Int) -> String {
+        guard let availableProducts = availableProducts,
+              availableProducts.count > index else {
+            return ""
+        }
+        
+        return availableProducts[index].freeTrialDuration ?? ""
+    }
+    
     func monthlyBreakdownOfPrice(withIntroDiscount withDiscount: Bool, withDurationSuffix: Bool) -> String {
         guard let availableProduct = availableProducts?.last else {
             return ""
@@ -345,6 +356,8 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
         }
         
         // - Do Not delete below commented code
+        
+        if _showSpecialOffer {
             if lastTimeUserShownSubscriptionScreen == nil {
                 lastTimeUserShownSubscriptionScreen = Date()
                 showSpecialOffer()
@@ -356,6 +369,9 @@ extension SubscribeCoordinator: SubscriptionViewControllerDelegate {
                     self._dismiss()
                 }
             }
+        } else {
+            _dismiss()
+        }
     }
 
     func selectPlan(at index: Int, controller: SubscriptionViewControllerProtocol) {
