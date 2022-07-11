@@ -133,6 +133,8 @@ struct DocumentHelper {
         emptyFolders.removeAll { $0.id == folder.id }
         UserDefaults.standard.save(emptyFolders, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
         NotificationCenter.default.post(name: .documentMovedToFolder, object: nil)
+        AnalyticsHelper.shared.logEvent(.documentMovedToFolder, properties: [.documentID: document.id,
+                                                                             .documentTag : folder.name])
     }
     
     
@@ -160,6 +162,7 @@ struct DocumentHelper {
         var emptyFoldersList = emptyFolders
         emptyFoldersList.append(folder)
         UserDefaults.standard.save(emptyFoldersList, forKey: Constants.DocumentScannerDefaults.emptyFoldersListKey)
+        AnalyticsHelper.shared.logEvent(.savedEmptyFolder)
     }
     
     var emptyFolders: [Folder] {
@@ -179,6 +182,7 @@ struct DocumentHelper {
                 document.updateTag(new: name)
             }
         }
+        AnalyticsHelper.shared.logEvent(.renamedFolder, properties: [.documentTag : folder.name])
     }
     
     func deleteFolder(_ folder: Folder) {
@@ -192,5 +196,6 @@ struct DocumentHelper {
                 deleteDocumentWithID(document.id, isNotifiedFromiCloud: false)
             }
         }
+        AnalyticsHelper.shared.logEvent(.deletedFolder, properties: [.documentTag : folder.name])
     }
 }

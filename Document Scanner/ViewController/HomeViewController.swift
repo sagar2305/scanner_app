@@ -335,8 +335,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
                 generator.notificationOccurred(.error)
                 return
             }
-            //check if folder with same name exists
-            
+           
             let results = self.folders.filter { $0.name == folderName }
             let folderExists = results.isEmpty == false
             if folderExists {
@@ -385,6 +384,7 @@ class HomeViewController: DocumentScannerViewController, HomeVC {
         ascending = !ascending
         self.filteredDocuments.sort(by: ascending ? {$0.creationDate < $1.creationDate } : {$0.creationDate > $1.creationDate })
         _applyDocumentSnapshot(animatingDifferences: true)
+        AnalyticsHelper.shared.logEvent(.sortedDocuments)
     }
 }
 
@@ -445,6 +445,7 @@ extension HomeViewController: UISearchBarDelegate {
             _applyFolderSnapshot()
             _applyDocumentSnapshot()
         }
+        AnalyticsHelper.shared.logEvent(.searchedDocuments)
     }
 }
 

@@ -117,5 +117,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                                                            showSpecialOffer: false)
         rootCoordinator?.childCoordinators.append(subscriptionCoordinator)
         subscriptionCoordinator.start()
+        AnalyticsHelper.shared.logEvent(.userClickedOnNotification)
     }
 }

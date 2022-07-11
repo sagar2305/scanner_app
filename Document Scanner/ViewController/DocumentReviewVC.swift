@@ -199,7 +199,7 @@ class DocumentReviewVC: DocumentScannerViewController {
             imagePageController.setViewControllers([pageControllerItems[pageControl.currentPage]], direction: direction, animated: true)
             currentPageIndex = pageControl.currentPage
         }
-        
+        AnalyticsHelper.shared.logEvent(.deletedPage)
     }
     
     private func didTapShare(_ sender: FooterButton) {

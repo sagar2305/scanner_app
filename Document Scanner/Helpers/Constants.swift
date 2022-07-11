@@ -119,6 +119,7 @@ struct Constants {
         case userOpenedDocument = "Opened Document" //done
         case userDeletedDocument = "Deleted Document" // done
         case renamedDocument = "Renamed Document" // done
+        case searchedDocuments = "Searched Documents" //done
         case userSharedDocument = "User Shared Document" // done
         case documentSharingFailed = "Document Sharing Failed" //done
         case visitedSettings = "Visited Settings" //done
@@ -131,6 +132,13 @@ struct Constants {
         case viewedPrivacyPolicy = "Viewed Privacy Policies" //done
         case viewedTermsAndLaws = "Viewed Terms And Laws" //done
         case reviewPromptRequested = "Review Requested" //done
+        case savedEmptyFolder = "Saved Empty Folder" //done
+        case deletedFolder = "Deleted Folder" //done
+        case renamedFolder = "Renamed Folder" //done
+        case documentMovedToFolder = "Document Moved To Folder" //done
+        case sortedDocuments = "Sorted Documents" //done
+        case searchedDocumentsInsideFolder = "Searched Documents Inside Folder"//done
+        case deletedPage = "Deleted Page"
         
         //image editing
         case userEditingImage = "Started Editing Image" //done
@@ -159,7 +167,11 @@ struct Constants {
         case documentDeletionFailed =  "iCloud - Document Deletion Failed" //done
         case recievedCloudNotification = "iCloud - Received Notification" //done
     
-        
+        //Notifications
+        case userClickedOnNotification = "User clicked on notification" //done
+        case removedScheduledNotifications = "Removed scheduled notifications" //done
+        case pushNotificationAfterUserCancelledPurchase = "Push Notification After User Cancelled Purchase" //done
+        case scheduledLocalNotification = "Scheduled Local Notification" //done
     }
 
     enum AnalyticsEventProperties: String, CustomStringConvertible {
@@ -172,6 +184,8 @@ struct Constants {
         case numberOfDocumentPages = "Number of Pages"
         case documentID = "Document ID"
         case pageID = "Page ID"
+        case documentTag = "Document Tag"
+    
         
         //for registration
         case phoneNumber = "Phone Number"

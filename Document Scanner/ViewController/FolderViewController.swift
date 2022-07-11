@@ -161,6 +161,7 @@ extension FolderViewController: UISearchBarDelegate {
             filteredDocuments = allDocuments.filter { $0.name.lowercased().contains(text.lowercased()) }
             _applyDocumentSnapshot()
         }
+        AnalyticsHelper.shared.logEvent(.searchedDocumentsInsideFolder)
     }
 }
 

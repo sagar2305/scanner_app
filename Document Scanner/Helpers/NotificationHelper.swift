@@ -33,6 +33,7 @@ class NotificationHelper {
     
     func removeScheduledNotification() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        AnalyticsHelper.shared.logEvent(.removedScheduledNotifications)
     }
     
     func scheduleNotification() {
@@ -51,6 +52,7 @@ class NotificationHelper {
                 print(error)
             }
         }
+        AnalyticsHelper.shared.logEvent(.scheduledLocalNotification)
     }
     
     func scheduleNotificationAfterUserCancelledPurchase() {
@@ -69,5 +71,6 @@ class NotificationHelper {
                 print(error)
             }
         }
+        AnalyticsHelper.shared.logEvent(.pushNotificationAfterUserCancelledPurchase)
     }
 }
